@@ -12,7 +12,13 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div class="dp-library dp-wrapper">
+      <header class="header-main">
+        <div class="header-wrapper" id="doppler-menu-mfe"></div>
+      </header>
+      <div>
+      </div>
+    </div>
     <script src="https://cdn.fromdoppler.com/loader/v1/loader.js"></script>
     <script type="text/javascript">
       const versionParamRegex = new RegExp(
@@ -58,6 +64,7 @@
       console.log(`Script URL: ${scriptUrl}`);
 
       window["doppler-menu-mfe-configuration"] = {
+        dopplerMenuElementId: "doppler-menu-mfe",
         useDummies,
       };
 
