@@ -17,6 +17,9 @@
         <div class="header-wrapper" id="doppler-menu-mfe"></div>
       </header>
       <div>
+        <header id="root-header"></header>
+        <div id="root"></div>
+        <footer id="root-footer"></footer>
       </div>
     </div>
     <script src="https://cdn.fromdoppler.com/loader/v1/loader.js"></script>
@@ -68,9 +71,24 @@
         useDummies,
       };
 
+      window["editors-webapp-configuration"] = {
+        basename: "editors-demo",
+        dopplerLegacyBaseUrl: "https://app2.fromdoppler.com",
+        dopplerRestApiBaseUrl: "https://restapi.fromdoppler.com",
+        htmlEditorApiBaseUrl: "https://apis.fromdoppler.com/html-editor",
+        loaderUrl: "https://cdn.fromdoppler.com/loader/v1/loader.js",
+        loginPageUrl: "https://app.fromdoppler.com/login",
+        unlayerEditorManifestUrl:
+          "https://cdn.fromdoppler.com/unlayer-editor/asset-manifest-v2.json",
+        unlayerProjectId: 32092,
+        useDummies: true,
+      };
 
       new AssetServices().load(
         "https://cdn.fromdoppler.com/doppler-style-guide/asset-manifest-v1.json"
+      );
+      new AssetServices().load(
+        "https://cdn.fromdoppler.com/editors-webapp/asset-manifest-v1.json"
       );
       new AssetServices().load(scriptUrl);
     </script>
