@@ -25,10 +25,40 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script>
+      window["doppler-menu-mfe-configuration"] = {
+        dopplerMenuElementId: "doppler-menu-mfe",
+      };
+
+      window["editors-webapp-configuration"] = {
+        basename: "editors-demo",
+        dopplerLegacyBaseUrl: "https://app2.fromdoppler.com",
+        dopplerRestApiBaseUrl: "https://restapi.fromdoppler.com",
+        htmlEditorApiBaseUrl: "https://apis.fromdoppler.com/html-editor",
+        loaderUrl: "https://cdn.fromdoppler.com/loader/v1/loader.js",
+        loginPageUrl: "https://app.fromdoppler.com/login",
+        unlayerEditorManifestUrl:
+          "https://cdn.fromdoppler.com/unlayer-editor/asset-manifest-v2.json",
+        unlayerProjectId: 32092,
+        useDummies: true,
+      };
+    </script>
+    <!-- AssetServices -->
+    <script src="https://cdn.fromdoppler.com/loader/v1/loader.js"></script>
+    <!-- End AssetServices -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div class="dp-library dp-wrapper">
+      <header class="header-main">
+        <div class="header-wrapper" id="doppler-menu-mfe"></div>
+      </header>
+      <div>
+        <header id="root-header"></header>
+        <div id="root"></div>
+        <footer id="root-footer"></footer>
+      </div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -40,4 +70,14 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <!-- Use AssetServices to load asset-manifest.json -->
+  <script type="text/javascript">
+    new AssetServices().load(
+      "https://cdn.fromdoppler.com/doppler-style-guide/asset-manifest-main.json"
+    );
+    new AssetServices().load(
+      "https://cdn.fromdoppler.com/editors-webapp/asset-manifest-v1.json"
+    );
+  </script>
+  <!-- End Use AssetServices -->
 </html>
