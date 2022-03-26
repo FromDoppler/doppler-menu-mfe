@@ -17,7 +17,7 @@
     <script type="text/javascript">
       const versionParamRegex = new RegExp(
         "\\?(?:.+&)*" +
-          "ew_version=((?:(?:main)|(?:INT)|(?:pr-\\d+)|(?:v\\d+(?:\\.\\d+){0,2})))" +
+          "dmm_version=((?:(?:main)|(?:INT)|(?:pr-\\d+)|(?:v\\d+(?:\\.\\d+){0,2})))" +
           "(?:-([a-f\\d]{40}))?" +
           "(?:&.*)?$"
       );
@@ -32,7 +32,7 @@
         defaultCommitId;
 
       const avoidCacheParamRegex =
-        /\?(?:.+&)*ew_nocache=((?:true)|(?:false))(?:&.*)?$/;
+        /\?(?:.+&)*dmm_nocache=((?:true)|(?:false))(?:&.*)?$/;
       const avoidCacheParamRegexResult =
         location.href.match(avoidCacheParamRegex);
       const avoidCacheDefault = true;
@@ -41,7 +41,7 @@
         : avoidCacheDefault;
 
       const useDummiesParamRegex =
-        /\?(?:.+&)*ew_dummy=((?:true)|(?:false))(?:&.*)?$/;
+        /\?(?:.+&)*dmm_dummy=((?:true)|(?:false))(?:&.*)?$/;
       const useDummiesParamRegexResult =
         location.href.match(useDummiesParamRegex);
       const useDummiesDefault = false;
