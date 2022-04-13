@@ -13,10 +13,7 @@ function App() {
 
   return (
     <>
-      <Header
-        nav={updatedNav}
-        isInactiveSection={isInactiveSection}
-      />
+      <Header nav={updatedNav} isInactiveSection={isInactiveSection} />
     </>
   );
 }
