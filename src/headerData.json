@@ -204,12 +204,17 @@
     "emailParameterActive": false
   },
   "notifications": [
-    "<strong>DEMO DAY: LIVE ONLINE EVENT</strong><br/><p class='text--small'>Learn how to take full advantage of your Email & Automation Marketing strategy. <a target='_blank' href='https://www.fromdoppler.com/demo-day/?utm_source=fromdoppler&utm_medium=appnotification&utm_campaign=demoday'><br/><strong>REGISTER FOR FREE</strong></a>.</p>"
+    "<strong>DEMO DAY: LIVE ONLINE EVENT</strong><br/><p class='text--small'>\n",
+    "Learn how to take full advantage of your Email & Automation Marketing strategy. \n",
+    "<a target='_blank' \n",
+    "href='https://www.fromdoppler.com/demo-day/?\n",
+    "utm_source=fromdoppler&utm_medium=appnotification&utm_campaign=demoday'>\n",
+    "<br/><strong>REGISTER FOR FREE</strong></a>.</p>"
   ],
-  "jwtToken": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOjEwODIxMywidW5pcXVlX25hbWUiOiJic2VndWVyQG1ha2luZ3NlbnNlLmNvbSIsImlzU3UiOmZhbHNlLCJzdWIiOiJic2VndWVyQG1ha2luZ3NlbnNlLmNvbSIsImN1c3RvbWVySWQiOm51bGwsImNkaF9jdXN0b21lcklkIjpudWxsLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY0OTc5MTc5NywiZXhwIjoxNjQ5NzkzNTk3fQ.BFRWx1PBLedslYvuUq3RGuHExDlDjpCwWfhqxhTiGiLp-hHnowsAPeEu2smFT6I8mJxpbbBWc55Hpc7kIALs5e0VFDJ1rTGdlpSpfxN4IBNbena7_nYgSRl8NvTv2mS9vEuaIHEV-WhxS0JjJO51tm0AydDu4n6M_MgbfJwML1zyOvVP767ufSp46EyhDwvsl5hNuYt_L9PmT-K7mq8amVGyMnIRpzBJMteHD-Sb-zFNC5JXWdLs2HtS_oArEe20sFbyWE3pk5ER7vcqZDthu4PhId-VOyYG8BP3VGQV_7fAbL2Bd5Uso6f7Y0hL8ucgKmYrAkHU0oVWpyGePX_fZw",
+  "jwtToken": "",
   "unlayerUser": {
     "id": "int_108213",
     "email": "bseguer@makingsense.com",
-    "signature": "c37b9c833adae9903bc22c1ce3998c207fee6d0c78e5632be6eaee9738b92dfc"
+    "signature": ""
   }
 }

@@ -35,8 +35,8 @@ const NavItem = ({ item, isInactiveSection }) => {
     (openMainMenu) => {
       const headerMainElement = document.querySelector(".header-main");
       !isInactiveSection && subNav.length && openMainMenu
-        ? headerMainElement.classList.add("header-open")
-        : headerMainElement.classList.remove("header-open");
+        ? headerMainElement?.classList.add("header-open")
+        : headerMainElement?.classList.remove("header-open");
     },
     [isInactiveSection, subNav.length]
   );
