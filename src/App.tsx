@@ -1,10 +1,9 @@
-import React from "react";
+import Header from "./components/Header";
 
 function App() {
   return (
     <>
-      Doppler Menu Micro-Frontend
-      <a href="/editors-demo/campaigns/123">Editor</a>
+      <Header />
     </>
   );
 }
