@@ -2,41 +2,41 @@
   "nav": [
     {
       "title": "Home",
-      "url": "http://localhost:3000/",
+      "url": "/",
       "isEnabled": false,
       "isSelected": false,
       "idHTML": "dashboard"
     },
     {
       "title": "Campaigns",
-      "url": "http://localhost:3000/Campaigns/Draft/",
+      "url": "/Campaigns/Draft/",
       "isEnabled": false,
       "isSelected": false,
       "subNav": [
         {
           "title": "Draft",
-          "url": "http://localhost:3000/Campaigns/Draft/",
+          "url": "/Campaigns/Draft/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "campaignDraftMenu"
         },
         {
           "title": "Scheduled",
-          "url": "http://localhost:3000/Campaigns/Scheduled/",
+          "url": "/Campaigns/Scheduled/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "campaignScheduledMenu"
         },
         {
           "title": "Sent",
-          "url": "http://localhost:3000/Campaigns/Sent/",
+          "url": "/Campaigns/Sent/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "campaignSentMenu"
         },
         {
           "title": "A/B Test",
-          "url": "http://localhost:3000/Campaigns/TestAB/",
+          "url": "/Campaigns/TestAB/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "campaignTestABMenu"
@@ -46,41 +46,41 @@
     },
     {
       "title": "Lists",
-      "url": "http://localhost:3000/Lists/SubscribersList/",
+      "url": "/Lists/SubscribersList/",
       "isEnabled": false,
       "isSelected": false,
       "subNav": [
         {
           "title": "Main Lists",
-          "url": "http://localhost:3000/Lists/SubscribersList/",
+          "url": "/Lists/SubscribersList/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "listMainMenu"
         },
         {
           "title": "Segments",
-          "url": "http://localhost:3000/Lists/Segment/",
+          "url": "/Lists/Segment/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "listSegmentMenu"
         },
         {
           "title": "Contacts",
-          "url": "http://localhost:3000/Lists/MasterSubscriber/",
+          "url": "/Lists/MasterSubscriber/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "listMasterSubscriberMenu"
         },
         {
           "title": "Custom Fields",
-          "url": "http://localhost:3000/Lists/MasterCustomFields/",
+          "url": "/Lists/MasterCustomFields/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "listCustomFieldMenu"
         },
         {
           "title": "Forms",
-          "url": "http://localhost:3000/Lists/Form/",
+          "url": "/Lists/Form/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "listFormMenu"
@@ -90,27 +90,27 @@
     },
     {
       "title": "Reports",
-      "url": "http://localhost:3000/Campaigns/Reports/",
+      "url": "/Campaigns/Reports/",
       "isEnabled": false,
       "isSelected": false,
       "subNav": [
         {
           "title": "Sent Campaigns",
-          "url": "http://localhost:3000/Campaigns/Reports/",
+          "url": "/Campaigns/Reports/",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "reportsSentCampaign"
         },
         {
           "title": "Subscriber History",
-          "url": "http://localhost:3000/Campaigns/Reports/?redirect=subHistory",
+          "url": "/Campaigns/Reports/?redirect=subHistory",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "reportsSubsHistory"
         },
         {
           "title": "Advanced",
-          "url": "http://localhost:3000/reports",
+          "url": "/reports",
           "isEnabled": false,
           "isSelected": false,
           "idHTML": "webapp"
@@ -120,7 +120,7 @@
     },
     {
       "title": "Automation",
-      "url": "http://localhost:3000/Automation/Automation/AutomationApp/",
+      "url": "/Automation/Automation/AutomationApp/",
       "isEnabled": false,
       "isSelected": false,
       "subNav": [],
@@ -128,7 +128,7 @@
     },
     {
       "title": "Templates",
-      "url": "http://localhost:3000/Templates/Main/",
+      "url": "/Templates/Main/",
       "isEnabled": false,
       "isSelected": false,
       "idHTML": "templateMenu"
@@ -148,7 +148,7 @@
       "maxSubscribers": "500",
       "remainingCredits": "500",
       "buttonText": "UPGRADE",
-      "buttonUrl": "http://localhost:3000/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
+      "buttonUrl": "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
       "planDiscount": 0,
       "monthPlan": 0,
       "subscribersCount": 0,
@@ -163,21 +163,21 @@
     "nav": [
       {
         "title": "Control Panel",
-        "url": "http://localhost:3000/ControlPanel/ControlPanel/",
+        "url": "/ControlPanel/ControlPanel/",
         "isEnabled": false,
         "isSelected": false,
         "idHTML": "controlPanel"
       },
       {
         "title": "Download Center",
-        "url": "http://localhost:3000/DownloadCenter/DownloadCenter",
+        "url": "/DownloadCenter/DownloadCenter",
         "isEnabled": false,
         "isSelected": false,
         "idHTML": "downloadCenter"
       },
       {
         "title": "Logout ",
-        "url": "http://localhost:3000/SignIn/SignOut",
+        "url": "/SignIn/SignOut",
         "isEnabled": false,
         "isSelected": false,
         "idHTML": "signOut"
@@ -192,11 +192,11 @@
     "message": "Your Free trial with unlimited Campaigns up to  500  Contacts expires in  87  days.",
     "button": {
       "text": "Upgrade Now",
-      "url": "http://localhost:3000/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar"
+      "url": "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar"
     }
   },
-  "homeUrl": "http://localhost:3000",
-  "urlBase": "http://localhost:3000/",
+  "homeUrl": "",
+  "urlBase": "/",
   "features": {
     "siteTrackingEnabled": true,
     "siteTrackingActive": false,
