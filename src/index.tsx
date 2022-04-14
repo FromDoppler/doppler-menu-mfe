@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -9,11 +9,11 @@ const targetElement = document.getElementById(
 );
 
 if (targetElement) {
-  ReactDOM.render(
+  const root = createRoot(targetElement);
+  root.render(
     <React.StrictMode>
       <App />
-    </React.StrictMode>,
-    targetElement
+    </React.StrictMode>
   );
 }
 
