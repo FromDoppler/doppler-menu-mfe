@@ -3,7 +3,7 @@ import UserMenu from "./UserMenu";
 
 const headerMainElement = document.querySelector(".header-main");
 
-const toggleOpenHeader = () => {
+const toggleHeader = () => {
   headerMainElement?.classList?.toggle("header-open");
 };
 
@@ -38,8 +38,8 @@ const NavItem = ({ item, isInactiveSection }) => {
     <li
       key={title}
       className={`${subNav.length ? "submenu-item" : ""}`}
-      onMouseEnter={() => subNav.length && toggleOpenHeader()}
-      onMouseLeave={() => subNav.length && toggleOpenHeader()}
+      onMouseEnter={() => subNav.length && toggleHeader()}
+      onMouseLeave={() => subNav.length && toggleHeader()}
     >
       <a
         className={isSelected && !isInactiveSection ? "active" : ""}
