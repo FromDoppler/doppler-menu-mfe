@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import useClickOutsideHandler from "../hooks/useClickOutsideHandler";
+import { useState } from "react";
+import useOnclickOutside from "react-cool-onclickoutside";
 
 const Notifications = ({
   notifications = [],
@@ -7,9 +7,8 @@ const Notifications = ({
 }) => {
   const count = notifications.length;
   const dataCount = count && { "data-count": count };
-  const notificationsRef = useRef();
   const [openNotification, setOpenNotification] = useState(false);
-  useClickOutsideHandler(notificationsRef, () => setOpenNotification(false));
+  const notificationsRef = useOnclickOutside(() => setOpenNotification(false));
 
   const handleToggleNotification = () => {
     setOpenNotification((prev) => !prev);

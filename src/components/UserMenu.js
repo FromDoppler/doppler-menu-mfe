@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import useClickOutsideHandler from "../hooks/useClickOutsideHandler";
+import { useState } from "react";
+import useOnclickOutside from "react-cool-onclickoutside";
 
 const UserMenu = ({ user }) => {
   const { fullname = "", email = "", avatar = {}, plan = {}, nav = [] } = user;
@@ -15,9 +15,8 @@ const UserMenu = ({ user }) => {
     description = "",
   } = plan;
 
-  const userMenuRef = useRef();
   const [openUserMenu, setOpenUserMenu] = useState(false);
-  useClickOutsideHandler(userMenuRef, () => setOpenUserMenu(false));
+  const userMenuRef = useOnclickOutside(() => setOpenUserMenu(false));
 
   const handleToggleNotification = () => {
     setOpenUserMenu((prev) => !prev);
