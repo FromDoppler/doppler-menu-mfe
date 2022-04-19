@@ -1,13 +1,14 @@
-import { useCallback, useEffect } from "react";
 import Notifications from "./Notifications";
 import UserMenu from "./UserMenu";
 
-const SubNavItems = ({ item, isInactiveSection, toggleOpenHeader }) => {
-  const { isSelected, subNav = [] } = item;
+const headerMainElement = document.querySelector(".header-main");
 
-  useEffect(() => {
-    toggleOpenHeader(isSelected && !isInactiveSection);
-  }, [isInactiveSection, isSelected, toggleOpenHeader]);
+const toggleOpenHeader = () => {
+  headerMainElement?.classList?.toggle("header-open");
+};
+
+const SubNavItems = ({ item, isInactiveSection }) => {
+  const { isSelected, subNav = [] } = item;
 
   return (
     <ul
@@ -33,22 +34,12 @@ const SubNavItems = ({ item, isInactiveSection, toggleOpenHeader }) => {
 const NavItem = ({ item, isInactiveSection }) => {
   const { title, url, subNav = [], isSelected } = item;
 
-  const toggleOpenHeader = useCallback(
-    (openMainMenu) => {
-      const headerMainElement = document.querySelector(".header-main");
-      !isInactiveSection && subNav.length && openMainMenu
-        ? headerMainElement?.classList.add("header-open")
-        : headerMainElement?.classList.remove("header-open");
-    },
-    [isInactiveSection, subNav.length]
-  );
-
   return (
     <li
       key={title}
       className={`${subNav.length ? "submenu-item" : ""}`}
-      onMouseEnter={() => toggleOpenHeader(true)}
-      onMouseLeave={() => toggleOpenHeader(false)}
+      onMouseEnter={() => subNav.length && toggleOpenHeader()}
+      onMouseLeave={() => subNav.length && toggleOpenHeader()}
     >
       <a
         className={isSelected && !isInactiveSection ? "active" : ""}
@@ -57,11 +48,7 @@ const NavItem = ({ item, isInactiveSection }) => {
         {title}
       </a>
       {!!subNav.length && (
-        <SubNavItems
-          item={item}
-          isInactiveSection={isInactiveSection}
-          toggleOpenHeader={toggleOpenHeader}
-        />
+        <SubNavItems item={item} isInactiveSection={isInactiveSection} />
       )}
     </li>
   );

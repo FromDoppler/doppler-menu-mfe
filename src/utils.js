@@ -76,6 +76,7 @@ const urlsWebApp = [
   },
 ];
 
+// Match pathname with a set of predefined urls "urlsWebApp"
 export const getCurrentPageForUrl = (currentUrl) => {
   return urlsWebApp.find((item) => item.url === currentUrl);
 };
@@ -90,7 +91,8 @@ export const getUpdatedSubNav = (currentSubNav = [], subMenuItem) => {
   });
 };
 
-export const getUpdateMenu = (currentUrl, nav) => {
+// Recursively set isSelected property in menu items
+export const getUpdatedMenu = (currentUrl, nav) => {
   const currentPage = getCurrentPageForUrl(currentUrl);
   if (currentPage && currentPage.menu) {
     return nav.map((item) => {
@@ -105,4 +107,10 @@ export const getUpdateMenu = (currentUrl, nav) => {
     });
   }
   return nav;
+};
+
+// Return false if current path match an item in urlsWebApp object
+export const isInactiveSection = (path) => {
+  const currentPage = getCurrentPageForUrl(path);
+  return !currentPage || !currentPage.menu;
 };
