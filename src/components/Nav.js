@@ -1,4 +1,6 @@
 import { useCallback, useEffect } from "react";
+import Notifications from "./Notifications";
+import UserMenu from "./UserMenu";
 
 const SubNavItems = ({ item, isInactiveSection, toggleOpenHeader }) => {
   const { isSelected, subNav = [] } = item;
@@ -65,7 +67,13 @@ const NavItem = ({ item, isInactiveSection }) => {
   );
 };
 
-const Nav = ({ nav, isInactiveSection }) => {
+const Nav = ({
+  nav,
+  notifications,
+  isInactiveSection,
+  emptyNotificationText,
+  user,
+}) => {
   return (
     <>
       <nav className="nav-left-main">
@@ -86,9 +94,10 @@ const Nav = ({ nav, isInactiveSection }) => {
       <nav className="nav-right-main">
         <ul className="nav-right-main--list">
           <li>
-            <span className="user-menu--open active" data-count="1">
-              <span className="ms-icon icon-notification"></span>
-            </span>
+            <Notifications
+              notifications={notifications}
+              emptyNotificationText={emptyNotificationText}
+            />
           </li>
           <li>
             <a href="https://help.fromdoppler.com/en">
@@ -96,16 +105,7 @@ const Nav = ({ nav, isInactiveSection }) => {
             </a>
           </li>
           <li>
-            <div>
-              <button className="user-menu--open">
-                <span
-                  className="user-avatar"
-                  style={{ background: `rgb(238, 156, 112)` }}
-                >
-                  BS
-                </span>
-              </button>
-            </div>
+            <UserMenu user={user} />
           </li>
         </ul>
       </nav>
