@@ -5,5 +5,5 @@ test("renders Doppler Menu Micro-Frontend", () => {
   render(<App />);
   const el = screen.getByText("Home");
   expect(el).toBeInTheDocument();
-  expect(el.classList.toString()).toBe("active");
+  expect(el).toHaveAttribute("href");
 });

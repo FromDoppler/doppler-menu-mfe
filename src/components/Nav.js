@@ -1,55 +1,48 @@
 import Notifications from "./Notifications";
 import UserMenu from "./UserMenu";
 
-const headerMainElement = document.querySelector(".header-main");
-
-const toggleHeader = () => {
-  headerMainElement?.classList?.toggle("header-open");
-};
-
 const SubNavItems = ({ item, isInactiveSection }) => {
-  const { isSelected, subNav = [] } = item;
+  const { subNav = [] } = item;
 
-  return (
-    <ul
-      className={`sub-menu ${isSelected && !isInactiveSection ? "open" : ""}`}
-    >
-      {subNav.length &&
-        subNav.map(({ title, url, isSelected }) => {
-          return (
-            <li key={title}>
-              <a
-                className={isSelected && !isInactiveSection ? "active" : ""}
-                href={url}
-              >
-                {title}
-              </a>
-            </li>
-          );
-        })}
-    </ul>
-  );
+  return subNav.map(({ title, url, isSelected }) => {
+    return (
+      <li key={title}>
+        <a
+          className={isSelected && !isInactiveSection ? "active" : ""}
+          href={url}
+        >
+          {title}
+        </a>
+      </li>
+    );
+  });
 };
 
-const NavItem = ({ item, isInactiveSection }) => {
+const NavItem = ({
+  item,
+  isInactiveSection,
+  openMenuHeader,
+  closeMenuHeader,
+}) => {
   const { title, url, subNav = [], isSelected } = item;
+  const isActive = isSelected && !isInactiveSection;
+  const hasSubmenuItems = !!subNav.length;
 
   return (
     <li
       key={title}
-      className={`${subNav.length ? "submenu-item" : ""}`}
-      onMouseEnter={() => subNav.length && toggleHeader()}
-      onMouseLeave={() => subNav.length && toggleHeader()}
+      className={`${hasSubmenuItems ? "submenu-item" : ""}`}
+      onMouseEnter={() => hasSubmenuItems && openMenuHeader()}
+      onMouseLeave={() => hasSubmenuItems && closeMenuHeader()}
     >
-      <a
-        className={isSelected && !isInactiveSection ? "active" : ""}
-        href={url}
-      >
+      <a className={isActive ? "active" : ""} href={url}>
         {title}
       </a>
-      {!!subNav.length && (
-        <SubNavItems item={item} isInactiveSection={isInactiveSection} />
-      )}
+      {
+        <ul className={`sub-menu ${isActive ? "open" : ""}`}>
+          <SubNavItems item={item} isInactiveSection={isInactiveSection} />
+        </ul>
+      }
     </li>
   );
 };
@@ -60,6 +53,8 @@ const Nav = ({
   isInactiveSection,
   emptyNotificationText,
   user,
+  openMenuHeader,
+  closeMenuHeader,
 }) => {
   return (
     <>
@@ -72,6 +67,8 @@ const Nav = ({
                   key={`${item.idHTML}${item.title}`}
                   item={item}
                   isInactiveSection={isInactiveSection}
+                  openMenuHeader={openMenuHeader}
+                  closeMenuHeader={closeMenuHeader}
                 />
               );
             })}

@@ -1,6 +1,6 @@
 const urlsWebApp = [
   {
-    url: "/",
+    url: "/Dashboard/",
     menu: "dashboard",
     subMenu: "",
   },
