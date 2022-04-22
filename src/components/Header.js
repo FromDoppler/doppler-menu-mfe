@@ -3,11 +3,11 @@ import Logo from "./Logo";
 import Nav from "./Nav";
 
 const Header = ({
-  nav,
-  notifications,
+  nav = [],
+  notifications = [],
+  user = {},
   isInactiveSection,
   emptyNotificationText,
-  user,
 }) => {
   const [openMenu, setOpenMenu] = useState(false);
 
@@ -20,7 +20,10 @@ const Header = ({
   };
 
   return (
-    <header className={`header-main ${openMenu ? "header-open" : ""}`}>
+    <header
+      className={`header-main ${openMenu ? "header-open" : ""}`}
+      aria-label="main header"
+    >
       <div className="header-wrapper">
         <Logo />
         <Nav

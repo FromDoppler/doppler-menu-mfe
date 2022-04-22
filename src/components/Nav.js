@@ -48,17 +48,17 @@ const NavItem = ({
 };
 
 const Nav = ({
-  nav,
-  notifications,
+  nav = [],
+  user = {},
+  notifications = [],
   isInactiveSection,
   emptyNotificationText,
-  user,
   openMenuHeader,
   closeMenuHeader,
 }) => {
   return (
     <>
-      <nav className="nav-left-main">
+      <nav className="nav-left-main" aria-label="main nav">
         <div className="menu-main--container">
           <ul className="menu-main">
             {nav.map((item) => {
@@ -75,7 +75,7 @@ const Nav = ({
           </ul>
         </div>
       </nav>
-      <nav className="nav-right-main">
+      <nav className="nav-right-main" aria-label="secundary nav">
         <ul className="nav-right-main--list">
           <li>
             <Notifications
