@@ -9,7 +9,6 @@ describe("<Logo />", () => {
 
     const link = screen.getByRole("link");
 
-    expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href");
   });
 

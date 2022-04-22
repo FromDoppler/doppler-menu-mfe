@@ -8,7 +8,7 @@ describe("<Header/>", () => {
 
     render(<Header />);
 
-    expect(screen.getByLabelText(mainHeaderLabel)).toBeInTheDocument();
-    expect(screen.getByLabelText(mainHeaderLabel)).toHaveClass(mainHeaderClass);
+    const headerLabel = screen.getByLabelText(mainHeaderLabel);
+    expect(headerLabel).toHaveClass(mainHeaderClass);
   });
 });
