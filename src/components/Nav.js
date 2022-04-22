@@ -1,68 +1,48 @@
-import { useCallback, useEffect } from "react";
 import Notifications from "./Notifications";
 import UserMenu from "./UserMenu";
 
-const SubNavItems = ({ item, isInactiveSection, toggleOpenHeader }) => {
-  const { isSelected, subNav = [] } = item;
+const SubNavItems = ({ item, isInactiveSection }) => {
+  const { subNav = [] } = item;
 
-  useEffect(() => {
-    toggleOpenHeader(isSelected && !isInactiveSection);
-  }, [isInactiveSection, isSelected, toggleOpenHeader]);
-
-  return (
-    <ul
-      className={`sub-menu ${isSelected && !isInactiveSection ? "open" : ""}`}
-    >
-      {subNav.length &&
-        subNav.map(({ title, url, isSelected }) => {
-          return (
-            <li key={title}>
-              <a
-                className={isSelected && !isInactiveSection ? "active" : ""}
-                href={url}
-              >
-                {title}
-              </a>
-            </li>
-          );
-        })}
-    </ul>
-  );
+  return subNav.map(({ title, url, isSelected }) => {
+    return (
+      <li key={title}>
+        <a
+          className={isSelected && !isInactiveSection ? "active" : ""}
+          href={url}
+        >
+          {title}
+        </a>
+      </li>
+    );
+  });
 };
 
-const NavItem = ({ item, isInactiveSection }) => {
+const NavItem = ({
+  item,
+  isInactiveSection,
+  openMenuHeader,
+  closeMenuHeader,
+}) => {
   const { title, url, subNav = [], isSelected } = item;
-
-  const toggleOpenHeader = useCallback(
-    (openMainMenu) => {
-      const headerMainElement = document.querySelector(".header-main");
-      !isInactiveSection && subNav.length && openMainMenu
-        ? headerMainElement?.classList.add("header-open")
-        : headerMainElement?.classList.remove("header-open");
-    },
-    [isInactiveSection, subNav.length]
-  );
+  const isActive = isSelected && !isInactiveSection;
+  const hasSubmenuItems = !!subNav.length;
 
   return (
     <li
       key={title}
-      className={`${subNav.length ? "submenu-item" : ""}`}
-      onMouseEnter={() => toggleOpenHeader(true)}
-      onMouseLeave={() => toggleOpenHeader(false)}
+      className={`${hasSubmenuItems ? "submenu-item" : ""}`}
+      onMouseEnter={() => hasSubmenuItems && openMenuHeader()}
+      onMouseLeave={() => hasSubmenuItems && closeMenuHeader()}
     >
-      <a
-        className={isSelected && !isInactiveSection ? "active" : ""}
-        href={url}
-      >
+      <a className={isActive ? "active" : ""} href={url}>
         {title}
       </a>
-      {!!subNav.length && (
-        <SubNavItems
-          item={item}
-          isInactiveSection={isInactiveSection}
-          toggleOpenHeader={toggleOpenHeader}
-        />
-      )}
+      {
+        <ul className={`sub-menu ${isActive ? "open" : ""}`}>
+          <SubNavItems item={item} isInactiveSection={isInactiveSection} />
+        </ul>
+      }
     </li>
   );
 };
@@ -73,6 +53,8 @@ const Nav = ({
   isInactiveSection,
   emptyNotificationText,
   user,
+  openMenuHeader,
+  closeMenuHeader,
 }) => {
   return (
     <>
@@ -85,6 +67,8 @@ const Nav = ({
                   key={`${item.idHTML}${item.title}`}
                   item={item}
                   isInactiveSection={isInactiveSection}
+                  openMenuHeader={openMenuHeader}
+                  closeMenuHeader={closeMenuHeader}
                 />
               );
             })}
