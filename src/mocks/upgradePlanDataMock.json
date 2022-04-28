@@ -1,0 +1,101 @@
+{
+  "success": true,
+  "data": {
+    "ClientTypePlans": [
+      {
+        "IdUserTypePlan": 10222,
+        "Description": "1-500",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 500
+      },
+      {
+        "IdUserTypePlan": 18,
+        "Description": "501-1500",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 1500
+      },
+      {
+        "IdUserTypePlan": 19,
+        "Description": "1501-2500",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 2500
+      },
+      {
+        "IdUserTypePlan": 20,
+        "Description": "2501-5000",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 5000
+      },
+      {
+        "IdUserTypePlan": 21,
+        "Description": "5001-10000",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 10000
+      },
+      {
+        "IdUserTypePlan": 22,
+        "Description": "10001-15000",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 15000
+      },
+      {
+        "IdUserTypePlan": 23,
+        "Description": "15001-25000",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 25000
+      },
+      {
+        "IdUserTypePlan": 38,
+        "Description": "25001-50000",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 50000
+      },
+      {
+        "IdUserTypePlan": 76,
+        "Description": "50001-75000",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 75000
+      },
+      {
+        "IdUserTypePlan": 37,
+        "Description": "75001-100000",
+        "EmailQty": null,
+        "Fee": null,
+        "ExtraEmailCost": null,
+        "IdUserType": 0,
+        "SubscribersQty": 100000
+      }
+    ],
+    "IdClientTypePlanSelected": null,
+    "Detail": null,
+    "IsSentSuccessEmail": false,
+    "UrlReferrer": null
+  }
+}

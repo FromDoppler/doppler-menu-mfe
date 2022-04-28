@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <HeaderMessages alert={alert} />
+      <HeaderMessages alert={alert} user={user} />
       <Header
         nav={getUpdatedMenu(pathname, nav)}
         isInactiveSection={isInactiveSection(pathname)}

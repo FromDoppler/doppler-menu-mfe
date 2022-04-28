@@ -1,8 +1,12 @@
-import React from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+// TODO: Implement Internationalization properly
+import { IntlProvider } from "react-intl";
+import messages_es from "./i18n/es";
 
 const targetElement = document.getElementById(
   (window as any)["doppler-menu-mfe-configuration"]?.dopplerMenuElementId
@@ -11,9 +15,11 @@ const targetElement = document.getElementById(
 if (targetElement) {
   const root = createRoot(targetElement);
   root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <StrictMode>
+      <IntlProvider locale="es" defaultLocale="es" messages={messages_es}>
+        <App />
+      </IntlProvider>
+    </StrictMode>
   );
 }
 

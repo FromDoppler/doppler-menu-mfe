@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Modal from "./Modal";
+import UpgradePlanForm from "./UpgradePlanForm";
 
 const updatePlanPopup = "updatePlanPopup";
 
-const HeaderMessages = ({ alert = {} }) => {
+const HeaderMessages = ({ alert = {}, user = {} }) => {
+  const { plan = {} } = user;
   const { type = "", message = "", button = {} } = alert;
   const { url = "", text = "", action = "" } = button;
 
@@ -36,17 +38,21 @@ const HeaderMessages = ({ alert = {} }) => {
   if (action && action !== updatePlanPopup) return null;
 
   return (
-    <div className={`messages-container  ${type}`}>
+    <div className={`messages-container sticky ${type}`}>
       <div className="wrapper">
         {message && <p>{message}</p>}
-        {url ? showLink() : showButton()}
+        {url ? showLink() : button ? showButton() : null}
       </div>
       <Modal
         className="modal"
         isOpen={modalIsOpen}
         handleClose={() => toggleModal(false)}
       >
-        <div>test modal</div>
+        <UpgradePlanForm
+          isSubscriber={plan.isSubscribers}
+          handleClose={() => toggleModal(false)}
+          user={user}
+        />
       </Modal>
     </div>
   );

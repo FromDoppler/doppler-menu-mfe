@@ -193,7 +193,7 @@ const headerData = {
       "Your Free trial with unlimited Campaigns up to  500  Contacts expires in  87  days.",
     button: {
       text: "Upgrade Now",
-      url: "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
+      // url: "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
     },
   },
   homeUrl: "",
