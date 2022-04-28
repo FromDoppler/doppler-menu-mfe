@@ -1,10 +1,10 @@
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 export const ConfirmationMessage = ({ isSubscriber, amountSubscribers }) => {
-  const intl = useIntl();
-  const _ = (id, values) => intl.formatMessage({ id: id }, values);
+  // TODO: fix imageUrl when intl implemented
+  // const intl = useIntl();
+  // const _ = (id, values) => intl.formatMessage({ id: id }, values);
 
-  // TODO: imageUrl url when intl implemented
   return (
     <>
       <span className="dp-iconmodal-center">

@@ -11,8 +11,6 @@ const messages_es = {
   "common.message_success": "¡Hecho! Tu solicitud ha sido enviada",
   "common.message_last_plan":
     "Cuéntanos tus necesidades y diseñaremos el Plan perfecto para ti",
-  "common.ui_library_image":
-    "https://cdn.fromdoppler.com/doppler-ui-library/${dopplerUiLibraryVersion}/img/{imageUrl}",
   "validation_messages.error_required_field": "¡Ouch! El campo está vacío.",
 };
 
