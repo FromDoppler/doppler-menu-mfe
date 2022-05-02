@@ -27,8 +27,8 @@ const getAmmountSubscribers = (availablePlans, selectedPlanId, isSubscriber) =>
     : availablePlans.find((plan) => plan.IdUserTypePlan === selectedPlanId)
         .EmailQty;
 
-const UpgradePlanForm = ({ handleClose, isSubscriber, user }) => {
-  const { plan } = user;
+const UpgradePlanForm = ({ handleClose, isSubscriber, user = {} }) => {
+  const { plan = {} } = user;
   const [availablePlans, setAvailablePlans] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLastPlan, setIsLastPlan] = useState(false);
@@ -48,7 +48,7 @@ const UpgradePlanForm = ({ handleClose, isSubscriber, user }) => {
       setAvailablePlans(availablePlanMajors);
       setIsLoading(false);
       setIsLastPlan(availablePlanMajors.length === 0);
-      setFirstPlanId(availablePlanMajors[0].IdUserTypePlan);
+      setFirstPlanId(availablePlanMajors[0]?.IdUserTypePlan);
     };
     fetchData();
   }, [isSubscriber, plan]);
@@ -110,7 +110,7 @@ const UpgradePlanForm = ({ handleClose, isSubscriber, user }) => {
         onSubmit={onSubmit}
       >
         {({ errors, touched, submitCount, isSubmitting }) => (
-          <Form className="form-request">
+          <Form className="form-request" role="form">
             <fieldset>
               <ul className="field-group">
                 {!isLastPlan ? (
@@ -173,6 +173,7 @@ const UpgradePlanForm = ({ handleClose, isSubscriber, user }) => {
             {!sentEmail ? (
               <div className="container-buttons">
                 <button
+                  type="button"
                   className="dp-button button-medium primary-grey"
                   onClick={handleClose}
                 >

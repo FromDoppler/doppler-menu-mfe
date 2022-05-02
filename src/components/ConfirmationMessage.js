@@ -20,10 +20,9 @@ export const ConfirmationMessage = ({ isSubscriber, amountSubscribers }) => {
       </h1>
       <p className="text-align--center">
         <FormattedMessage
-          id={
-            "upgradePlanForm.confirmation_subtitle_" +
-            (isSubscriber ? "contact" : "shipping")
-          }
+          id={`upgradePlanForm.confirmation_subtitle_${
+            isSubscriber ? "contact" : "shipping"
+          }`}
           values={{
             bold: (chunks) => (
               <b>

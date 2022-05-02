@@ -8,11 +8,11 @@ export const getUpgradePlanData = (isSubscriber) => {
     EmailQty: plan.EmailQty,
   }));
 
-  return new Promise((res) => setTimeout(() => res(response), 1000));
+  return new Promise((res) => setTimeout(() => res(response), 900));
 };
 
 export const upgradePlan = async (planModel) => {
   await new Promise((res) =>
-    setTimeout(() => res(console.log("Plan upgrated...", planModel)), 1500)
+    setTimeout(() => res(console.log("Plan upgrated...", planModel)), 900)
   );
 };

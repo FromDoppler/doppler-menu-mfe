@@ -1,8 +1,8 @@
 const Modal = ({
   isOpen,
   type = "medium",
-  handleClose,
-  className,
+  handleClose = null,
+  className = "",
   children,
 }) => {
   if (!isOpen) {

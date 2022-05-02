@@ -2,7 +2,7 @@ const Loading = ({ page }) => {
   if (page) {
     return (
       <div data-testid="wrapper-loading" className="wrapper-loading">
-        <div className="loading-page" />
+        <div data-testid="loading-page" className="loading-page" />
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import Header from "./components/Header";
 import { getUpdatedMenu, isInactiveSection } from "./utils";
-import headerData from "./headerData";
+import headerData from "./mocks/headerData";
 import HeaderMessages from "./components/HeaderMessages";
 
 function App() {
