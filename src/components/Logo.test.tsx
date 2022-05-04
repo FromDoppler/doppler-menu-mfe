@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import Logo from "./Logo";
+import { Logo } from "./Logo";
 
 const expectedIconClasses = "ms-icon icon-doppler-logo";
 
-describe("<Logo />", () => {
+describe(Logo.name, () => {
   it("renders logo link", () => {
     render(<Logo />);
 
