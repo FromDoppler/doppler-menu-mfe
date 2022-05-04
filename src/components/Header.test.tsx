@@ -25,6 +25,7 @@ const userMock: User = {
     trialExpirationDate: "2022-07-08T00:00:00",
     trialExpirationDays: 87,
     planFee: 0.0,
+    pendingFreeUpgrade: true,
   },
   lang: "en",
   avatar: { text: "BS", color: "#EE9C70" },

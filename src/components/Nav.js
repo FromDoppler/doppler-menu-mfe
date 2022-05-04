@@ -1,5 +1,5 @@
 import Notifications from "./Notifications";
-import UserMenu from "./UserMenu";
+import { UserMenu } from "./UserMenu";
 
 const SubNavItems = ({ item, isInactiveSection }) => {
   const { subNav = [] } = item;
