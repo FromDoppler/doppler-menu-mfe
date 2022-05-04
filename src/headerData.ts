@@ -7,7 +7,7 @@ export interface NavItem {
   subNav?: NavItem[];
 }
 
-interface Plan {
+export interface Plan {
   planType: string;
   idUserTypePlan: number;
   description: string;
@@ -26,6 +26,7 @@ interface Plan {
   trialExpirationDate: string;
   trialExpirationDays: number;
   planFee: number;
+  pendingFreeUpgrade: boolean;
 }
 
 export interface User {
@@ -223,6 +224,7 @@ const headerData: UserData = {
       trialExpirationDate: "2022-07-08T00:00:00",
       trialExpirationDays: 87,
       planFee: 0.0,
+      pendingFreeUpgrade: true,
     },
     lang: "en",
     avatar: { text: "BS", color: "#EE9C70" },

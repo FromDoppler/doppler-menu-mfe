@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import Header from "./Header";
+import { UserMenu } from "./UserMenu";
 import { User } from "../headerData";
 
-const userMock: User = {
-  email: "bseguer@makingsense.com",
-  fullname: "bruno seguer",
-  lastName: "seguer",
+const user: User = {
+  email: "test@makingsense.com",
+  fullname: "test makingsense",
+  lastName: "makingsense",
   plan: {
     planType: "1",
     idUserTypePlan: 0,
@@ -43,22 +43,13 @@ const userMock: User = {
   hasCampaignSent: false,
 };
 
-describe(Header.name, () => {
-  it("should not break if props are missing", () => {
-    const mainHeaderLabel = "main header";
-    const mainHeaderClass = "header-main";
+describe("<UserMenu />", () => {
+  it("renders user menu", () => {
+    render(<UserMenu user={user} />);
 
-    render(
-      <Header
-        nav={[]}
-        emptyNotificationText={""}
-        isInactiveSection={true}
-        notifications={[]}
-        user={userMock}
-      />
-    );
-
-    const headerLabel = screen.getByLabelText(mainHeaderLabel);
-    expect(headerLabel).toHaveClass(mainHeaderClass);
+    expect(screen.getByText(user.fullname)).toBeInTheDocument();
+    expect(screen.getByText(user.email)).toBeInTheDocument();
+    expect(screen.getByText(user.nav[0].title)).toBeInTheDocument();
+    expect(screen.getAllByText(user.avatar.text)).toHaveLength(2);
   });
 });
