@@ -1,4 +1,4 @@
-import Notifications from "./Notifications";
+import { Notifications } from "./Notifications";
 import { UserMenu } from "./UserMenu";
 
 const SubNavItems = ({ item, isInactiveSection }) => {
