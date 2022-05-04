@@ -1,14 +1,23 @@
 import { useState } from "react";
 import Logo from "./Logo";
 import Nav from "./Nav";
+import { NavItem, User } from "../headerData";
+
+interface HeaderProp {
+  nav: NavItem[];
+  notifications: string[];
+  user: User;
+  isInactiveSection: boolean;
+  emptyNotificationText: string;
+}
 
 const Header = ({
-  nav = [],
-  notifications = [],
-  user = {},
+  nav,
+  notifications,
+  user,
   isInactiveSection,
   emptyNotificationText,
-}) => {
+}: HeaderProp) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const openMenuHeader = () => {

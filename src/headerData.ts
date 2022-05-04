@@ -1,4 +1,70 @@
-const headerData = {
+export interface NavItem {
+  title: string;
+  url: string;
+  isEnabled: boolean;
+  isSelected: boolean;
+  idHTML: string;
+  subNav?: NavItem[];
+}
+
+interface Plan {
+  planType: string;
+  idUserTypePlan: number;
+  description: string;
+  itemDescription: string;
+  planName: string;
+  isSubscribers: string;
+  maxSubscribers: string;
+  remainingCredits: string;
+  buttonText: string;
+  buttonUrl: string;
+  planDiscount: number;
+  monthPlan: number;
+  subscribersCount: number;
+  trialActive: boolean;
+  trialExpired: false;
+  trialExpirationDate: string;
+  trialExpirationDays: number;
+  planFee: number;
+}
+
+export interface User {
+  email: string;
+  fullname: string;
+  lastName: string;
+  plan: Plan;
+  lang: "en" | "es";
+  avatar: { text: string; color: string };
+  nav: NavItem[];
+  sms: { smsEnabled: boolean; remainingCredits: number };
+  isLastPlanRequested: boolean;
+  hasCampaignSent: boolean;
+}
+
+interface UserData {
+  nav: NavItem[];
+  user: User;
+  alert: {
+    type: "warning";
+    message: string;
+    button: {
+      text: string;
+      url: string;
+    };
+  };
+  homeUrl: string;
+  urlBase: string;
+  features: {
+    siteTrackingEnabled: boolean;
+    siteTrackingActive: boolean;
+    emailParameterEnabled: boolean;
+    emailParameterActive: boolean;
+  };
+  notifications: string[];
+  emptyNotificationText: string;
+}
+
+const headerData: UserData = {
   nav: [
     {
       title: "Home",
@@ -205,20 +271,14 @@ const headerData = {
     emailParameterActive: false,
   },
   notifications: [
-    `<strong>DEMO DAY: LIVE ONLINE EVENT</strong><br/><p class='text--small'>
+    `<strong>DEMO DAY: LIVE ONLINE EVENT</strong><br/><p class="text--small">
     Learn how to take full advantage of your Email & Automation Marketing strategy.
-    <a target='_blank'
-    href='https://www.fromdoppler.com/demo-day/?
-    utm_source=fromdoppler&utm_medium=appnotification&utm_campaign=demoday'>
+    <a target="_blank"
+    href="https://www.fromdoppler.com/demo-day/?
+    utm_source=fromdoppler&utm_medium=appnotification&utm_campaign=demoday">
     <br/><strong>REGISTER FOR FREE</strong></a>.</p>`,
   ],
   emptyNotificationText: "Empty Notification Text",
-  jwtToken: "",
-  unlayerUser: {
-    id: "int_108213",
-    email: "bseguer@makingsense.com",
-    signature: "",
-  },
 };
 
 export default headerData;
