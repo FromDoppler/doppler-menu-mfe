@@ -1,21 +1,47 @@
 import { Notifications } from "./Notifications";
 import { UserMenu } from "./UserMenu";
+import { NavItem as INavItem, User } from "../headerData";
 
-const SubNavItems = ({ item, isInactiveSection }) => {
-  const { subNav = [] } = item;
+interface SubNavItemsProp {
+  item: INavItem;
+  isInactiveSection: boolean;
+}
 
-  return subNav.map(({ title, url, isSelected }) => {
-    return (
-      <li key={title}>
-        <a
-          className={isSelected && !isInactiveSection ? "active" : ""}
-          href={url}
-        >
-          {title}
-        </a>
-      </li>
-    );
-  });
+interface NavItemProp {
+  item: INavItem;
+  isInactiveSection: boolean;
+  openMenuHeader: () => void;
+  closeMenuHeader: () => void;
+}
+
+interface NavProp {
+  nav: INavItem[];
+  user: User;
+  notifications: string[];
+  isInactiveSection: boolean;
+  emptyNotificationText: string;
+  openMenuHeader: () => void;
+  closeMenuHeader: () => void;
+}
+
+const SubNavItems = ({ item, isInactiveSection }: SubNavItemsProp) => {
+  const { subNav } = item;
+  return (
+    <>
+      {subNav?.map(({ title, url, isSelected }) => {
+        return (
+          <li key={title}>
+            <a
+              className={isSelected && !isInactiveSection ? "active" : ""}
+              href={url}
+            >
+              {title}
+            </a>
+          </li>
+        );
+      })}
+    </>
+  );
 };
 
 const NavItem = ({
@@ -23,7 +49,7 @@ const NavItem = ({
   isInactiveSection,
   openMenuHeader,
   closeMenuHeader,
-}) => {
+}: NavItemProp) => {
   const { title, url, subNav = [], isSelected } = item;
   const isActive = isSelected && !isInactiveSection;
   const hasSubmenuItems = !!subNav.length;
@@ -47,35 +73,36 @@ const NavItem = ({
   );
 };
 
-const Nav = ({
-  nav = [],
-  user = {},
-  notifications = [],
+export const Nav = ({
+  nav,
+  user,
+  notifications,
   isInactiveSection,
   emptyNotificationText,
   openMenuHeader,
   closeMenuHeader,
-}) => {
+}: NavProp) => {
   return (
     <>
       <nav className="nav-left-main" aria-label="main nav">
         <div className="menu-main--container">
           <ul className="menu-main">
-            {nav.map((item) => {
-              return (
-                <NavItem
-                  key={`${item.idHTML}${item.title}`}
-                  item={item}
-                  isInactiveSection={isInactiveSection}
-                  openMenuHeader={openMenuHeader}
-                  closeMenuHeader={closeMenuHeader}
-                />
-              );
-            })}
+            {nav &&
+              nav.map((item) => {
+                return (
+                  <NavItem
+                    key={`${item.idHTML}${item.title}`}
+                    item={item}
+                    isInactiveSection={isInactiveSection}
+                    openMenuHeader={openMenuHeader}
+                    closeMenuHeader={closeMenuHeader}
+                  />
+                );
+              })}
           </ul>
         </div>
       </nav>
-      <nav className="nav-right-main" aria-label="secundary nav">
+      <nav className="nav-right-main" aria-label="secondary nav">
         <ul className="nav-right-main--list">
           <li>
             <Notifications
@@ -96,5 +123,3 @@ const Nav = ({
     </>
   );
 };
-
-export default Nav;

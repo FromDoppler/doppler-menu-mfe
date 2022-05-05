@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Logo } from "./Logo";
-import Nav from "./Nav";
+import { Nav } from "./Nav";
 import { NavItem, User } from "../headerData";
 
 interface HeaderProp {
