@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import Nav from "./Nav";
-import { User } from "../headerData";
 
 const mainNav = "main nav";
 const secundaryNav = "secundary nav";
