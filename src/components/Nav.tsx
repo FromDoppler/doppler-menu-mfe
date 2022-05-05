@@ -87,18 +87,17 @@ export const Nav = ({
       <nav className="nav-left-main" aria-label="main nav">
         <div className="menu-main--container">
           <ul className="menu-main">
-            {nav &&
-              nav.map((item) => {
-                return (
-                  <NavItem
-                    key={`${item.idHTML}${item.title}`}
-                    item={item}
-                    isInactiveSection={isInactiveSection}
-                    openMenuHeader={openMenuHeader}
-                    closeMenuHeader={closeMenuHeader}
-                  />
-                );
-              })}
+            {nav.map((item) => {
+              return (
+                <NavItem
+                  key={`${item.idHTML}${item.title}`}
+                  item={item}
+                  isInactiveSection={isInactiveSection}
+                  openMenuHeader={openMenuHeader}
+                  closeMenuHeader={closeMenuHeader}
+                />
+              );
+            })}
           </ul>
         </div>
       </nav>
