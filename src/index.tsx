@@ -1,8 +1,9 @@
-import React from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
 
 const targetElement = document.getElementById(
   (window as any)["doppler-menu-mfe-configuration"]?.dopplerMenuElementId
@@ -11,9 +12,11 @@ const targetElement = document.getElementById(
 if (targetElement) {
   const root = createRoot(targetElement);
   root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <StrictMode>
+      <MenuIntlProvider>
+        <App />
+      </MenuIntlProvider>
+    </StrictMode>
   );
 }
 
