@@ -30,7 +30,7 @@ const Header = ({
 
   return (
     <header
-      className={`header-main ${openMenu ? "header-open" : ""}`}
+      className={`header-main sticky ${openMenu ? "header-open" : ""}`}
       aria-label="main header"
     >
       <div className="header-wrapper">
