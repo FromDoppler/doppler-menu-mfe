@@ -42,17 +42,20 @@ export interface User {
   hasCampaignSent: boolean;
 }
 
+export interface Alert {
+  type: "warning";
+  message: string;
+  button: {
+    text: string;
+    url?: string;
+    action?: string;
+  };
+}
+
 interface UserData {
   nav: NavItem[];
   user: User;
-  alert: {
-    type: "warning";
-    message: string;
-    button: {
-      text: string;
-      url: string;
-    };
-  };
+  alert: Alert;
   homeUrl: string;
   urlBase: string;
   features: {
