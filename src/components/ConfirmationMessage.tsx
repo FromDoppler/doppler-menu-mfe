@@ -1,7 +1,7 @@
 import { FormattedMessage } from "react-intl";
 
 interface ConfirmationMessageProp {
-  isSubscriber: boolean;
+  isSubscriber: string;
   amountSubscribers: number;
 }
 
@@ -21,7 +21,7 @@ export const ConfirmationMessage = ({
       <p className="text-align--center">
         <FormattedMessage
           id={`upgradePlanForm.confirmation_subtitle_${
-            isSubscriber ? "contact" : "shipping"
+            isSubscriber === "true" ? "contact" : "shipping"
           }`}
           values={values}
         />

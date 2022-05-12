@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal } from "./Modal";
 import { User, Alert } from "../headerData";
+import { UpgradePlanForm } from "./UpgradePlanForm";
 
 interface HeaderMessagesProp {
   alert: Alert;
@@ -9,6 +10,7 @@ interface HeaderMessagesProp {
 const updatePlanPopup = "updatePlanPopup";
 
 export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
+  const { plan } = user;
   const { type, message, button } = alert;
   const { url, text, action } = button;
 
@@ -47,7 +49,11 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
         {url ? showLink() : button ? showButton() : null}
       </div>
       <Modal isOpen={modalIsOpen} handleClose={() => toggleModal(false)}>
-        <div>UpgradePlanForm Placeholder</div>
+        <UpgradePlanForm
+          isSubscriber={plan.isSubscribers}
+          handleClose={() => toggleModal(false)}
+          user={user}
+        />
       </Modal>
     </div>
   );
