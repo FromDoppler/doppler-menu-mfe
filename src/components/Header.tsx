@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Logo } from "./Logo";
 import { Nav } from "./Nav";
+import { MenuRight } from "./MenuRight";
 import { NavItem, User } from "../headerData";
 
 interface HeaderProp {
@@ -38,11 +39,13 @@ const Header = ({
         <Nav
           currentPath={currentPath}
           nav={nav}
-          notifications={notifications}
-          emptyNotificationText={emptyNotificationText}
-          user={user}
           openMenuHeader={openMenuHeader}
           closeMenuHeader={closeMenuHeader}
+        />
+        <MenuRight
+          user={user}
+          notifications={notifications}
+          emptyNotificationText={emptyNotificationText}
         />
       </div>
     </header>
