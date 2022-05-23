@@ -50,9 +50,9 @@ describe(Header.name, () => {
 
     render(
       <Header
+        currentPath={"/"}
         nav={[]}
         emptyNotificationText={""}
-        isInactiveSection={true}
         notifications={[]}
         user={userMock}
       />

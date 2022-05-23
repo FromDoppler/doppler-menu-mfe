@@ -39,7 +39,5 @@ export const getUpgradePlanData = (
 };
 
 export const upgradePlan = async (planModel: object) => {
-  await new Promise((res) =>
-    setTimeout(() => res(console.log("Plan upgrated...", planModel)), 900)
-  );
+  await new Promise((res) => setTimeout(() => res(planModel), 900));
 };

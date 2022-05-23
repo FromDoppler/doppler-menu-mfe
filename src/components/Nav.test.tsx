@@ -96,10 +96,10 @@ describe(Nav.name, () => {
   it("should not break if props are missing", () => {
     render(
       <Nav
+        currentPath={"/"}
         user={user}
         nav={[]}
         notifications={[]}
-        isInactiveSection={false}
         emptyNotificationText={""}
         openMenuHeader={jest.fn()}
         closeMenuHeader={jest.fn()}
@@ -114,10 +114,10 @@ describe(Nav.name, () => {
   it("should render Navs properly", () => {
     render(
       <Nav
+        currentPath={"/"}
         nav={nav}
         user={user}
         notifications={[]}
-        isInactiveSection={false}
         emptyNotificationText={""}
         openMenuHeader={jest.fn()}
         closeMenuHeader={jest.fn()}
