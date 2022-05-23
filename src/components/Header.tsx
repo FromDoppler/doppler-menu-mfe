@@ -20,6 +20,7 @@ const Header = ({
   emptyNotificationText,
 }: HeaderProp) => {
   const [openMenu, setOpenMenu] = useState(false);
+  const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
   const openMenuHeader = () => {
     setOpenMenu(true);
@@ -31,7 +32,9 @@ const Header = ({
 
   return (
     <header
-      className={`header-main sticky ${openMenu ? "header-open" : ""}`}
+      className={`header-main sticky ${openMenu ? "header-open" : ""} ${
+        openMenuMobile ? "open" : ""
+      }`}
       aria-label="main header"
     >
       <div className="header-wrapper">
@@ -46,6 +49,7 @@ const Header = ({
           user={user}
           notifications={notifications}
           emptyNotificationText={emptyNotificationText}
+          setOpenMenuMobile={setOpenMenuMobile}
         />
       </div>
     </header>
