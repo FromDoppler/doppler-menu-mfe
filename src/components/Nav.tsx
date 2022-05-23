@@ -1,14 +1,9 @@
-import { Notifications } from "./Notifications";
-import { UserMenu } from "./UserMenu";
-import { NavItem as INavItem, User } from "../headerData";
+import { NavItem as INavItem } from "../headerData";
 import { useEffect, useState } from "react";
 
 interface NavProp {
   currentPath: string;
-  emptyNotificationText: string;
-  user: User;
   nav: INavItem[];
-  notifications: string[];
   openMenuHeader: () => void;
   closeMenuHeader: () => void;
 }
@@ -37,50 +32,27 @@ interface SubNavItemProp {
 export const Nav = ({
   currentPath,
   nav,
-  user,
-  notifications,
-  emptyNotificationText,
   openMenuHeader,
   closeMenuHeader,
 }: NavProp) => {
   return (
-    <>
-      <nav className="nav-left-main" aria-label="main nav">
-        <div className="menu-main--container">
-          <ul className="menu-main">
-            {nav.map((item, index) => {
-              return (
-                <NavItem
-                  currentPath={currentPath}
-                  key={index}
-                  item={item}
-                  openMenuHeader={openMenuHeader}
-                  closeMenuHeader={closeMenuHeader}
-                />
-              );
-            })}
-          </ul>
-        </div>
-      </nav>
-      <nav className="nav-right-main" aria-label="secondary nav">
-        <ul className="nav-right-main--list">
-          <li>
-            <Notifications
-              notifications={notifications}
-              emptyNotificationText={emptyNotificationText}
-            />
-          </li>
-          <li>
-            <a href="https://help.fromdoppler.com/en">
-              <span className="ms-icon icon-header-help"></span>
-            </a>
-          </li>
-          <li>
-            <UserMenu user={user} />
-          </li>
+    <nav className="nav-left-main" aria-label="main nav">
+      <div className="menu-main--container">
+        <ul className="menu-main">
+          {nav.map((item, index) => {
+            return (
+              <NavItem
+                currentPath={currentPath}
+                key={index}
+                item={item}
+                openMenuHeader={openMenuHeader}
+                closeMenuHeader={closeMenuHeader}
+              />
+            );
+          })}
         </ul>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
 
