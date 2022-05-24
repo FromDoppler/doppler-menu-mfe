@@ -17,11 +17,7 @@ export const MenuRight = ({
 }: MenuRightProp) => {
   const toggleMenuMobile = () => setOpenMenuMobile((prev: boolean) => !prev);
   return (
-    <nav
-      className="nav-right-main"
-      aria-label="secondary nav"
-      style={{ padding: 0 }}
-    >
+    <nav className="nav-right-main" aria-label="secondary nav">
       <ul className="nav-right-main--list">
         <li>
           <Notifications

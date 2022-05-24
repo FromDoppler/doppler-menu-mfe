@@ -36,11 +36,7 @@ export const Nav = ({
   closeMenuHeader,
 }: NavProp) => {
   return (
-    <nav
-      className="nav-left-main"
-      aria-label="main nav"
-      style={{ padding: 0, top: "100%", marginTop: "5px" }}
-    >
+    <nav className="nav-left-main" aria-label="main nav">
       <div className="menu-main--container">
         <ul className="menu-main">
           {nav.map((item, index) => {
