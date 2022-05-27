@@ -1,4 +1,4 @@
-import { NavItem as INavItem } from "../headerData";
+import { NavItem as INavItem } from "../model";
 import { useEffect, useState } from "react";
 
 interface NavProp {

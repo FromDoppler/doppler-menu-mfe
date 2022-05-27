@@ -1,4 +1,4 @@
-import { Plan } from "../headerData";
+import { Plan } from "../model";
 
 interface UserPlanProps {
   plan: Plan;

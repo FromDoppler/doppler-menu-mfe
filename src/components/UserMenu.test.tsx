@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { UserMenu } from "./UserMenu";
-import { User } from "../headerData";
+import { User } from "../model";
 
 const user: User = {
   email: "test@makingsense.com",

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { User } from "../headerData";
+import { User } from "../model";
 import { MenuRight } from "./MenuRight";
 import user from "@testing-library/user-event";
 

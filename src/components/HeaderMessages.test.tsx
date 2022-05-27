@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { HeaderMessages } from "./HeaderMessages";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
-import { Alert, User } from "../headerData";
+import { Alert, User } from "../model";
 
 const userData: User = {
   email: "email@mock.com",

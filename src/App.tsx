@@ -1,11 +1,11 @@
 import Header from "./components/Header";
-import headerData from "./headerData";
+import { testUserData } from "./testData";
 import { HeaderMessages } from "./components/HeaderMessages";
 
 function App() {
   const { pathname, search } = window.location;
-  const { nav, notifications, emptyNotificationText, user, alert }: any =
-    headerData;
+  const { nav, notifications, emptyNotificationText, user, alert } =
+    testUserData;
 
   return (
     <>

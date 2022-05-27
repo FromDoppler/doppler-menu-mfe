@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Logo } from "./Logo";
 import { Nav } from "./Nav";
 import { MenuRight } from "./MenuRight";
-import { NavItem, User } from "../headerData";
+import { NavItem, User } from "../model";
 
 interface HeaderProp {
   currentPath: string;

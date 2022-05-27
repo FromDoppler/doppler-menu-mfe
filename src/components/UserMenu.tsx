@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useOnclickOutside from "react-cool-onclickoutside";
-import { User } from "../headerData";
+import { User } from "../model";
 import { Avatar } from "./Avatar";
 import { UserPlan } from "./UserPlan";
 

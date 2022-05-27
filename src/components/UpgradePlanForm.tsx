@@ -9,7 +9,7 @@ import {
   FormikHelpers,
 } from "formik";
 import { FormattedMessage, useIntl } from "react-intl";
-import { User, Plan } from "../headerData";
+import { User, Plan } from "../model";
 import { ConfirmationMessage } from "./ConfirmationMessage";
 import { Loading } from "./Loading";
 import { useTimeout } from "../hooks/useTimeout";
