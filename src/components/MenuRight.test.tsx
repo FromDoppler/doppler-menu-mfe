@@ -1,10 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { User } from "../headerData";
 import { MenuRight } from "./MenuRight";
+import user from "@testing-library/user-event";
 
 const secondaryNav = "secondary nav";
 
-const user: User = {
+const userData: User = {
   email: "test@makingsense.com",
   fullname: "test makingsense",
   lastName: "makingsense",
@@ -48,7 +49,12 @@ const user: User = {
 describe("<MenuRight />", () => {
   it("should not break if props are missing", () => {
     render(
-      <MenuRight user={user} notifications={[]} emptyNotificationText={""} />
+      <MenuRight
+        user={userData}
+        notifications={[]}
+        emptyNotificationText={""}
+        setOpenMenuMobile={jest.fn()}
+      />
     );
 
     expect(screen.getAllByRole("navigation").length).toEqual(1);
@@ -57,12 +63,35 @@ describe("<MenuRight />", () => {
 
   it("should render MenuRight properly", () => {
     render(
-      <MenuRight user={user} notifications={[]} emptyNotificationText={""} />
+      <MenuRight
+        user={userData}
+        notifications={[]}
+        emptyNotificationText={""}
+        setOpenMenuMobile={jest.fn()}
+      />
     );
 
     const links = screen.getAllByRole("link");
     links.forEach((link) => {
       expect(link).toHaveAttribute("href");
     });
+  });
+
+  it("should call toggle menu when open/close icon is clicked", async () => {
+    const toggleMenu = jest.fn();
+    render(
+      <MenuRight
+        user={userData}
+        notifications={[]}
+        emptyNotificationText={""}
+        setOpenMenuMobile={toggleMenu}
+      />
+    );
+
+    const openMenu = screen.getByTestId("open-menu");
+    const closeMenu = screen.getByTestId("close-menu");
+    await user.click(openMenu);
+    await user.click(closeMenu);
+    expect(toggleMenu).toHaveBeenCalledTimes(2);
   });
 });

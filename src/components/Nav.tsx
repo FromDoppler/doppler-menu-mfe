@@ -82,12 +82,14 @@ const NavItem = ({
       <a className={isNavItemActive ? "active" : ""} href={url}>
         {title}
       </a>
-      <SubNav
-        isNavItemActive={isNavItemActive}
-        currentPath={currentPath}
-        item={item}
-        setNavItemActive={setNavItemActive}
-      />
+      {hasSubmenuItems && (
+        <SubNav
+          isNavItemActive={isNavItemActive}
+          currentPath={currentPath}
+          item={item}
+          setNavItemActive={setNavItemActive}
+        />
+      )}
     </li>
   );
 };
