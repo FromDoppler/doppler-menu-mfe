@@ -7,12 +7,16 @@ import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
 import { AppSessionStateProvider } from "./session/AppSessionStateContext";
 import { AppConfiguration } from "./AppConfiguration";
 import { createDummyAppSessionStateClient } from "./session/dummyAppSessionStateClient";
+import { SessionMfeAppSessionStateClient } from "./session/SessionMfeAppSessionStateClient";
 
 const configuration: AppConfiguration = readConfiguration(window);
 const targetElement = getTargetElement(document, configuration);
 
 if (targetElement) {
-  const appSessionStateClient = createAppSessionStateClient();
+  const appSessionStateClient = createAppSessionStateClient(
+    window,
+    configuration
+  );
   appSessionStateClient.start();
 
   const root = createRoot(targetElement);
@@ -42,6 +46,11 @@ function getTargetElement(document: Document, configuration: AppConfiguration) {
     : null;
 }
 
-function createAppSessionStateClient() {
-  return createDummyAppSessionStateClient();
+function createAppSessionStateClient(
+  window: Window,
+  configuration: AppConfiguration
+) {
+  return configuration.useDummies
+    ? createDummyAppSessionStateClient()
+    : new SessionMfeAppSessionStateClient({ window });
 }
