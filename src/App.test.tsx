@@ -1,5 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
+import { AppSessionStateProvider } from "./session/AppSessionStateContext";
+import {
+  AppSessionState,
+  AppSessionStateClient,
+} from "./session/app-session-abstractions";
+import { testUserData } from "./testData";
 
 test("renders Doppler Menu Micro-Frontend", () => {
   const mainHeaderLabel = "main header";
@@ -7,7 +13,23 @@ test("renders Doppler Menu Micro-Frontend", () => {
   const mainNav = "main nav";
   const secondaryNav = "secondary nav";
 
-  render(<App />);
+  const appSessionState: AppSessionState = {
+    status: "authenticated",
+    dopplerAccountName: "dopplerAccountName",
+    userData: testUserData,
+  };
+
+  const dummyAppSessionStateClient: AppSessionStateClient = {
+    getCurrentSessionState: () => appSessionState,
+    onSessionUpdate: () => {},
+    start: () => {},
+  };
+
+  render(
+    <AppSessionStateProvider appSessionStateClient={dummyAppSessionStateClient}>
+      <App />
+    </AppSessionStateProvider>
+  );
 
   expect(screen.getByLabelText(mainHeaderLabel)).toBeInTheDocument();
   expect(screen.getByLabelText(logoLabel)).toBeInTheDocument();

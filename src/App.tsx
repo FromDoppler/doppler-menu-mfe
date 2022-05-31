@@ -1,11 +1,18 @@
 import Header from "./components/Header";
-import { testUserData } from "./testData";
 import { HeaderMessages } from "./components/HeaderMessages";
+import { useAppSessionState } from "./session/AppSessionStateContext";
 
 function App() {
   const { pathname, search } = window.location;
+  const appSessionState = useAppSessionState();
+
+  if (appSessionState.status !== "authenticated") {
+    // TODO: keep the same layout to avoid blinks
+    return <p>NON-AUTHENTICATED</p>;
+  }
+
   const { nav, notifications, emptyNotificationText, user, alert } =
-    testUserData;
+    appSessionState.userData;
 
   return (
     <>
