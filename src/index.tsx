@@ -4,10 +4,15 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
+import { AppConfiguration } from "./AppConfiguration";
 
-const targetElement = document.getElementById(
-  (window as any)["doppler-menu-mfe-configuration"]?.dopplerMenuElementId
-);
+const configuration: AppConfiguration = (window as any)[
+  "doppler-menu-mfe-configuration"
+];
+
+const targetElement =
+  configuration.dopplerMenuElementId &&
+  document.getElementById(configuration.dopplerMenuElementId);
 
 if (targetElement) {
   const root = createRoot(targetElement);
