@@ -55,7 +55,7 @@ export interface Alert {
 export interface UserData {
   nav: NavItem[];
   user: User;
-  alert: Alert;
+  alert?: Alert;
   homeUrl: string;
   urlBase: string;
   features: {

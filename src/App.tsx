@@ -16,7 +16,10 @@ function App() {
 
   return (
     <>
-      <HeaderMessages alert={alert} user={user} />
+      {
+        // TODO: confirm if it is rendered in the right way
+        alert ? <HeaderMessages alert={alert} user={user} /> : null
+      }
       <Header
         currentPath={`${pathname}${search}`}
         nav={nav}
