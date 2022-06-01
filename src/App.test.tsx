@@ -5,7 +5,7 @@ import {
   AppSessionState,
   AppSessionStateClient,
 } from "./session/app-session-abstractions";
-import { testUserData } from "./testData";
+import testUserData from "./testUserData.json";
 
 test("renders Doppler Menu Micro-Frontend", () => {
   const mainHeaderLabel = "main header";
@@ -16,7 +16,7 @@ test("renders Doppler Menu Micro-Frontend", () => {
   const appSessionState: AppSessionState = {
     status: "authenticated",
     dopplerAccountName: "dopplerAccountName",
-    userData: testUserData,
+    userData: testUserData as any,
   };
 
   const dummyAppSessionStateClient: AppSessionStateClient = {
