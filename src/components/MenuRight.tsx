@@ -1,4 +1,4 @@
-import { User } from "../headerData";
+import { User } from "../model";
 import { Notifications } from "./Notifications";
 import { UserMenu } from "./UserMenu";
 

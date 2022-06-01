@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Modal } from "./Modal";
-import { User, Alert } from "../headerData";
+import { User, Alert } from "../model";
 import { UpgradePlanForm } from "./UpgradePlanForm";
 
 interface HeaderMessagesProp {

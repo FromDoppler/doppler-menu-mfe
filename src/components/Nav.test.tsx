@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Nav } from "./Nav";
-import { NavItem } from "../headerData";
+import { NavItem } from "../model";
 
 const mainNav = "main nav";
 const nav: NavItem[] = [

@@ -7,7 +7,7 @@ import {
 import user from "@testing-library/user-event";
 import { UpgradePlanForm } from "./UpgradePlanForm";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
-import { User } from "../headerData";
+import { User } from "../model";
 
 const toggleModal = jest.fn();
 

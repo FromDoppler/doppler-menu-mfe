@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Header from "./Header";
-import { User } from "../headerData";
+import { User } from "../model";
 
 const userMock: User = {
   email: "bseguer@makingsense.com",
