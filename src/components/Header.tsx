@@ -10,14 +10,16 @@ interface HeaderProp {
   notifications: string[];
   user: User;
   emptyNotificationText: string;
+  sticky: boolean;
 }
 
-const Header = ({
+export const Header = ({
   currentPath,
   nav,
   notifications,
   user,
   emptyNotificationText,
+  sticky,
 }: HeaderProp) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
@@ -32,10 +34,11 @@ const Header = ({
 
   return (
     <header
-      className={`header-main sticky ${openMenu ? "header-open" : ""} ${
-        openMenuMobile ? "open" : ""
-      }`}
       aria-label="main header"
+      className={`header-main
+      ${sticky ? "sticky" : ""}
+      ${openMenu ? "header-open" : ""}
+      ${openMenuMobile ? "open" : ""}`}
     >
       <div className="header-wrapper">
         <Logo />
@@ -56,4 +59,14 @@ const Header = ({
   );
 };
 
-export default Header;
+export const HeaderPlaceholder = () => (
+  <header className="header-main sticky" aria-label="header placeholder">
+    <div className="header-wrapper">
+      <nav className="nav-left-main">
+        <div className="menu-main--container">
+          <ul className="menu-main"></ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+);

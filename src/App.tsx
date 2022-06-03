@@ -1,5 +1,6 @@
-import Header from "./components/Header";
+import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
+
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
 function App() {
@@ -7,8 +8,7 @@ function App() {
   const appSessionState = useAppSessionState();
 
   if (appSessionState.status !== "authenticated") {
-    // TODO: keep the same layout to avoid blinks
-    return <p>NON-AUTHENTICATED</p>;
+    return <HeaderPlaceholder />;
   }
 
   const { nav, notifications, emptyNotificationText, user, alert } =
@@ -26,6 +26,7 @@ function App() {
         notifications={notifications}
         emptyNotificationText={emptyNotificationText}
         user={user}
+        sticky={!!alert}
       />
     </>
   );
