@@ -35,10 +35,9 @@ export const Header = ({
   return (
     <header
       aria-label="main header"
-      className={`header-main
-      ${sticky ? "sticky" : ""}
-      ${openMenu ? "header-open" : ""}
-      ${openMenuMobile ? "open" : ""}`}
+      className={`header-main ${sticky ? "sticky" : ""} ${
+        openMenu ? "header-open" : ""
+      } ${openMenuMobile ? "open" : ""}`}
     >
       <div className="header-wrapper">
         <Logo />
@@ -60,13 +59,9 @@ export const Header = ({
 };
 
 export const HeaderPlaceholder = () => (
-  <header className="header-main sticky" aria-label="header placeholder">
+  <header>
     <div className="header-wrapper">
-      <nav className="nav-left-main">
-        <div className="menu-main--container">
-          <ul className="menu-main"></ul>
-        </div>
-      </nav>
+      <Logo />
     </div>
   </header>
 );
