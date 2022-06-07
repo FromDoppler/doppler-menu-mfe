@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Header from "./Header";
+import { Header } from "./Header";
 import { User } from "../model";
 
 const userMock: User = {
@@ -55,6 +55,7 @@ describe(Header.name, () => {
         emptyNotificationText={""}
         notifications={[]}
         user={userMock}
+        sticky={true}
       />
     );
 
