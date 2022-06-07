@@ -19,4 +19,16 @@ export const messages_es = {
   validation_messages: {
     error_required_field: `¡Ouch! El campo está vacío.`,
   },
+  header: {
+    availables: "disponibles",
+    enabled: "HABILITADO",
+    plan_emails: "Emails",
+    plan_prepaid: "Plan Premium por Créditos",
+    plan_suscribers: "Suscriptores",
+    profile: "Perfil",
+    send_mails: "Envío de Emails",
+    send_request: "SOLICITUD ENVIADA",
+    tooltip_last_plan:
+      "Estamos diseñando un Plan a la medida de tus necesidades. ¡Te contactaremos pronto!",
+  },
 };

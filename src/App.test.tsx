@@ -6,6 +6,7 @@ import {
   AppSessionStateClient,
 } from "./session/app-session-abstractions";
 import testUserData from "./testUserData.json";
+import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
 
 test("renders Doppler Menu Micro-Frontend", () => {
   const mainHeaderLabel = "main header";
@@ -27,7 +28,9 @@ test("renders Doppler Menu Micro-Frontend", () => {
 
   render(
     <AppSessionStateProvider appSessionStateClient={dummyAppSessionStateClient}>
-      <App />
+      <MenuIntlProvider>
+        <App />
+      </MenuIntlProvider>
     </AppSessionStateProvider>
   );
 
