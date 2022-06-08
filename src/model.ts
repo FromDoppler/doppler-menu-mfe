@@ -27,6 +27,7 @@ export interface Plan {
   trialExpirationDays: number;
   planFee: number;
   pendingFreeUpgrade: boolean;
+  isMonthlyByEmail?: string;
 }
 
 export interface User {
@@ -38,8 +39,10 @@ export interface User {
   avatar: { text: string; color: string };
   nav: NavItem[];
   sms: { smsEnabled: boolean; remainingCredits: number };
-  isLastPlanRequested: boolean;
   hasCampaignSent: boolean;
+  isLastPlanRequested: boolean;
+  hasClientManager?: boolean;
+  clientManager?: boolean;
 }
 
 export interface Alert {

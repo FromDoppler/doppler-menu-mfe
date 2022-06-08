@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { User } from "../model";
 import { MenuRight } from "./MenuRight";
 import user from "@testing-library/user-event";
+import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 
 const secondaryNav = "secondary nav";
 
@@ -49,12 +50,14 @@ const userData: User = {
 describe("<MenuRight />", () => {
   it("should not break if props are missing", () => {
     render(
-      <MenuRight
-        user={userData}
-        notifications={[]}
-        emptyNotificationText={""}
-        setOpenMenuMobile={jest.fn()}
-      />
+      <MenuIntlProvider>
+        <MenuRight
+          user={userData}
+          notifications={[]}
+          emptyNotificationText={""}
+          setOpenMenuMobile={jest.fn()}
+        />
+      </MenuIntlProvider>
     );
 
     expect(screen.getAllByRole("navigation").length).toEqual(1);
@@ -63,12 +66,14 @@ describe("<MenuRight />", () => {
 
   it("should render MenuRight properly", () => {
     render(
-      <MenuRight
-        user={userData}
-        notifications={[]}
-        emptyNotificationText={""}
-        setOpenMenuMobile={jest.fn()}
-      />
+      <MenuIntlProvider>
+        <MenuRight
+          user={userData}
+          notifications={[]}
+          emptyNotificationText={""}
+          setOpenMenuMobile={jest.fn()}
+        />
+      </MenuIntlProvider>
     );
 
     const links = screen.getAllByRole("link");
@@ -80,12 +85,14 @@ describe("<MenuRight />", () => {
   it("should call toggle menu when open/close icon is clicked", async () => {
     const toggleMenu = jest.fn();
     render(
-      <MenuRight
-        user={userData}
-        notifications={[]}
-        emptyNotificationText={""}
-        setOpenMenuMobile={toggleMenu}
-      />
+      <MenuIntlProvider>
+        <MenuRight
+          user={userData}
+          notifications={[]}
+          emptyNotificationText={""}
+          setOpenMenuMobile={toggleMenu}
+        />
+      </MenuIntlProvider>
     );
 
     const openMenu = screen.getByTestId("open-menu");

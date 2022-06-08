@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Header } from "./Header";
 import { User } from "../model";
+import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 
 const userMock: User = {
   email: "bseguer@makingsense.com",
@@ -49,14 +50,16 @@ describe(Header.name, () => {
     const mainHeaderClass = "header-main";
 
     render(
-      <Header
-        currentPath={"/"}
-        nav={[]}
-        emptyNotificationText={""}
-        notifications={[]}
-        user={userMock}
-        sticky={true}
-      />
+      <MenuIntlProvider>
+        <Header
+          currentPath={"/"}
+          nav={[]}
+          emptyNotificationText={""}
+          notifications={[]}
+          user={userMock}
+          sticky={true}
+        />
+      </MenuIntlProvider>
     );
 
     const headerLabel = screen.getByLabelText(mainHeaderLabel);

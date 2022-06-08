@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { UserMenu } from "./UserMenu";
 import { User } from "../model";
+import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 
 const user: User = {
   email: "test@makingsense.com",
@@ -45,7 +46,11 @@ const user: User = {
 
 describe("<UserMenu />", () => {
   it("renders user menu", () => {
-    render(<UserMenu user={user} />);
+    render(
+      <MenuIntlProvider>
+        <UserMenu user={user} />
+      </MenuIntlProvider>
+    );
 
     expect(screen.getByText(user.fullname)).toBeInTheDocument();
     expect(screen.getByText(user.email)).toBeInTheDocument();
