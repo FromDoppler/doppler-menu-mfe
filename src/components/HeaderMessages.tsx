@@ -12,7 +12,7 @@ const updatePlanPopup = "updatePlanPopup";
 export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
   const { plan } = user;
   const { type, message, button } = alert;
-  const { url, text, action } = button;
+  const { url, text, action } = button || {};
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const toggleModal = (isOpen: boolean) => setModalIsOpen(isOpen);

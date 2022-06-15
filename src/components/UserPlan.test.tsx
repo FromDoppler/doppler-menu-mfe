@@ -157,7 +157,6 @@ describe("<UserPlan />", () => {
       isLastPlanRequested: true,
       plan: {
         ...userData.plan,
-        pendingFreeUpgrade: false,
       },
     };
     const requestSentLabel = "SOLICITUD ENVIADA";

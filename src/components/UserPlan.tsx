@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormattedNumber, useIntl } from "react-intl";
+import { FormattedMessage, FormattedNumber } from "react-intl";
 import { User } from "../model";
 import { Modal } from "./Modal";
 import { Tooltip } from "./Tooltip";
@@ -35,19 +35,6 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     buttonText: smsButtonText,
   } = sms;
 
-  const intl = useIntl();
-  const planPrepaid = intl.formatMessage({ id: "header.plan_prepaid" });
-  const sendRequest = intl.formatMessage({ id: "header.send_request" });
-  const profile = intl.formatMessage({ id: "header.profile" });
-  const sendMails = intl.formatMessage({ id: "header.send_mails" });
-  const enabled = intl.formatMessage({ id: "header.enabled" });
-  const suscribers = intl.formatMessage({ id: "header.plan_suscribers" });
-  const emails = intl.formatMessage({ id: "header.plan_emails" });
-  const availables = intl.formatMessage({ id: "header.availables" });
-  const toolTipLastPlanText = intl.formatMessage({
-    id: "header.tooltip_last_plan",
-  });
-
   const isPlanTypeMonthlyDeliveries = planType === "monthly-deliveries";
   const isPlanTypeSuscribers = planType === "suscribers";
 
@@ -56,17 +43,27 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     setIsModalOpen(true);
   };
 
-  const showTooltip = () => (
-    <Tooltip>
-      <OpenModalButton
-        className="user-plan close-user--menu dp-tooltip-left"
-        openModalHandler={openModalHandler}
-      >
-        {sendRequest}
-        <div className="tooltiptext">{toolTipLastPlanText}</div>
-      </OpenModalButton>
-      <span className="ms-icon icon-info-icon"></span>
-    </Tooltip>
+  const renderModalButton = () => (
+    <OpenModalButton className="user-plan" openModalHandler={openModalHandler}>
+      {buttonText}
+    </OpenModalButton>
+  );
+
+  const renderModalButtonWithTooltip = () => (
+    <div className="dp-request-sent">
+      <Tooltip>
+        <OpenModalButton
+          className="user-plan close-user--menu dp-tooltip-left"
+          openModalHandler={openModalHandler}
+        >
+          <FormattedMessage id="header.send_request" />
+          <div className="tooltiptext">
+            <FormattedMessage id="header.tooltip_last_plan" />
+          </div>
+        </OpenModalButton>
+        <span className="ms-icon icon-info-icon"></span>
+      </Tooltip>
+    </div>
   );
 
   const renderPlanLink = () => {
@@ -81,96 +78,100 @@ export const UserPlan = ({ user }: UserPlanProps) => {
   return (
     <div className="user-plan--container">
       {!hasClientManager && (
-        <UserPlanType>
-          {isSubscribers || isMonthlyByEmail ? (
-            <>
-              <MonthlyPlan>
-                <strong>{planName}</strong> ({maxSubscribers} {itemDescription})
-              </MonthlyPlan>
-              {renderPlanLink()}
-            </>
-          ) : (
-            <>
-              <MonthlyPlan>{planPrepaid}</MonthlyPlan>
-              {renderPlanLink()}
-            </>
-          )}
-
-          {(buttonUrl && pendingFreeUpgrade) || !buttonUrl
-            ? !isLastPlanRequested && (
-                <OpenModalButton
-                  className="user-plan"
-                  openModalHandler={openModalHandler}
-                >
-                  {buttonText}
-                </OpenModalButton>
-              )
-            : isLastPlanRequested && (
-                <div className="dp-request-sent">{showTooltip()}</div>
-              )}
-        </UserPlanType>
+        <>
+          <UserPlanType>
+            {isSubscribers || isMonthlyByEmail ? (
+              <>
+                <MonthlyPlan>
+                  <strong>{planName}</strong> ({maxSubscribers}{" "}
+                  {itemDescription})
+                </MonthlyPlan>
+                {renderPlanLink()}
+              </>
+            ) : (
+              <>
+                <MonthlyPlan>
+                  <FormattedMessage id="header.plan_prepaid" />
+                </MonthlyPlan>
+                {renderPlanLink()}
+              </>
+            )}
+            {!buttonUrl || pendingFreeUpgrade
+              ? !isLastPlanRequested
+                ? renderModalButton()
+                : renderModalButtonWithTooltip()
+              : ""}
+          </UserPlanType>
+          <UserPlanType>
+            {isPlanTypeMonthlyDeliveries || isPlanTypeSuscribers ? (
+              <BuyContainer>
+                <p>
+                  {Number(maxSubscribers) - Number(remainingCredits)}{" "}
+                  {isPlanTypeSuscribers ? (
+                    <FormattedMessage id="header.plan_suscribers" />
+                  ) : (
+                    <FormattedMessage id="header.plan_emails" />
+                  )}{" "}
+                  (<strong>{remainingCredits}</strong>{" "}
+                  <FormattedMessage id="header.availables" />)
+                </p>
+              </BuyContainer>
+            ) : (
+              <BuyContainer>
+                <p>
+                  <strong>{remainingCredits}</strong> {description}
+                </p>
+              </BuyContainer>
+            )}
+            {!!Object.keys(sms).length && smsEnabled && (
+              <BuyContainer>
+                <p>
+                  <strong>
+                    US${" "}
+                    <FormattedNumber
+                      // eslint-disable-next-line react/style-prop-object
+                      style="decimal"
+                      value={smsRemainingCredits}
+                      minimumFractionDigits={2}
+                      maximumFractionDigits={2}
+                    />
+                  </strong>{" "}
+                  {smsDescription}
+                </p>
+                {smsButtonUrl && (
+                  <a className="user-plan" target="_self" href={smsButtonUrl}>
+                    {smsButtonText}
+                  </a>
+                )}
+              </BuyContainer>
+            )}
+          </UserPlanType>
+        </>
       )}
 
       {hasClientManager && (
         <UserPlanType>
           {clientManager?.profileName && (
             <MonthlyPlan>
-              {profile} <strong>{clientManager?.profileName}</strong>
+              <FormattedMessage id="header.profile" />{" "}
+              <strong>{clientManager?.profileName}</strong>
             </MonthlyPlan>
           )}
           {!clientManager?.profileName && (
             <>
-              <MonthlyPlan>{sendMails}</MonthlyPlan>
-              <p className="user-plan-enabled">{enabled}</p>
+              <MonthlyPlan>
+                <FormattedMessage id="header.send_mails" />
+              </MonthlyPlan>
+              <p className="user-plan-enabled">
+                <FormattedMessage id="header.enabled" />
+              </p>
             </>
-          )}
-        </UserPlanType>
-      )}
-
-      {!hasClientManager && (
-        <UserPlanType>
-          {isPlanTypeMonthlyDeliveries || isPlanTypeSuscribers ? (
-            <BuyContainer>
-              <p>
-                {Number(maxSubscribers) - Number(remainingCredits)}{" "}
-                {isPlanTypeSuscribers ? suscribers : emails} (
-                <strong>{remainingCredits}</strong> {availables})
-              </p>
-            </BuyContainer>
-          ) : (
-            <BuyContainer>
-              <p>
-                <strong>{remainingCredits}</strong> {description}
-              </p>
-            </BuyContainer>
-          )}
-          {!!Object.keys(sms).length && smsEnabled && (
-            <BuyContainer>
-              <p>
-                <strong>
-                  US${" "}
-                  <FormattedNumber
-                    // eslint-disable-next-line react/style-prop-object
-                    style="decimal"
-                    value={smsRemainingCredits}
-                    minimumFractionDigits={2}
-                    maximumFractionDigits={2}
-                  />
-                </strong>{" "}
-                {smsDescription}
-              </p>
-              {smsButtonUrl && (
-                <a className="user-plan" target="_self" href={smsButtonUrl}>
-                  {smsButtonText}
-                </a>
-              )}
-            </BuyContainer>
           )}
         </UserPlanType>
       )}
       <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
         <UpgradePlanForm
-          isSubscriber={plan.isSubscribers}
+          isSubscriber={isSubscribers}
           handleClose={() => setIsModalOpen(false)}
           user={user}
         />
