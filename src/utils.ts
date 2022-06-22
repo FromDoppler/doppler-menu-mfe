@@ -1,34 +1,37 @@
-const stringToBoolean = (value: string) => {
+import { UserData } from "./model";
+
+const stringToBoolean = (value: string): boolean => {
   const stringBooleans = ["true", "false"];
-  if (value && stringBooleans.includes(value)) {
-    return value === "true" ? true : false;
-  }
-  return value;
+  if (!stringBooleans.includes(value))
+    throw new Error(`String value expected to be "true" or "false"`);
+  return value === "true" ? true : false;
 };
 
-const stringToNumber = (value: string) => {
+const stringToNumber = (value: string): number => {
   const number = Number(value);
-  if (isNaN(number)) return value;
+  if (isNaN(number)) throw new Error(`Can't convert String value to Number`);
   return number;
 };
 
-export const parseUserData = (data: any) => {
+export const parseUserData = (data: any): UserData => {
+  const userData: UserData = { ...data };
+
   // Booleans
   const isSubscribers = data?.user?.plan?.isSubscribers;
   if (isSubscribers && typeof isSubscribers === "string") {
-    data.user.plan.isSubscribers = stringToBoolean(isSubscribers);
+    userData.user.plan.isSubscribers = stringToBoolean(isSubscribers);
   }
 
   // Numbers
   const maxSubscribers = data?.user?.plan?.maxSubscribers;
   if (maxSubscribers && typeof maxSubscribers === "string") {
-    data.user.plan.maxSubscribers = stringToNumber(maxSubscribers);
+    userData.user.plan.maxSubscribers = stringToNumber(maxSubscribers);
   }
 
   const remainingCredits = data?.user?.plan?.remainingCredits;
   if (remainingCredits && typeof remainingCredits === "string") {
-    data.user.plan.remainingCredits = stringToNumber(remainingCredits);
+    userData.user.plan.remainingCredits = stringToNumber(remainingCredits);
   }
 
-  return data;
+  return userData;
 };
