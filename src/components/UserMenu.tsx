@@ -9,7 +9,7 @@ interface UserMenuProps {
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
-  const { fullname, email, avatar, plan, nav } = user;
+  const { fullname, email, avatar, nav } = user;
   const { color: backgroundColor, text: avatarText } = avatar;
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
@@ -38,7 +38,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             <span className="email">{email}</span>
           </p>
         </header>
-        <UserPlan plan={plan} />
+        <UserPlan user={user} />
         <ul className="options-user">
           {nav.map((item, index) => (
             <li key={index}>

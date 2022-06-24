@@ -38,11 +38,17 @@ export interface User {
   lang: "en" | "es";
   avatar: { text: string; color: string };
   nav: NavItem[];
-  sms: { smsEnabled: boolean; remainingCredits: number };
+  sms: {
+    smsEnabled: boolean;
+    remainingCredits: number;
+    description?: string;
+    buttonText?: string;
+    buttonUrl?: string;
+  };
   hasCampaignSent: boolean;
   isLastPlanRequested: boolean;
   hasClientManager?: boolean;
-  clientManager?: boolean;
+  clientManager?: { profileName: string };
 }
 
 export interface Alert {
