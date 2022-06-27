@@ -1,5 +1,21 @@
 import { UserData } from "./model";
 
+const deepCopy = (source: any): UserData => {
+  return Array.isArray(source)
+    ? source.map((item) => deepCopy(item))
+    : source instanceof Date
+    ? new Date(source.getTime())
+    : typeof source === "object"
+    ? Object.getOwnPropertyNames(source).reduce(
+        (object, prop) => {
+          object[prop] = deepCopy((source as { [key: string]: any })[prop]);
+          return object;
+        },
+        { ...source }
+      )
+    : source;
+};
+
 const stringToBoolean = (value: string): boolean => {
   const stringBooleans = ["true", "false"];
   if (!stringBooleans.includes(value))
@@ -14,7 +30,7 @@ const stringToNumber = (value: string): number => {
 };
 
 export const parseUserData = (data: any): UserData => {
-  const userData: UserData = { ...data };
+  const userData: UserData = deepCopy(data);
 
   // Booleans
   const isSubscribers = data?.user?.plan?.isSubscribers;
