@@ -11,7 +11,7 @@ export interface ClientTypePlans {
 }
 
 export const getUpgradePlanData = (
-  isSubscriber: string
+  isSubscriber: boolean
 ): Promise<ClientTypePlans[]> => {
   const response = upgradePlanData.data.ClientTypePlans.map(
     ({

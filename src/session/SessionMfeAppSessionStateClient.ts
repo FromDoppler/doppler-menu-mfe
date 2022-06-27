@@ -1,3 +1,4 @@
+import { parseUserData } from "../utils";
 import {
   AppSessionState,
   AppSessionStateClient,
@@ -19,8 +20,7 @@ const mapDopplerSessionState: (
     : {
         status: "authenticated",
         dopplerAccountName: dopplerSessionState.dopplerAccountName,
-        // TODO: parse dopplerSessionState.rawDopplerUserData
-        userData: dopplerSessionState.rawDopplerUserData,
+        userData: parseUserData(dopplerSessionState.rawDopplerUserData),
       };
 
 export class SessionMfeAppSessionStateClient implements AppSessionStateClient {

@@ -21,7 +21,7 @@ import {
 } from "../mocks/servicesMock";
 
 interface UpgradePlanFormProp {
-  isSubscriber: string;
+  isSubscriber: boolean;
   handleClose: () => void;
   user: User;
 }
@@ -47,25 +47,23 @@ const getAvailablePlans = (
   userPlan: Plan,
   availablePlans: ClientTypePlans[]
 ) => {
-  const maxSubscribers = parseInt(userPlan.maxSubscribers);
   return availablePlans.filter(({ SubscribersQty, EmailQty }) =>
     userPlan.isSubscribers
-      ? SubscribersQty > maxSubscribers
-      : EmailQty && EmailQty > maxSubscribers
+      ? SubscribersQty > userPlan.maxSubscribers
+      : EmailQty && EmailQty > userPlan.maxSubscribers
   );
 };
 
 const getAmmountSubscribers = (
   availablePlans: ClientTypePlans[],
   selectedPlanId: number,
-  isSubscriber: string
+  isSubscriber: boolean
 ) => {
-  const amount =
-    isSubscriber === "true"
-      ? availablePlans.find((plan) => plan.IdUserTypePlan === selectedPlanId)
-          ?.SubscribersQty
-      : availablePlans.find((plan) => plan.IdUserTypePlan === selectedPlanId)
-          ?.EmailQty;
+  const amount = isSubscriber
+    ? availablePlans.find((plan) => plan.IdUserTypePlan === selectedPlanId)
+        ?.SubscribersQty
+    : availablePlans.find((plan) => plan.IdUserTypePlan === selectedPlanId)
+        ?.EmailQty;
 
   return amount || 0;
 };

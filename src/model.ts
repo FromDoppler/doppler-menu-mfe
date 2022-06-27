@@ -13,9 +13,9 @@ export interface Plan {
   description: string;
   itemDescription: string;
   planName: string;
-  isSubscribers: string;
-  maxSubscribers: string;
-  remainingCredits: string;
+  isSubscribers: boolean;
+  maxSubscribers: number;
+  remainingCredits: number;
   buttonText: string;
   buttonUrl: string;
   planDiscount: number;
