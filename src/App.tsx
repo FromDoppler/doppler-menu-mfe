@@ -4,7 +4,7 @@ import { HeaderMessages } from "./components/HeaderMessages";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
 function App() {
-  const { pathname, search } = window.location;
+  const { href, origin } = window.location;
   const appSessionState = useAppSessionState();
 
   if (appSessionState.status !== "authenticated") {
@@ -14,6 +14,28 @@ function App() {
   const { nav, notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
 
+  // Temporal change: For testing purpose. PR-107
+  const replaceOriginFromUrl = (urlString: string, origin: string): string => {
+    const url = new URL(urlString);
+    return url.href.replace(url.origin, origin);
+  };
+
+  const modifiedNav = nav.map((navElement) => {
+    return {
+      ...navElement,
+      url: replaceOriginFromUrl(navElement.url, origin),
+      ...(navElement.subNav && {
+        subNav: navElement.subNav.map((subNavElement) => {
+          return {
+            ...subNavElement,
+            url: replaceOriginFromUrl(subNavElement.url, origin),
+          };
+        }),
+      }),
+    };
+  });
+  // End Temporal Change
+
   return (
     <>
       {
@@ -21,8 +43,8 @@ function App() {
         alert ? <HeaderMessages alert={alert} user={user} /> : null
       }
       <Header
-        currentPath={`${pathname}${search}`}
-        nav={nav}
+        currentPath={href}
+        nav={modifiedNav}
         notifications={notifications}
         emptyNotificationText={emptyNotificationText}
         user={user}
