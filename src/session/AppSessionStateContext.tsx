@@ -35,6 +35,7 @@ export function AppSessionStateProvider({
         isTheSameSession(previousState, newState) ? previousState : newState
       );
     };
+    appSessionStateClient.onSessionUpdate();
     return () => {
       appSessionStateClient.onSessionUpdate = () => {};
     };
