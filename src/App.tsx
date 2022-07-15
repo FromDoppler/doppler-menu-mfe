@@ -1,7 +1,9 @@
 import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
-
 import { useAppSessionState } from "./session/AppSessionStateContext";
+
+const webapp = "webapp";
+const testmenu = "testmenu";
 
 function App() {
   const { href, origin } = window.location;
@@ -14,27 +16,28 @@ function App() {
   const { nav, notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
 
-  // Temporal change: For testing purpose. PR-107
-  const replaceOriginFromUrl = (urlString: string, origin: string): string => {
-    const url = new URL(urlString);
-    return url.href.replace(url.origin, origin);
+  // For testing in testmenu enviroment
+  const replaceUrl = (url: string): string => {
+    return url.includes(webapp) ? url.replace(webapp, testmenu) : url;
   };
 
-  const modifiedNav = nav.map((navElement) => {
-    return {
-      ...navElement,
-      url: replaceOriginFromUrl(navElement.url, origin),
-      ...(navElement.subNav && {
-        subNav: navElement.subNav.map((subNavElement) => {
-          return {
-            ...subNavElement,
-            url: replaceOriginFromUrl(subNavElement.url, origin),
-          };
-        }),
-      }),
-    };
-  });
-  // End Temporal Change
+  const navigation = origin.includes(testmenu)
+    ? nav.map((navElement) => {
+        return {
+          ...navElement,
+          url: replaceUrl(navElement.url),
+          ...(navElement.subNav && {
+            subNav: navElement.subNav.map((subNavElement) => {
+              return {
+                ...subNavElement,
+                url: replaceUrl(subNavElement.url),
+              };
+            }),
+          }),
+        };
+      })
+    : nav;
+  // End
 
   return (
     <>
@@ -44,7 +47,7 @@ function App() {
       }
       <Header
         currentPath={href}
-        nav={modifiedNav}
+        nav={navigation}
         notifications={notifications}
         emptyNotificationText={emptyNotificationText}
         user={user}
