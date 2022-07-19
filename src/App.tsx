@@ -2,8 +2,12 @@ import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
-const webapp = "webapp";
 const testmenu = "testmenu";
+const webAppSubDomainRegex =
+  /(?<=http[s]*:\/\/)webapp(?=qa|int)|app(?=\.)(?=[^/]*\.)/gi;
+
+const testMenuSubDomainRegex =
+  /(?<=http[s]*:\/\/)((testmenu(qa|int)*))(?=\.)(?=[^/]*\.)/gi;
 
 function App() {
   const { href, origin } = window.location;
@@ -18,10 +22,13 @@ function App() {
 
   // For testing in testmenu enviroment
   const replaceUrl = (url: string): string => {
-    return url.includes(webapp) ? url.replace(webapp, testmenu) : url;
+    const isWebAppUrl = webAppSubDomainRegex.test(url);
+    return isWebAppUrl ? url.replace(webAppSubDomainRegex, testmenu) : url;
   };
 
-  const navigation = origin.includes(testmenu)
+  const isTestMenuEnv = testMenuSubDomainRegex.test(origin);
+
+  const navigation = isTestMenuEnv
     ? nav.map((navElement) => {
         return {
           ...navElement,
