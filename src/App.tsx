@@ -1,7 +1,13 @@
 import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
-
 import { useAppSessionState } from "./session/AppSessionStateContext";
+
+const testmenu = "testmenu";
+const webAppSubDomainRegex =
+  /(?<=http[s]*:\/\/)webapp(?=qa|int)|app(?=\.)(?=[^/]*\.)/gi;
+
+const testMenuSubDomainRegex =
+  /(?<=http[s]*:\/\/)((testmenu(qa|int)*))(?=\.)(?=[^/]*\.)/gi;
 
 function App() {
   const { href, origin } = window.location;
@@ -14,27 +20,31 @@ function App() {
   const { nav, notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
 
-  // Temporal change: For testing purpose. PR-107
-  const replaceOriginFromUrl = (urlString: string, origin: string): string => {
-    const url = new URL(urlString);
-    return url.href.replace(url.origin, origin);
+  // For testing in testmenu enviroment
+  const replaceUrl = (url: string): string => {
+    const isWebAppUrl = webAppSubDomainRegex.test(url);
+    return isWebAppUrl ? url.replace(webAppSubDomainRegex, testmenu) : url;
   };
 
-  const modifiedNav = nav.map((navElement) => {
-    return {
-      ...navElement,
-      url: replaceOriginFromUrl(navElement.url, origin),
-      ...(navElement.subNav && {
-        subNav: navElement.subNav.map((subNavElement) => {
-          return {
-            ...subNavElement,
-            url: replaceOriginFromUrl(subNavElement.url, origin),
-          };
-        }),
-      }),
-    };
-  });
-  // End Temporal Change
+  const isTestMenuEnv = testMenuSubDomainRegex.test(origin);
+
+  const navigation = isTestMenuEnv
+    ? nav.map((navElement) => {
+        return {
+          ...navElement,
+          url: replaceUrl(navElement.url),
+          ...(navElement.subNav && {
+            subNav: navElement.subNav.map((subNavElement) => {
+              return {
+                ...subNavElement,
+                url: replaceUrl(subNavElement.url),
+              };
+            }),
+          }),
+        };
+      })
+    : nav;
+  // End
 
   return (
     <>
@@ -44,7 +54,7 @@ function App() {
       }
       <Header
         currentPath={href}
-        nav={modifiedNav}
+        nav={navigation}
         notifications={notifications}
         emptyNotificationText={emptyNotificationText}
         user={user}
