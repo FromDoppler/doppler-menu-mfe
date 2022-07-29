@@ -1,8 +1,8 @@
 import { UserData } from "../model";
 
 export type AppSessionState =
-  | { readonly status: "unknown" }
-  | { readonly status: "non-authenticated" }
+  | { readonly status: "unknown"; readonly userData?: UserData }
+  | { readonly status: "non-authenticated"; readonly userData?: UserData }
   | {
       readonly status: "authenticated";
       readonly dopplerAccountName: string;
