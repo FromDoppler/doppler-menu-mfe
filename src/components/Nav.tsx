@@ -18,7 +18,9 @@ interface NavItemProp {
 interface SubNavProp {
   currentPath: string;
   isNavItemActive: boolean;
+  isSubNavItemActive: boolean;
   item: INavItem;
+  openMenuHeader: () => void;
   setNavItemActive: (value: boolean) => void;
 }
 
@@ -68,9 +70,14 @@ const NavItem = ({
     currentPath === item.url
   );
 
+  const isSubNavItemActive = !!item.subNav?.some(({ url }) => {
+    return url === currentPath;
+  });
+
   useEffect(() => {
-    if (isNavItemActive && hasSubmenuItems) openMenuHeader();
-  }, [hasSubmenuItems, isNavItemActive, openMenuHeader]);
+    const isActive = currentPath === item.url || isSubNavItemActive;
+    setNavItemActive(isActive);
+  }, [currentPath, item.url, isSubNavItemActive]);
 
   return (
     <li
@@ -84,7 +91,9 @@ const NavItem = ({
       </a>
       {hasSubmenuItems && (
         <SubNav
+          openMenuHeader={openMenuHeader}
           isNavItemActive={isNavItemActive}
+          isSubNavItemActive={isSubNavItemActive}
           currentPath={currentPath}
           item={item}
           setNavItemActive={setNavItemActive}
@@ -97,9 +106,17 @@ const NavItem = ({
 const SubNav = ({
   currentPath,
   isNavItemActive,
+  isSubNavItemActive,
   item,
   setNavItemActive,
+  openMenuHeader,
 }: SubNavProp) => {
+  useEffect(() => {
+    if (isNavItemActive && isSubNavItemActive) {
+      openMenuHeader();
+    }
+  }, [isNavItemActive, openMenuHeader, isSubNavItemActive]);
+
   return (
     <ul className={`sub-menu ${isNavItemActive ? "open" : ""}`}>
       {item.subNav?.map(({ title, url }) => (
