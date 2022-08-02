@@ -5,7 +5,7 @@ import { useAppSessionState } from "./session/AppSessionStateContext";
 const webappDomainRegex =
   /^https?:\/\/(?:webapp(?:qa|int)\.fromdoppler\.net|app\.fromdoppler\.com)(?=\/|$)/;
 const applyUrlPatchInTheseDomainsRegex =
-  /^https?:\/\/(?:testmenu(?:qa|int)\.fromdoppler\.net|testmenu\.fromdoppler\.com)(?=\/|$)/;
+  /^https?:\/\/(?:testmenu(?:qa|int)\.fromdoppler\.net|testmenu\.fromdoppler\.com|localhost:3000)(?=\/|$)/;
 
 function App() {
   const { href, origin } = window.location;
