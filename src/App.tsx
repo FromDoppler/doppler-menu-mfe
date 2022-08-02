@@ -1,11 +1,33 @@
 import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
+import { NavItem } from "./model";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
 const webappDomainRegex =
   /^https?:\/\/(?:webapp(?:qa|int)\.fromdoppler\.net|app\.fromdoppler\.com)(?=\/|$)/;
 const applyUrlPatchInTheseDomainsRegex =
   /^https?:\/\/(?:testmenu(?:qa|int)\.fromdoppler\.net|testmenu\.fromdoppler\.com|localhost:3000)(?=\/|$)/;
+
+function patchWebAppUrlsIfNeeded(origin: string, nav: NavItem[]): NavItem[] {
+  if (!applyUrlPatchInTheseDomainsRegex.test(origin)) {
+    return nav;
+  }
+
+  return nav.map((navElement) => {
+    return {
+      ...navElement,
+      url: navElement.url?.replace(webappDomainRegex, origin),
+      ...(navElement.subNav && {
+        subNav: navElement.subNav.map((subNavElement) => {
+          return {
+            ...subNavElement,
+            url: subNavElement.url?.replace(webappDomainRegex, origin),
+          };
+        }),
+      }),
+    };
+  });
+}
 
 function App() {
   const { href, origin } = window.location;
@@ -18,26 +40,7 @@ function App() {
   const { nav, notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
 
-  // For testing in testmenu enviroment
-  const shouldPatchWebAppUrls = applyUrlPatchInTheseDomainsRegex.test(origin);
-
-  const navigation = shouldPatchWebAppUrls
-    ? nav.map((navElement) => {
-        return {
-          ...navElement,
-          url: navElement.url?.replace(webappDomainRegex, origin),
-          ...(navElement.subNav && {
-            subNav: navElement.subNav.map((subNavElement) => {
-              return {
-                ...subNavElement,
-                url: subNavElement.url?.replace(webappDomainRegex, origin),
-              };
-            }),
-          }),
-        };
-      })
-    : nav;
-  // End
+  const navigation = patchWebAppUrlsIfNeeded(origin, nav);
 
   return (
     <>
