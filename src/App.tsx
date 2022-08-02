@@ -2,12 +2,10 @@ import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
-const testmenu = "testmenu";
-const webAppSubDomainRegex =
-  /(?<=http[s]*:\/\/)webapp(?=qa|int)|app(?=\.)(?=[^/]*\.)/gi;
-
+const webappDomainRegex =
+  /^https?:\/\/(?:webapp(?:qa|int)\.fromdoppler\.net|app\.fromdoppler\.com)(?=\/|$)/;
 const applyUrlPatchInTheseDomainsRegex =
-  /(?<=http[s]*:\/\/)((testmenu(qa|int)*))(?=\.)(?=[^/]*\.)/gi;
+  /^https?:\/\/(?:testmenu(?:qa|int)\.fromdoppler\.net|testmenu\.fromdoppler\.com)(?=\/|$)/;
 
 function App() {
   const { href, origin } = window.location;
@@ -22,8 +20,8 @@ function App() {
 
   // For testing in testmenu enviroment
   const patchWebAppUrl = (url: string): string => {
-    const isWebAppUrl = webAppSubDomainRegex.test(url);
-    return isWebAppUrl ? url.replace(webAppSubDomainRegex, testmenu) : url;
+    const isWebAppUrl = webappDomainRegex.test(url);
+    return isWebAppUrl ? url.replace(webappDomainRegex, origin) : url;
   };
 
   const shouldPatchWebAppUrls = applyUrlPatchInTheseDomainsRegex.test(origin);
