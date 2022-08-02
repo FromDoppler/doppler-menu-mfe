@@ -6,7 +6,7 @@ const testmenu = "testmenu";
 const webAppSubDomainRegex =
   /(?<=http[s]*:\/\/)webapp(?=qa|int)|app(?=\.)(?=[^/]*\.)/gi;
 
-const testMenuSubDomainRegex =
+const applyUrlPatchInTheseDomainsRegex =
   /(?<=http[s]*:\/\/)((testmenu(qa|int)*))(?=\.)(?=[^/]*\.)/gi;
 
 function App() {
@@ -21,23 +21,23 @@ function App() {
     appSessionState.userData;
 
   // For testing in testmenu enviroment
-  const replaceUrl = (url: string): string => {
+  const patchWebAppUrl = (url: string): string => {
     const isWebAppUrl = webAppSubDomainRegex.test(url);
     return isWebAppUrl ? url.replace(webAppSubDomainRegex, testmenu) : url;
   };
 
-  const isTestMenuEnv = testMenuSubDomainRegex.test(origin);
+  const shouldPatchWebAppUrls = applyUrlPatchInTheseDomainsRegex.test(origin);
 
-  const navigation = isTestMenuEnv
+  const navigation = shouldPatchWebAppUrls
     ? nav.map((navElement) => {
         return {
           ...navElement,
-          url: replaceUrl(navElement.url),
+          url: patchWebAppUrl(navElement.url),
           ...(navElement.subNav && {
             subNav: navElement.subNav.map((subNavElement) => {
               return {
                 ...subNavElement,
-                url: replaceUrl(subNavElement.url),
+                url: patchWebAppUrl(subNavElement.url),
               };
             }),
           }),
