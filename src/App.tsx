@@ -19,23 +19,18 @@ function App() {
     appSessionState.userData;
 
   // For testing in testmenu enviroment
-  const patchWebAppUrl = (url: string): string => {
-    const isWebAppUrl = webappDomainRegex.test(url);
-    return isWebAppUrl ? url.replace(webappDomainRegex, origin) : url;
-  };
-
   const shouldPatchWebAppUrls = applyUrlPatchInTheseDomainsRegex.test(origin);
 
   const navigation = shouldPatchWebAppUrls
     ? nav.map((navElement) => {
         return {
           ...navElement,
-          url: patchWebAppUrl(navElement.url),
+          url: navElement.url?.replace(webappDomainRegex, origin),
           ...(navElement.subNav && {
             subNav: navElement.subNav.map((subNavElement) => {
               return {
                 ...subNavElement,
-                url: patchWebAppUrl(subNavElement.url),
+                url: subNavElement.url?.replace(webappDomainRegex, origin),
               };
             }),
           }),
