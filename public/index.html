@@ -55,6 +55,28 @@
       <div>
         <header id="root-header"></header>
         <div id="root"></div>
+
+        <div class="dp-container">
+          <br />
+          <h2>Buttons to simulate SPA navigation</h2>
+          <button
+            type="button"
+            class="dp-button button-medium primary-green button--round m-r-24"
+            onclick="window.history.pushState({}, '', '/dashboard')"
+          >
+            Dashboard
+          </button>
+          <button
+            type="button"
+            class="dp-button button-medium primary-green button--round"
+            onclick="window.history.pushState({}, '', '/reports')"
+          >
+            Reports
+          </button>
+          <br />
+          <br />
+        </div>
+
         <footer id="root-footer"></footer>
       </div>
     </div>
