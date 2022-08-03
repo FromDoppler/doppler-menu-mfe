@@ -20,3 +20,17 @@ export function patchBrowserBehaviorToInterceptLocationUpdates(
 
   global.addEventListener("popstate", dispatchLocationUpdatedEvent);
 }
+
+export function addLocationUpdatedEventListener(
+  listener: () => void,
+  global: Window = window
+) {
+  global.addEventListener(DOPPLER_MENU_LOCATION_UPDATED, listener);
+}
+
+export function removeLocationUpdatedEventListener(
+  listener: () => void,
+  global: Window = window
+) {
+  global.removeEventListener(DOPPLER_MENU_LOCATION_UPDATED, listener);
+}
