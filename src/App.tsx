@@ -1,5 +1,6 @@
 import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
+import { useLocationHref } from "./hooks/useLocationHref";
 import { NavItem } from "./model";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
@@ -30,7 +31,9 @@ function patchWebAppUrlsIfNeeded(origin: string, nav: NavItem[]): NavItem[] {
 }
 
 function App() {
-  const { href, origin } = window.location;
+  const { origin } = window.location;
+  const href = useLocationHref(window);
+
   const appSessionState = useAppSessionState();
 
   if (appSessionState.status !== "authenticated") {

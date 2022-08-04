@@ -7,6 +7,9 @@ import { AppSessionStateProvider } from "./session/AppSessionStateContext";
 import { AppConfiguration } from "./AppConfiguration";
 import { createDummyAppSessionStateClient } from "./session/dummyAppSessionStateClient";
 import { SessionMfeAppSessionStateClient } from "./session/SessionMfeAppSessionStateClient";
+import { patchBrowserBehaviorToInterceptLocationUpdates } from "./history/historyUtils";
+
+patchBrowserBehaviorToInterceptLocationUpdates(window);
 
 const configuration: AppConfiguration = readConfiguration(window);
 const targetElement = getTargetElement(document, configuration);
