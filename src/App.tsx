@@ -1,13 +1,33 @@
 import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
+import { NavItem } from "./model";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
-const testmenu = "testmenu";
-const webAppSubDomainRegex =
-  /(?<=http[s]*:\/\/)webapp(?=qa|int)|app(?=\.)(?=[^/]*\.)/gi;
+const webappDomainRegex =
+  /^https?:\/\/(?:webapp(?:qa|int)\.fromdoppler\.net|app\.fromdoppler\.com)(?=\/|$)/;
+const applyUrlPatchInTheseDomainsRegex =
+  /^https?:\/\/(?:testmenu(?:qa|int)\.fromdoppler\.net|testmenu\.fromdoppler\.com|localhost:3000)(?=\/|$)/;
 
-const testMenuSubDomainRegex =
-  /(?<=http[s]*:\/\/)((testmenu(qa|int)*))(?=\.)(?=[^/]*\.)/gi;
+function patchWebAppUrlsIfNeeded(origin: string, nav: NavItem[]): NavItem[] {
+  if (!applyUrlPatchInTheseDomainsRegex.test(origin)) {
+    return nav;
+  }
+
+  return nav.map((navElement) => {
+    return {
+      ...navElement,
+      url: navElement.url?.replace(webappDomainRegex, origin),
+      ...(navElement.subNav && {
+        subNav: navElement.subNav.map((subNavElement) => {
+          return {
+            ...subNavElement,
+            url: subNavElement.url?.replace(webappDomainRegex, origin),
+          };
+        }),
+      }),
+    };
+  });
+}
 
 function App() {
   const { href, origin } = window.location;
@@ -20,31 +40,7 @@ function App() {
   const { nav, notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
 
-  // For testing in testmenu enviroment
-  const replaceUrl = (url: string): string => {
-    const isWebAppUrl = webAppSubDomainRegex.test(url);
-    return isWebAppUrl ? url.replace(webAppSubDomainRegex, testmenu) : url;
-  };
-
-  const isTestMenuEnv = testMenuSubDomainRegex.test(origin);
-
-  const navigation = isTestMenuEnv
-    ? nav.map((navElement) => {
-        return {
-          ...navElement,
-          url: replaceUrl(navElement.url),
-          ...(navElement.subNav && {
-            subNav: navElement.subNav.map((subNavElement) => {
-              return {
-                ...subNavElement,
-                url: replaceUrl(subNavElement.url),
-              };
-            }),
-          }),
-        };
-      })
-    : nav;
-  // End
+  const navigation = patchWebAppUrlsIfNeeded(origin, nav);
 
   return (
     <>
