@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { Nav } from "./Nav";
 import { MenuRight } from "./MenuRight";
@@ -31,6 +31,10 @@ export const Header = ({
   const closeMenuHeader = () => {
     setOpenMenu(false);
   };
+
+  useEffect(() => {
+    setOpenMenu(false);
+  }, [currentPath]);
 
   return (
     <header
