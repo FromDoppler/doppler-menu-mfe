@@ -2,7 +2,7 @@ export const DOPPLER_SESSION_STATE_UPDATE_EVENT_TYPE =
   "doppler-session-state-update";
 
 export type DopplerSessionState =
-  | { status: "unknown" }
+  | undefined
   | { status: "non-authenticated" }
   | {
       status: "authenticated";
@@ -14,6 +14,6 @@ export type DopplerSessionState =
 
 declare global {
   interface Window {
-    dopplerSessionState?: DopplerSessionState;
+    dopplerSessionState: DopplerSessionState;
   }
 }

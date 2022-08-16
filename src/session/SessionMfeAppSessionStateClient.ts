@@ -9,7 +9,7 @@ import {
 } from "./doppler-session-mfe-conventions";
 
 const mapDopplerSessionState: (
-  dopplerSessionState?: DopplerSessionState
+  dopplerSessionState: DopplerSessionState
 ) => AppSessionState = (dopplerSessionState) =>
   !dopplerSessionState
     ? {
