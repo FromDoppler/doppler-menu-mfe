@@ -15,6 +15,28 @@ const configuration: AppConfiguration = readConfiguration(window);
 const targetElement = getTargetElement(document, configuration);
 
 if (targetElement) {
+  initialize(window, configuration, targetElement);
+} else {
+  // In some scenarios, the target element is not available yet, so we need to wait for it.
+  // For example, now it is happening in resports2
+  document.addEventListener("DOMContentLoaded", () => {
+    const targetElement = getTargetElement(document, configuration);
+    if (targetElement) {
+      initialize(window, configuration, targetElement);
+    }
+  });
+}
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+function initialize(
+  window: Window,
+  configuration: AppConfiguration,
+  targetElement: HTMLElement
+) {
   const appSessionStateClient = createAppSessionStateClient(
     window,
     configuration
@@ -32,11 +54,6 @@ if (targetElement) {
     </StrictMode>
   );
 }
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
 
 function readConfiguration(window: Window): AppConfiguration {
   return (window as any)["doppler-menu-mfe-configuration"] ?? {};
