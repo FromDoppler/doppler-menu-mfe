@@ -1,5 +1,6 @@
 import { NavItem as INavItem } from "../model";
 import { useEffect, useState } from "react";
+import { IsActiveUrl } from "../utils";
 
 interface NavProp {
   currentPath: string;
@@ -67,15 +68,15 @@ const NavItem = ({
   const { title, url, subNav = [] } = item;
   const hasSubmenuItems = !!subNav.length;
   const [isNavItemActive, setNavItemActive] = useState(
-    currentPath === item.url
+    IsActiveUrl(currentPath, item.url)
   );
 
   const isSubNavItemActive = !!item.subNav?.some(({ url }) => {
-    return url === currentPath;
+    return IsActiveUrl(currentPath, url);
   });
 
   useEffect(() => {
-    const isActive = currentPath === item.url || isSubNavItemActive;
+    const isActive = IsActiveUrl(currentPath, item.url) || isSubNavItemActive;
     setNavItemActive(isActive);
   }, [currentPath, item.url, isSubNavItemActive]);
 
@@ -138,7 +139,7 @@ const SubNavItem = ({
   currentPath,
   setNavItemActive,
 }: SubNavItemProp) => {
-  const isActive = url === currentPath;
+  const isActive = IsActiveUrl(currentPath, url);
 
   useEffect(() => {
     if (isActive) setNavItemActive(true);

@@ -1,5 +1,16 @@
 import { UserData } from "./model";
 
+const sanitizeUrlToCompare = (url: string): string =>
+  url
+    .replace(/^https?:\/\//, "//")
+    .replace(/\?.*$/, "")
+    .replace(/#.*$/, "")
+    .replace(/\/+$/, "")
+    .toLowerCase();
+
+export const IsActiveUrl = (currentUrl: string, itemUrl: string): boolean =>
+  sanitizeUrlToCompare(currentUrl) === sanitizeUrlToCompare(itemUrl);
+
 const deepCopy = (source: any): UserData => {
   return Array.isArray(source)
     ? source.map((item) => deepCopy(item))
