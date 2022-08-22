@@ -29,9 +29,79 @@ describe(IsActiveUrl.name, () => {
       itemUrl:
         "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
     },
-  ])("returns true when urls are equal", ({ currentUrl, itemUrl }) => {
-    expect(IsActiveUrl(currentUrl, itemUrl)).toBe(true);
-  });
+    {
+      currentUrl:
+        "https://reports2.fromdoppler.com/Dashboard.aspx?idCampaign=18315986",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl:
+        "https://reports2.fromdoppler.com/Dashboard.aspx?idCampaign=18315986",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/Dashboard.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/ViralActivity.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/OpensAndClicks.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/GeolocationByCountry.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/LinkTracking.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/DeliveryRate.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/Unsubscribe.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/ROI.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/UserMailAgents.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/SocialNetworks.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+    {
+      currentUrl: "https://reports2.fromdoppler.com/LinkTagging.aspx",
+      itemUrl:
+        "https://app2.fromdoppler.com/Campaigns/Reports/?_gl=1*1kw4fce*_ga",
+    },
+  ])(
+    "returns true when urls are equal $currentUrl $itemUrl",
+    ({ currentUrl, itemUrl }) => {
+      expect(IsActiveUrl(currentUrl, itemUrl)).toBe(true);
+    }
+  );
 
   it.each([
     {

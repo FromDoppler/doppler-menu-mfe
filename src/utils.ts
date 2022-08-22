@@ -17,6 +17,16 @@ const activeUrlOverridings = [
     currentUrlRegex: /\/SentCampaigns.aspx(?:\?|$)/,
     itemUrlRegex: /\/Campaigns\/Reports\/?(?:\?(?!redirect=subHistory)|$)/,
   },
+  {
+    currentUrlRegex:
+      /\/(?:Dashboard|SocialNetworks|UserMailAgents|LinkTagging|ViralActivity|OpensAndClicks)\.aspx(?:\?|$)/,
+    itemUrlRegex: /\/Campaigns\/Reports\/?(?:\?(?!redirect=subHistory)|$)/,
+  },
+  {
+    currentUrlRegex:
+      /\/(?:GeolocationByCountry|LinkTracking|DeliveryRate|Unsubscribe|ROI)\.aspx(?:\?|$)/,
+    itemUrlRegex: /\/Campaigns\/Reports\/?(?:\?(?!redirect=subHistory)|$)/,
+  },
 ];
 
 export const IsActiveUrl = (currentUrl: string, itemUrl: string): boolean =>
