@@ -71,7 +71,7 @@ export const ValidateMaxSubscribersForm = ({
     }
 
     if (isCheckbox(questionItem.answer)) {
-      let fieldName = `answer${questionIndex}`;
+      const fieldName = `answer${questionIndex}`;
       return (
         <li className="m-t-6">
           <fieldset>

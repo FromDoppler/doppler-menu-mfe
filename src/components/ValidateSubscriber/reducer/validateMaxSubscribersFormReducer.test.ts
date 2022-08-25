@@ -22,9 +22,10 @@ describe("validateMaxSubscribersFormReducer", () => {
 
   it(`${VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS.FINISH_FETCH} action`, () => {
     // Arrange
+    const maxSubscribersData = getMaxSubscribersData();
     const action = {
       type: VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS.FINISH_FETCH,
-      payload: getMaxSubscribersData(),
+      payload: maxSubscribersData,
     };
 
     // Act
