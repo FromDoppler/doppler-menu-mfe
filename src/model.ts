@@ -19,7 +19,7 @@ export interface Plan {
   isMonthlyByEmail: boolean;
 }
 
-export interface User {
+export type User = {
   email: string;
   fullname: string;
   plan: Plan;
@@ -33,9 +33,16 @@ export interface User {
     buttonUrl?: string;
   };
   isLastPlanRequested: boolean;
-  hasClientManager: boolean;
-  clientManager?: { profileName: string };
-}
+} & (
+  | {
+      hasClientManager: true;
+      clientManager: { profileName: string };
+    }
+  | {
+      hasClientManager: false;
+      clientManager?: undefined;
+    }
+);
 
 export interface Alert {
   type: string;

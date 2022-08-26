@@ -96,12 +96,14 @@ const safeUser = (data: any): User => ({
   nav: data?.nav?.map(safeNavItem) ?? [],
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
-  hasClientManager: safeBoolean(data?.hasClientManager),
-  clientManager: data?.clientManager
+  ...(safeBoolean(data?.hasClientManager)
     ? {
-        profileName: safeString(data.clientManager.profileName),
+        hasClientManager: true,
+        clientManager: {
+          profileName: safeString(data.clientManager.profileName),
+        },
       }
-    : undefined,
+    : { hasClientManager: false }),
 });
 
 const safeAlert = (data: any): Alert => ({
