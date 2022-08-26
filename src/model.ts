@@ -16,7 +16,7 @@ export interface Plan {
   buttonText: string;
   buttonUrl: string;
   pendingFreeUpgrade: boolean;
-  isMonthlyByEmail?: string;
+  isMonthlyByEmail: boolean;
 }
 
 export interface User {
@@ -33,7 +33,7 @@ export interface User {
     buttonUrl?: string;
   };
   isLastPlanRequested: boolean;
-  hasClientManager?: boolean;
+  hasClientManager: boolean;
   clientManager?: { profileName: string };
 }
 

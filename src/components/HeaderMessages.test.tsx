@@ -17,6 +17,7 @@ const userData: User = {
     buttonText: "UPGRADE",
     buttonUrl: "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
     pendingFreeUpgrade: true,
+    isMonthlyByEmail: false,
   },
   avatar: { text: "BS", color: "#EE9C70" },
   nav: [
@@ -28,6 +29,7 @@ const userData: User = {
   ],
   sms: { smsEnabled: false, remainingCredits: 0.0 },
   isLastPlanRequested: false,
+  hasClientManager: false,
 };
 
 describe("<HeaderMessages />", () => {

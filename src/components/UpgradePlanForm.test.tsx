@@ -23,6 +23,7 @@ const userData: User = {
     buttonText: "UPGRADE",
     buttonUrl: "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
     pendingFreeUpgrade: false,
+    isMonthlyByEmail: false,
   },
   email: "",
   fullname: "",
@@ -36,6 +37,7 @@ const userData: User = {
     remainingCredits: 0,
   },
   isLastPlanRequested: false,
+  hasClientManager: false,
 };
 
 describe("<UpgradePlanForm />", () => {
