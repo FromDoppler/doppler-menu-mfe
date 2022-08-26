@@ -3,7 +3,7 @@ import {
   AppSessionStateClient,
 } from "./app-session-abstractions";
 import testUserData from "../testUserData.json";
-import { parseUserData } from "../utils";
+import { safeUserData } from "../utils";
 
 export function createDummyAppSessionStateClient(): AppSessionStateClient {
   let currentSessionState: AppSessionState = { status: "unknown" };
@@ -15,7 +15,7 @@ export function createDummyAppSessionStateClient(): AppSessionStateClient {
           status: "authenticated",
           dopplerAccountName: testUserData.user.email,
           lang: "es",
-          userData: parseUserData(testUserData),
+          userData: safeUserData(testUserData),
         };
         instance.onSessionUpdate();
       }, 1000);

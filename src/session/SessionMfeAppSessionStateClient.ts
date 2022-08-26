@@ -1,4 +1,4 @@
-import { parseUserData } from "../utils";
+import { safeUserData } from "../utils";
 import {
   AppSessionState,
   AppSessionStateClient,
@@ -21,7 +21,7 @@ const mapDopplerSessionState: (
         status: "authenticated",
         dopplerAccountName: dopplerSessionState.dopplerAccountName,
         lang: dopplerSessionState.rawDopplerUserData?.user?.lang,
-        userData: parseUserData(dopplerSessionState.rawDopplerUserData),
+        userData: safeUserData(dopplerSessionState.rawDopplerUserData),
       };
 
 export class SessionMfeAppSessionStateClient implements AppSessionStateClient {
