@@ -38,7 +38,7 @@ export interface User {
 }
 
 export interface Alert {
-  type: "warning";
+  type: string;
   message: string;
   button: {
     text: string;
