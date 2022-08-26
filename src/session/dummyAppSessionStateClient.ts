@@ -14,6 +14,7 @@ export function createDummyAppSessionStateClient(): AppSessionStateClient {
         currentSessionState = {
           status: "authenticated",
           dopplerAccountName: testUserData.user.email,
+          lang: "es",
           userData: parseUserData(testUserData),
         };
         instance.onSessionUpdate();
