@@ -9,7 +9,10 @@ const webappDomainRegex =
 const applyUrlPatchInTheseDomainsRegex =
   /^https?:\/\/(?:testmenu(?:qa|int)\.fromdoppler\.net|testmenu\.fromdoppler\.com|localhost:3000)(?=\/|$)/;
 
-function patchWebAppUrlsIfNeeded(origin: string, nav: NavItem[]): NavItem[] {
+function patchWebAppUrlsIfNeeded(
+  origin: string,
+  nav: ReadonlyArray<NavItem>
+): ReadonlyArray<NavItem> {
   if (!applyUrlPatchInTheseDomainsRegex.test(origin)) {
     return nav;
   }

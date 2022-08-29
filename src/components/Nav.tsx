@@ -4,7 +4,7 @@ import { IsActiveUrl } from "../utils";
 
 interface NavProp {
   currentPath: string;
-  nav: INavItem[];
+  nav: ReadonlyArray<INavItem>;
   openMenuHeader: () => void;
   closeMenuHeader: () => void;
 }

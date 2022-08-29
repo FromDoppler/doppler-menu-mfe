@@ -6,8 +6,8 @@ import { NavItem, User } from "../model";
 
 interface HeaderProp {
   currentPath: string;
-  nav: NavItem[];
-  notifications: string[];
+  nav: ReadonlyArray<NavItem>;
+  notifications: ReadonlyArray<string>;
   user: User;
   emptyNotificationText: string;
   sticky: boolean;

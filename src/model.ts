@@ -1,11 +1,11 @@
-export interface NavItem {
+export type NavItem = Readonly<{
   title: string;
   url: string;
   idHTML: string;
-  subNav?: NavItem[];
-}
+  subNav?: ReadonlyArray<NavItem>;
+}>;
 
-export interface Plan {
+export type Plan = Readonly<{
   planType: string;
   description: string;
   itemDescription: string;
@@ -17,62 +17,67 @@ export interface Plan {
   buttonUrl: string;
   pendingFreeUpgrade: boolean;
   isMonthlyByEmail: boolean;
-}
+}>;
 
-export type User = {
-  email: string;
-  fullname: string;
-  plan: Plan;
-  avatar: { text: string; color: string };
-  nav: NavItem[];
-  sms:
+export type User = Readonly<
+  {
+    email: string;
+    fullname: string;
+    plan: Plan;
+    avatar: Readonly<{ text: string; color: string }>;
+    nav: ReadonlyArray<NavItem>;
+    sms: Readonly<
+      | {
+          smsEnabled: true;
+          remainingCredits: number;
+          description: string;
+          buttonText: string;
+          buttonUrl: string;
+        }
+      | {
+          smsEnabled: false;
+          remainingCredits?: undefined;
+          description?: undefined;
+          buttonText?: undefined;
+          buttonUrl?: undefined;
+        }
+    >;
+    isLastPlanRequested: boolean;
+  } & (
     | {
-        smsEnabled: true;
-        remainingCredits: number;
-        description: string;
-        buttonText: string;
-        buttonUrl: string;
+        hasClientManager: true;
+        clientManager: Readonly<{ profileName: string }>;
       }
     | {
-        smsEnabled: false;
-        remainingCredits?: undefined;
-        description?: undefined;
-        buttonText?: undefined;
-        buttonUrl?: undefined;
-      };
-  isLastPlanRequested: boolean;
-} & (
-  | {
-      hasClientManager: true;
-      clientManager: { profileName: string };
-    }
-  | {
-      hasClientManager: false;
-      clientManager?: undefined;
-    }
-);
+        hasClientManager: false;
+        clientManager?: undefined;
+      }
+  )
+>;
 
-export interface Alert {
+export type Alert = Readonly<{
   type: string;
   message: string;
   button:
-    | {
-        text: string;
-        url: string;
-        action?: undefined;
-      }
-    | {
-        text: string;
-        action: string;
-        url?: undefined;
-      }
+    | Readonly<
+        | {
+            text: string;
+            url: string;
+            action?: undefined;
+          }
+        | {
+            text: string;
+            action: string;
+            url?: undefined;
+          }
+      >
     | undefined;
-}
+}>;
 
-export interface UserData {
-  nav: NavItem[];
+export type UserData = Readonly<{
+  nav: ReadonlyArray<NavItem>;
   user: User;
   alert?: Alert;
-  notifications: string[];
+  notifications: ReadonlyArray<string>;
   emptyNotificationText: string;
-}
+}>;

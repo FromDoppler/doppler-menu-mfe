@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import useOnclickOutside from "react-cool-onclickoutside";
 
 interface NotificationsProps {
-  notifications: string[];
+  notifications: ReadonlyArray<string>;
   emptyNotificationText: string;
 }
 
