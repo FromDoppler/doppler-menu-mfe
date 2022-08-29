@@ -6,8 +6,7 @@ export type AppSessionState =
   | {
       readonly status: "authenticated";
       readonly dopplerAccountName: string;
-      // TODO: use lang field in place of rawDopplerUserData.lang
-      // lang: string;
+      readonly lang?: string;
       readonly userData: UserData;
     };
 

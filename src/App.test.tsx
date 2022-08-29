@@ -17,6 +17,7 @@ test("renders Doppler Menu Micro-Frontend", () => {
   const appSessionState: AppSessionState = {
     status: "authenticated",
     dopplerAccountName: "dopplerAccountName",
+    lang: testUserData.user.lang,
     userData: testUserData as any,
   };
 

@@ -12,5 +12,3 @@ export function flattenMessages(nestedMessages: any, prefix = "") {
     return messages;
   }, {});
 }
-
-export const defaultLanguage = "es";

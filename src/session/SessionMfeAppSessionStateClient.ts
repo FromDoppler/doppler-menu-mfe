@@ -20,6 +20,7 @@ const mapDopplerSessionState: (
     : {
         status: "authenticated",
         dopplerAccountName: dopplerSessionState.dopplerAccountName,
+        lang: dopplerSessionState.rawDopplerUserData?.user?.lang,
         userData: parseUserData(dopplerSessionState.rawDopplerUserData),
       };
 
