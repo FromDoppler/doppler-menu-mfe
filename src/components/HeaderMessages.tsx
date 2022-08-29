@@ -49,10 +49,12 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
     action === validateSubscribersPopup || action === upgradePlanPopup;
 
   return (
-    <div className={`messages-container sticky ${type}`}>
-      <div className="wrapper">
-        {message && <p>{message}</p>}
-        {url ? showLink() : button ? showButton() : null}
+    <>
+      <div className={`messages-container sticky ${type}`}>
+        <div className="wrapper">
+          {message && <p>{message}</p>}
+          {url ? showLink() : button ? showButton() : null}
+        </div>
       </div>
       {hasModal() && (
         <Modal
@@ -74,6 +76,6 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
           )}
         </Modal>
       )}
-    </div>
+    </>
   );
 };
