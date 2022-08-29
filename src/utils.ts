@@ -69,21 +69,16 @@ const safePlan = (data: any): Plan => ({
   isMonthlyByEmail: safeBoolean(data?.isMonthlyByEmail),
 });
 
-const safeSms = (
-  data: any
-): {
-  smsEnabled: boolean;
-  remainingCredits: number;
-  description: string;
-  buttonText: string;
-  buttonUrl: string;
-} => ({
-  smsEnabled: safeBoolean(data?.smsEnabled),
-  remainingCredits: safeNumber(data?.remainingCredits),
-  description: safeString(data?.description),
-  buttonText: safeString(data?.buttonText),
-  buttonUrl: safeString(data?.buttonUrl),
-});
+const safeSms = (data: any) =>
+  safeBoolean(data?.smsEnabled)
+    ? {
+        smsEnabled: true as const,
+        remainingCredits: safeNumber(data?.remainingCredits),
+        description: safeString(data?.description),
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      }
+    : { smsEnabled: false as const };
 
 const safeUser = (data: any): User => ({
   email: safeString(data?.email),

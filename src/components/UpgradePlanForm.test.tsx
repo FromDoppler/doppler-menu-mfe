@@ -34,7 +34,6 @@ const userData: User = {
   nav: [],
   sms: {
     smsEnabled: false,
-    remainingCredits: 0,
   },
   isLastPlanRequested: false,
   hasClientManager: false,

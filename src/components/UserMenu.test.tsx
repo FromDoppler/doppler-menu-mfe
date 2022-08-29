@@ -27,7 +27,7 @@ const user: User = {
       idHTML: "controlPanel",
     },
   ],
-  sms: { smsEnabled: false, remainingCredits: 0.0 },
+  sms: { smsEnabled: false },
   isLastPlanRequested: false,
   hasClientManager: false,
 };

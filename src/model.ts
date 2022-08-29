@@ -25,13 +25,21 @@ export type User = {
   plan: Plan;
   avatar: { text: string; color: string };
   nav: NavItem[];
-  sms: {
-    smsEnabled: boolean;
-    remainingCredits: number;
-    description?: string;
-    buttonText?: string;
-    buttonUrl?: string;
-  };
+  sms:
+    | {
+        smsEnabled: true;
+        remainingCredits: number;
+        description: string;
+        buttonText: string;
+        buttonUrl: string;
+      }
+    | {
+        smsEnabled: false;
+        remainingCredits?: undefined;
+        description?: undefined;
+        buttonText?: undefined;
+        buttonUrl?: undefined;
+      };
   isLastPlanRequested: boolean;
 } & (
   | {
