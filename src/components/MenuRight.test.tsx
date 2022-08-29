@@ -23,7 +23,7 @@ const userData: User = {
     isMonthlyByEmail: false,
   },
   avatar: { text: "BS", color: "#EE9C70" },
-  nav: [
+  navItems: [
     {
       title: "Control Panel",
       url: "/ControlPanel/ControlPanel/",

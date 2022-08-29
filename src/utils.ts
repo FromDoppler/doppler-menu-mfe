@@ -52,7 +52,7 @@ const safeNavItem = (data: any): NavItem => ({
   title: safeString(data?.title),
   url: safeString(data?.url),
   idHTML: safeString(data?.idHTML),
-  subNav: data?.subNav?.map(safeNavItem),
+  subNavItems: data?.subNav?.map(safeNavItem),
 });
 
 const safePlan = (data: any): Plan => ({
@@ -88,7 +88,7 @@ const safeUser = (data: any): User => ({
     text: safeString(data?.avatar?.text),
     color: safeString(data?.avatar?.color),
   },
-  nav: data?.nav?.map(safeNavItem) ?? [],
+  navItems: data?.nav?.map(safeNavItem) ?? [],
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
   ...(safeBoolean(data?.hasClientManager)
@@ -118,7 +118,7 @@ const safeAlert = (data: any): Alert => ({
 });
 
 export const safeUserData = (data: any): UserData => ({
-  nav: data.nav?.map(safeNavItem) ?? [],
+  navItems: data.nav?.map(safeNavItem) ?? [],
   user: safeUser(data?.user ?? {}),
   alert: data?.alert ? safeAlert(data?.alert) : undefined,
   notifications: data?.notifications?.map(safeString) ?? [],

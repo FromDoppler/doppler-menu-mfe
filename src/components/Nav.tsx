@@ -65,13 +65,13 @@ const NavItem = ({
   openMenuHeader,
   closeMenuHeader,
 }: NavItemProp) => {
-  const { title, url, subNav = [] } = item;
-  const hasSubmenuItems = !!subNav.length;
+  const { title, url, subNavItems = [] } = item;
+  const hasSubmenuItems = !!subNavItems.length;
   const [isNavItemActive, setNavItemActive] = useState(
     IsActiveUrl(currentPath, item.url)
   );
 
-  const isSubNavItemActive = !!item.subNav?.some(({ url }) => {
+  const isSubNavItemActive = !!item.subNavItems?.some(({ url }) => {
     return IsActiveUrl(currentPath, url);
   });
 
@@ -120,7 +120,7 @@ const SubNav = ({
 
   return (
     <ul className={`sub-menu ${isNavItemActive ? "open" : ""}`}>
-      {item.subNav?.map(({ title, url }) => (
+      {item.subNavItems?.map(({ title, url }) => (
         <SubNavItem
           key={title}
           currentPath={currentPath}

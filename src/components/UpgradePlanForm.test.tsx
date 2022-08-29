@@ -31,7 +31,7 @@ const userData: User = {
     text: "",
     color: "",
   },
-  nav: [],
+  navItems: [],
   sms: {
     smsEnabled: false,
   },

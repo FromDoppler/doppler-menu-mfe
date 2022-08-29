@@ -20,7 +20,7 @@ const user: User = {
     isMonthlyByEmail: false,
   },
   avatar: { text: "BS", color: "#EE9C70" },
-  nav: [
+  navItems: [
     {
       title: "Control Panel",
       url: "/ControlPanel/ControlPanel/",
@@ -42,7 +42,7 @@ describe("<UserMenu />", () => {
 
     expect(screen.getByText(user.fullname)).toBeInTheDocument();
     expect(screen.getByText(user.email)).toBeInTheDocument();
-    expect(screen.getByText(user.nav[0].title)).toBeInTheDocument();
+    expect(screen.getByText(user.navItems[0].title)).toBeInTheDocument();
     expect(screen.getAllByText(user.avatar.text)).toHaveLength(2);
   });
 });

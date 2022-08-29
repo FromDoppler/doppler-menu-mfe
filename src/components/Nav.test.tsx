@@ -13,7 +13,7 @@ const nav: NavItem[] = [
     title: "Campaigns",
     url: "/Campaigns/Draft/",
     idHTML: "campaignMenu",
-    subNav: [
+    subNavItems: [
       {
         title: "Draft",
         url: "/Campaigns/Draft/",

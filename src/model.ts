@@ -2,7 +2,7 @@ export type NavItem = Readonly<{
   title: string;
   url: string;
   idHTML: string;
-  subNav?: ReadonlyArray<NavItem>;
+  subNavItems?: ReadonlyArray<NavItem>;
 }>;
 
 export type Plan = Readonly<{
@@ -25,7 +25,7 @@ export type User = Readonly<
     fullname: string;
     plan: Plan;
     avatar: Readonly<{ text: string; color: string }>;
-    nav: ReadonlyArray<NavItem>;
+    navItems: ReadonlyArray<NavItem>;
     sms: Readonly<
       | {
           smsEnabled: true;
@@ -75,7 +75,7 @@ export type Alert = Readonly<{
 }>;
 
 export type UserData = Readonly<{
-  nav: ReadonlyArray<NavItem>;
+  navItems: ReadonlyArray<NavItem>;
   user: User;
   alert?: Alert;
   notifications: ReadonlyArray<string>;

@@ -11,18 +11,18 @@ const applyUrlPatchInTheseDomainsRegex =
 
 function patchWebAppUrlsIfNeeded(
   origin: string,
-  nav: ReadonlyArray<NavItem>
+  navItems: ReadonlyArray<NavItem>
 ): ReadonlyArray<NavItem> {
   if (!applyUrlPatchInTheseDomainsRegex.test(origin)) {
-    return nav;
+    return navItems;
   }
 
-  return nav.map((navElement) => {
+  return navItems.map((navElement) => {
     return {
       ...navElement,
       url: navElement.url?.replace(webappDomainRegex, origin),
-      ...(navElement.subNav && {
-        subNav: navElement.subNav.map((subNavElement) => {
+      ...(navElement.subNavItems && {
+        subNavItems: navElement.subNavItems.map((subNavElement) => {
           return {
             ...subNavElement,
             url: subNavElement.url?.replace(webappDomainRegex, origin),
@@ -43,10 +43,10 @@ function App() {
     return <HeaderPlaceholder />;
   }
 
-  const { nav, notifications, emptyNotificationText, user, alert } =
+  const { navItems, notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
 
-  const navigation = patchWebAppUrlsIfNeeded(origin, nav);
+  const navigation = patchWebAppUrlsIfNeeded(origin, navItems);
 
   return (
     <>
