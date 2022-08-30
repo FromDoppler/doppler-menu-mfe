@@ -192,7 +192,7 @@
     "message": "Your Free trial with unlimited Campaigns up to  500 Contacts expires today",
     "button": {
       "text": "Upgrade Now",
-      "url": "https://appint.fromdoppler.net/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar"
+      "action": "validateSubscribersPopup"
     }
   },
   "homeUrl": "https://webappint.fromdoppler.net",
