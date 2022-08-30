@@ -107,11 +107,17 @@ const safeUser = (data: any): User => ({
 const safeAlert = (data: any): Alert => ({
   type: safeString(data?.type),
   message: safeString(data?.message),
-  button: {
-    text: safeString(data?.button?.text),
-    url: data?.button?.url ? safeString(data?.button?.url) : undefined,
-    action: data?.button?.action ? safeString(data?.button?.action) : undefined,
-  },
+  button: data?.button?.url
+    ? {
+        text: safeString(data.button.text),
+        url: safeString(data.button.url),
+      }
+    : data?.button?.action
+    ? {
+        text: safeString(data.button.text),
+        action: safeString(data.button.action),
+      }
+    : undefined,
 });
 
 export const safeUserData = (data: any): UserData => ({

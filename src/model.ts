@@ -40,11 +40,18 @@ export interface User {
 export interface Alert {
   type: string;
   message: string;
-  button: {
-    text: string;
-    url?: string;
-    action?: string;
-  };
+  button:
+    | {
+        text: string;
+        url: string;
+        action?: undefined;
+      }
+    | {
+        text: string;
+        action: string;
+        url?: undefined;
+      }
+    | undefined;
 }
 
 export interface UserData {
