@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { Nav } from "./Nav";
 import { MenuRight } from "./MenuRight";
-import { NavItem, User } from "../model";
+import { PrimaryNavItem, User } from "../model";
 
 interface HeaderProp {
   currentPath: string;
-  nav: ReadonlyArray<NavItem>;
+  nav: ReadonlyArray<PrimaryNavItem>;
   notifications: ReadonlyArray<string>;
   user: User;
   emptyNotificationText: string;

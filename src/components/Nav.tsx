@@ -1,17 +1,17 @@
-import { NavItem as INavItem } from "../model";
+import { PrimaryNavItem } from "../model";
 import { useEffect, useState } from "react";
 import { IsActiveUrl } from "../utils";
 
 interface NavProp {
   currentPath: string;
-  nav: ReadonlyArray<INavItem>;
+  nav: ReadonlyArray<PrimaryNavItem>;
   openMenuHeader: () => void;
   closeMenuHeader: () => void;
 }
 
 interface NavItemProp {
   currentPath: string;
-  item: INavItem;
+  item: PrimaryNavItem;
   openMenuHeader: () => void;
   closeMenuHeader: () => void;
 }
@@ -20,7 +20,7 @@ interface SubNavProp {
   currentPath: string;
   isNavItemActive: boolean;
   isSubNavItemActive: boolean;
-  item: INavItem;
+  item: PrimaryNavItem;
   openMenuHeader: () => void;
   setNavItemActive: (value: boolean) => void;
 }

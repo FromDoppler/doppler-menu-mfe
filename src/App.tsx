@@ -1,7 +1,7 @@
 import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
 import { useLocationHref } from "./hooks/useLocationHref";
-import { NavItem } from "./model";
+import { PrimaryNavItem } from "./model";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
 const webappDomainRegex =
@@ -11,8 +11,8 @@ const applyUrlPatchInTheseDomainsRegex =
 
 function patchWebAppUrlsIfNeeded(
   origin: string,
-  navItems: ReadonlyArray<NavItem>
-): ReadonlyArray<NavItem> {
+  navItems: ReadonlyArray<PrimaryNavItem>
+): ReadonlyArray<PrimaryNavItem> {
   if (!applyUrlPatchInTheseDomainsRegex.test(origin)) {
     return navItems;
   }

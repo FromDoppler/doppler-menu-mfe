@@ -1,8 +1,15 @@
-export type NavItem = Readonly<{
+export type TerminalNavItem = Readonly<{
   title: string;
   url: string;
   idHTML: string;
-  subNavItems?: ReadonlyArray<NavItem>;
+  subNavItems?: undefined;
+}>;
+
+export type PrimaryNavItem = Readonly<{
+  title: string;
+  url: string;
+  idHTML: string;
+  subNavItems?: ReadonlyArray<TerminalNavItem>;
 }>;
 
 export type Plan = Readonly<{
@@ -25,7 +32,7 @@ export type User = Readonly<
     fullname: string;
     plan: Plan;
     avatar: Readonly<{ text: string; color: string }>;
-    navItems: ReadonlyArray<NavItem>;
+    navItems: ReadonlyArray<TerminalNavItem>;
     sms: Readonly<
       | {
           smsEnabled: true;
@@ -75,7 +82,7 @@ export type Alert = Readonly<{
 }>;
 
 export type UserData = Readonly<{
-  navItems: ReadonlyArray<NavItem>;
+  navItems: ReadonlyArray<PrimaryNavItem>;
   user: User;
   alert?: Alert;
   notifications: ReadonlyArray<string>;

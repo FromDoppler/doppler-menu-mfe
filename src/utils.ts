@@ -1,4 +1,11 @@
-import { Alert, NavItem, Plan, User, UserData } from "./model";
+import {
+  Alert,
+  PrimaryNavItem,
+  Plan,
+  TerminalNavItem,
+  User,
+  UserData,
+} from "./model";
 
 const sanitizeUrlToCompare = (url: string): string =>
   url
@@ -48,11 +55,17 @@ const safeString = (data: unknown): string =>
 
 const safeNumber = (data: unknown): number => Number(data) || 0;
 
-const safeNavItem = (data: any): NavItem => ({
+const safeNavItem = (data: any): PrimaryNavItem => ({
   title: safeString(data?.title),
   url: safeString(data?.url),
   idHTML: safeString(data?.idHTML),
-  subNavItems: data?.subNav?.map(safeNavItem),
+  subNavItems: data?.subNav?.map(safeTerminalNavItem),
+});
+
+const safeTerminalNavItem = (data: any): TerminalNavItem => ({
+  title: safeString(data?.title),
+  url: safeString(data?.url),
+  idHTML: safeString(data?.idHTML),
 });
 
 const safePlan = (data: any): Plan => ({
@@ -88,7 +101,7 @@ const safeUser = (data: any): User => ({
     text: safeString(data?.avatar?.text),
     color: safeString(data?.avatar?.color),
   },
-  navItems: data?.nav?.map(safeNavItem) ?? [],
+  navItems: (data?.nav as any[])?.map(safeTerminalNavItem) ?? [],
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
   ...(safeBoolean(data?.hasClientManager)

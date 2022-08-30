@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { Nav } from "./Nav";
-import { NavItem } from "../model";
+import { PrimaryNavItem } from "../model";
 
 const mainNav = "main nav";
-const nav: NavItem[] = [
+const nav: PrimaryNavItem[] = [
   {
     title: "Home",
     url: "/Dashboard/",
