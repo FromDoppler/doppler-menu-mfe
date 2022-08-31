@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Field, Form, Formik, FormikState } from "formik";
 import { FormattedMessage } from "react-intl";
-import { CheckboxFieldItem, FieldGroup, InputFieldItem } from "./form-helpers";
+import {
+  CheckboxFieldItem,
+  FieldGroup,
+  InputFieldItem,
+  SubmitButton,
+} from "./form-helpers";
 import {
   MaxSubscribersQuestion,
   SubscriberValidationAnswer,
@@ -13,37 +18,44 @@ export const ValidateMaxSubscribersForm = ({
   handleClose,
   handleSubmit,
 }: ValidateMaxSubscribersFormProp) => {
-  // TODO: validate and onSubmit implementation
-  const validate = (values: {}) => {};
-  const onSubmit = async (values: {}) => {};
-
   const [show, setShow] = useState(false);
-  const toggleOthers = () => {
-    console.log("test toggle");
-    setShow((prev) => !prev);
-  };
 
   const isCheckbox = (answer: SubscriberValidationAnswer) => {
     return ["CHECKBOX_WITH_TEXTAREA", "CHECKBOX"].includes(answer.answerType);
   };
 
-  const isCheckboxWithTextArea = (answer: SubscriberValidationAnswer) => {
-    return "CHECKBOX_WITH_TEXTAREA" === answer.answerType;
+  const answers: any = {};
+  validationFormData.questionsList?.forEach((question, index) => {
+    answers[`answer${index}`] = isCheckbox(question.answer) ? [] : "";
+    if (question.answer?.answerType === "CHECKBOX_WITH_TEXTAREA") {
+      answers[`answer${index}_text`] = "";
+    }
+  });
+
+  const onSubmit = async (values: any, { setSubmitting }: any) => {
+    validationFormData.questionsList.forEach((questionItem, index) => {
+      if (isCheckbox(questionItem.answer)) {
+        questionItem.answer.value = values[`answer${index}`].join("-");
+        questionItem.answer.text = values[`answer${index}_text`];
+      } else {
+        questionItem.answer.value = values[`answer${index}`];
+      }
+    });
+    const result = await handleSubmit();
+    if (!result) {
+      setSubmitting(false);
+    }
   };
 
-  const initialValues = validationFormData.questionsList?.reduce(
-    (accumulator, question, index) => {
-      const answer = {
-        [`answer${index}`]: isCheckbox(question.answer) ? [] : "",
-        ...(isCheckboxWithTextArea(question.answer) && {
-          [`answer${index}_text`]: "",
-        }),
-      };
-
-      return { ...accumulator, ...answer };
-    },
-    {}
-  );
+  const validate = (values: any) => {
+    const errors: any = {};
+    for (let value in values) {
+      if (Array.isArray(values[value]) && values[value].length === 0) {
+        errors[value] = "validate_max_subscribers_form.checkbox_empty";
+      }
+    }
+    return errors;
+  };
 
   const renderQuestions = (
     questionItem: MaxSubscribersQuestion,
@@ -80,16 +92,15 @@ export const ValidateMaxSubscribersForm = ({
             </label>
             <FieldGroup>
               {questionItem.answer.answerOptions.map((option, optionIndex) => {
-                // TODO: fix text area not diplaying when "others" is checked
                 const lastCheckboxItem =
-                  isCheckboxWithTextArea(questionItem.answer) &&
+                  questionItem.answer?.answerType ===
+                    "CHECKBOX_WITH_TEXTAREA" &&
                   questionItem.answer?.answerOptions.length - 1 === optionIndex;
-
                 return (
                   <React.Fragment key={`checkbox${optionIndex}`}>
                     <CheckboxFieldItem
                       className={"field-item--50"}
-                      label={`${option} ${show}`}
+                      label={option}
                       fieldName={fieldName}
                       id={`${fieldName}-${optionIndex}`}
                       value={option}
@@ -127,6 +138,10 @@ export const ValidateMaxSubscribersForm = ({
     }
   };
 
+  const toggleOthers = () => {
+    setShow(!show);
+  };
+
   return (
     <section className="dp-container">
       <div className="dp-wrapper-form-plans">
@@ -136,11 +151,7 @@ export const ValidateMaxSubscribersForm = ({
         <p>
           <FormattedMessage id="validate_max_subscribers_form.subtitle" />
         </p>
-        <Formik
-          initialValues={initialValues}
-          validate={validate}
-          onSubmit={onSubmit}
-        >
+        <Formik initialValues={answers} validate={validate} onSubmit={onSubmit}>
           {(formikProps) => (
             <Form className="dp-validate-max-subscribers">
               <fieldset>
@@ -163,7 +174,11 @@ export const ValidateMaxSubscribersForm = ({
                 <p>
                   <i>
                     <FormattedMessage id="validate_max_subscribers_form.form_help" />{" "}
-                    <a target="_BLANK" href={"/"} rel="noreferrer">
+                    <a
+                      target="_BLANK"
+                      rel="noreferrer"
+                      href={validationFormData?.urlHelp}
+                    >
                       <FormattedMessage id="validate_max_subscribers_form.form_help_link_text" />
                       <br />
                     </a>
@@ -180,14 +195,9 @@ export const ValidateMaxSubscribersForm = ({
                       >
                         <FormattedMessage id="common.cancel" />
                       </button>
-                      {/* RODO: implement SubmitButton
-                      <SubmitButton
-                        intl={undefined}
-                        formik={formikProps}
-                        className={"dp-button button-medium primary-green"}
-                      >
+                      <SubmitButton className="dp-button button-medium primary-green">
                         <FormattedMessage id="common.save" />
-                      </SubmitButton> */}
+                      </SubmitButton>
                     </div>
                   </div>
                 </div>

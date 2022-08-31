@@ -60,6 +60,37 @@ export interface FormikProp {
   submitCount?: number;
 }
 
+/**
+ * Submit Button Component
+ * @param { Object } props
+ * @param { import('react-intl').InjectedIntl } props.intl
+ * @param { import('formik').FormikProps<Values> } props.formik
+ * @param { string } props.className
+ */
+const _SubmitButton = ({
+  children,
+  formik: { isSubmitting },
+  className,
+}: any) => {
+  return (
+    <>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={
+          "dp-button button-medium primary-green" +
+          ((isSubmitting && " button--loading") || "") +
+          ((className && ` ${className}`) || "")
+        }
+      >
+        {children}
+      </button>
+    </>
+  );
+};
+
+export const SubmitButton = connect(_SubmitButton);
+
 export const FieldItem = connect(
   ({
     className,

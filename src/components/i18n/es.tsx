@@ -2,6 +2,7 @@ export const messages_es = {
   common: {
     cancel: `Cancelar`,
     send: `Enviar`,
+    save: `Guardar`,
     message_success: `¡Hecho! Tu solicitud ha sido enviada`,
     message_last_plan: `Cuéntanos tus necesidades y diseñaremos el Plan perfecto para ti`,
     unexpected_error: `¡Ouch! Ocurrio un error inesperado, intenta nuevamente`,

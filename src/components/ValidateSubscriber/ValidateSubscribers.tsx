@@ -26,10 +26,16 @@ export const ValidateSubscribers = ({
   const dopplerLegacyClient = useDopplerLegacyClient();
 
   const [success, setSuccess] = useState(false);
-  const handleSubmit = () => {
-    // TODO: submit implementation
-    setSuccess(true);
-    setNextAlert();
+
+  const handleSubmit = async () => {
+    const isSuccess = await dopplerLegacyClient.sendMaxSubscribersData(
+      validationFormData
+    );
+    if (isSuccess) {
+      setSuccess(isSuccess);
+      setNextAlert();
+    }
+    return isSuccess;
   };
 
   useEffect(() => {
