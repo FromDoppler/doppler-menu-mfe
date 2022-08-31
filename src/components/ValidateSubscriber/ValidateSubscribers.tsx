@@ -6,9 +6,9 @@ import {
   VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS,
 } from "./reducer/validateMaxSubscribersFormReducer";
 import { ValidateMaxSubscribersForm } from "./ValidateMaxSubscribersForm";
-import { getMaxSubscribersData } from "./validate-max-subscribers-doubles";
 import { ValidateMaxSubscribersConfirmation } from "./ValidateMaxSubscribersConfirmation";
 import { UnexpectedError } from "../UnexpectedError";
+import { useDopplerLegacyClient } from "../../client/dopplerLegacyClient";
 
 interface ValidateSubscribersProps {
   handleClose: () => void;
@@ -23,6 +23,7 @@ export const ValidateSubscribers = ({
     validateMaxSubscribersFormReducer,
     INITIAL_STATE
   );
+  const dopplerLegacyClient = useDopplerLegacyClient();
 
   const [success, setSuccess] = useState(false);
   const handleSubmit = () => {
@@ -35,8 +36,7 @@ export const ValidateSubscribers = ({
     const fetchData = async () => {
       try {
         dispatch({ type: VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS.START_FETCH });
-        // TODO: Connect with data.
-        const response = await getMaxSubscribersData();
+        const response = await dopplerLegacyClient.getMaxSubscribersData();
         dispatch({
           type: VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS.FINISH_FETCH,
           payload: response,
@@ -46,7 +46,7 @@ export const ValidateSubscribers = ({
       }
     };
     fetchData();
-  }, []);
+  }, [dopplerLegacyClient.getMaxSubscribersData]);
 
   if (loading) {
     return <Loading />;

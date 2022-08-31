@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
 import { AppSessionStateProvider } from "./session/AppSessionStateContext";
-import { AppConfiguration } from "./AppConfiguration";
+import { AppConfiguration, AppConfigurationProvider } from "./AppConfiguration";
 import { createDummyAppSessionStateClient } from "./session/dummyAppSessionStateClient";
 import { SessionMfeAppSessionStateClient } from "./session/SessionMfeAppSessionStateClient";
 import { patchBrowserBehaviorToInterceptLocationUpdates } from "./history/historyUtils";
@@ -47,9 +47,11 @@ function initialize(
   root.render(
     <StrictMode>
       <AppSessionStateProvider appSessionStateClient={appSessionStateClient}>
-        <MenuIntlProvider>
-          <App />
-        </MenuIntlProvider>
+        <AppConfigurationProvider configuration={configuration}>
+          <MenuIntlProvider>
+            <App />
+          </MenuIntlProvider>
+        </AppConfigurationProvider>
       </AppSessionStateProvider>
     </StrictMode>
   );
