@@ -1,49 +1,37 @@
 import { render, screen } from "@testing-library/react";
 import { Nav } from "./Nav";
-import { NavItem } from "../model";
+import { PrimaryNavItem } from "../model";
 
 const mainNav = "main nav";
-const nav: NavItem[] = [
+const nav: PrimaryNavItem[] = [
   {
     title: "Home",
     url: "/Dashboard/",
-    isEnabled: false,
-    isSelected: false,
     idHTML: "dashboard",
   },
   {
     title: "Campaigns",
     url: "/Campaigns/Draft/",
     idHTML: "campaignMenu",
-    isEnabled: false,
-    isSelected: false,
-    subNav: [
+    subNavItems: [
       {
         title: "Draft",
         url: "/Campaigns/Draft/",
-        isEnabled: false,
-        isSelected: false,
         idHTML: "dashboard",
       },
       {
         title: "Scheduled",
         url: "/Campaigns/Scheduled/",
-        isEnabled: false,
-        isSelected: false,
         idHTML: "dashboard",
       },
       {
         title: "Sent",
         url: "/Campaigns/Sent/",
-        isEnabled: false,
-        isSelected: false,
         idHTML: "dashboard",
       },
       {
         title: "A/B Test",
         url: "/Campaigns/TestAB/",
-        isEnabled: false,
-        isSelected: false,
         idHTML: "dashboard",
       },
     ],

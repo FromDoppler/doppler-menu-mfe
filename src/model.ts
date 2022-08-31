@@ -1,15 +1,19 @@
-export interface NavItem {
+export type TerminalNavItem = Readonly<{
   title: string;
   url: string;
-  isEnabled: boolean;
-  isSelected: boolean;
   idHTML: string;
-  subNav?: NavItem[];
-}
+  subNavItems?: undefined;
+}>;
 
-export interface Plan {
+export type PrimaryNavItem = Readonly<{
+  title: string;
+  url: string;
+  idHTML: string;
+  subNavItems?: ReadonlyArray<TerminalNavItem>;
+}>;
+
+export type Plan = Readonly<{
   planType: string;
-  idUserTypePlan: number;
   description: string;
   itemDescription: string;
   planName: string;
@@ -18,61 +22,69 @@ export interface Plan {
   remainingCredits: number;
   buttonText: string;
   buttonUrl: string;
-  planDiscount: number;
-  monthPlan: number;
-  subscribersCount: number;
-  trialActive: boolean;
-  trialExpired: false;
-  trialExpirationDate: string;
-  trialExpirationDays: number;
-  planFee: number;
   pendingFreeUpgrade: boolean;
-  isMonthlyByEmail?: string;
-}
+  isMonthlyByEmail: boolean;
+}>;
 
-export interface User {
-  email: string;
-  fullname: string;
-  lastName: string;
-  plan: Plan;
-  lang: "en" | "es";
-  avatar: { text: string; color: string };
-  nav: NavItem[];
-  sms: {
-    smsEnabled: boolean;
-    remainingCredits: number;
-    description?: string;
-    buttonText?: string;
-    buttonUrl?: string;
-  };
-  hasCampaignSent: boolean;
-  isLastPlanRequested: boolean;
-  hasClientManager?: boolean;
-  clientManager?: { profileName: string };
-}
+export type User = Readonly<
+  {
+    email: string;
+    fullname: string;
+    plan: Plan;
+    avatar: Readonly<{ text: string; color: string }>;
+    navItems: ReadonlyArray<TerminalNavItem>;
+    sms: Readonly<
+      | {
+          smsEnabled: true;
+          remainingCredits: number;
+          description: string;
+          buttonText: string;
+          buttonUrl: string;
+        }
+      | {
+          smsEnabled: false;
+          remainingCredits?: undefined;
+          description?: undefined;
+          buttonText?: undefined;
+          buttonUrl?: undefined;
+        }
+    >;
+    isLastPlanRequested: boolean;
+  } & (
+    | {
+        hasClientManager: true;
+        clientManager: Readonly<{ profileName: string }>;
+      }
+    | {
+        hasClientManager: false;
+        clientManager?: undefined;
+      }
+  )
+>;
 
-export interface Alert {
-  type: "warning";
+export type Alert = Readonly<{
+  type: string;
   message: string;
-  button: {
-    text: string;
-    url?: string;
-    action?: string;
-  };
-}
+  button:
+    | Readonly<
+        | {
+            text: string;
+            url: string;
+            action?: undefined;
+          }
+        | {
+            text: string;
+            action: string;
+            url?: undefined;
+          }
+      >
+    | undefined;
+}>;
 
-export interface UserData {
-  nav: NavItem[];
+export type UserData = Readonly<{
+  navItems: ReadonlyArray<PrimaryNavItem>;
   user: User;
   alert?: Alert;
-  homeUrl: string;
-  urlBase: string;
-  features: {
-    siteTrackingEnabled: boolean;
-    siteTrackingActive: boolean;
-    emailParameterEnabled: boolean;
-    emailParameterActive: boolean;
-  };
-  notifications: string[];
+  notifications: ReadonlyArray<string>;
   emptyNotificationText: string;
-}
+}>;

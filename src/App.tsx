@@ -1,7 +1,7 @@
 import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
 import { useLocationHref } from "./hooks/useLocationHref";
-import { NavItem } from "./model";
+import { PrimaryNavItem } from "./model";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 
 const webappDomainRegex =
@@ -9,17 +9,20 @@ const webappDomainRegex =
 const applyUrlPatchInTheseDomainsRegex =
   /^https?:\/\/(?:testmenu(?:qa|int)\.fromdoppler\.net|testmenu\.fromdoppler\.com|localhost:3000)(?=\/|$)/;
 
-function patchWebAppUrlsIfNeeded(origin: string, nav: NavItem[]): NavItem[] {
+function patchWebAppUrlsIfNeeded(
+  origin: string,
+  navItems: ReadonlyArray<PrimaryNavItem>
+): ReadonlyArray<PrimaryNavItem> {
   if (!applyUrlPatchInTheseDomainsRegex.test(origin)) {
-    return nav;
+    return navItems;
   }
 
-  return nav.map((navElement) => {
+  return navItems.map((navElement) => {
     return {
       ...navElement,
       url: navElement.url?.replace(webappDomainRegex, origin),
-      ...(navElement.subNav && {
-        subNav: navElement.subNav.map((subNavElement) => {
+      ...(navElement.subNavItems && {
+        subNavItems: navElement.subNavItems.map((subNavElement) => {
           return {
             ...subNavElement,
             url: subNavElement.url?.replace(webappDomainRegex, origin),
@@ -40,10 +43,10 @@ function App() {
     return <HeaderPlaceholder />;
   }
 
-  const { nav, notifications, emptyNotificationText, user, alert } =
+  const { navItems, notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
 
-  const navigation = patchWebAppUrlsIfNeeded(origin, nav);
+  const navigation = patchWebAppUrlsIfNeeded(origin, navItems);
 
   return (
     <>

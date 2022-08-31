@@ -7,6 +7,7 @@ import {
 } from "./session/app-session-abstractions";
 import testUserData from "./testUserData.json";
 import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
+import { safeUserData } from "./utils";
 
 test("renders Doppler Menu Micro-Frontend", () => {
   const mainHeaderLabel = "main header";
@@ -18,7 +19,7 @@ test("renders Doppler Menu Micro-Frontend", () => {
     status: "authenticated",
     dopplerAccountName: "dopplerAccountName",
     lang: testUserData.user.lang,
-    userData: testUserData as any,
+    userData: safeUserData(testUserData),
   };
 
   const dummyAppSessionStateClient: AppSessionStateClient = {

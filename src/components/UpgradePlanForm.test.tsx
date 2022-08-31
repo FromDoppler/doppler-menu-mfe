@@ -14,7 +14,6 @@ const toggleModal = jest.fn();
 const userData: User = {
   plan: {
     planType: "1",
-    idUserTypePlan: 0,
     description: "Available Contacts",
     itemDescription: "Contacts",
     planName: "Free Trial",
@@ -23,31 +22,21 @@ const userData: User = {
     remainingCredits: 500,
     buttonText: "UPGRADE",
     buttonUrl: "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
-    planDiscount: 0,
-    monthPlan: 0,
-    subscribersCount: 0,
-    trialActive: true,
-    trialExpired: false,
-    trialExpirationDate: "2022-07-08T00:00:00",
-    trialExpirationDays: 87,
-    planFee: 0.0,
     pendingFreeUpgrade: false,
+    isMonthlyByEmail: false,
   },
   email: "",
   fullname: "",
-  lastName: "",
-  lang: "en",
   avatar: {
     text: "",
     color: "",
   },
-  nav: [],
+  navItems: [],
   sms: {
     smsEnabled: false,
-    remainingCredits: 0,
   },
   isLastPlanRequested: false,
-  hasCampaignSent: false,
+  hasClientManager: false,
 };
 
 describe("<UpgradePlanForm />", () => {

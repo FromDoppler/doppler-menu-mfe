@@ -106,7 +106,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
             {isPlanTypeMonthlyDeliveries || isPlanTypeSuscribers ? (
               <BuyContainer>
                 <p>
-                  {Number(maxSubscribers) - Number(remainingCredits)}{" "}
+                  {maxSubscribers - remainingCredits}{" "}
                   {isPlanTypeSuscribers ? (
                     <FormattedMessage id="header.plan_suscribers" />
                   ) : (

@@ -2,14 +2,13 @@ import { render, screen } from "@testing-library/react";
 import { HeaderMessages } from "./HeaderMessages";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { Alert, User } from "../model";
+import { act } from "react-dom/test-utils";
 
 const userData: User = {
   email: "email@mock.com",
   fullname: "bruno seguer",
-  lastName: "seguer",
   plan: {
     planType: "1",
-    idUserTypePlan: 0,
     description: "Available Contacts",
     itemDescription: "Contacts",
     planName: "Free Trial",
@@ -18,40 +17,31 @@ const userData: User = {
     remainingCredits: 500,
     buttonText: "UPGRADE",
     buttonUrl: "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
-    planDiscount: 0,
-    monthPlan: 0,
-    subscribersCount: 0,
-    trialActive: true,
-    trialExpired: false,
-    trialExpirationDate: "2022-07-08T00:00:00",
-    trialExpirationDays: 87,
-    planFee: 0.0,
     pendingFreeUpgrade: true,
+    isMonthlyByEmail: false,
   },
-  lang: "en",
   avatar: { text: "BS", color: "#EE9C70" },
-  nav: [
+  navItems: [
     {
       title: "Control Panel",
       url: "/ControlPanel/ControlPanel/",
-      isEnabled: false,
-      isSelected: false,
       idHTML: "controlPanel",
     },
   ],
-  sms: { smsEnabled: false, remainingCredits: 0.0 },
+  sms: { smsEnabled: false },
   isLastPlanRequested: false,
-  hasCampaignSent: false,
+  hasClientManager: false,
 };
 
 describe("<HeaderMessages />", () => {
   it("display a link if url property is defined", () => {
     const linkTestId = "linkButton";
+    const url = "test--url";
     const alertData: Alert = {
       type: "warning",
       message: "test--message",
       button: {
-        url: "test--url",
+        url,
         text: "Upgrade Now",
       },
     };
@@ -63,16 +53,20 @@ describe("<HeaderMessages />", () => {
     );
 
     const link = screen.getByTestId(linkTestId);
-    expect(link).toHaveAttribute("href", alertData.button.url);
+    expect(link).toHaveAttribute("href", url);
   });
 
-  it("display a button if url property is undefined", () => {
+  it("display a button if url property is undefined and action is upgradePlanPopup", () => {
     const buttonTestId = "actionButton";
+    const modalTestId = "modal";
+    const expectedContentSelector = ".modal-content--medium";
+
     const alertData: Alert = {
       type: "warning",
       message: "test--message",
       button: {
         text: "Upgrade Now",
+        action: "upgradePlanPopup",
       },
     };
 
@@ -82,15 +76,30 @@ describe("<HeaderMessages />", () => {
       </MenuIntlProvider>
     );
 
-    screen.getByTestId(buttonTestId);
+    const button = screen.queryByTestId(buttonTestId);
+    expect(button).toBeInTheDocument();
+
+    act(() => {
+      button!.click();
+    });
+
+    const modal = screen.queryByTestId(modalTestId);
+    expect(modal).toBeInTheDocument();
+    const content = modal!.querySelector(expectedContentSelector);
+    expect(content).toBeInTheDocument();
   });
 
-  it("display button text property", () => {
+  it("display a button if url property is undefined and action is validateSubscribersPopup", () => {
+    const buttonTestId = "actionButton";
+    const modalTestId = "modal";
+    const expectedContentSelector = ".modal-content--large";
+
     const alertData: Alert = {
       type: "warning",
       message: "test--message",
       button: {
-        text: "Upgrade Now",
+        text: "VALIDATE!",
+        action: "validateSubscribersPopup",
       },
     };
 
@@ -100,6 +109,85 @@ describe("<HeaderMessages />", () => {
       </MenuIntlProvider>
     );
 
-    screen.getByText(alertData.button.text);
+    const button = screen.queryByTestId(buttonTestId);
+    expect(button).toBeInTheDocument();
+
+    act(() => {
+      button!.click();
+    });
+
+    const modal = screen.queryByTestId(modalTestId);
+    expect(modal).toBeInTheDocument();
+    const content = modal!.querySelector(expectedContentSelector);
+    expect(content).toBeInTheDocument();
+  });
+
+  it("display a button when url property is undefined and action is not an expected action", () => {
+    const buttonTestId = "actionButton";
+    const modalTestId = "modal";
+    const alertData: Alert = {
+      type: "warning",
+      message: "test--message",
+      button: {
+        text: "Upgrade Now",
+        action: "UNKNOWN ACTION",
+      },
+    };
+
+    render(
+      <MenuIntlProvider>
+        <HeaderMessages alert={alertData} user={userData} />
+      </MenuIntlProvider>
+    );
+
+    const button = screen.queryByTestId(buttonTestId);
+    expect(button).toBeInTheDocument();
+
+    act(() => {
+      button!.click();
+    });
+
+    const modal = screen.queryByTestId(modalTestId);
+    expect(modal).not.toBeInTheDocument();
+  });
+
+  it("display button text property when it is a link", () => {
+    const text = "Upgrade Now";
+    const alertData: Alert = {
+      type: "warning",
+      message: "test--message",
+      button: {
+        text,
+        url: "test--url",
+      },
+    };
+
+    render(
+      <MenuIntlProvider>
+        <HeaderMessages alert={alertData} user={userData} />
+      </MenuIntlProvider>
+    );
+
+    screen.getByText(text);
+  });
+
+  it("display button text property when it is a button", () => {
+    const text = "Upgrade Now";
+    const alertData: Alert = {
+      type: "warning",
+      message: "test--message",
+      button: {
+        text,
+        action: "upgradePlanPopup",
+      },
+    };
+
+    render(
+      <MenuIntlProvider>
+        <HeaderMessages alert={alertData} user={userData} />
+      </MenuIntlProvider>
+    );
+
+    screen.getByText(text);
   });
 });

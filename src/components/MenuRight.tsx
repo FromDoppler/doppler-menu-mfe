@@ -4,7 +4,7 @@ import { UserMenu } from "./UserMenu";
 
 interface MenuRightProp {
   user: User;
-  notifications: string[];
+  notifications: ReadonlyArray<string>;
   emptyNotificationText: string;
   setOpenMenuMobile: (param: any) => void;
 }
