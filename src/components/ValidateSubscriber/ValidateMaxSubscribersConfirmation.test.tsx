@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { ValidateMaxSubscribersConfirmation } from "./ValidateMaxSubscribersConfirmation";
-import user from "@testing-library/user-event";
-import { MenuIntlProvider } from "../i18n/MenuIntlProvider";
+import { IntlProviderDouble } from "../i18n/DopplerIntlProvider.double-with-ids-as-values";
+import userEvent from "@testing-library/user-event";
 
 describe("ValidateMaxSubscribersConfirm", () => {
   it("should call handleClose when button is clicked", async () => {
@@ -10,16 +10,14 @@ describe("ValidateMaxSubscribersConfirm", () => {
 
     // Act
     render(
-      <MenuIntlProvider>
+      <IntlProviderDouble>
         <ValidateMaxSubscribersConfirmation handleClose={handleClose} />
-      </MenuIntlProvider>
+      </IntlProviderDouble>
     );
-
-    const button = screen.getByRole("button", {
-      name: "Aceptar",
-    });
-
-    await user.click(button);
+    const button = screen.getByText(
+      "validate_max_subscribers_form.button_accept"
+    );
+    await userEvent.click(button);
 
     // Assert
     expect(handleClose).toBeCalledTimes(1);
