@@ -60,13 +60,6 @@ export interface FormikProp {
   submitCount?: number;
 }
 
-/**
- * Submit Button Component
- * @param { Object } props
- * @param { import('react-intl').InjectedIntl } props.intl
- * @param { import('formik').FormikProps<Values> } props.formik
- * @param { string } props.className
- */
 const _SubmitButton = ({
   children,
   formik: { isSubmitting },
@@ -180,15 +173,16 @@ interface CheckboxFieldItemProp {
   onClick?: () => void;
   withErrors: boolean;
 }
+
 export const CheckboxFieldItem = ({
   className,
   fieldName,
   label,
   checkRequired,
   id,
-  value,
   onChange,
   withErrors = true,
+  ...rest
 }: CheckboxFieldItemProp) => (
   <FieldItem
     className={concatClasses("field-item field-item__checkbox", className)}
@@ -200,8 +194,8 @@ export const CheckboxFieldItem = ({
       name={fieldName}
       id={id || fieldName}
       validate={(value: any) => checkRequired && validateCheckRequired(value)}
-      value={value}
       onClick={onChange}
+      {...rest}
     />
     <span className="checkmark" />
     <label htmlFor={id || fieldName}> {label}</label>
