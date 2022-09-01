@@ -6,6 +6,7 @@ import {
   User,
   UserData,
 } from "./model";
+import { patchWebAppUrlIfNeed } from "./temporalPatchingUtils";
 
 const sanitizeUrlToCompare = (url: string): string =>
   url
@@ -55,16 +56,18 @@ const safeString = (data: unknown): string =>
 
 const safeNumber = (data: unknown): number => Number(data) || 0;
 
+const safeUrl = (data: unknown) => patchWebAppUrlIfNeed(safeString(data));
+
 const safeNavItem = (data: any): PrimaryNavItem => ({
   title: safeString(data?.title),
-  url: safeString(data?.url),
+  url: safeUrl(data?.url),
   idHTML: safeString(data?.idHTML),
   subNavItems: data?.subNav?.map(safeTerminalNavItem),
 });
 
 const safeTerminalNavItem = (data: any): TerminalNavItem => ({
   title: safeString(data?.title),
-  url: safeString(data?.url),
+  url: safeUrl(data?.url),
   idHTML: safeString(data?.idHTML),
 });
 
@@ -120,7 +123,7 @@ const safeAlert = (data: any): Alert => ({
   button: data?.button?.url
     ? {
         text: safeString(data.button.text),
-        url: safeString(data.button.url),
+        url: safeUrl(data.button.url),
       }
     : data?.button?.action
     ? {
