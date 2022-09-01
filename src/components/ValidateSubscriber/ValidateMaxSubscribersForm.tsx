@@ -24,13 +24,20 @@ export const ValidateMaxSubscribersForm = ({
     return ["CHECKBOX_WITH_TEXTAREA", "CHECKBOX"].includes(answer.answerType);
   };
 
-  const answers: any = {};
-  validationFormData.questionsList?.forEach((question, index) => {
-    answers[`answer${index}`] = isCheckbox(question.answer) ? [] : "";
-    if (question.answer?.answerType === "CHECKBOX_WITH_TEXTAREA") {
-      answers[`answer${index}_text`] = "";
-    }
-  });
+  const normalizeQuestions = (questionsList: MaxSubscribersQuestion[]) => {
+    let normalizedAnswer: any = {};
+    questionsList?.forEach((question, index) => {
+      normalizedAnswer[`answer${index}`] = isCheckbox(question.answer)
+        ? []
+        : "";
+      if (question.answer?.answerType === "CHECKBOX_WITH_TEXTAREA") {
+        normalizedAnswer[`answer${index}_text`] = "";
+      }
+    });
+    return normalizedAnswer;
+  };
+
+  const answers: any = normalizeQuestions(validationFormData.questionsList);
 
   const onSubmit = async (values: any, { setSubmitting }: any) => {
     validationFormData.questionsList.forEach((questionItem, index) => {
@@ -141,6 +148,10 @@ export const ValidateMaxSubscribersForm = ({
   const toggleOthers = () => {
     setShow(!show);
   };
+
+  if (Object.entries(answers).length === 0) {
+    return <>Loading..</>;
+  }
 
   return (
     <section className="dp-container">
