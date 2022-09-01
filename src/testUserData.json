@@ -5,7 +5,7 @@
       "url": "https://webappint.fromdoppler.net/dashboard",
       "isEnabled": false,
       "isSelected": false,
-      "idHTML": "listMenu"
+      "idHTML": "dashboardMenu"
     },
     {
       "title": "Campaigns",
