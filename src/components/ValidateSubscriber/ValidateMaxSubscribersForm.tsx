@@ -1,25 +1,19 @@
-import React, { useState } from "react";
-import { Field, Form, Formik, FormikState } from "formik";
+import React from "react";
+import { Form, Formik, FormikState } from "formik";
 import { FormattedMessage } from "react-intl";
-import {
-  CheckboxFieldItem,
-  FieldGroup,
-  InputFieldItem,
-  SubmitButton,
-} from "./form-helpers";
+import { FieldGroup, SubmitButton } from "./form-helpers";
 import {
   MaxSubscribersQuestion,
   SubscriberValidationAnswer,
   ValidateMaxSubscribersFormProp,
 } from "./types";
+import { Question } from "./Question";
 
 export const ValidateMaxSubscribersForm = ({
   validationFormData,
   handleClose,
   handleSubmit,
 }: ValidateMaxSubscribersFormProp) => {
-  const [show, setShow] = useState(false);
-
   const isCheckbox = (answer: SubscriberValidationAnswer) => {
     return ["CHECKBOX_WITH_TEXTAREA", "CHECKBOX"].includes(answer.answerType);
   };
@@ -70,83 +64,18 @@ export const ValidateMaxSubscribersForm = ({
     formikProps: FormikState<any>
   ) => {
     const { touched, errors, submitCount } = formikProps;
-    if (
-      questionItem.answer?.answerType === "TEXTFIELD" ||
-      questionItem.answer?.answerType === "URL"
-    ) {
-      return (
-        <InputFieldItem
-          type="text"
-          label={questionItem.question}
-          fieldName={`answer${questionIndex}`}
-          required
-          className={`${
-            questionItem.answer?.answerType === "TEXTFIELD"
-              ? "field-item--50"
-              : ""
-          }`}
-        />
-      );
-    }
-
-    if (isCheckbox(questionItem.answer)) {
-      const fieldName = `answer${questionIndex}`;
-      return (
-        <li className="m-t-6">
-          <fieldset>
-            <label htmlFor={questionItem.question}>
-              {questionItem.question}
-            </label>
-            <FieldGroup>
-              {questionItem.answer.answerOptions.map((option, optionIndex) => {
-                const lastCheckboxItem =
-                  questionItem.answer?.answerType ===
-                    "CHECKBOX_WITH_TEXTAREA" &&
-                  questionItem.answer?.answerOptions.length - 1 === optionIndex;
-                return (
-                  <React.Fragment key={`checkbox${optionIndex}`}>
-                    <CheckboxFieldItem
-                      className={"field-item--50"}
-                      label={option}
-                      fieldName={fieldName}
-                      id={`${fieldName}-${optionIndex}`}
-                      value={option}
-                      onClick={lastCheckboxItem ? toggleOthers : undefined}
-                      withErrors={false}
-                    />
-                    {lastCheckboxItem ? (
-                      <div
-                        className={`${show ? "dp-show" : "dp-hide"}`}
-                        data-testid="last-textarea"
-                      >
-                        <Field
-                          as="textarea"
-                          name={`answer${questionIndex}_text`}
-                          className={"field-item"}
-                        />
-                      </div>
-                    ) : null}
-                  </React.Fragment>
-                );
-              })}
-              {submitCount && touched[fieldName] && errors[fieldName] ? (
-                <li className="field-item error">
-                  <div className="dp-message dp-error-form">
-                    <p>
-                      <FormattedMessage id={`${errors[fieldName]}`} />
-                    </p>
-                  </div>
-                </li>
-              ) : null}
-            </FieldGroup>
-          </fieldset>
-        </li>
-      );
-    }
-  };
-
-  const toggleOthers = () => {
-    setShow(!show);
+    const fieldName = `answer${questionIndex}`;
+    return (
+      <Question
+        questionItem={questionItem}
+        fieldName={fieldName}
+        error={
+          submitCount && touched[fieldName] && errors[fieldName]
+            ? `${errors[fieldName]}`
+            : undefined
+        }
+      />
+    );
   };
 
   if (Object.entries(answers).length === 0) {
