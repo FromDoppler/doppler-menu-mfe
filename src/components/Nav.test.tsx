@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
+import { PrimaryNavItemState } from "../navbar-state/navbar-state-abstractions";
 import { Nav } from "./Nav";
-import { PrimaryNavItem } from "../model";
 
 const mainNav = "main nav";
-const nav: PrimaryNavItem[] = [
+const nav: PrimaryNavItemState[] = [
   {
     title: "Home",
     url: "/Dashboard/",
@@ -42,10 +42,14 @@ describe(Nav.name, () => {
   it("should not break if props are missing", () => {
     render(
       <Nav
-        currentPath={"/"}
-        nav={[]}
-        openMenuHeader={jest.fn()}
-        closeMenuHeader={jest.fn()}
+        selectNavItem={() => {}}
+        unselectNavItem={() => {}}
+        navBar={{
+          currentUrl: "/",
+          selectedItemId: null,
+          items: [],
+          isExpanded: false,
+        }}
       />
     );
 
@@ -56,10 +60,14 @@ describe(Nav.name, () => {
   it("should render Navs properly", () => {
     render(
       <Nav
-        currentPath={"/"}
-        nav={nav}
-        openMenuHeader={jest.fn()}
-        closeMenuHeader={jest.fn()}
+        selectNavItem={() => {}}
+        unselectNavItem={() => {}}
+        navBar={{
+          currentUrl: "/",
+          selectedItemId: null,
+          items: nav,
+          isExpanded: false,
+        }}
       />
     );
 
