@@ -62,8 +62,14 @@ const safeNavItem = (data: any): PrimaryNavItem => ({
   title: safeString(data?.title),
   url: safeUrl(data?.url),
   idHTML: safeString(data?.idHTML),
-  subNavItems: data?.subNav?.map(safeTerminalNavItem),
+  subNavItems: safeSubNavItems(data?.subNav),
 });
+
+const safeSubNavItems = (
+  data: any
+): undefined | Readonly<[TerminalNavItem, ...TerminalNavItem[]]> => {
+  return data && data.length > 0 ? data.map(safeTerminalNavItem) : undefined;
+};
 
 const safeTerminalNavItem = (data: any): TerminalNavItem => ({
   title: safeString(data?.title),

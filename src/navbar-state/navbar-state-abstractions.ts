@@ -5,7 +5,6 @@ export type SecondaryNavItemState = TerminalNavItem &
     /** isActive value is based on current URL.
      * It should be true when url matches current URL. */
     isActive?: true | undefined;
-    subNavItems?: undefined;
   }>;
 
 export type PrimaryNavItemState = Omit<PrimaryNavItem, "subNavItems"> &
@@ -18,7 +17,7 @@ export type PrimaryNavItemState = Omit<PrimaryNavItem, "subNavItems"> &
     /** isSelected value is based on mouse hover.
      * It should be the last primaryNavItem that was hovered. */
     isSelected?: true | undefined;
-    subNavItems?: ReadonlyArray<SecondaryNavItemState>;
+    subNavItems?: Readonly<[SecondaryNavItemState, ...SecondaryNavItemState[]]>;
   }>;
 
 export type NavBarState = Readonly<{
@@ -36,6 +35,6 @@ export type NavBarState = Readonly<{
 // Using events like naming convention for action types
 // See https://redux.js.org/style-guide/#model-actions-as-events-not-setters
 export type NavBarStateReducerAction =
-  | { type: "items/updated"; items: ReadonlyArray<PrimaryNavItem> }
+  | { type: "items/updated"; items: ReadonlyArray<PrimaryNavItemState> }
   | { type: "url/updated"; href: string }
   | { type: "selected-item/updated"; idHTML: string | null };

@@ -42,7 +42,6 @@ function buildNavBarState({
     }
     let primaryIsOpen =
       primaryItem.subNavItems &&
-      primaryItem.subNavItems.length > 0 &&
       ((primaryIsActive && !selectedItemId) ||
         primaryItem.idHTML === selectedItemId);
 
@@ -56,7 +55,13 @@ function buildNavBarState({
         ? primaryItem
         : {
             ...primaryItem,
-            subNavItems: secondaryItems,
+            subNavItems:
+              secondaryItems.length > 0
+                ? (secondaryItems as [
+                    SecondaryNavItemState,
+                    ...SecondaryNavItemState[]
+                  ])
+                : undefined,
             isActive: primaryIsActive ? (true as const) : undefined,
             isSelected: primaryIsSelected ? (true as const) : undefined,
             isOpen: primaryIsOpen ? (true as const) : undefined,
@@ -98,7 +103,7 @@ function navBarStateReducer(
 export function useNavBarStateReducer(
   getInitializationData: () => {
     currentUrl: string;
-    items: ReadonlyArray<PrimaryNavItem>;
+    items: ReadonlyArray<PrimaryNavItemState>;
   }
 ) {
   return useReducer(navBarStateReducer, null, () =>
