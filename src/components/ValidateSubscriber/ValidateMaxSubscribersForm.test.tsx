@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 import "@testing-library/jest-dom/extend-expect";
 import { IntlProviderDouble } from "../i18n/DopplerIntlProvider.double-with-ids-as-values";
 import { ValidateMaxSubscribersForm } from "./ValidateMaxSubscribersForm";
 import { MaxSubscribersData } from "./types";
+import { AppConfigurationProvider } from "../../AppConfiguration";
 
 const mockFormData: MaxSubscribersData = {
   isSentSuccessEmail: false,
@@ -78,12 +78,10 @@ describe("ValidateSubscribersFormComponent", () => {
     );
 
     // Assert
-    await act(async () => {
-      const submitButton = await screen.getByRole("button", {
-        name: "common.save",
-      });
-      await userEvent.click(submitButton);
+    const submitButton = await screen.getByRole("button", {
+      name: "common.save",
     });
+    await userEvent.click(submitButton);
     expect(handleSubmit).toBeCalledTimes(0);
   });
 
@@ -97,13 +95,15 @@ describe("ValidateSubscribersFormComponent", () => {
 
     // Act
     render(
-      <IntlProviderDouble>
-        <ValidateMaxSubscribersForm
-          validationFormData={mockFormData}
-          handleSubmit={handleSubmit}
-          handleClose={jest.fn()}
-        />
-      </IntlProviderDouble>
+      <AppConfigurationProvider configuration={{ useDummies: true }}>
+        <IntlProviderDouble>
+          <ValidateMaxSubscribersForm
+            validationFormData={mockFormData}
+            handleSubmit={handleSubmit}
+            handleClose={jest.fn()}
+          />
+        </IntlProviderDouble>
+      </AppConfigurationProvider>
     );
 
     const inputName = await screen.getByRole("textbox", { name: /Name/i });
@@ -128,12 +128,10 @@ describe("ValidateSubscribersFormComponent", () => {
     expect(checkboxSources).toBeChecked();
     expect(checkboxSubscriptionMethods).toBeChecked();
 
-    await act(async () => {
-      const submitButton = await screen.getByRole("button", {
-        name: "common.save",
-      });
-      await userEvent.click(submitButton);
+    const submitButton = await screen.getByRole("button", {
+      name: "common.save",
     });
+    await userEvent.click(submitButton);
     expect(handleSubmit).toBeCalledTimes(1);
   });
 
@@ -153,9 +151,7 @@ describe("ValidateSubscribersFormComponent", () => {
     );
 
     const checkboxSources = await screen.getByLabelText(sourceSelected);
-    await act(async () => {
-      await userEvent.click(checkboxSources);
-    });
+    await userEvent.click(checkboxSources);
     const textarea = await screen.getByTestId("last-textarea");
     // Assert
     expect(textarea.classList.contains("dp-show")).toBeTruthy();

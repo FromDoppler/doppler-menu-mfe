@@ -1,9 +1,7 @@
 import "@testing-library/jest-dom/extend-expect";
 import {
-  act,
   render,
   screen,
-  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import { IntlProviderDouble } from "../i18n/DopplerIntlProvider.double-with-ids-as-values";
@@ -12,6 +10,7 @@ import * as dopplerLegacyClient from "../../client/dopplerLegacyClient";
 import userEvent from "@testing-library/user-event";
 import { AnswerType, MaxSubscribersData } from "./types";
 import { AppConfigurationProvider } from "../../AppConfiguration";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export const maxSubscribersData: MaxSubscribersData = {
   questionsList: [
@@ -95,11 +94,14 @@ export const maxSubscribersData: MaxSubscribersData = {
 
 describe("ValidateSubscribersComponent", () => {
   it("should render Loading when there is no data", async () => {
+    const queryClient = new QueryClient();
     // Act
     render(
-      <IntlProviderDouble>
-        <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
-      </IntlProviderDouble>
+      <QueryClientProvider client={queryClient}>
+        <IntlProviderDouble>
+          <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
+        </IntlProviderDouble>
+      </QueryClientProvider>
     );
 
     // Assert
@@ -119,11 +121,14 @@ describe("ValidateSubscribersComponent", () => {
         sendMaxSubscribersData: jest.fn(),
       }));
 
+    const queryClient = new QueryClient();
     // Act
     render(
-      <IntlProviderDouble>
-        <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
-      </IntlProviderDouble>
+      <QueryClientProvider client={queryClient}>
+        <IntlProviderDouble>
+          <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
+        </IntlProviderDouble>
+      </QueryClientProvider>
     );
 
     // Assert
@@ -135,19 +140,22 @@ describe("ValidateSubscribersComponent", () => {
   it("should render ValidateMaxSubscribersForm when there is form data", async () => {
     jest
       .spyOn(dopplerLegacyClient, "useDopplerLegacyClient")
-      .mockImplementationOnce(() => ({
+      .mockImplementation(() => ({
         getMaxSubscribersData: jest.fn(async () => maxSubscribersData),
         sendAcceptButtonAction: jest.fn(),
         sendMaxSubscribersData: jest.fn(async (data) => true),
       }));
 
+    const queryClient = new QueryClient();
     // Act
     render(
-      <AppConfigurationProvider configuration={{ useDummies: true }}>
-        <IntlProviderDouble>
-          <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
-        </IntlProviderDouble>
-      </AppConfigurationProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppConfigurationProvider configuration={{ useDummies: true }}>
+          <IntlProviderDouble>
+            <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
+          </IntlProviderDouble>
+        </AppConfigurationProvider>
+      </QueryClientProvider>
     );
     // Assert
     const loader = screen.getByTestId("loading-box");
@@ -183,32 +191,30 @@ describe("ValidateSubscribersComponent", () => {
         sendMaxSubscribersData: jest.fn(async (data) => true),
       }));
 
+    const queryClient = new QueryClient();
     // Act
     render(
-      <IntlProviderDouble>
-        <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
-      </IntlProviderDouble>
+      <QueryClientProvider client={queryClient}>
+        <IntlProviderDouble>
+          <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
+        </IntlProviderDouble>
+      </QueryClientProvider>
     );
 
     const loader = screen.getByTestId("loading-box");
     await waitForElementToBeRemoved(loader);
 
-    await act(async () => {
-      const input = await screen.getByRole("textbox", { name: "Nombre" });
-      await userEvent.type(input, "value");
-      const submitButton = await screen.getByRole("button", {
-        name: "common.save",
-      });
-      await userEvent.click(submitButton);
+    const input = await screen.getByRole("textbox", { name: "Nombre" });
+    await userEvent.type(input, "value");
+    const submitButton = await screen.getByRole("button", {
+      name: "common.save",
     });
+    await userEvent.click(submitButton);
 
     // Assert
-    await waitFor(async () => {
-      //TODO: corregir, tarda mucho tiempo en renderizar, test fragil
-      const validateMaxSubscribersConfirm = await screen.getByTestId(
-        "validate-subscribers-confirm"
-      );
-      expect(validateMaxSubscribersConfirm).toBeInTheDocument();
-    });
+    const validateMaxSubscribersConfirm = await screen.getByTestId(
+      "validate-subscribers-confirm"
+    );
+    expect(validateMaxSubscribersConfirm).toBeInTheDocument();
   });
 });

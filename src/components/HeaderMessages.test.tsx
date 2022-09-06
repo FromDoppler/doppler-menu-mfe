@@ -3,6 +3,7 @@ import { HeaderMessages } from "./HeaderMessages";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { Alert, User } from "../model";
 import { act } from "react-dom/test-utils";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const userData: User = {
   email: "email@mock.com",
@@ -103,10 +104,14 @@ describe("<HeaderMessages />", () => {
       },
     };
 
+    const queryClient = new QueryClient();
+    // Act
     render(
-      <MenuIntlProvider>
-        <HeaderMessages alert={alertData} user={userData} />
-      </MenuIntlProvider>
+      <QueryClientProvider client={queryClient}>
+        <MenuIntlProvider>
+          <HeaderMessages alert={alertData} user={userData} />
+        </MenuIntlProvider>
+      </QueryClientProvider>
     );
 
     const button = screen.queryByTestId(buttonTestId);
