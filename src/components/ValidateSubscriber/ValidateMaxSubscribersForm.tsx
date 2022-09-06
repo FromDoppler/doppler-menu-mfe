@@ -11,8 +11,8 @@ import { Question } from "./Question";
 
 export const ValidateMaxSubscribersForm = ({
   validationFormData,
-  handleClose,
-  handleSubmit,
+  onClose,
+  onSubmit,
 }: ValidateMaxSubscribersFormProp) => {
   const isCheckbox = (answer: SubscriberValidationAnswer) => {
     return ["CHECKBOX_WITH_TEXTAREA", "CHECKBOX"].includes(answer.answerType);
@@ -33,7 +33,7 @@ export const ValidateMaxSubscribersForm = ({
 
   const answers: any = normalizeQuestions(validationFormData.questionsList);
 
-  const onSubmit = async (values: any, { setSubmitting }: any) => {
+  const handlerSubmit = async (values: any, { setSubmitting }: any) => {
     validationFormData.questionsList.forEach((questionItem, index) => {
       if (isCheckbox(questionItem.answer)) {
         questionItem.answer.value = values[`answer${index}`].join("-");
@@ -42,7 +42,7 @@ export const ValidateMaxSubscribersForm = ({
         questionItem.answer.value = values[`answer${index}`];
       }
     });
-    const result = await handleSubmit();
+    const result = await onSubmit();
     if (!result) {
       setSubmitting(false);
     }
@@ -91,7 +91,11 @@ export const ValidateMaxSubscribersForm = ({
         <p>
           <FormattedMessage id="validate_max_subscribers_form.subtitle" />
         </p>
-        <Formik initialValues={answers} validate={validate} onSubmit={onSubmit}>
+        <Formik
+          initialValues={answers}
+          validate={validate}
+          onSubmit={handlerSubmit}
+        >
           {(formikProps) => (
             <Form className="dp-validate-max-subscribers">
               <fieldset>
@@ -131,7 +135,7 @@ export const ValidateMaxSubscribersForm = ({
                       <button
                         type="button"
                         className="dp-button button-medium primary-grey m-r-6"
-                        onClick={handleClose}
+                        onClick={onClose}
                       >
                         <FormattedMessage id="common.cancel" />
                       </button>

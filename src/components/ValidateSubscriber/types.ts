@@ -29,6 +29,6 @@ export enum AnswerType {
 
 export interface ValidateMaxSubscribersFormProp {
   validationFormData: MaxSubscribersData;
-  handleClose: () => void;
-  handleSubmit: () => Promise<boolean>;
+  onClose: () => void;
+  onSubmit: () => Promise<boolean>;
 }

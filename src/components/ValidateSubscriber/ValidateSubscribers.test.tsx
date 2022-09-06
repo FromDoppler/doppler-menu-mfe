@@ -99,7 +99,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
+          <ValidateSubscribers handleClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );
@@ -126,7 +126,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
+          <ValidateSubscribers handleClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );
@@ -152,7 +152,7 @@ describe("ValidateSubscribersComponent", () => {
       <QueryClientProvider client={queryClient}>
         <AppConfigurationProvider configuration={{ useDummies: true }}>
           <IntlProviderDouble>
-            <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
+            <ValidateSubscribers handleClose={jest.fn} />
           </IntlProviderDouble>
         </AppConfigurationProvider>
       </QueryClientProvider>
@@ -196,7 +196,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribers handleClose={jest.fn} setNextAlert={jest.fn} />
+          <ValidateSubscribers handleClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );

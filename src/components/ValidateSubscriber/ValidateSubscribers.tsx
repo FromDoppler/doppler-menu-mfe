@@ -8,12 +8,10 @@ import { useQuery } from "react-query";
 
 interface ValidateSubscribersProps {
   handleClose: () => void;
-  setNextAlert: () => void;
 }
 
 export const ValidateSubscribers = ({
   handleClose,
-  setNextAlert,
 }: ValidateSubscribersProps) => {
   const dopplerLegacyClient = useDopplerLegacyClient();
   const {
@@ -38,7 +36,6 @@ export const ValidateSubscribers = ({
     );
     if (isSuccess) {
       setSuccess(isSuccess);
-      setNextAlert();
     }
     return isSuccess;
   };
@@ -58,8 +55,8 @@ export const ValidateSubscribers = ({
   return (
     <ValidateMaxSubscribersForm
       validationFormData={validationFormData}
-      handleClose={handleClose}
-      handleSubmit={handleSubmit}
+      onClose={handleClose}
+      onSubmit={handleSubmit}
     />
   );
 };

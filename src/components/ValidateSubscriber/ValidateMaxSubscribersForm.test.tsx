@@ -71,8 +71,8 @@ describe("ValidateSubscribersFormComponent", () => {
       <IntlProviderDouble>
         <ValidateMaxSubscribersForm
           validationFormData={mockFormData}
-          handleSubmit={handleSubmit}
-          handleClose={jest.fn()}
+          onSubmit={handleSubmit}
+          onClose={jest.fn()}
         />
       </IntlProviderDouble>
     );
@@ -99,8 +99,8 @@ describe("ValidateSubscribersFormComponent", () => {
         <IntlProviderDouble>
           <ValidateMaxSubscribersForm
             validationFormData={mockFormData}
-            handleSubmit={handleSubmit}
-            handleClose={jest.fn()}
+            onSubmit={handleSubmit}
+            onClose={jest.fn()}
           />
         </IntlProviderDouble>
       </AppConfigurationProvider>
@@ -144,8 +144,8 @@ describe("ValidateSubscribersFormComponent", () => {
       <IntlProviderDouble>
         <ValidateMaxSubscribersForm
           validationFormData={mockFormData}
-          handleClose={jest.fn()}
-          handleSubmit={jest.fn()}
+          onClose={jest.fn()}
+          onSubmit={jest.fn()}
         />
       </IntlProviderDouble>
     );
@@ -164,8 +164,8 @@ describe("ValidateSubscribersFormComponent", () => {
       <IntlProviderDouble>
         <ValidateMaxSubscribersForm
           validationFormData={mockFormData}
-          handleClose={jest.fn()}
-          handleSubmit={jest.fn()}
+          onClose={jest.fn()}
+          onSubmit={jest.fn()}
         />
       </IntlProviderDouble>
     );

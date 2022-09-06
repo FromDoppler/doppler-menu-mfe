@@ -69,10 +69,7 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
           }
         >
           {button?.action === validateSubscribersPopup ? (
-            <ValidateSubscribers
-              handleClose={() => toggleModal(false)}
-              setNextAlert={() => {}}
-            />
+            <ValidateSubscribers handleClose={() => toggleModal(false)} />
           ) : (
             <UpgradePlanForm
               isSubscriber={plan.isSubscribers}

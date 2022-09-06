@@ -142,9 +142,7 @@ export const InputFieldItem = ({
   type,
   placeholder,
   required,
-  withNameValidation,
-  minLength,
-  rest,
+  ...rest
 }: InputFieldItemProp) => (
   <FieldItem
     className={concatClasses("field-item", className)}
