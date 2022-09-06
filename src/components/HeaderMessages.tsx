@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Modal } from "./Modal";
 import { User, Alert } from "../model";
 import { UpgradePlanForm } from "./UpgradePlanForm";
@@ -13,34 +13,17 @@ const upgradePlanPopup = "upgradePlanPopup";
 const validateSubscribersPopup = "validateSubscribersPopup";
 
 export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  if (!Object.keys(alert).length) {
+    return null;
+  }
+
   const { plan } = user;
   const { type, message, button } = alert;
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const toggleModal = (isOpen: boolean) => setModalIsOpen(isOpen);
   // TODO: nextAlert logic
-
-  const showLink = ({ text, url }: { text: string; url: string }) => (
-    <a
-      href={url}
-      className="button button--light button--tiny"
-      data-testid="linkButton"
-    >
-      {text}
-    </a>
-  );
-
-  const showButton = ({ text }: { text: string; action: string }) => (
-    <button
-      className="button button--light button--tiny"
-      data-testid="actionButton"
-      onClick={() => toggleModal(true)}
-    >
-      {text}
-    </button>
-  );
-
-  if (!Object.keys(alert).length) return null;
 
   // Only validateSubscribersPopup and upgradePlanPopup actions are supported
   const hasModal =
@@ -48,16 +31,22 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
     (button.action === validateSubscribersPopup ||
       button?.action === upgradePlanPopup);
 
+  const showAction = button?.url || button?.action;
+
   return (
     <>
       <div className={`messages-container sticky ${type}`}>
         <div className="wrapper">
           {message && <p>{message}</p>}
-          {button?.url
-            ? showLink(button)
-            : button?.action
-            ? showButton(button)
-            : null}
+          {showAction && (
+            <ActionComponent
+              type={button?.url ? "LINK" : "BUTTON"}
+              url={button?.url}
+              onClick={() => toggleModal(true)}
+            >
+              {button?.text}
+            </ActionComponent>
+          )}
         </div>
       </div>
       {hasModal && (
@@ -80,5 +69,33 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
         </Modal>
       )}
     </>
+  );
+};
+
+interface ActionComponentProps {
+  url?: string;
+  onClick?: () => void;
+  children: string | ReactNode;
+  type: "BUTTON" | "LINK";
+}
+
+const ActionComponent = ({
+  children,
+  type,
+  url,
+  onClick,
+}: ActionComponentProps) => {
+  if (type === "LINK") {
+    return (
+      <a href={url} className="button button--light button--tiny">
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <button className="button button--light button--tiny" onClick={onClick}>
+      {children}
+    </button>
   );
 };

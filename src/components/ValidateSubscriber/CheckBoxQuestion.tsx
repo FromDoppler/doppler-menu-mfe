@@ -26,7 +26,7 @@ export const CheckBoxQuestion = ({
               : undefined
           }
         />
-        {isCheckOtherOption && isLastOption ? (
+        {enableOtherOption && isLastOption ? (
           <div
             className={`${isCheckOtherOption ? "dp-show" : "dp-hide"}`}
             data-testid="last-textarea"
