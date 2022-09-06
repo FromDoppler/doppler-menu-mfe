@@ -4,10 +4,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
 import { AppSessionStateProvider } from "./session/AppSessionStateContext";
-import { AppConfiguration } from "./AppConfiguration";
+import { AppConfiguration, AppConfigurationProvider } from "./AppConfiguration";
 import { createDummyAppSessionStateClient } from "./session/dummyAppSessionStateClient";
 import { SessionMfeAppSessionStateClient } from "./session/SessionMfeAppSessionStateClient";
 import { patchBrowserBehaviorToInterceptLocationUpdates } from "./history/historyUtils";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 patchBrowserBehaviorToInterceptLocationUpdates(window);
 
@@ -42,15 +43,21 @@ function initialize(
     configuration
   );
   appSessionStateClient.start();
+  // Create a client
+  const queryClient = new QueryClient();
 
   const root = createRoot(targetElement);
   root.render(
     <StrictMode>
-      <AppSessionStateProvider appSessionStateClient={appSessionStateClient}>
-        <MenuIntlProvider>
-          <App />
-        </MenuIntlProvider>
-      </AppSessionStateProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppSessionStateProvider appSessionStateClient={appSessionStateClient}>
+          <AppConfigurationProvider configuration={configuration}>
+            <MenuIntlProvider>
+              <App />
+            </MenuIntlProvider>
+          </AppConfigurationProvider>
+        </AppSessionStateProvider>
+      </QueryClientProvider>
     </StrictMode>
   );
 }

@@ -1,4 +1,27 @@
-import { AnswerType, MaxSubscribersData } from "./types";
+import { DopplerLegacyClient } from "./dopplerLegacyClient";
+import {
+  AnswerType,
+  MaxSubscribersData,
+} from "../components/ValidateSubscriber/types";
+
+export class DopplerLegacyClientDummy implements DopplerLegacyClient {
+  public async getMaxSubscribersData(): Promise<MaxSubscribersData> {
+    await setTimeout(() => {}, 1500);
+    return maxSubscribersData;
+  }
+
+  public async sendAcceptButtonAction(): Promise<boolean> {
+    await setTimeout(() => {}, 1500);
+    return true;
+  }
+
+  public async sendMaxSubscribersData(
+    maxSubscribersData: MaxSubscribersData
+  ): Promise<boolean> {
+    await setTimeout(() => {}, 1500);
+    return true;
+  }
+}
 
 const maxSubscribersData: MaxSubscribersData = {
   questionsList: [
@@ -79,9 +102,3 @@ const maxSubscribersData: MaxSubscribersData = {
   urlHelp:
     "http://help.fromdoppler.com/por-que-debo-completar-un-formulario-al-cargar-mis-listas/",
 };
-
-export async function getMaxSubscribersData(): Promise<MaxSubscribersData> {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve(maxSubscribersData), 1500)
-  );
-}

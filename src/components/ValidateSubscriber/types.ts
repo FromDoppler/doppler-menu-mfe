@@ -14,6 +14,7 @@ export interface SubscriberValidationAnswer {
   answerType: string;
   answerOptions: string[];
   value: string;
+  text?: string;
   optionsSelected: string[];
 }
 
@@ -29,5 +30,5 @@ export enum AnswerType {
 export interface ValidateMaxSubscribersFormProp {
   validationFormData: MaxSubscribersData;
   handleClose: () => void;
-  handleSubmit: () => void;
+  handleSubmit: () => Promise<boolean>;
 }

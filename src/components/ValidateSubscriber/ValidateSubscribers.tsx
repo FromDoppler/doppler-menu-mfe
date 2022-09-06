@@ -1,14 +1,10 @@
-import { useReducer, useEffect, useState } from "react";
+import { useState } from "react";
 import { Loading } from "../Loading";
-import {
-  INITIAL_STATE,
-  validateMaxSubscribersFormReducer,
-  VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS,
-} from "./reducer/validateMaxSubscribersFormReducer";
 import { ValidateMaxSubscribersForm } from "./ValidateMaxSubscribersForm";
-import { getMaxSubscribersData } from "./validate-max-subscribers-doubles";
 import { ValidateMaxSubscribersConfirmation } from "./ValidateMaxSubscribersConfirmation";
 import { UnexpectedError } from "../UnexpectedError";
+import { useDopplerLegacyClient } from "../../client/dopplerLegacyClient";
+import { useQuery } from "react-query";
 
 interface ValidateSubscribersProps {
   handleClose: () => void;
@@ -19,40 +15,39 @@ export const ValidateSubscribers = ({
   handleClose,
   setNextAlert,
 }: ValidateSubscribersProps) => {
-  const [{ loading, hasError, validationFormData }, dispatch] = useReducer(
-    validateMaxSubscribersFormReducer,
-    INITIAL_STATE
+  const dopplerLegacyClient = useDopplerLegacyClient();
+  const {
+    data: validationFormData,
+    isLoading,
+    error,
+  } = useQuery<any>(
+    "getMaxSubscribersData",
+    dopplerLegacyClient.getMaxSubscribersData,
+    {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      retry: false,
+    }
   );
 
   const [success, setSuccess] = useState(false);
-  const handleSubmit = () => {
-    // TODO: submit implementation
-    setSuccess(true);
-    setNextAlert();
+
+  const handleSubmit = async () => {
+    const isSuccess = await dopplerLegacyClient.sendMaxSubscribersData(
+      validationFormData
+    );
+    if (isSuccess) {
+      setSuccess(isSuccess);
+      setNextAlert();
+    }
+    return isSuccess;
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch({ type: VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS.START_FETCH });
-        // TODO: Connect with data.
-        const response = await getMaxSubscribersData();
-        dispatch({
-          type: VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS.FINISH_FETCH,
-          payload: response,
-        });
-      } catch (error) {
-        dispatch({ type: VALIDATE_MAX_SUBSCRIBERS_FORM_ACTIONS.FAIL_FETCH });
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <Loading />;
   }
 
-  if (hasError) {
+  if (error) {
     return <UnexpectedError />;
   }
 

@@ -60,6 +60,30 @@ export interface FormikProp {
   submitCount?: number;
 }
 
+const _SubmitButton = ({
+  children,
+  formik: { isSubmitting },
+  className,
+}: any) => {
+  return (
+    <>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={
+          "dp-button button-medium primary-green" +
+          ((isSubmitting && " button--loading") || "") +
+          ((className && ` ${className}`) || "")
+        }
+      >
+        {children}
+      </button>
+    </>
+  );
+};
+
+export const SubmitButton = connect(_SubmitButton);
+
 export const FieldItem = connect(
   ({
     className,
@@ -149,15 +173,16 @@ interface CheckboxFieldItemProp {
   onClick?: () => void;
   withErrors: boolean;
 }
+
 export const CheckboxFieldItem = ({
   className,
   fieldName,
   label,
   checkRequired,
   id,
-  value,
   onChange,
   withErrors = true,
+  ...rest
 }: CheckboxFieldItemProp) => (
   <FieldItem
     className={concatClasses("field-item field-item__checkbox", className)}
@@ -169,8 +194,8 @@ export const CheckboxFieldItem = ({
       name={fieldName}
       id={id || fieldName}
       validate={(value: any) => checkRequired && validateCheckRequired(value)}
-      value={value}
       onClick={onChange}
+      {...rest}
     />
     <span className="checkmark" />
     <label htmlFor={id || fieldName}> {label}</label>
