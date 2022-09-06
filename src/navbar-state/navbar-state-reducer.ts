@@ -43,6 +43,8 @@ function buildNavBarState({
       }
     }
     let primaryIsOpen =
+      primaryItem.subNavItems &&
+      primaryItem.subNavItems.length > 0 &&
       primaryIsActive &&
       (!selectedItemId || primaryItem.idHTML === selectedItemId);
 
