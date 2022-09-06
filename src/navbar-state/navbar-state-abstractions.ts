@@ -4,7 +4,7 @@ export type SecondaryNavItemState = TerminalNavItem &
   Readonly<{
     /** isActive value is based on current URL.
      * It should be true when url matches current URL. */
-    isActive?: true | undefined;
+    isActive: boolean;
   }>;
 
 export type PrimaryNavItemState = Omit<PrimaryNavItem, "subNavItems"> &
@@ -12,12 +12,14 @@ export type PrimaryNavItemState = Omit<PrimaryNavItem, "subNavItems"> &
     /** isActive value is based on current URL.
      * It should be true when url matches current URL
      * or when subItem's URL matches. */
-    isActive?: true | undefined;
-    isOpen?: true | undefined;
+    isActive: boolean;
+    isOpen: boolean;
     /** isSelected value is based on mouse hover.
      * It should be the last primaryNavItem that was hovered. */
-    isSelected?: true | undefined;
-    subNavItems?: Readonly<[SecondaryNavItemState, ...SecondaryNavItemState[]]>;
+    isSelected: boolean;
+    subNavItems:
+      | Readonly<[SecondaryNavItemState, ...SecondaryNavItemState[]]>
+      | undefined;
   }>;
 
 export type NavBarState = Readonly<{

@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import { PrimaryNavItem } from "../model";
 import { IsActiveUrl } from "../utils";
 import {
   NavBarState,
@@ -34,19 +33,19 @@ function buildNavBarState({
             ? secondaryItem
             : {
                 ...secondaryItem,
-                isActive: secondaryIsActive ? (true as const) : undefined,
+                isActive: secondaryIsActive,
               };
         secondaryItems.push(newSecondaryItem);
         primaryIsActive ||= secondaryIsActive;
       }
     }
-    let primaryIsOpen =
-      primaryItem.subNavItems &&
-      ((primaryIsActive && !selectedItemId) ||
-        primaryItem.idHTML === selectedItemId);
+    let primaryIsOpen = primaryItem.subNavItems
+      ? (primaryIsActive && !selectedItemId) ||
+        primaryItem.idHTML === selectedItemId
+      : false;
 
     // Comparing negations in order to normalize values to boolean
-    const newPrimaryItem =
+    const newPrimaryItem: PrimaryNavItemState =
       !primaryIsActive &&
       !primaryItem.isActive &&
       !primaryIsOpen &&
@@ -62,9 +61,9 @@ function buildNavBarState({
                     ...SecondaryNavItemState[]
                   ])
                 : undefined,
-            isActive: primaryIsActive ? (true as const) : undefined,
-            isSelected: primaryIsSelected ? (true as const) : undefined,
-            isOpen: primaryIsOpen ? (true as const) : undefined,
+            isActive: primaryIsActive,
+            isSelected: primaryIsSelected,
+            isOpen: primaryIsOpen,
           };
     primaryItems.push(newPrimaryItem);
     isExpanded ||= !!primaryIsOpen;
@@ -73,7 +72,7 @@ function buildNavBarState({
   return { currentUrl, selectedItemId, items: primaryItems, isExpanded };
 }
 
-function navBarStateReducer(
+export function navBarStateReducer(
   state: NavBarState,
   action: NavBarStateReducerAction
 ): NavBarState {

@@ -1,14 +1,31 @@
 import { useEffect } from "react";
 import { AppSessionState } from "../session/app-session-abstractions";
 import { useNavBarStateReducer } from "./navbar-state-reducer";
-import { NavBarState } from "./navbar-state-abstractions";
+import {
+  NavBarState,
+  PrimaryNavItemState,
+  SecondaryNavItemState,
+} from "./navbar-state-abstractions";
 
-function extractNavItems(appSessionState: AppSessionState) {
+function extractNavItems(
+  appSessionState: AppSessionState
+): ReadonlyArray<PrimaryNavItemState> {
   const items =
     appSessionState.status === "authenticated"
       ? appSessionState.userData.navItems
       : [];
-  return items;
+  return items.map((x) => ({
+    ...x,
+    isActive: false,
+    isOpen: false,
+    isSelected: false,
+    subNavItems: x.subNavItems
+      ? (x.subNavItems.map((y) => ({ ...y, isActive: false })) as [
+          SecondaryNavItemState,
+          ...SecondaryNavItemState[]
+        ])
+      : undefined,
+  }));
 }
 
 export function useNavBarState({
