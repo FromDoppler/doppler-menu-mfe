@@ -13,7 +13,6 @@ interface NavProp {
 interface NavItemProp {
   item: PrimaryNavItemState;
   selectNavItem: (idHTML: string) => void;
-  unselectNavItem: () => void;
 }
 
 interface SubNavProp {
@@ -26,17 +25,16 @@ interface SubNavItemProp {
 
 export const Nav = ({ selectNavItem, unselectNavItem, navBar }: NavProp) => {
   return (
-    <nav className="nav-left-main" aria-label="main nav">
+    <nav
+      className="nav-left-main"
+      aria-label="main nav"
+      onMouseLeave={() => unselectNavItem()}
+    >
       <div className="menu-main--container">
         <ul className="menu-main">
           {navBar.items.map((item, index) => {
             return (
-              <NavItem
-                key={index}
-                item={item}
-                selectNavItem={selectNavItem}
-                unselectNavItem={unselectNavItem}
-              />
+              <NavItem key={index} item={item} selectNavItem={selectNavItem} />
             );
           })}
         </ul>
@@ -45,7 +43,7 @@ export const Nav = ({ selectNavItem, unselectNavItem, navBar }: NavProp) => {
   );
 };
 
-const NavItem = ({ selectNavItem, unselectNavItem, item }: NavItemProp) => {
+const NavItem = ({ selectNavItem, item }: NavItemProp) => {
   const { title, url, subNavItems = [] } = item;
   const hasSubmenuItems = !!subNavItems.length;
 
@@ -54,8 +52,6 @@ const NavItem = ({ selectNavItem, unselectNavItem, item }: NavItemProp) => {
       key={title}
       className={`${hasSubmenuItems ? "submenu-item" : ""}`}
       onMouseEnter={() => selectNavItem(item.idHTML)}
-      // TODO: review it
-      onMouseLeave={() => unselectNavItem()}
     >
       <a className={item.isActive ? "active" : ""} href={url}>
         {title}
