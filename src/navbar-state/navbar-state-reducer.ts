@@ -18,9 +18,7 @@ function buildNavBarState({
   items: ReadonlyArray<PrimaryNavItemState>;
 }): NavBarState {
   // TODO: refactorize it
-  let activeWithSubitems = false;
-  let selectedWithSubitems = false;
-  let selectedWithoutSubitems = false;
+  let isExpanded = false;
   const primaryItems = [];
   for (const primaryItem of items) {
     let primaryIsActive = IsActiveUrl(currentUrl, primaryItem.url);
@@ -45,8 +43,8 @@ function buildNavBarState({
     let primaryIsOpen =
       primaryItem.subNavItems &&
       primaryItem.subNavItems.length > 0 &&
-      primaryIsActive &&
-      (!selectedItemId || primaryItem.idHTML === selectedItemId);
+      ((primaryIsActive && !selectedItemId) ||
+        primaryItem.idHTML === selectedItemId);
 
     // Comparing negations in order to normalize values to boolean
     const newPrimaryItem =
@@ -64,30 +62,8 @@ function buildNavBarState({
             isOpen: primaryIsOpen ? (true as const) : undefined,
           };
     primaryItems.push(newPrimaryItem);
-    if (
-      primaryIsActive &&
-      primaryItem.subNavItems &&
-      primaryItem.subNavItems.length > 0
-    ) {
-      activeWithSubitems = true;
-    }
-    if (
-      primaryIsSelected &&
-      primaryItem.subNavItems &&
-      primaryItem.subNavItems.length > 0
-    ) {
-      selectedWithSubitems = true;
-    }
-    if (
-      primaryIsSelected &&
-      (!primaryItem.subNavItems || primaryItem.subNavItems.length === 0)
-    ) {
-      selectedWithoutSubitems = true;
-    }
+    isExpanded ||= !!primaryIsOpen;
   }
-
-  const isExpanded =
-    !selectedWithoutSubitems && (selectedWithSubitems || activeWithSubitems);
 
   return { currentUrl, selectedItemId, items: primaryItems, isExpanded };
 }
