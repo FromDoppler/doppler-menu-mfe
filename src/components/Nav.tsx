@@ -23,12 +23,13 @@ interface SubNavItemProp {
   subItem: SecondaryNavItemState;
 }
 
-export const Nav = ({ selectNavItem, unselectNavItem, navBar }: NavProp) => {
-  return (
+export const Nav = ({ selectNavItem, unselectNavItem, navBar }: NavProp) => (
+  <>
     <nav
       className="nav-left-main"
       aria-label="main nav"
       onMouseLeave={() => unselectNavItem()}
+      style={navStylePatch}
     >
       <div className="menu-main--container">
         <ul className="menu-main">
@@ -40,8 +41,14 @@ export const Nav = ({ selectNavItem, unselectNavItem, navBar }: NavProp) => {
         </ul>
       </div>
     </nav>
-  );
-};
+    <FlexibleSpace />
+  </>
+);
+
+// TODO: move these patches to Style Guide MFE
+const navStylePatch = { flex: "unset" };
+const flexibleSpaceStylePatch = { flex: "1" };
+const FlexibleSpace = () => <div style={flexibleSpaceStylePatch} />;
 
 const NavItem = ({ selectNavItem, item }: NavItemProp) => {
   const { title, url, subNavItems = [] } = item;
