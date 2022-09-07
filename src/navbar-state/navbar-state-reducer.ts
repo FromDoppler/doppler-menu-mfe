@@ -7,69 +7,102 @@ import {
   SecondaryNavItemState,
 } from "./navbar-state-abstractions";
 
+const findSecondaryItemByUrl = ({
+  currentUrl,
+  items,
+}: {
+  currentUrl: string;
+  items: ReadonlyArray<PrimaryNavItemState>;
+}) =>
+  !currentUrl
+    ? undefined
+    : items
+        .flatMap((primaryItem) => primaryItem.subNavItems || [])
+        .find((secondaryItem) => IsActiveUrl(currentUrl, secondaryItem.url));
+
+const findPrimaryItemByUrl = ({
+  currentUrl,
+  items,
+}: {
+  currentUrl: string;
+  items: ReadonlyArray<PrimaryNavItemState>;
+}) =>
+  !currentUrl
+    ? undefined
+    : items.find((primaryItem) => IsActiveUrl(currentUrl, primaryItem.url));
+
+const findPrimaryItemByIdHTML = ({
+  idHTML,
+  items,
+}: {
+  idHTML: string | null;
+  items: ReadonlyArray<PrimaryNavItemState>;
+}) =>
+  !idHTML
+    ? undefined
+    : items.find((primaryItem) => primaryItem.idHTML === idHTML);
+
+const findParent = ({
+  subItem: secondaryItem,
+  items,
+}: {
+  subItem: SecondaryNavItemState;
+  items: ReadonlyArray<PrimaryNavItemState>;
+}) =>
+  items.find(
+    (primaryItem) =>
+      primaryItem.subNavItems && primaryItem.subNavItems.includes(secondaryItem)
+  );
+
 function buildNavBarState({
   currentUrl,
   selectedItemId,
-  itemsWithObsoleteState,
+  itemsWithObsoleteState: items,
 }: {
   currentUrl: string;
   selectedItemId: string | null;
   itemsWithObsoleteState: ReadonlyArray<PrimaryNavItemState>;
 }): NavBarState {
-  // TODO: refactorize it
-  let isExpanded = false;
-  const primaryItems = [];
-  for (const primaryItem of itemsWithObsoleteState) {
-    let primaryIsActive = IsActiveUrl(currentUrl, primaryItem.url);
-    let primaryIsSelected =
-      selectedItemId != null && primaryItem.idHTML === selectedItemId;
-    const secondaryItems: SecondaryNavItemState[] = [];
-    if (primaryItem.subNavItems) {
-      for (const secondaryItem of primaryItem.subNavItems) {
-        const secondaryIsActive = IsActiveUrl(currentUrl, secondaryItem.url);
-        // Comparing negations in order to normalize values to boolean
-        const newSecondaryItem =
-          !secondaryIsActive === !secondaryItem.isActive
-            ? secondaryItem
-            : {
-                ...secondaryItem,
-                isActive: secondaryIsActive,
-              };
-        secondaryItems.push(newSecondaryItem);
-        primaryIsActive ||= secondaryIsActive;
-      }
-    }
-    let primaryIsOpen = primaryItem.subNavItems
-      ? (primaryIsActive && !selectedItemId) ||
-        primaryItem.idHTML === selectedItemId
-      : false;
+  const activeSecondaryItem = findSecondaryItemByUrl({ currentUrl, items });
 
-    // Comparing negations in order to normalize values to boolean
-    const newPrimaryItem: PrimaryNavItemState =
-      !primaryIsActive &&
-      !primaryItem.isActive &&
-      !primaryIsOpen &&
-      !primaryItem.isOpen &&
-      !primaryIsSelected === !primaryItem.isSelected
-        ? primaryItem
-        : {
-            ...primaryItem,
-            subNavItems:
-              secondaryItems.length > 0
-                ? (secondaryItems as [
-                    SecondaryNavItemState,
-                    ...SecondaryNavItemState[]
-                  ])
-                : undefined,
-            isActive: primaryIsActive,
-            isSelected: primaryIsSelected,
-            isOpen: primaryIsOpen,
-          };
-    primaryItems.push(newPrimaryItem);
-    isExpanded ||= !!primaryIsOpen;
-  }
+  const activePrimaryItem = activeSecondaryItem
+    ? findParent({ subItem: activeSecondaryItem, items })
+    : findPrimaryItemByUrl({ currentUrl, items });
 
-  return { currentUrl, selectedItemId, items: primaryItems, isExpanded };
+  const selectedPrimaryItem = findPrimaryItemByIdHTML({
+    idHTML: selectedItemId,
+    items,
+  });
+
+  const newItems = items.map((primaryItem) => {
+    const isActive = primaryItem === activePrimaryItem;
+    const isSelected = primaryItem === selectedPrimaryItem;
+    const isOpen = !!(
+      (isSelected || (isActive && !selectedPrimaryItem)) &&
+      primaryItem.subNavItems
+    );
+    const subNavItems = primaryItem.subNavItems?.map((secondaryItem) => ({
+      ...secondaryItem,
+      isActive: secondaryItem === activeSecondaryItem,
+    }));
+
+    return {
+      ...primaryItem,
+      isActive,
+      isSelected,
+      isOpen,
+      subNavItems,
+    } as PrimaryNavItemState;
+  });
+
+  const isExpanded = newItems.some((primaryItem) => primaryItem.isOpen);
+
+  return {
+    currentUrl,
+    isExpanded,
+    selectedItemId,
+    items: newItems,
+  };
 }
 
 export function navBarStateReducer(
