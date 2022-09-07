@@ -2,29 +2,28 @@ import React, { ReactNode } from "react";
 import { Form, Formik, FormikState } from "formik";
 import { FormattedMessage } from "react-intl";
 import { FieldGroup, SubmitButton } from "./form-helpers";
-import {
-  MaxSubscribersData,
-  MaxSubscribersQuestion,
-  SubscriberValidationAnswer,
-} from "./types";
+import { QuestionModel, AnswerModel } from "./types";
 import { Question } from "./Question";
+import { Loading } from "../Loading";
 
 export interface ValidateMaxSubscribersFormProp {
-  validationFormData: MaxSubscribersData;
+  questions: QuestionModel[];
   onSubmit: () => Promise<boolean>;
   customSubmit?: ReactNode;
+  className?: string;
 }
 
 export const ValidateMaxSubscribersForm = ({
-  validationFormData,
+  questions,
   onSubmit,
   customSubmit,
+  ...otherProps
 }: ValidateMaxSubscribersFormProp) => {
-  const isCheckbox = (answer: SubscriberValidationAnswer) => {
+  const isCheckbox = (answer: AnswerModel) => {
     return ["CHECKBOX_WITH_TEXTAREA", "CHECKBOX"].includes(answer.answerType);
   };
 
-  const normalizeQuestions = (questionsList: MaxSubscribersQuestion[]) => {
+  const normalizeQuestions = (questionsList: QuestionModel[]) => {
     let normalizedAnswer: any = {};
     questionsList?.forEach((question, index) => {
       normalizedAnswer[`answer${index}`] = isCheckbox(question.answer)
@@ -37,10 +36,10 @@ export const ValidateMaxSubscribersForm = ({
     return normalizedAnswer;
   };
 
-  const answers: any = normalizeQuestions(validationFormData.questionsList);
+  const answers: any = normalizeQuestions(questions);
 
   const handlerSubmit = async (values: any, { setSubmitting }: any) => {
-    validationFormData.questionsList.forEach((questionItem, index) => {
+    questions.forEach((questionItem, index) => {
       if (isCheckbox(questionItem.answer)) {
         questionItem.answer.value = values[`answer${index}`].join("-");
         questionItem.answer.text = values[`answer${index}_text`];
@@ -56,16 +55,20 @@ export const ValidateMaxSubscribersForm = ({
 
   const validate = (values: any) => {
     const errors: any = {};
-    for (let value in values) {
-      if (Array.isArray(values[value]) && values[value].length === 0) {
-        errors[value] = "validate_max_subscribers_form.checkbox_empty";
+    for (let attr in values) {
+      if (
+        values.hasOwnProperty(attr) &&
+        Array.isArray(values[attr]) &&
+        values[attr].length === 0
+      ) {
+        errors[attr] = "validate_max_subscribers_form.checkbox_empty";
       }
     }
     return errors;
   };
 
   const renderQuestions = (
-    questionItem: MaxSubscribersQuestion,
+    questionItem: QuestionModel,
     questionIndex: number,
     formikProps: FormikState<any>
   ) => {
@@ -85,54 +88,38 @@ export const ValidateMaxSubscribersForm = ({
   };
 
   if (Object.entries(answers).length === 0) {
-    return <>Loading..</>;
+    return <Loading />;
   }
 
   return (
-    <section className="dp-container">
-      <div className="dp-wrapper-form-plans">
-        <h2 className="modal-title">
-          <FormattedMessage id="validate_max_subscribers_form.title" />
-        </h2>
-        <p>
-          <FormattedMessage id="validate_max_subscribers_form.subtitle" />
-        </p>
-        <Formik
-          initialValues={answers}
-          validate={validate}
-          onSubmit={handlerSubmit}
-        >
-          {(formikProps) => (
-            <Form className="dp-validate-max-subscribers">
-              <fieldset>
-                <legend>
-                  <FormattedMessage id="validate_max_subscribers_form.title" />
-                </legend>
-                <FieldGroup>
-                  {validationFormData.questionsList?.map(
-                    (questionItem, questionIndex) => (
-                      <React.Fragment key={`question${questionIndex}`}>
-                        {renderQuestions(
-                          questionItem,
-                          questionIndex,
-                          formikProps
-                        )}
-                      </React.Fragment>
-                    )
-                  )}
-                </FieldGroup>
-                {customSubmit ? (
-                  customSubmit
-                ) : (
-                  <SubmitButton className="dp-button button-medium primary-green">
-                    <FormattedMessage id="common.save" />
-                  </SubmitButton>
-                )}
-              </fieldset>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </section>
+    <Formik
+      initialValues={answers}
+      validate={validate}
+      onSubmit={handlerSubmit}
+    >
+      {(formikProps) => (
+        <Form {...otherProps}>
+          <fieldset>
+            <legend>
+              <FormattedMessage id="validate_max_subscribers_form.title" />
+            </legend>
+            <FieldGroup>
+              {questions?.map((questionItem, questionIndex) => (
+                <React.Fragment key={`question${questionIndex}`}>
+                  {renderQuestions(questionItem, questionIndex, formikProps)}
+                </React.Fragment>
+              ))}
+            </FieldGroup>
+            {customSubmit ? (
+              customSubmit
+            ) : (
+              <SubmitButton className="dp-button button-medium primary-green">
+                <FormattedMessage id="common.save" />
+              </SubmitButton>
+            )}
+          </fieldset>
+        </Form>
+      )}
+    </Formik>
   );
 };

@@ -1,9 +1,9 @@
-import { MaxSubscribersQuestion } from "./types";
+import { QuestionModel } from "./types";
 import { InputFieldItem } from "./form-helpers";
 import React from "react";
 
 interface InputQuestionProp {
-  questionItem: MaxSubscribersQuestion;
+  questionItem: QuestionModel;
   fieldName: string;
   className: string;
 }

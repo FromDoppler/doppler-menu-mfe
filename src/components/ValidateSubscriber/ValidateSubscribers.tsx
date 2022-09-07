@@ -7,6 +7,7 @@ import { useDopplerLegacyClient } from "../../client/dopplerLegacyClient";
 import { useQuery } from "react-query";
 import { FormattedMessage } from "react-intl";
 import { SubmitButton } from "./form-helpers";
+import { MaxSubscribersData } from "./types";
 
 interface ValidateSubscribersProps {
   handleClose: () => void;
@@ -20,7 +21,7 @@ export const ValidateSubscribers = ({
     data: validationFormData,
     isLoading,
     error,
-  } = useQuery<any>(
+  } = useQuery<MaxSubscribersData>(
     "getMaxSubscribersData",
     dopplerLegacyClient.getMaxSubscribersData,
     {
@@ -33,9 +34,10 @@ export const ValidateSubscribers = ({
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async () => {
-    const isSuccess = await dopplerLegacyClient.sendMaxSubscribersData(
-      validationFormData
-    );
+    // TODO: improve that, never occur if validationFormData is undefined
+    const isSuccess = validationFormData
+      ? await dopplerLegacyClient.sendMaxSubscribersData(validationFormData)
+      : false;
     if (isSuccess) {
       setSuccess(isSuccess);
     }
@@ -90,10 +92,23 @@ export const ValidateSubscribers = ({
   );
 
   return (
-    <ValidateMaxSubscribersForm
-      validationFormData={validationFormData}
-      onSubmit={handleSubmit}
-      customSubmit={customSubmit}
-    />
+    <section className="dp-container">
+      <div className="dp-wrapper-form-plans">
+        <h2 className="modal-title">
+          <FormattedMessage id="validate_max_subscribers_form.title" />
+        </h2>
+        <p>
+          <FormattedMessage id="validate_max_subscribers_form.subtitle" />
+        </p>
+        {validationFormData && (
+          <ValidateMaxSubscribersForm
+            questions={validationFormData.questionsList}
+            onSubmit={handleSubmit}
+            customSubmit={customSubmit}
+            className="dp-validate-max-subscribers"
+          />
+        )}
+      </div>
+    </section>
   );
 };

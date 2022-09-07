@@ -1,5 +1,5 @@
 import React from "react";
-import { MaxSubscribersQuestion } from "./types";
+import { QuestionModel } from "./types";
 import { InputQuestion } from "./InputQuestion";
 import { CheckBoxQuestion } from "./CheckBoxQuestion";
 
@@ -40,7 +40,7 @@ export const Question = ({ questionItem, fieldName, error }: QuestionProp) => {
 };
 
 interface QuestionProp {
-  questionItem: MaxSubscribersQuestion;
+  questionItem: QuestionModel;
   fieldName: string;
   error?: string;
 }

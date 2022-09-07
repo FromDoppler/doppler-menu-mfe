@@ -1,16 +1,16 @@
 export interface MaxSubscribersData {
   isSentSuccessEmail: boolean;
-  questionsList: MaxSubscribersQuestion[];
+  questionsList: QuestionModel[];
   urlHelp: string;
   urlReferrer: string;
 }
 
-export interface MaxSubscribersQuestion {
+export interface QuestionModel {
   question: string;
-  answer: SubscriberValidationAnswer;
+  answer: AnswerModel;
 }
 
-export interface SubscriberValidationAnswer {
+export interface AnswerModel {
   answerType: string;
   answerOptions: string[];
   value: string;
