@@ -3,7 +3,7 @@ import { DopplerLegacyClient } from "./dopplerLegacyClient";
 import {
   AnswerType,
   MaxSubscribersData,
-  MaxSubscribersQuestion,
+  QuestionModel,
 } from "../components/ValidateSubscriber/types";
 
 const mapMaxSubscribersData = (json: any): MaxSubscribersData => {
@@ -17,7 +17,7 @@ const mapMaxSubscribersData = (json: any): MaxSubscribersData => {
   };
 };
 
-const mapMaxSubscribersQuestion = (json: any): MaxSubscribersQuestion => {
+const mapMaxSubscribersQuestion = (json: any): QuestionModel => {
   return {
     question: json.Question,
     answer: {
@@ -29,9 +29,7 @@ const mapMaxSubscribersQuestion = (json: any): MaxSubscribersQuestion => {
   };
 };
 
-const mapMaxSubscribersQuestionData = (
-  question: MaxSubscribersQuestion
-): any => {
+const mapMaxSubscribersQuestionData = (question: QuestionModel): any => {
   return {
     Question: question.question,
     Answer: {

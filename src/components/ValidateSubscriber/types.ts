@@ -1,16 +1,16 @@
 export interface MaxSubscribersData {
   isSentSuccessEmail: boolean;
-  questionsList: MaxSubscribersQuestion[];
+  questionsList: QuestionModel[];
   urlHelp: string;
   urlReferrer: string;
 }
 
-export interface MaxSubscribersQuestion {
+export interface QuestionModel {
   question: string;
-  answer: SubscriberValidationAnswer;
+  answer: AnswerModel;
 }
 
-export interface SubscriberValidationAnswer {
+export interface AnswerModel {
   answerType: string;
   answerOptions: string[];
   value: string;
@@ -25,10 +25,4 @@ export enum AnswerType {
   DROPDOWN = 4,
   RADIOBUTTON = 5,
   URL = 6,
-}
-
-export interface ValidateMaxSubscribersFormProp {
-  validationFormData: MaxSubscribersData;
-  handleClose: () => void;
-  handleSubmit: () => Promise<boolean>;
 }

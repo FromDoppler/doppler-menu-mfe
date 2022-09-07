@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { HeaderMessages } from "./HeaderMessages";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { Alert, User } from "../model";
-import { act } from "react-dom/test-utils";
 import { QueryClient, QueryClientProvider } from "react-query";
+import userEvent from "@testing-library/user-event";
 
 const userData: User = {
   email: "email@mock.com",
@@ -35,16 +35,12 @@ const userData: User = {
 };
 
 describe("<HeaderMessages />", () => {
-  it("display a link if url property is defined", () => {
-    const linkTestId = "linkButton";
+  it("render alert action as link when url is defined", () => {
     const url = "test--url";
     const alertData: Alert = {
       type: "warning",
       message: "test--message",
-      button: {
-        url,
-        text: "Upgrade Now",
-      },
+      button: { url, text: "upgrade.now" },
     };
 
     render(
@@ -53,59 +49,45 @@ describe("<HeaderMessages />", () => {
       </MenuIntlProvider>
     );
 
-    const link = screen.getByTestId(linkTestId);
-    expect(link).toHaveAttribute("href", url);
+    const actionLink = screen.getByText("upgrade.now");
+    expect(actionLink).toHaveAttribute("href", url);
   });
 
-  it("display a button if url property is undefined and action is upgradePlanPopup", () => {
-    const buttonTestId = "actionButton";
-    const modalTestId = "modal";
-    const expectedContentSelector = ".modal-content--medium";
+  it.each([
+    { action: "upgradePlanPopup" },
+    { action: "validateSubscribersPopup" },
+  ])(
+    "render alert action as button when url is undefined and action is $action",
+    ({ action }) => {
+      const alertData: Alert = {
+        type: "warning",
+        message: "test--message",
+        button: { text: "upgrade.now.button", action },
+      };
 
+      render(
+        <MenuIntlProvider>
+          <HeaderMessages alert={alertData} user={userData} />
+        </MenuIntlProvider>
+      );
+
+      screen.getByText("upgrade.now.button");
+    }
+  );
+
+  it("display a button if url property is undefined and action is validateSubscribersPopup", async () => {
+    const modalTestId = "modal";
     const alertData: Alert = {
       type: "warning",
       message: "test--message",
       button: {
-        text: "Upgrade Now",
-        action: "upgradePlanPopup",
-      },
-    };
-
-    render(
-      <MenuIntlProvider>
-        <HeaderMessages alert={alertData} user={userData} />
-      </MenuIntlProvider>
-    );
-
-    const button = screen.queryByTestId(buttonTestId);
-    expect(button).toBeInTheDocument();
-
-    act(() => {
-      button!.click();
-    });
-
-    const modal = screen.queryByTestId(modalTestId);
-    expect(modal).toBeInTheDocument();
-    const content = modal!.querySelector(expectedContentSelector);
-    expect(content).toBeInTheDocument();
-  });
-
-  it("display a button if url property is undefined and action is validateSubscribersPopup", () => {
-    const buttonTestId = "actionButton";
-    const modalTestId = "modal";
-    const expectedContentSelector = ".modal-content--large";
-
-    const alertData: Alert = {
-      type: "warning",
-      message: "test--message",
-      button: {
-        text: "VALIDATE!",
+        text: "button.action.text",
         action: "validateSubscribersPopup",
       },
     };
 
     const queryClient = new QueryClient();
-    // Act
+
     render(
       <QueryClientProvider client={queryClient}>
         <MenuIntlProvider>
@@ -114,27 +96,20 @@ describe("<HeaderMessages />", () => {
       </QueryClientProvider>
     );
 
-    const button = screen.queryByTestId(buttonTestId);
-    expect(button).toBeInTheDocument();
-
-    act(() => {
-      button!.click();
-    });
+    const button = screen.getByText("button.action.text");
+    await userEvent.click(button);
 
     const modal = screen.queryByTestId(modalTestId);
-    expect(modal).toBeInTheDocument();
-    const content = modal!.querySelector(expectedContentSelector);
+    const content = modal!.querySelector(".modal-content--large");
     expect(content).toBeInTheDocument();
   });
 
-  it("display a button when url property is undefined and action is not an expected action", () => {
-    const buttonTestId = "actionButton";
-    const modalTestId = "modal";
+  it("render alert action as button when url and action properties are undefined", () => {
     const alertData: Alert = {
       type: "warning",
       message: "test--message",
       button: {
-        text: "Upgrade Now",
+        text: "upgrade.now.with.action.unknown",
         action: "UNKNOWN ACTION",
       },
     };
@@ -145,35 +120,7 @@ describe("<HeaderMessages />", () => {
       </MenuIntlProvider>
     );
 
-    const button = screen.queryByTestId(buttonTestId);
-    expect(button).toBeInTheDocument();
-
-    act(() => {
-      button!.click();
-    });
-
-    const modal = screen.queryByTestId(modalTestId);
-    expect(modal).not.toBeInTheDocument();
-  });
-
-  it("display button text property when it is a link", () => {
-    const text = "Upgrade Now";
-    const alertData: Alert = {
-      type: "warning",
-      message: "test--message",
-      button: {
-        text,
-        url: "test--url",
-      },
-    };
-
-    render(
-      <MenuIntlProvider>
-        <HeaderMessages alert={alertData} user={userData} />
-      </MenuIntlProvider>
-    );
-
-    screen.getByText(text);
+    screen.queryByTestId("upgrade.now.with.action.unknown");
   });
 
   it("display button text property when it is a button", () => {
