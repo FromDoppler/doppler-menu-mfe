@@ -6,19 +6,19 @@ import { QuestionModel, AnswerModel } from "./types";
 import { Question } from "./Question";
 import { Loading } from "../Loading";
 
-export interface ValidateMaxSubscribersFormProp {
+export interface QuestionsFormProps {
   questions: QuestionModel[];
   onSubmit: () => Promise<boolean>;
   customSubmit?: ReactNode;
   className?: string;
 }
 
-export const ValidateMaxSubscribersForm = ({
+export const QuestionsForm = ({
   questions,
   onSubmit,
   customSubmit,
   ...otherProps
-}: ValidateMaxSubscribersFormProp) => {
+}: QuestionsFormProps) => {
   const isCheckbox = (answer: AnswerModel) => {
     return ["CHECKBOX_WITH_TEXTAREA", "CHECKBOX"].includes(answer.answerType);
   };

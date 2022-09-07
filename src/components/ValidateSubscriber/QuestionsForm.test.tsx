@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/extend-expect";
 import { IntlProviderDouble } from "../i18n/DopplerIntlProvider.double-with-ids-as-values";
-import { ValidateMaxSubscribersForm } from "./ValidateMaxSubscribersForm";
+import { QuestionsForm } from "./QuestionsForm";
 import { QuestionModel } from "./types";
 import { AppConfigurationProvider } from "../../AppConfiguration";
 
@@ -54,7 +54,7 @@ const questionsMock: QuestionModel[] = [
   },
 ];
 
-describe("ValidateSubscribersFormComponent", () => {
+describe(QuestionsForm.name, () => {
   it("should not call handleSubmit when fields are empty", async () => {
     // Arrange
     const handleSubmit = jest.fn();
@@ -62,10 +62,7 @@ describe("ValidateSubscribersFormComponent", () => {
     // Act
     render(
       <IntlProviderDouble>
-        <ValidateMaxSubscribersForm
-          questions={questionsMock}
-          onSubmit={handleSubmit}
-        />
+        <QuestionsForm questions={questionsMock} onSubmit={handleSubmit} />
       </IntlProviderDouble>
     );
 
@@ -80,7 +77,7 @@ describe("ValidateSubscribersFormComponent", () => {
   it("should call handleSubmit when all fields are valid", async () => {
     // Arrange
     const name = "John Doe";
-    const url = "http://www.someurl.com";
+    const url = "https://www.someurl.com";
     const sourceSelected = "Online/Offline Store";
     const subscriptionMethod = "Opt-in";
     const handleSubmit = jest.fn();
@@ -89,10 +86,7 @@ describe("ValidateSubscribersFormComponent", () => {
     render(
       <AppConfigurationProvider configuration={{ useDummies: true }}>
         <IntlProviderDouble>
-          <ValidateMaxSubscribersForm
-            questions={questionsMock}
-            onSubmit={handleSubmit}
-          />
+          <QuestionsForm questions={questionsMock} onSubmit={handleSubmit} />
         </IntlProviderDouble>
       </AppConfigurationProvider>
     );
@@ -133,10 +127,7 @@ describe("ValidateSubscribersFormComponent", () => {
     // Act
     render(
       <IntlProviderDouble>
-        <ValidateMaxSubscribersForm
-          questions={questionsMock}
-          onSubmit={jest.fn()}
-        />
+        <QuestionsForm questions={questionsMock} onSubmit={jest.fn()} />
       </IntlProviderDouble>
     );
 
@@ -152,10 +143,7 @@ describe("ValidateSubscribersFormComponent", () => {
     // Act
     render(
       <IntlProviderDouble>
-        <ValidateMaxSubscribersForm
-          questions={questionsMock}
-          onSubmit={jest.fn()}
-        />
+        <QuestionsForm questions={questionsMock} onSubmit={jest.fn()} />
       </IntlProviderDouble>
     );
 

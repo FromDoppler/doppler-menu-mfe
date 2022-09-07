@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { Modal } from "./Modal";
 import { User, Alert } from "../model";
 import { UpgradePlanForm } from "./UpgradePlanForm";
-import { ValidateSubscribers } from "./ValidateSubscriber/ValidateSubscribers";
+import { ValidateSubscribersForm } from "./ValidateSubscriber/ValidateSubscribersForm";
 
 interface HeaderMessagesProp {
   alert: Alert;
@@ -58,7 +58,7 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
           }
         >
           {button?.action === validateSubscribersPopup ? (
-            <ValidateSubscribers handleClose={() => toggleModal(false)} />
+            <ValidateSubscribersForm handleClose={() => toggleModal(false)} />
           ) : (
             <UpgradePlanForm
               isSubscriber={plan.isSubscribers}

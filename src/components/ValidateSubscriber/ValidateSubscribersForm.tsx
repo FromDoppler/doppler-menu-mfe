@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Loading } from "../Loading";
-import { ValidateMaxSubscribersForm } from "./ValidateMaxSubscribersForm";
+import { QuestionsForm } from "./QuestionsForm";
 import { ValidateMaxSubscribersConfirmation } from "./ValidateMaxSubscribersConfirmation";
 import { UnexpectedError } from "../UnexpectedError";
 import { useDopplerLegacyClient } from "../../client/dopplerLegacyClient";
@@ -13,7 +13,7 @@ interface ValidateSubscribersProps {
   handleClose: () => void;
 }
 
-export const ValidateSubscribers = ({
+export const ValidateSubscribersForm = ({
   handleClose,
 }: ValidateSubscribersProps) => {
   const dopplerLegacyClient = useDopplerLegacyClient();
@@ -101,7 +101,7 @@ export const ValidateSubscribers = ({
           <FormattedMessage id="validate_max_subscribers_form.subtitle" />
         </p>
         {validationFormData && (
-          <ValidateMaxSubscribersForm
+          <QuestionsForm
             questions={validationFormData.questionsList}
             onSubmit={handleSubmit}
             customSubmit={customSubmit}

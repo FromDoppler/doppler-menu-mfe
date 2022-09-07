@@ -5,7 +5,7 @@ import {
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import { IntlProviderDouble } from "../i18n/DopplerIntlProvider.double-with-ids-as-values";
-import { ValidateSubscribers } from "./ValidateSubscribers";
+import { ValidateSubscribersForm } from "./ValidateSubscribersForm";
 import * as dopplerLegacyClient from "../../client/dopplerLegacyClient";
 import userEvent from "@testing-library/user-event";
 import { AnswerType, MaxSubscribersData } from "./types";
@@ -16,7 +16,7 @@ export const maxSubscribersData: MaxSubscribersData = {
   questionsList: [
     {
       answer: {
-        answerType: AnswerType[1],
+        answerType: `${AnswerType.TEXTFIELD}`,
         answerOptions: [],
         value: "",
         optionsSelected: [],
@@ -25,7 +25,7 @@ export const maxSubscribersData: MaxSubscribersData = {
     },
     {
       answer: {
-        answerType: AnswerType[1],
+        answerType: `${AnswerType.TEXTFIELD}`,
         answerOptions: [],
         value: "",
         optionsSelected: [],
@@ -34,7 +34,7 @@ export const maxSubscribersData: MaxSubscribersData = {
     },
     {
       answer: {
-        answerType: AnswerType[1],
+        answerType: `${AnswerType.TEXTFIELD}`,
         answerOptions: [],
         value: "",
         optionsSelected: [],
@@ -43,7 +43,7 @@ export const maxSubscribersData: MaxSubscribersData = {
     },
     {
       answer: {
-        answerType: AnswerType[1],
+        answerType: `${AnswerType.TEXTFIELD}`,
         answerOptions: [],
         value: "",
         optionsSelected: [],
@@ -52,7 +52,7 @@ export const maxSubscribersData: MaxSubscribersData = {
     },
     {
       answer: {
-        answerType: AnswerType[3],
+        answerType: `${AnswerType.TEXTFIELD}`,
         answerOptions: [
           "Sitio Web",
           "Evento",
@@ -69,7 +69,7 @@ export const maxSubscribersData: MaxSubscribersData = {
     },
     {
       answer: {
-        answerType: AnswerType[2],
+        answerType: `${AnswerType.TEXTFIELD}`,
         answerOptions: ["Opt-in", "Doble Opt-in", "Manual"],
         value: "",
         optionsSelected: [],
@@ -78,7 +78,7 @@ export const maxSubscribersData: MaxSubscribersData = {
     },
     {
       answer: {
-        answerType: AnswerType[6],
+        answerType: `${AnswerType.TEXTFIELD}`,
         answerOptions: [],
         value: "",
         optionsSelected: [],
@@ -88,8 +88,7 @@ export const maxSubscribersData: MaxSubscribersData = {
   ],
   isSentSuccessEmail: false,
   urlReferrer: "",
-  urlHelp:
-    "http://help.fromdoppler.com/por-que-debo-completar-un-formulario-al-cargar-mis-listas/",
+  urlHelp: "https://help.fromdoppler.com/",
 };
 
 describe("ValidateSubscribersComponent", () => {
@@ -99,7 +98,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribers handleClose={jest.fn} />
+          <ValidateSubscribersForm handleClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );
@@ -126,7 +125,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribers handleClose={jest.fn} />
+          <ValidateSubscribersForm handleClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );
@@ -143,7 +142,7 @@ describe("ValidateSubscribersComponent", () => {
       .mockImplementation(() => ({
         getMaxSubscribersData: jest.fn(async () => maxSubscribersData),
         sendAcceptButtonAction: jest.fn(),
-        sendMaxSubscribersData: jest.fn(async (data) => true),
+        sendMaxSubscribersData: jest.fn(async () => true),
       }));
 
     const queryClient = new QueryClient();
@@ -152,7 +151,7 @@ describe("ValidateSubscribersComponent", () => {
       <QueryClientProvider client={queryClient}>
         <AppConfigurationProvider configuration={{ useDummies: true }}>
           <IntlProviderDouble>
-            <ValidateSubscribers handleClose={jest.fn} />
+            <ValidateSubscribersForm handleClose={jest.fn} />
           </IntlProviderDouble>
         </AppConfigurationProvider>
       </QueryClientProvider>
@@ -179,8 +178,7 @@ describe("ValidateSubscribersComponent", () => {
       ],
       isSentSuccessEmail: false,
       urlReferrer: "",
-      urlHelp:
-        "http://help.fromdoppler.com/por-que-debo-completar-un-formulario-al-cargar-mis-listas/",
+      urlHelp: "https://help.fromdoppler.com/",
     };
 
     jest
@@ -188,7 +186,7 @@ describe("ValidateSubscribersComponent", () => {
       .mockImplementation(() => ({
         getMaxSubscribersData: jest.fn(async () => formData),
         sendAcceptButtonAction: jest.fn(),
-        sendMaxSubscribersData: jest.fn(async (data) => true),
+        sendMaxSubscribersData: jest.fn(async () => true),
       }));
 
     const queryClient = new QueryClient();
@@ -196,7 +194,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribers handleClose={jest.fn} />
+          <ValidateSubscribersForm handleClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );
