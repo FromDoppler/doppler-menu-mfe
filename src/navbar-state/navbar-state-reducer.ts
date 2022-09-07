@@ -10,16 +10,16 @@ import {
 function buildNavBarState({
   currentUrl,
   selectedItemId,
-  items,
+  itemsWithObsoleteState,
 }: {
   currentUrl: string;
   selectedItemId: string | null;
-  items: ReadonlyArray<PrimaryNavItemState>;
+  itemsWithObsoleteState: ReadonlyArray<PrimaryNavItemState>;
 }): NavBarState {
   // TODO: refactorize it
   let isExpanded = false;
   const primaryItems = [];
-  for (const primaryItem of items) {
+  for (const primaryItem of itemsWithObsoleteState) {
     let primaryIsActive = IsActiveUrl(currentUrl, primaryItem.url);
     let primaryIsSelected =
       selectedItemId != null && primaryItem.idHTML === selectedItemId;
@@ -82,19 +82,23 @@ export function navBarStateReducer(
       return buildNavBarState({
         currentUrl,
         selectedItemId,
-        items: action.items,
+        itemsWithObsoleteState: action.items,
       });
     case "url/updated":
       return action.href !== currentUrl
         ? buildNavBarState({
             currentUrl: action.href,
             selectedItemId: null,
-            items,
+            itemsWithObsoleteState: items,
           })
         : state;
     case "selected-item/updated":
       return action.idHTML !== selectedItemId
-        ? buildNavBarState({ currentUrl, selectedItemId: action.idHTML, items })
+        ? buildNavBarState({
+            currentUrl,
+            selectedItemId: action.idHTML,
+            itemsWithObsoleteState: items,
+          })
         : state;
   }
 }
@@ -105,7 +109,12 @@ export function useNavBarStateReducer(
     items: ReadonlyArray<PrimaryNavItemState>;
   }
 ) {
-  return useReducer(navBarStateReducer, null, () =>
-    buildNavBarState({ ...getInitializationData(), selectedItemId: null })
-  );
+  return useReducer(navBarStateReducer, null, () => {
+    const { currentUrl, items } = getInitializationData();
+    return buildNavBarState({
+      currentUrl,
+      selectedItemId: null,
+      itemsWithObsoleteState: items,
+    });
+  });
 }

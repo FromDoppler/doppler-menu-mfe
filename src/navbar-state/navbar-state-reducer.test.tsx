@@ -44,7 +44,6 @@ const item2 = {
   isSelected: false,
   subNavItems: undefined,
 } as const;
-const testItems = [item0, item1, item2] as const;
 
 describe(navBarStateReducer.name, () => {
   describe("items/updated action", () => {
@@ -58,30 +57,27 @@ describe(navBarStateReducer.name, () => {
       } as const;
       const action = {
         type: "items/updated",
-        items: testItems,
+        items: [item0, item1, item2],
       } as const;
 
       // Act
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
+      expect(state1.currentUrl).toBe(url1);
       expect(state1.items[1].isActive).toBe(true);
-
-      // When the item state does not change, the item should be the same
-      expect(state1.items[0]).toBe(item0);
-      expect(state1.items[1]).not.toBe(item1);
-      expect(state1.items[2]).toBe(item2);
+      expect(state1.items[0]).toEqual(item0);
+      expect(state1.items[2]).toEqual(item2);
     });
   });
 
   describe("url/updated action", () => {
-    it("should update the active item when there is not a previously activated item", () => {
+    it("should set active item when there is not a previously activated item", () => {
       // Arrange
       const state0 = {
         currentUrl: "Unknown URL",
         isExpanded: false,
-        items: testItems,
+        items: [item0, item1, item2],
         selectedItemId: null,
       } as const;
       const action = {
@@ -93,19 +89,13 @@ describe(navBarStateReducer.name, () => {
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
       expect(state1.currentUrl).toBe(url1);
-      expect(state1.isExpanded).toBe(false);
-      expect(state1.selectedItemId).toBeNull();
       expect(state1.items[1].isActive).toBe(true);
-
-      // When the item state does not change, the item should be the same
-      expect(state1.items[0]).toBe(item0);
-      expect(state1.items[1]).not.toBe(item1);
-      expect(state1.items[2]).toBe(item2);
+      expect(state1.items[0]).toEqual(item0);
+      expect(state1.items[2]).toEqual(item2);
     });
 
-    it("should update the active item when there is a previously activated item", () => {
+    it("should change active item when there is a previously activated item", () => {
       // Arrange
       const state0 = {
         currentUrl: url0,
@@ -122,18 +112,9 @@ describe(navBarStateReducer.name, () => {
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
       expect(state1.currentUrl).toBe(url1);
-      expect(state1.isExpanded).toBe(false);
-      expect(state1.selectedItemId).toBeNull();
-      expect(state1.items).toHaveLength(3);
+      expect(state1.items[0].isActive).toBe(false);
       expect(state1.items[1].isActive).toBe(true);
-
-      // When the item state does not change, the item should be the same
-      expect(state1.items[0]).not.toBe(item0);
-      expect(state1.items[0]).toEqual(item0);
-      expect(state1.items[1]).not.toBe(item1);
-      expect(state1.items[2]).toBe(item2);
     });
 
     it("should deselect item", () => {
@@ -180,20 +161,21 @@ describe(navBarStateReducer.name, () => {
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
       expect(state1.currentUrl).toBe(url1);
       expect(state1.selectedItemId).toBe(null);
       expect(state1.isExpanded).toBe(false);
-      expect(state1.items).toHaveLength(3);
       expect(state1.items[0].isActive).toBe(false);
+      expect(state1.items[0].isSelected).toBe(false);
       expect(state1.items[0].isOpen).toBe(false);
       expect(state1.items[1].isActive).toBe(true);
+      expect(state1.items[1].isSelected).toBe(false);
       expect(state1.items[1].isOpen).toBe(false);
+      expect(state1.items[2].isActive).toBe(false);
       expect(state1.items[2].isSelected).toBe(false);
       expect(state1.items[2].isOpen).toBe(false);
     });
 
-    it("should open the navbar when the URL matches a subitem", () => {
+    it("should open the navbar when the URL matches a subItem", () => {
       // Arrange
       const state0 = {
         currentUrl: "Unknown URL",
@@ -224,22 +206,19 @@ describe(navBarStateReducer.name, () => {
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
       expect(state1.currentUrl).toBe("urlSubItem0");
       expect(state1.isExpanded).toBe(true);
-      expect(state1.selectedItemId).toBeNull();
       expect(state1.items).toHaveLength(3);
       expect(state1.items[0].isActive).toBe(true);
       expect(state1.items[0].isOpen).toBe(true);
       expect(state1.items[0].subNavItems![0].isActive).toBe(true);
-
-      // When the item state does not change, the item should be the same
-      expect(state1.items[2]).toBe(item2);
+      expect(state1.items[1]).toEqual(item1);
+      expect(state1.items[2]).toEqual(item2);
     });
   });
 
   describe("selected-item/updated action", () => {
-    it("should update the selected item when the new selected item is also active", () => {
+    it("should update selected item when new selected item is active", () => {
       // Arrange
       const state0 = {
         currentUrl: url0,
@@ -271,23 +250,18 @@ describe(navBarStateReducer.name, () => {
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
-      expect(state1.currentUrl).toBe(url0);
       expect(state1.selectedItemId).toBe(idHTML0);
-      expect(state1.isExpanded).toBe(false);
-      expect(state1.items).toHaveLength(3);
-      expect(state1.items[0].isActive).toBe(true);
       expect(state1.items[0].isSelected).toBe(true);
+      expect(state1.items[0].isActive).toBe(true);
       expect(state1.items[0].isOpen).toBe(false);
+      expect(state1.currentUrl).toBe(url0);
       expect(state1.items[1].isActive).toBe(false);
       expect(state1.items[1].isSelected).toBe(false);
       expect(state1.items[1].isOpen).toBe(false);
-
-      // When the item state does not change, the item should be the same
-      expect(state1.items[2]).toBe(item2);
+      expect(state1.items[2]).toEqual(item2);
     });
 
-    it("should update the selected item and expand navbar when the new selected item has subItems", () => {
+    it("should update selected item and expand navbar when the new selected item has subItems", () => {
       // Arrange
       const state0 = {
         currentUrl: url0,
@@ -318,21 +292,60 @@ describe(navBarStateReducer.name, () => {
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
-      expect(state1.currentUrl).toBe(url0);
       expect(state1.selectedItemId).toBe(idHTML2);
-      expect(state1.isExpanded).toBe(true);
-      expect(state1.items).toHaveLength(3);
-      expect(state1.items[0].isActive).toBe(true);
-      expect(state1.items[0].isOpen).toBe(false);
       expect(state1.items[2].isSelected).toBe(true);
       expect(state1.items[2].isOpen).toBe(true);
-
-      // When the item state does not change, the item should be the same
-      expect(state1.items[1]).toBe(item1);
+      expect(state1.items[2].isActive).toBe(false);
+      expect(state1.isExpanded).toBe(true);
+      expect(state1.items[0].isActive).toBe(true);
+      expect(state1.items[0].isOpen).toBe(false);
+      expect(state1.items[1]).toEqual(item1);
     });
 
-    it("should open the selected item when the active one was open", () => {
+    it("should collapse navbar when new selected item does not have subItems", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: url2,
+        isExpanded: true,
+        items: [
+          item0,
+          item1,
+          {
+            ...item2,
+            isActive: true,
+            isOpen: true,
+            subNavItems: [
+              {
+                title: "subItem1",
+                url: "urlSubItem1",
+                idHTML: "idHTMLSubitem1",
+                isActive: true,
+              },
+            ],
+          },
+        ],
+        selectedItemId: null,
+      } as const;
+      const action = {
+        type: "selected-item/updated",
+        idHTML: idHTML0,
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.selectedItemId).toBe(idHTML0);
+      expect(state1.isExpanded).toBe(false);
+      expect(state1.items[0].isActive).toBe(false);
+      expect(state1.items[0].isOpen).toBe(false);
+      expect(state1.items[0].isSelected).toBe(true);
+      expect(state1.items[2].isOpen).toBe(false);
+      expect(state1.items[2].isActive).toBe(true);
+      expect(state1.items[2].isSelected).toBe(false);
+    });
+
+    it("should open selected item when the active one was open", () => {
       // Arrange
       const state0 = {
         currentUrl: url0,
@@ -375,21 +388,18 @@ describe(navBarStateReducer.name, () => {
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
-      expect(state1.currentUrl).toBe(url0);
       expect(state1.selectedItemId).toBe(idHTML2);
       expect(state1.isExpanded).toBe(true);
-      expect(state1.items).toHaveLength(3);
       expect(state1.items[0].isActive).toBe(true);
       expect(state1.items[0].isOpen).toBe(false);
+      expect(state1.items[0].isSelected).toBe(false);
       expect(state1.items[2].isSelected).toBe(true);
       expect(state1.items[2].isOpen).toBe(true);
-
-      // When the item state does not change, the item should be the same
-      expect(state1.items[1]).toBe(item1);
+      expect(state1.items[2].isActive).toBe(false);
+      expect(state1.items[1]).toEqual(item1);
     });
 
-    it("should open previously active one when selected item becomes null", () => {
+    it("should open active item when selected item becomes null", () => {
       // Arrange
       const state0 = {
         currentUrl: url0,
@@ -433,18 +443,16 @@ describe(navBarStateReducer.name, () => {
       const state1 = navBarStateReducer(state0, action);
 
       // Assert
-      expect(state1.items).toHaveLength(3);
       expect(state1.currentUrl).toBe(url0);
       expect(state1.selectedItemId).toBe(null);
       expect(state1.isExpanded).toBe(true);
-      expect(state1.items).toHaveLength(3);
       expect(state1.items[0].isActive).toBe(true);
       expect(state1.items[0].isOpen).toBe(true);
-      expect(state1.items[2].isSelected).toBe(false);
+      expect(state1.items[0].isSelected).toBe(false);
+      expect(state1.items[2].isActive).toBe(false);
       expect(state1.items[2].isOpen).toBe(false);
-
-      // When the item state does not change, the item should be the same
-      expect(state1.items[1]).toBe(item1);
+      expect(state1.items[2].isSelected).toBe(false);
+      expect(state1.items[1]).toEqual(item1);
     });
   });
 });
@@ -475,7 +483,7 @@ describe(useNavBarStateReducer.name, () => {
       // Arrange
       const initializationData = {
         currentUrl: url1,
-        items: testItems,
+        items: [item0, item1, item2],
       };
 
       const { TestComponent, getCurrentState } = createTestContext(
@@ -493,11 +501,8 @@ describe(useNavBarStateReducer.name, () => {
       expect(state0.selectedItemId).toBeNull();
       expect(state0.items).toHaveLength(3);
       expect(state0.items[1].isActive).toBe(true);
-
-      // When the item state does not change, the item should be the same
-      expect(state0.items[0]).toBe(item0);
-      expect(state0.items[1]).not.toBe(item1);
-      expect(state0.items[2]).toBe(item2);
+      expect(state0.items[0]).toEqual(item0);
+      expect(state0.items[2]).toEqual(item2);
     });
   });
 });
