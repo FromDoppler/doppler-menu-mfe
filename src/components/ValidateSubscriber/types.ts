@@ -26,9 +26,3 @@ export enum AnswerType {
   RADIOBUTTON = 5,
   URL = 6,
 }
-
-export interface ValidateMaxSubscribersFormProp {
-  validationFormData: MaxSubscribersData;
-  onClose: () => void;
-  onSubmit: () => Promise<boolean>;
-}

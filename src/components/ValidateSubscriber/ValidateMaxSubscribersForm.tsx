@@ -1,18 +1,24 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Form, Formik, FormikState } from "formik";
 import { FormattedMessage } from "react-intl";
 import { FieldGroup, SubmitButton } from "./form-helpers";
 import {
+  MaxSubscribersData,
   MaxSubscribersQuestion,
   SubscriberValidationAnswer,
-  ValidateMaxSubscribersFormProp,
 } from "./types";
 import { Question } from "./Question";
 
+export interface ValidateMaxSubscribersFormProp {
+  validationFormData: MaxSubscribersData;
+  onSubmit: () => Promise<boolean>;
+  customSubmit?: ReactNode;
+}
+
 export const ValidateMaxSubscribersForm = ({
   validationFormData,
-  onClose,
   onSubmit,
+  customSubmit,
 }: ValidateMaxSubscribersFormProp) => {
   const isCheckbox = (answer: SubscriberValidationAnswer) => {
     return ["CHECKBOX_WITH_TEXTAREA", "CHECKBOX"].includes(answer.answerType);
@@ -115,36 +121,13 @@ export const ValidateMaxSubscribersForm = ({
                     )
                   )}
                 </FieldGroup>
-                <p>
-                  <i>
-                    <FormattedMessage id="validate_max_subscribers_form.form_help" />{" "}
-                    <a
-                      target="_BLANK"
-                      rel="noreferrer"
-                      href={validationFormData?.urlHelp}
-                    >
-                      <FormattedMessage id="validate_max_subscribers_form.form_help_link_text" />
-                      <br />
-                    </a>
-                    <FormattedMessage id="validate_max_subscribers_form.info_text" />
-                  </i>
-                </p>
-                <div className="dp-container">
-                  <div className="dp-rowflex">
-                    <div className="dp-footer-form">
-                      <button
-                        type="button"
-                        className="dp-button button-medium primary-grey m-r-6"
-                        onClick={onClose}
-                      >
-                        <FormattedMessage id="common.cancel" />
-                      </button>
-                      <SubmitButton className="dp-button button-medium primary-green">
-                        <FormattedMessage id="common.save" />
-                      </SubmitButton>
-                    </div>
-                  </div>
-                </div>
+                {customSubmit ? (
+                  customSubmit
+                ) : (
+                  <SubmitButton className="dp-button button-medium primary-green">
+                    <FormattedMessage id="common.save" />
+                  </SubmitButton>
+                )}
               </fieldset>
             </Form>
           )}
