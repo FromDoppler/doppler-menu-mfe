@@ -12,7 +12,7 @@ export const messages_es = {
     enabled: "HABILITADO",
     plan_emails: "Emails",
     plan_prepaid: "Plan Premium por Créditos",
-    plan_suscribers: "Suscriptores",
+    plan_subscribers: "Suscriptores",
     profile: "Perfil",
     send_mails: "Envío de Emails",
     send_request: "SOLICITUD ENVIADA",

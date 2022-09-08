@@ -108,7 +108,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
                 <p>
                   {maxSubscribers - remainingCredits}{" "}
                   {isPlanTypeSuscribers ? (
-                    <FormattedMessage id="header.plan_suscribers" />
+                    <FormattedMessage id="header.plan_subscribers" />
                   ) : (
                     <FormattedMessage id="header.plan_emails" />
                   )}{" "}
