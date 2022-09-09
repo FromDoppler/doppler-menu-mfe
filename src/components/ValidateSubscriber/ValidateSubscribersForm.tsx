@@ -10,11 +10,11 @@ import { SubmitButton } from "./form-helpers";
 import { MaxSubscribersData } from "./types";
 
 interface ValidateSubscribersProps {
-  handleClose: () => void;
+  onClose: () => void;
 }
 
 export const ValidateSubscribersForm = ({
-  handleClose,
+  onClose,
 }: ValidateSubscribersProps) => {
   const dopplerLegacyClient = useDopplerLegacyClient();
   const {
@@ -53,7 +53,7 @@ export const ValidateSubscribersForm = ({
   }
 
   if (success) {
-    return <ValidateMaxSubscribersConfirmation handleClose={handleClose} />;
+    return <ValidateMaxSubscribersConfirmation handleClose={onClose} />;
   }
 
   const customSubmit = (
@@ -78,7 +78,7 @@ export const ValidateSubscribersForm = ({
             <button
               type="button"
               className="dp-button button-medium primary-grey m-r-6"
-              onClick={handleClose}
+              onClick={onClose}
             >
               <FormattedMessage id="common.cancel" />
             </button>
