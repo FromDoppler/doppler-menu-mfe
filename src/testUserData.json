@@ -188,11 +188,15 @@
     "hasCampaignSent": false
   },
   "alert": {
-    "type": "warning",
-    "message": "Your Free trial with unlimited Campaigns up to  500 Contacts expires today",
+    "type": "blocker",
+    "message": "To be able to send a new Campaign we need to verify the source of your Subscribers.",
     "button": {
-      "text": "Upgrade Now",
+      "text": "Verify Source now",
       "action": "validateSubscribersPopup"
+    },
+    "nextAlert": {
+      "type": "warning",
+      "message": "Thanks. We'll contact you asap and if everything is ok you'll be able to send your Campaign."
     }
   },
   "homeUrl": "https://webappint.fromdoppler.net",

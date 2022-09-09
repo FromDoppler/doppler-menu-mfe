@@ -11,10 +11,12 @@ import { MaxSubscribersData } from "./types";
 
 interface ValidateSubscribersProps {
   onClose: () => void;
+  onComplete?: () => void;
 }
 
 export const ValidateSubscribersForm = ({
   onClose,
+  onComplete,
 }: ValidateSubscribersProps) => {
   const dopplerLegacyClient = useDopplerLegacyClient();
   const {
@@ -41,6 +43,7 @@ export const ValidateSubscribersForm = ({
     if (isSuccess) {
       setSuccess(isSuccess);
     }
+    isSuccess && onComplete && onComplete();
     return isSuccess;
   };
 
