@@ -1,154 +1,88 @@
-import { PrimaryNavItem } from "../model";
-import { useEffect, useState } from "react";
-import { IsActiveUrl } from "../utils";
+import {
+  NavBarState,
+  PrimaryNavItemState,
+  SecondaryNavItemState,
+} from "../navbar-state/navbar-state-abstractions";
 
 interface NavProp {
-  currentPath: string;
-  nav: ReadonlyArray<PrimaryNavItem>;
-  openMenuHeader: () => void;
-  closeMenuHeader: () => void;
+  navBar: NavBarState;
+  selectNavItem: (idHTML: string) => void;
+  unselectNavItem: () => void;
 }
 
 interface NavItemProp {
-  currentPath: string;
-  item: PrimaryNavItem;
-  openMenuHeader: () => void;
-  closeMenuHeader: () => void;
+  item: PrimaryNavItemState;
+  selectNavItem: (idHTML: string) => void;
 }
 
 interface SubNavProp {
-  currentPath: string;
-  isNavItemActive: boolean;
-  isSubNavItemActive: boolean;
-  item: PrimaryNavItem;
-  openMenuHeader: () => void;
-  setNavItemActive: (value: boolean) => void;
+  item: PrimaryNavItemState;
 }
 
 interface SubNavItemProp {
-  currentPath: string;
-  url: string;
-  title: string;
-  setNavItemActive: (value: boolean) => void;
+  subItem: SecondaryNavItemState;
 }
 
-export const Nav = ({
-  currentPath,
-  nav,
-  openMenuHeader,
-  closeMenuHeader,
-}: NavProp) => {
-  return (
-    <nav className="nav-left-main" aria-label="main nav">
+export const Nav = ({ selectNavItem, unselectNavItem, navBar }: NavProp) => (
+  <>
+    <nav
+      className="nav-left-main"
+      aria-label="main nav"
+      onMouseLeave={() => unselectNavItem()}
+      style={navStylePatch}
+    >
       <div className="menu-main--container">
         <ul className="menu-main">
-          {nav.map((item, index) => {
+          {navBar.items.map((item, index) => {
             return (
-              <NavItem
-                currentPath={currentPath}
-                key={index}
-                item={item}
-                openMenuHeader={openMenuHeader}
-                closeMenuHeader={closeMenuHeader}
-              />
+              <NavItem key={index} item={item} selectNavItem={selectNavItem} />
             );
           })}
         </ul>
       </div>
     </nav>
-  );
-};
+    <FlexibleSpace />
+  </>
+);
 
-const NavItem = ({
-  currentPath,
-  item,
-  openMenuHeader,
-  closeMenuHeader,
-}: NavItemProp) => {
+// TODO: move these patches to Style Guide MFE
+const navStylePatch = { flex: "unset" };
+const flexibleSpaceStylePatch = { flex: "1" };
+const FlexibleSpace = () => <div style={flexibleSpaceStylePatch} />;
+
+const NavItem = ({ selectNavItem, item }: NavItemProp) => {
   const { title, url, subNavItems = [] } = item;
   const hasSubmenuItems = !!subNavItems.length;
-  const [isNavItemActive, setNavItemActive] = useState(
-    IsActiveUrl(currentPath, item.url)
-  );
-
-  const isSubNavItemActive = !!item.subNavItems?.some(({ url }) => {
-    return IsActiveUrl(currentPath, url);
-  });
-
-  useEffect(() => {
-    const isActive = IsActiveUrl(currentPath, item.url) || isSubNavItemActive;
-    setNavItemActive(isActive);
-  }, [currentPath, item.url, isSubNavItemActive]);
 
   return (
     <li
       key={title}
       className={`${hasSubmenuItems ? "submenu-item" : ""}`}
-      onMouseEnter={() => hasSubmenuItems && openMenuHeader()}
-      onMouseLeave={() => hasSubmenuItems && closeMenuHeader()}
+      onMouseEnter={() => selectNavItem(item.idHTML)}
     >
-      <a className={isNavItemActive ? "active" : ""} href={url}>
+      <a className={item.isActive ? "active" : ""} href={url}>
         {title}
       </a>
-      {hasSubmenuItems && (
-        <SubNav
-          openMenuHeader={openMenuHeader}
-          isNavItemActive={isNavItemActive}
-          isSubNavItemActive={isSubNavItemActive}
-          currentPath={currentPath}
-          item={item}
-          setNavItemActive={setNavItemActive}
-        />
-      )}
+      {hasSubmenuItems && <SubNav item={item} />}
     </li>
   );
 };
 
-const SubNav = ({
-  currentPath,
-  isNavItemActive,
-  isSubNavItemActive,
-  item,
-  setNavItemActive,
-  openMenuHeader,
-}: SubNavProp) => {
-  useEffect(() => {
-    if (isNavItemActive && isSubNavItemActive) {
-      openMenuHeader();
-    }
-  }, [isNavItemActive, openMenuHeader, isSubNavItemActive]);
-
+const SubNav = ({ item }: SubNavProp) => {
   return (
-    <ul className={`sub-menu ${isNavItemActive ? "open" : ""}`}>
-      {item.subNavItems?.map(({ title, url }) => (
-        <SubNavItem
-          key={title}
-          currentPath={currentPath}
-          url={url}
-          title={title}
-          setNavItemActive={setNavItemActive}
-        />
+    <ul className={`sub-menu ${item.isOpen ? "open" : ""}`}>
+      {item.subNavItems?.map((subItem) => (
+        <SubNavItem key={subItem.title} subItem={subItem} />
       ))}
     </ul>
   );
 };
 
-const SubNavItem = ({
-  url,
-  title,
-  currentPath,
-  setNavItemActive,
-}: SubNavItemProp) => {
-  const isActive = IsActiveUrl(currentPath, url);
-
-  useEffect(() => {
-    if (isActive) setNavItemActive(true);
-  }, [isActive, setNavItemActive]);
-
+const SubNavItem = ({ subItem }: SubNavItemProp) => {
   return (
     <li>
-      <a className={isActive ? "active" : ""} href={url}>
-        {title}
+      <a className={subItem.isActive ? "active" : ""} href={subItem.url}>
+        {subItem.title}
       </a>
     </li>
   );

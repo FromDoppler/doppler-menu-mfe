@@ -2,17 +2,23 @@ import { Header, HeaderPlaceholder } from "./components/Header";
 import { HeaderMessages } from "./components/HeaderMessages";
 import { useLocationHref } from "./hooks/useLocationHref";
 import { useAppSessionState } from "./session/AppSessionStateContext";
+import { useNavBarState } from "./navbar-state/navbar-state-hook";
 
 function App() {
   const href = useLocationHref(window);
 
   const appSessionState = useAppSessionState();
 
+  const { navBar, selectNavItem, unselectNavItem } = useNavBarState({
+    currentUrl: href,
+    appSessionState,
+  });
+
   if (appSessionState.status !== "authenticated") {
     return <HeaderPlaceholder />;
   }
 
-  const { navItems, notifications, emptyNotificationText, user, alert } =
+  const { notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
 
   return (
@@ -22,8 +28,9 @@ function App() {
         alert ? <HeaderMessages alert={alert} user={user} /> : null
       }
       <Header
-        currentPath={href}
-        nav={navItems}
+        selectNavItem={selectNavItem}
+        unselectNavItem={unselectNavItem}
+        navBar={navBar}
         notifications={notifications}
         emptyNotificationText={emptyNotificationText}
         user={user}

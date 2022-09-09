@@ -2,14 +2,13 @@ export type TerminalNavItem = Readonly<{
   title: string;
   url: string;
   idHTML: string;
-  subNavItems?: undefined;
 }>;
 
 export type PrimaryNavItem = Readonly<{
   title: string;
   url: string;
   idHTML: string;
-  subNavItems?: ReadonlyArray<TerminalNavItem>;
+  subNavItems: undefined | Readonly<[TerminalNavItem, ...TerminalNavItem[]]>;
 }>;
 
 export type Plan = Readonly<{

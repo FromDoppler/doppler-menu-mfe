@@ -40,8 +40,14 @@ describe(Header.name, () => {
     render(
       <MenuIntlProvider>
         <Header
-          currentPath={"/"}
-          nav={[]}
+          selectNavItem={() => {}}
+          unselectNavItem={() => {}}
+          navBar={{
+            currentUrl: "/",
+            selectedItemId: null,
+            items: [],
+            isExpanded: false,
+          }}
           emptyNotificationText={""}
           notifications={[]}
           user={userMock}

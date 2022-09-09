@@ -1,55 +1,44 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Logo } from "./Logo";
 import { Nav } from "./Nav";
 import { MenuRight } from "./MenuRight";
-import { PrimaryNavItem, User } from "../model";
+import { User } from "../model";
+import { NavBarState } from "../navbar-state/navbar-state-abstractions";
 
 interface HeaderProp {
-  currentPath: string;
-  nav: ReadonlyArray<PrimaryNavItem>;
+  navBar: NavBarState;
   notifications: ReadonlyArray<string>;
   user: User;
   emptyNotificationText: string;
   sticky: boolean;
+  selectNavItem: (idHTML: string) => void;
+  unselectNavItem: () => void;
 }
 
 export const Header = ({
-  currentPath,
-  nav,
+  selectNavItem,
+  unselectNavItem,
+  navBar,
   notifications,
   user,
   emptyNotificationText,
   sticky,
 }: HeaderProp) => {
-  const [openMenu, setOpenMenu] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
-
-  const openMenuHeader = () => {
-    setOpenMenu(true);
-  };
-
-  const closeMenuHeader = () => {
-    setOpenMenu(false);
-  };
-
-  useEffect(() => {
-    setOpenMenu(false);
-  }, [currentPath]);
 
   return (
     <header
       aria-label="main header"
       className={`header-main ${sticky ? "sticky" : ""} ${
-        openMenu ? "header-open" : ""
+        navBar.isExpanded ? "header-open" : ""
       } ${openMenuMobile ? "open" : ""}`}
     >
       <div className="header-wrapper">
         <Logo />
         <Nav
-          currentPath={currentPath}
-          nav={nav}
-          openMenuHeader={openMenuHeader}
-          closeMenuHeader={closeMenuHeader}
+          selectNavItem={selectNavItem}
+          unselectNavItem={unselectNavItem}
+          navBar={navBar}
         />
         <MenuRight
           user={user}
