@@ -24,6 +24,10 @@ if (targetElement) {
     const targetElement = getTargetElement(document, configuration);
     if (targetElement) {
       initialize(window, configuration, targetElement);
+    } else {
+      console.error(
+        `Element with id ${configuration.dopplerMenuElementId} not found.`
+      );
     }
   });
 }
