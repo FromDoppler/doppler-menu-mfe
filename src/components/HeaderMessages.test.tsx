@@ -4,6 +4,7 @@ import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { Alert, User } from "../model";
 import { QueryClient, QueryClientProvider } from "react-query";
 import userEvent from "@testing-library/user-event";
+import * as dopplerLegacyClient from "../client/dopplerLegacyClient";
 
 const userData: User = {
   email: "email@mock.com",
@@ -120,16 +121,15 @@ describe("<HeaderMessages />", () => {
       </MenuIntlProvider>
     );
 
-    screen.queryByTestId("upgrade.now.with.action.unknown");
+    screen.getByText("upgrade.now.with.action.unknown");
   });
 
   it("display button text property when it is a button", () => {
-    const text = "Upgrade Now";
     const alertData: Alert = {
       type: "warning",
       message: "test--message",
       button: {
-        text,
+        text: "button.action.upgrade.now",
         action: "upgradePlanPopup",
       },
     };
@@ -140,6 +140,76 @@ describe("<HeaderMessages />", () => {
       </MenuIntlProvider>
     );
 
-    screen.getByText(text);
+    screen.getByText("button.action.upgrade.now");
+  });
+
+  it("show next alert when action alert is complete", async () => {
+    // Arrange
+    const questions = {
+      questionsList: [
+        {
+          answer: {
+            answerType: "TEXTFIELD",
+            answerOptions: [],
+            value: "answer.input",
+            optionsSelected: [],
+          },
+          question: "question",
+        },
+      ],
+      isSentSuccessEmail: false,
+      urlReferrer: "",
+      urlHelp: "https://help.fromdoppler.com/",
+    };
+    jest
+      .spyOn(dopplerLegacyClient, "useDopplerLegacyClient")
+      .mockImplementation(() => ({
+        getMaxSubscribersData: jest.fn(async () => questions),
+        sendAcceptButtonAction: jest.fn(),
+        sendMaxSubscribersData: jest.fn(async () => true),
+      }));
+
+    const alertData: Alert = {
+      type: "warning",
+      message: "test--message",
+      button: {
+        text: "button.action.text",
+        action: "validateSubscribersPopup",
+      },
+      nextAlert: {
+        type: "warning",
+        message: "next.alert.message",
+        button: {
+          text: "button.action.text",
+          action: "validateSubscribersPopup",
+        },
+      },
+    };
+
+    const queryClient = new QueryClient();
+    // Act
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MenuIntlProvider>
+          <HeaderMessages alert={alertData} user={userData} />
+        </MenuIntlProvider>
+      </QueryClientProvider>
+    );
+    // Assert
+    const button = screen.getByText("button.action.text");
+    await userEvent.click(button);
+
+    const answerInput = screen.getByLabelText("question", {
+      selector: "input",
+    });
+    await userEvent.type(answerInput, "answer");
+
+    const submitButton = screen.getByText("Guardar");
+    await userEvent.click(submitButton);
+
+    const confirmButton = screen.getByText("Aceptar");
+    await userEvent.click(confirmButton);
+
+    screen.getByText("next.alert.message");
   });
 });

@@ -78,6 +78,7 @@ export type Alert = Readonly<{
           }
       >
     | undefined;
+  nextAlert?: Alert;
 }>;
 
 export type UserData = Readonly<{

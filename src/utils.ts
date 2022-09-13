@@ -137,6 +137,7 @@ const safeAlert = (data: any): Alert => ({
         action: safeString(data.button.action),
       }
     : undefined,
+  nextAlert: data.nextAlert ? safeAlert(data.nextAlert) : undefined,
 });
 
 export const safeUserData = (data: any): UserData => ({

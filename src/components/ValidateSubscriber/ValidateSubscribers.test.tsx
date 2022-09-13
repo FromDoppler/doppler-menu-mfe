@@ -98,7 +98,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribersForm handleClose={jest.fn} />
+          <ValidateSubscribersForm onClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );
@@ -125,7 +125,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribersForm handleClose={jest.fn} />
+          <ValidateSubscribersForm onClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );
@@ -151,7 +151,7 @@ describe("ValidateSubscribersComponent", () => {
       <QueryClientProvider client={queryClient}>
         <AppConfigurationProvider configuration={{ useDummies: true }}>
           <IntlProviderDouble>
-            <ValidateSubscribersForm handleClose={jest.fn} />
+            <ValidateSubscribersForm onClose={jest.fn} />
           </IntlProviderDouble>
         </AppConfigurationProvider>
       </QueryClientProvider>
@@ -194,7 +194,7 @@ describe("ValidateSubscribersComponent", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <IntlProviderDouble>
-          <ValidateSubscribersForm handleClose={jest.fn} />
+          <ValidateSubscribersForm onClose={jest.fn} />
         </IntlProviderDouble>
       </QueryClientProvider>
     );

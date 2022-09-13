@@ -14,16 +14,19 @@ const validateSubscribersPopup = "validateSubscribersPopup";
 
 export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [currentAlert, setCurrentAlert] = useState<Alert>(alert);
 
   if (!Object.keys(alert).length) {
     return null;
   }
 
   const { plan } = user;
-  const { type, message, button } = alert;
+  const { type, message, button } = currentAlert;
 
   const toggleModal = (isOpen: boolean) => setModalIsOpen(isOpen);
-  // TODO: nextAlert logic
+  const showNextAlert = () => {
+    alert.nextAlert && setCurrentAlert(alert.nextAlert);
+  };
 
   // Only validateSubscribersPopup and upgradePlanPopup actions are supported
   const hasModal =
@@ -58,7 +61,10 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
           }
         >
           {button?.action === validateSubscribersPopup ? (
-            <ValidateSubscribersForm handleClose={() => toggleModal(false)} />
+            <ValidateSubscribersForm
+              onClose={() => toggleModal(false)}
+              onComplete={showNextAlert}
+            />
           ) : (
             <UpgradePlanForm
               isSubscriber={plan.isSubscribers}
