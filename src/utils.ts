@@ -5,6 +5,7 @@ import {
   TerminalNavItem,
   User,
   UserData,
+  PlanType,
 } from "./model";
 import { patchWebAppUrlIfNeed } from "./temporalPatchingUtils";
 
@@ -75,19 +76,32 @@ const safeTerminalNavItem = (data: any): TerminalNavItem => ({
   idHTML: safeString(data?.idHTML),
 });
 
-const safePlan = (data: any): Plan => ({
-  planType: safeString(data?.planType),
-  description: safeString(data?.description),
-  itemDescription: safeString(data?.itemDescription),
-  planName: safeString(data?.planName),
-  isSubscribers: safeBoolean(data?.isSubscribers),
-  maxSubscribers: safeNumber(data?.maxSubscribers),
-  remainingCredits: safeNumber(data?.remainingCredits),
-  buttonText: safeString(data?.buttonText),
-  buttonUrl: safeString(data?.buttonUrl),
-  pendingFreeUpgrade: safeBoolean(data?.pendingFreeUpgrade),
-  isMonthlyByEmail: safeBoolean(data?.isMonthlyByEmail),
-});
+const safePlan = (data: any): Plan => {
+  const planTypes: { [idUserType: number]: PlanType } = {
+    1: "free",
+    2: "monthly-deliveries",
+    3: "prepaid",
+    4: "contacts",
+    5: "agencies",
+    6: "agencies",
+    7: "free",
+    8: "agencies",
+  };
+
+  return {
+    planType: planTypes[data.planType],
+    description: safeString(data?.description),
+    itemDescription: safeString(data?.itemDescription),
+    planName: safeString(data?.planName),
+    isSubscribers: safeBoolean(data?.isSubscribers),
+    maxSubscribers: safeNumber(data?.maxSubscribers),
+    remainingCredits: safeNumber(data?.remainingCredits),
+    buttonText: safeString(data?.buttonText),
+    buttonUrl: safeString(data?.buttonUrl),
+    pendingFreeUpgrade: safeBoolean(data?.pendingFreeUpgrade),
+    isMonthlyByEmail: safeBoolean(data?.isMonthlyByEmail),
+  };
+};
 
 const safeSms = (data: any) =>
   safeBoolean(data?.smsEnabled)

@@ -11,8 +11,15 @@ export type PrimaryNavItem = Readonly<{
   subNavItems: undefined | Readonly<[TerminalNavItem, ...TerminalNavItem[]]>;
 }>;
 
+export type PlanType =
+  | "monthly-deliveries"
+  | "prepaid"
+  | "contacts"
+  | "agencies"
+  | "free";
+
 export type Plan = Readonly<{
-  planType: string;
+  planType?: PlanType;
   description: string;
   itemDescription: string;
   planName: string;
@@ -21,7 +28,7 @@ export type Plan = Readonly<{
   remainingCredits: number;
   buttonText: string;
   buttonUrl: string;
-  pendingFreeUpgrade: boolean;
+  pendingFreeUpgrade?: boolean;
   isMonthlyByEmail: boolean;
 }>;
 

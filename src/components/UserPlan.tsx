@@ -36,7 +36,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
   } = sms;
 
   const isPlanTypeMonthlyDeliveries = planType === "monthly-deliveries";
-  const isPlanTypeSubscribers = planType === "subscribers";
+  const isPlanTypeSubscribers = planType === "contacts";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModalHandler = () => {

@@ -13,7 +13,7 @@ const toggleModal = jest.fn();
 
 const userData: User = {
   plan: {
-    planType: "1",
+    planType: "free",
     description: "Available Contacts",
     itemDescription: "Contacts",
     planName: "Free Trial",
