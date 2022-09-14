@@ -47,9 +47,7 @@ const safeBoolean = (data: unknown): boolean =>
     ? true
     : data === false
     ? false
-    : typeof data === "string" && data.toLowerCase() === "true"
-    ? true
-    : false;
+    : typeof data === "string" && data.toLowerCase() === "true";
 
 const safeString = (data: unknown): string =>
   typeof data === "string" ? data : !data ? "" : `${data}`;
