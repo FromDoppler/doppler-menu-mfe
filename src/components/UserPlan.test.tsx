@@ -6,7 +6,7 @@ import { UserPlan } from "./UserPlan";
 import { userData as defaultUser } from "../mocks/userMock";
 import { IntlProviderDouble } from "./i18n/DopplerIntlProvider.double-with-ids-as-values";
 
-describe("<UserPlan />", () => {
+describe(UserPlan.name, () => {
   it("should render user free trial plan", () => {
     // Act
     render(
@@ -27,14 +27,19 @@ describe("<UserPlan />", () => {
     expect(screen.getByText(defaultUser.plan.description)).toBeInTheDocument();
   });
 
-  it("should render user monthly plan", () => {
+  it("should display the user's monthly plan information.", () => {
     // Arrange
+    const maxSubscribers = 500;
+    const remainingCredits = 1212;
+    const usedCredits = maxSubscribers - remainingCredits;
     const monthlyPlanUser: User = {
       ...defaultUser,
       plan: {
         ...defaultUser.plan,
         planType: "monthly-deliveries",
         isMonthlyByEmail: true,
+        maxSubscribers,
+        remainingCredits,
       },
     };
 
@@ -46,10 +51,11 @@ describe("<UserPlan />", () => {
     );
 
     // Assert
-    expect(screen.getByText(monthlyPlanUser.plan.planName)).toBeInTheDocument();
-    expect(
-      screen.getByText(monthlyPlanUser.plan.buttonText)
-    ).toBeInTheDocument();
+    screen.getByText(monthlyPlanUser.plan.planName);
+    screen.getByText(monthlyPlanUser.plan.buttonText);
+    screen.getByText(new RegExp(`${usedCredits}\ +header.plan_emails`));
+    screen.getByText(remainingCredits);
+    screen.getByText(/header.availables/);
   });
 
   it("should render an Upgrade button when plan has a button url and a pending free upgrade", () => {
