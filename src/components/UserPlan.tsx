@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FormattedMessage, FormattedNumber } from "react-intl";
-import { User } from "../model";
+import { PlanType, User } from "../model";
 import { Modal } from "./Modal";
 import { Tooltip } from "./Tooltip";
 import { UpgradePlanForm } from "./UpgradePlanForm";
@@ -34,9 +34,6 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     buttonUrl: smsButtonUrl,
     buttonText: smsButtonText,
   } = sms;
-
-  const isPlanTypeMonthlyDeliveries = planType === "monthly-deliveries";
-  const isPlanTypeSubscribers = planType === "contacts";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModalHandler = () => {
@@ -103,26 +100,12 @@ export const UserPlan = ({ user }: UserPlanProps) => {
               : ""}
           </UserPlanType>
           <UserPlanType>
-            {isPlanTypeMonthlyDeliveries || isPlanTypeSubscribers ? (
-              <BuyContainer>
-                <p>
-                  {maxSubscribers - remainingCredits}{" "}
-                  {isPlanTypeSubscribers ? (
-                    <FormattedMessage id="header.plan_subscribers" />
-                  ) : (
-                    <FormattedMessage id="header.plan_emails" />
-                  )}{" "}
-                  (<strong>{remainingCredits}</strong>{" "}
-                  <FormattedMessage id="header.availables" />)
-                </p>
-              </BuyContainer>
-            ) : (
-              <BuyContainer>
-                <p>
-                  <strong>{remainingCredits}</strong> {description}
-                </p>
-              </BuyContainer>
-            )}
+            <UserPlanInformation
+              planType={planType}
+              remainingCredits={remainingCredits}
+              credits={maxSubscribers}
+              description={description}
+            />
             {!!Object.keys(sms).length && smsEnabled && (
               <BuyContainer>
                 <p>
@@ -190,6 +173,41 @@ const UserPlanType = ({ children }: { children: React.ReactNode }) => (
 
 const BuyContainer = ({ children }: { children: React.ReactNode }) => {
   return <div className="user-plan--buyContainer">{children}</div>;
+};
+
+const UserPlanInformation = ({
+  planType,
+  credits,
+  remainingCredits,
+  description,
+}: {
+  credits: number;
+  remainingCredits: number;
+  planType?: PlanType;
+  description?: string;
+}) => {
+  if (planType === "monthly-deliveries" || planType === "contacts") {
+    const creditCriteria =
+      planType === "contacts"
+        ? "header.plan_subscribers"
+        : "header.plan_emails";
+    return (
+      <div className="user-plan--buyContainer">
+        <p>
+          {credits - remainingCredits} <FormattedMessage id={creditCriteria} />{" "}
+          (<strong>{remainingCredits}</strong>{" "}
+          <FormattedMessage id="header.availables" />)
+        </p>
+      </div>
+    );
+  }
+  return (
+    <div className="user-plan--buyContainer">
+      <p>
+        <strong>{remainingCredits}</strong> {description}
+      </p>
+    </div>
+  );
 };
 
 const OpenModalButton = ({
