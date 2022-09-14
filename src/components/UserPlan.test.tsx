@@ -51,9 +51,35 @@ describe(UserPlan.name, () => {
     );
 
     // Assert
-    screen.getByText(monthlyPlanUser.plan.planName);
-    screen.getByText(monthlyPlanUser.plan.buttonText);
     screen.getByText(new RegExp(`${usedCredits}\ +header.plan_emails`));
+    screen.getByText(remainingCredits);
+    screen.getByText(/header.availables/);
+  });
+
+  it("should display the user's contact plan information", () => {
+    // Arrange
+    const maxSubscribers = 500;
+    const remainingCredits = 1212;
+    const usedCredits = maxSubscribers - remainingCredits;
+    const contactPlanUser: User = {
+      ...defaultUser,
+      plan: {
+        ...defaultUser.plan,
+        planType: "contacts",
+        maxSubscribers,
+        remainingCredits,
+      },
+    };
+
+    // Act
+    render(
+      <IntlProviderDouble>
+        <UserPlan user={contactPlanUser} />
+      </IntlProviderDouble>
+    );
+
+    // Assert
+    screen.getByText(new RegExp(`${usedCredits}\ +header.plan_subscribers`));
     screen.getByText(remainingCredits);
     screen.getByText(/header.availables/);
   });
