@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
-import { User } from "../model";
+import { PlanType, User } from "../model";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { UserPlan } from "./UserPlan";
 import { userData as defaultUser } from "../mocks/userMock";
@@ -83,6 +83,39 @@ describe(UserPlan.name, () => {
     screen.getByText(remainingCredits);
     screen.getByText(/header.availables/);
   });
+
+  it.each([
+    { planType: undefined },
+    { planType: "prepaid" },
+    { planType: "agencies" },
+    { planType: "free" },
+  ])(
+    "should display the user's plan information for $planType plan types",
+    ({ planType }) => {
+      // Arrange
+      const remainingCredits = 878876;
+      const contactPlanUser: User = {
+        ...defaultUser,
+        plan: {
+          ...defaultUser.plan,
+          planType: planType as PlanType,
+          description: "undefined.plan.description",
+          remainingCredits,
+        },
+      };
+
+      // Act
+      render(
+        <IntlProviderDouble>
+          <UserPlan user={contactPlanUser} />
+        </IntlProviderDouble>
+      );
+
+      // Assert
+      screen.getByText(remainingCredits);
+      screen.getByText(/undefined.plan.description/);
+    }
+  );
 
   it("should render an Upgrade button when plan has a button url and a pending free upgrade", () => {
     // Arrange
