@@ -36,7 +36,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
   } = sms;
 
   const isPlanTypeMonthlyDeliveries = planType === "monthly-deliveries";
-  const isPlanTypeSuscribers = planType === "suscribers";
+  const isPlanTypeSubscribers = planType === "contacts";
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModalHandler = () => {
@@ -61,7 +61,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
             <FormattedMessage id="header.tooltip_last_plan" />
           </div>
         </OpenModalButton>
-        <span className="ms-icon icon-info-icon"></span>
+        <span className="ms-icon icon-info-icon" />
       </Tooltip>
     </div>
   );
@@ -103,11 +103,11 @@ export const UserPlan = ({ user }: UserPlanProps) => {
               : ""}
           </UserPlanType>
           <UserPlanType>
-            {isPlanTypeMonthlyDeliveries || isPlanTypeSuscribers ? (
+            {isPlanTypeMonthlyDeliveries || isPlanTypeSubscribers ? (
               <BuyContainer>
                 <p>
                   {maxSubscribers - remainingCredits}{" "}
-                  {isPlanTypeSuscribers ? (
+                  {isPlanTypeSubscribers ? (
                     <FormattedMessage id="header.plan_subscribers" />
                   ) : (
                     <FormattedMessage id="header.plan_emails" />

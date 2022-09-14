@@ -7,7 +7,7 @@ const user: User = {
   email: "test@makingsense.com",
   fullname: "test makingsense",
   plan: {
-    planType: "1",
+    planType: "free",
     description: "Available Contacts",
     itemDescription: "Contacts",
     planName: "Free Trial",
