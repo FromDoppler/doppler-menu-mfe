@@ -203,19 +203,16 @@ describe(UserPlan.name, () => {
     expect(tooltip).toBeInTheDocument();
   });
 
-  it("should render a sms plan description", () => {
+  it("should display sms plan information when is enabled", () => {
     // Arrange
     const smsPlanUser: User = {
       ...defaultUser,
       sms: {
         smsEnabled: true,
-        remainingCredits: 0.0,
-        description: "Disponible para SMS",
-        buttonText: "CARGAR",
-        buttonUrl: "GetSmsConfiguration",
-      },
-      plan: {
-        ...defaultUser.plan,
+        remainingCredits: -1.0,
+        description: "description.sms",
+        buttonText: "button.sms",
+        buttonUrl: "sms.url",
       },
     };
 
@@ -225,9 +222,22 @@ describe(UserPlan.name, () => {
         <UserPlan user={smsPlanUser} />
       </MenuIntlProvider>
     );
+    screen.getByTestId("sms-information-test-id");
+    screen.getByText("description.sms");
+    screen.getByText(/-1.0/);
+    const smsLink = screen.getByText("button.sms");
+    expect(smsLink).toHaveAttribute("href", smsPlanUser.sms!.buttonUrl);
+  });
 
-    expect(screen.getByText("Disponible para SMS")).toBeInTheDocument();
-    const smsLink = screen.getByText("CARGAR");
-    expect(smsLink).toHaveAttribute("href", smsPlanUser.sms.buttonUrl);
+  it("should no display sms plan information when sms is disable", () => {
+    // Act
+    render(
+      <MenuIntlProvider>
+        <UserPlan user={defaultUser} />
+      </MenuIntlProvider>
+    );
+
+    const description = screen.queryByTestId("sms-information-test-id");
+    expect(description).not.toBeInTheDocument();
   });
 });

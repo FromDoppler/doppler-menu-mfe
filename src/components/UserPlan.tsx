@@ -27,14 +27,6 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     isMonthlyByEmail,
   } = plan;
 
-  const {
-    smsEnabled,
-    remainingCredits: smsRemainingCredits,
-    description: smsDescription,
-    buttonUrl: smsButtonUrl,
-    buttonText: smsButtonText,
-  } = sms;
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModalHandler = () => {
     setIsModalOpen(true);
@@ -106,28 +98,14 @@ export const UserPlan = ({ user }: UserPlanProps) => {
               credits={maxSubscribers}
               description={description}
             />
-            {!!Object.keys(sms).length && smsEnabled && (
-              <BuyContainer>
-                <p>
-                  <strong>
-                    US${" "}
-                    <FormattedNumber
-                      // eslint-disable-next-line react/style-prop-object
-                      style="decimal"
-                      value={smsRemainingCredits}
-                      minimumFractionDigits={2}
-                      maximumFractionDigits={2}
-                    />
-                  </strong>{" "}
-                  {smsDescription}
-                </p>
-                {smsButtonUrl && (
-                  <a className="user-plan" target="_self" href={smsButtonUrl}>
-                    {smsButtonText}
-                  </a>
-                )}
-              </BuyContainer>
-            )}
+            {sms.smsEnabled ? (
+              <SmsInformation
+                buttonText={sms.buttonText}
+                buttonUrl={sms.buttonUrl}
+                description={sms.description}
+                remainingCredits={sms.remainingCredits}
+              />
+            ) : null}
           </UserPlanType>
         </>
       )}
@@ -171,10 +149,6 @@ const UserPlanType = ({ children }: { children: React.ReactNode }) => (
   <div className="user-plan--type">{children}</div>
 );
 
-const BuyContainer = ({ children }: { children: React.ReactNode }) => {
-  return <div className="user-plan--buyContainer">{children}</div>;
-};
-
 const UserPlanInformation = ({
   planType,
   credits,
@@ -206,6 +180,42 @@ const UserPlanInformation = ({
       <p>
         <strong>{remainingCredits}</strong> {description}
       </p>
+    </div>
+  );
+};
+
+const SmsInformation = ({
+  remainingCredits,
+  description,
+  buttonUrl,
+  buttonText,
+}: {
+  remainingCredits: number;
+  description: string;
+  buttonUrl: string;
+  buttonText: string;
+}) => {
+  return (
+    <div
+      className="user-plan--buyContainer"
+      data-testid="sms-information-test-id"
+    >
+      <p>
+        <strong>
+          US${" "}
+          <FormattedNumber
+            // eslint-disable-next-line react/style-prop-object
+            style="decimal"
+            value={remainingCredits}
+            minimumFractionDigits={2}
+            maximumFractionDigits={2}
+          />
+        </strong>{" "}
+        {description}
+      </p>
+      <a className="user-plan" target="_self" href={buttonUrl}>
+        {buttonText}
+      </a>
     </div>
   );
 };
