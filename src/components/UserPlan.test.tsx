@@ -128,22 +128,27 @@ describe(UserPlan.name, () => {
     expect(screen.getByText(upgradeLabel)).toBeInTheDocument();
   });
 
-  it("should render Modal when Upgrade button is clicked", async () => {
+  it("should display upgrade form modal when Upgrade button is clicked", async () => {
     // Arrange
-    const upgradeLabel = "UPGRADE";
-    const modalTestId = "modal";
+    const modalTestId = "upgrade.plan.form.modal";
+    const freeUser = {
+      ...defaultUser,
+      plan: {
+        ...defaultUser.plan,
+        buttonText: "upgrade.plan.button",
+      },
+    };
 
     // Act
     render(
       <MenuIntlProvider>
-        <UserPlan user={defaultUser} />
+        <UserPlan user={freeUser} />
       </MenuIntlProvider>
     );
 
-    const upgradeButton = screen.getByText(upgradeLabel);
+    const upgradeButton = screen.getByText("upgrade.plan.button");
     await user.click(upgradeButton);
-    const modal = screen.getByTestId(modalTestId);
-    expect(modal).toBeInTheDocument();
+    screen.getByTestId(modalTestId);
   });
 
   it("should render an Upgrade link when plan has a button url and no pending free upgrade", () => {

@@ -108,7 +108,11 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           )}
         </UserPlanType>
       )}
-      <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
+      <Modal
+        isOpen={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
+        data-testid={"upgrade.plan.form.modal"}
+      >
         <UpgradePlanForm
           isSubscriber={isSubscribers}
           handleClose={() => setIsModalOpen(false)}
