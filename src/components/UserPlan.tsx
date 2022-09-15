@@ -19,7 +19,6 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     planType,
     itemDescription,
     buttonUrl,
-    buttonText,
     pendingFreeUpgrade,
     remainingCredits,
     description,
@@ -32,34 +31,11 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     setIsModalOpen(true);
   };
 
-  const renderModalButton = () => (
-    <OpenModalButton className="user-plan" openModalHandler={openModalHandler}>
-      {buttonText}
-    </OpenModalButton>
-  );
-
-  const renderModalButtonWithTooltip = () => (
-    <div className="dp-request-sent">
-      <Tooltip>
-        <OpenModalButton
-          className="user-plan close-user--menu dp-tooltip-left"
-          openModalHandler={openModalHandler}
-        >
-          <FormattedMessage id="header.send_request" />
-          <div className="tooltiptext">
-            <FormattedMessage id="header.tooltip_last_plan" />
-          </div>
-        </OpenModalButton>
-        <span className="ms-icon icon-info-icon" />
-      </Tooltip>
-    </div>
-  );
-
   const renderPlanLink = () => {
     if (buttonUrl && !pendingFreeUpgrade)
       return (
         <a className="user-plan" href={buttonUrl}>
-          {buttonText}
+          {plan.buttonText}
         </a>
       );
   };
@@ -85,11 +61,13 @@ export const UserPlan = ({ user }: UserPlanProps) => {
                 {renderPlanLink()}
               </>
             )}
-            {!buttonUrl || pendingFreeUpgrade
-              ? !isLastPlanRequested
-                ? renderModalButton()
-                : renderModalButtonWithTooltip()
-              : ""}
+            {!buttonUrl || pendingFreeUpgrade ? (
+              <UpdatePlanButton
+                showTips={isLastPlanRequested}
+                click={openModalHandler}
+                text={plan.buttonText}
+              />
+            ) : null}
           </UserPlanType>
           <UserPlanType>
             <UserPlanInformation
@@ -220,16 +198,39 @@ const SmsInformation = ({
   );
 };
 
-const OpenModalButton = ({
-  className,
-  openModalHandler,
-  children,
-}: {
-  className: string;
-  openModalHandler: () => void;
-  children: React.ReactNode;
-}) => (
-  <button onClick={() => openModalHandler()} className={className}>
-    {children}
-  </button>
-);
+type UpdatePlanButtonProp =
+  | {
+      showTips: false;
+      text: string;
+      click: () => void;
+    }
+  | {
+      showTips: true;
+      click: () => void;
+    };
+
+const UpdatePlanButton = (props: UpdatePlanButtonProp) => {
+  if (props.showTips) {
+    return (
+      <div className="dp-request-sent">
+        <Tooltip>
+          <button
+            onClick={props.click}
+            className="user-plan close-user--menu dp-tooltip-left"
+          >
+            <FormattedMessage id="header.send_request" />
+            <div className="tooltiptext">
+              <FormattedMessage id="header.tooltip_last_plan" />
+            </div>
+          </button>
+          <span className="ms-icon icon-info-icon" />
+        </Tooltip>
+      </div>
+    );
+  }
+  return (
+    <button onClick={props.click} className="user-plan">
+      {props.text}
+    </button>
+  );
+};

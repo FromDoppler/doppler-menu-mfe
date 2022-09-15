@@ -16,15 +16,11 @@ describe(UserPlan.name, () => {
     );
 
     // Assert
-    expect(screen.getByText(defaultUser.plan.planName)).toBeInTheDocument();
-    expect(
-      screen.getByText(defaultUser.plan.maxSubscribers)
-    ).toBeInTheDocument();
-    expect(screen.getByText(defaultUser.plan.buttonText)).toBeInTheDocument();
-    expect(
-      screen.getByText(defaultUser.plan.remainingCredits)
-    ).toBeInTheDocument();
-    expect(screen.getByText(defaultUser.plan.description)).toBeInTheDocument();
+    screen.getByText(defaultUser.plan.planName);
+    screen.getByText(defaultUser.plan.maxSubscribers);
+    screen.getByText(defaultUser.plan.buttonText);
+    screen.getByText(defaultUser.plan.remainingCredits);
+    screen.getByText(defaultUser.plan.description);
   });
 
   it("should display the user's monthly plan information.", () => {
