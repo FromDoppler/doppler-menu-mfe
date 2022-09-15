@@ -1,83 +1,121 @@
 import { render, screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
-import { User } from "../model";
+import { PlanType, User } from "../model";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { UserPlan } from "./UserPlan";
+import { userData as defaultUser } from "../mocks/userMock";
+import { IntlProviderDouble } from "./i18n/DopplerIntlProvider.double-with-ids-as-values";
 
-const userData: User = {
-  email: "test@makingsense.com",
-  fullname: "test makingsense",
-  plan: {
-    planType: "free",
-    description: "Available Contacts",
-    itemDescription: "Contacts",
-    planName: "Free Trial",
-    isSubscribers: true,
-    maxSubscribers: 500,
-    remainingCredits: 500,
-    buttonText: "UPGRADE",
-    buttonUrl: "/ControlPanel/AccountPreferences/PreUpgrade?origin=hello_bar",
-    pendingFreeUpgrade: true,
-    isMonthlyByEmail: false,
-  },
-  avatar: { text: "BS", color: "#EE9C70" },
-  navItems: [
-    {
-      title: "Control Panel",
-      url: "/ControlPanel/ControlPanel/",
-      idHTML: "controlPanel",
-    },
-  ],
-  sms: { smsEnabled: false },
-  isLastPlanRequested: false,
-  hasClientManager: false,
-};
-
-describe("<UserPlan />", () => {
+describe(UserPlan.name, () => {
   it("should render user free trial plan", () => {
     // Act
     render(
       <MenuIntlProvider>
-        <UserPlan user={userData} />
+        <UserPlan user={defaultUser} />
       </MenuIntlProvider>
     );
 
     // Assert
-    expect(screen.getByText(userData.plan.planName)).toBeInTheDocument();
-    expect(screen.getByText(userData.plan.maxSubscribers)).toBeInTheDocument();
-    expect(screen.getByText(userData.plan.buttonText)).toBeInTheDocument();
+    expect(screen.getByText(defaultUser.plan.planName)).toBeInTheDocument();
     expect(
-      screen.getByText(userData.plan.remainingCredits)
+      screen.getByText(defaultUser.plan.maxSubscribers)
     ).toBeInTheDocument();
-    expect(screen.getByText(userData.plan.description)).toBeInTheDocument();
+    expect(screen.getByText(defaultUser.plan.buttonText)).toBeInTheDocument();
+    expect(
+      screen.getByText(defaultUser.plan.remainingCredits)
+    ).toBeInTheDocument();
+    expect(screen.getByText(defaultUser.plan.description)).toBeInTheDocument();
   });
 
-  it("should render user monthly plan", () => {
+  it("should display the user's monthly plan information.", () => {
     // Arrange
+    const maxSubscribers = 500;
+    const remainingCredits = 1212;
+    const usedCredits = maxSubscribers - remainingCredits;
     const monthlyPlanUser: User = {
-      ...userData,
+      ...defaultUser,
       plan: {
-        ...userData.plan,
+        ...defaultUser.plan,
+        planType: "monthly-deliveries",
         isMonthlyByEmail: true,
-        planName: "Monthly Plan",
-        buttonText: "upgrade",
-        description: "Remaining Emails",
+        maxSubscribers,
+        remainingCredits,
       },
     };
 
     // Act
     render(
-      <MenuIntlProvider>
+      <IntlProviderDouble>
         <UserPlan user={monthlyPlanUser} />
-      </MenuIntlProvider>
+      </IntlProviderDouble>
     );
 
     // Assert
-    expect(screen.getByText(monthlyPlanUser.plan.planName)).toBeInTheDocument();
-    expect(
-      screen.getByText(monthlyPlanUser.plan.buttonText)
-    ).toBeInTheDocument();
+    screen.getByText(new RegExp(`${usedCredits}\ +header.plan_emails`));
+    screen.getByText(remainingCredits);
+    screen.getByText(/header.availables/);
   });
+
+  it("should display the user's contact plan information", () => {
+    // Arrange
+    const maxSubscribers = 500;
+    const remainingCredits = 1212;
+    const usedCredits = maxSubscribers - remainingCredits;
+    const contactPlanUser: User = {
+      ...defaultUser,
+      plan: {
+        ...defaultUser.plan,
+        planType: "contacts",
+        maxSubscribers,
+        remainingCredits,
+      },
+    };
+
+    // Act
+    render(
+      <IntlProviderDouble>
+        <UserPlan user={contactPlanUser} />
+      </IntlProviderDouble>
+    );
+
+    // Assert
+    screen.getByText(new RegExp(`${usedCredits}\ +header.plan_subscribers`));
+    screen.getByText(remainingCredits);
+    screen.getByText(/header.availables/);
+  });
+
+  it.each([
+    { planType: undefined },
+    { planType: "prepaid" },
+    { planType: "agencies" },
+    { planType: "free" },
+  ])(
+    "should display the user's plan information for $planType plan types",
+    ({ planType }) => {
+      // Arrange
+      const remainingCredits = 878876;
+      const contactPlanUser: User = {
+        ...defaultUser,
+        plan: {
+          ...defaultUser.plan,
+          planType: planType as PlanType,
+          description: "undefined.plan.description",
+          remainingCredits,
+        },
+      };
+
+      // Act
+      render(
+        <IntlProviderDouble>
+          <UserPlan user={contactPlanUser} />
+        </IntlProviderDouble>
+      );
+
+      // Assert
+      screen.getByText(remainingCredits);
+      screen.getByText(/undefined.plan.description/);
+    }
+  );
 
   it("should render an Upgrade button when plan has a button url and a pending free upgrade", () => {
     // Arrange
@@ -86,7 +124,7 @@ describe("<UserPlan />", () => {
     // Act
     render(
       <MenuIntlProvider>
-        <UserPlan user={userData} />
+        <UserPlan user={defaultUser} />
       </MenuIntlProvider>
     );
 
@@ -102,7 +140,7 @@ describe("<UserPlan />", () => {
     // Act
     render(
       <MenuIntlProvider>
-        <UserPlan user={userData} />
+        <UserPlan user={defaultUser} />
       </MenuIntlProvider>
     );
 
@@ -114,9 +152,9 @@ describe("<UserPlan />", () => {
 
   it("should render an Upgrade link when plan has a button url and no pending free upgrade", () => {
     const upgradeLinkPlanUser: User = {
-      ...userData,
+      ...defaultUser,
       plan: {
-        ...userData.plan,
+        ...defaultUser.plan,
         pendingFreeUpgrade: false,
         buttonUrl: "upgrade/link/to/test",
       },
@@ -141,10 +179,10 @@ describe("<UserPlan />", () => {
   it("should render a button with tooltip when upgrade request was sent", () => {
     // Arrange
     const tooltipPlanUser: User = {
-      ...userData,
+      ...defaultUser,
       isLastPlanRequested: true,
       plan: {
-        ...userData.plan,
+        ...defaultUser.plan,
       },
     };
     const requestSentLabel = "SOLICITUD ENVIADA";
@@ -168,7 +206,7 @@ describe("<UserPlan />", () => {
   it("should render a sms plan description", () => {
     // Arrange
     const smsPlanUser: User = {
-      ...userData,
+      ...defaultUser,
       sms: {
         smsEnabled: true,
         remainingCredits: 0.0,
@@ -177,7 +215,7 @@ describe("<UserPlan />", () => {
         buttonUrl: "GetSmsConfiguration",
       },
       plan: {
-        ...userData.plan,
+        ...defaultUser.plan,
       },
     };
 
