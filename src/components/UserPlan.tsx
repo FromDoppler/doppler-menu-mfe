@@ -10,8 +10,7 @@ interface UserPlanProps {
 }
 
 export const UserPlan = ({ user }: UserPlanProps) => {
-  const { sms, plan, hasClientManager, isLastPlanRequested, clientManager } =
-    user;
+  const { sms, plan, isLastPlanRequested } = user;
 
   const {
     planName,
@@ -33,72 +32,47 @@ export const UserPlan = ({ user }: UserPlanProps) => {
 
   return (
     <div className="user-plan--container">
-      {!hasClientManager && (
-        <>
-          <UserPlanType>
-            {isSubscribers || isMonthlyByEmail ? (
-              <UpdateItemDefault
-                showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
-                buttonUrl={plan.buttonUrl}
-                buttonText={plan.buttonText}
-              >
-                <strong>{planName}</strong> ({maxSubscribers}{" "}
-                {itemDescription})
-              </UpdateItemDefault>
-            ) : (
-              <UpdateItemDefault
-                showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
-                buttonUrl={plan.buttonUrl}
-                buttonText={plan.buttonText}
-              />
-            )}
-            {!buttonUrl || pendingFreeUpgrade ? (
-              <UpdatePlanButton
-                showTips={isLastPlanRequested}
-                click={openModalHandler}
-                text={plan.buttonText}
-              />
-            ) : null}
-          </UserPlanType>
-          <UserPlanType>
-            <UserPlanInformation
-              planType={planType}
-              remainingCredits={remainingCredits}
-              credits={maxSubscribers}
-              description={description}
-            />
-            {sms.smsEnabled ? (
-              <SmsInformation
-                buttonText={sms.buttonText}
-                buttonUrl={sms.buttonUrl}
-                description={sms.description}
-                remainingCredits={sms.remainingCredits}
-              />
-            ) : null}
-          </UserPlanType>
-        </>
-      )}
+      <div className="user-plan--type">
+        {isSubscribers || isMonthlyByEmail ? (
+          <UpdateItemDefault
+            showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
+            buttonUrl={plan.buttonUrl}
+            buttonText={plan.buttonText}
+          >
+            <strong>{planName}</strong> ({maxSubscribers} {itemDescription})
+          </UpdateItemDefault>
+        ) : (
+          <UpdateItemDefault
+            showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
+            buttonUrl={plan.buttonUrl}
+            buttonText={plan.buttonText}
+          />
+        )}
+        {!buttonUrl || pendingFreeUpgrade ? (
+          <UpdatePlanButton
+            showTips={isLastPlanRequested}
+            click={openModalHandler}
+            text={plan.buttonText}
+          />
+        ) : null}
+      </div>
+      <div className="user-plan--type">
+        <UserPlanInformation
+          planType={planType}
+          remainingCredits={remainingCredits}
+          credits={maxSubscribers}
+          description={description}
+        />
+        {sms.smsEnabled ? (
+          <SmsInformation
+            buttonText={sms.buttonText}
+            buttonUrl={sms.buttonUrl}
+            description={sms.description}
+            remainingCredits={sms.remainingCredits}
+          />
+        ) : null}
+      </div>
 
-      {hasClientManager && (
-        <UserPlanType>
-          {clientManager?.profileName && (
-            <MonthlyPlan>
-              <FormattedMessage id="header.profile" />{" "}
-              <strong>{clientManager?.profileName}</strong>
-            </MonthlyPlan>
-          )}
-          {!clientManager?.profileName && (
-            <>
-              <MonthlyPlan>
-                <FormattedMessage id="header.send_mails" />
-              </MonthlyPlan>
-              <p className="user-plan-enabled">
-                <FormattedMessage id="header.enabled" />
-              </p>
-            </>
-          )}
-        </UserPlanType>
-      )}
       <Modal
         isOpen={isModalOpen}
         handleClose={() => setIsModalOpen(false)}
@@ -113,14 +87,6 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     </div>
   );
 };
-
-const MonthlyPlan = ({ children }: { children: React.ReactNode }) => {
-  return <p className="user-plan--monthly-text">{children}</p>;
-};
-
-const UserPlanType = ({ children }: { children: React.ReactNode }) => (
-  <div className="user-plan--type">{children}</div>
-);
 
 const UserPlanInformation = ({
   planType,
@@ -233,7 +199,8 @@ const UpdatePlanButton = (props: UpdatePlanButtonProp) => {
 const UpdateItemDefault = ({
   showPlanLink,
   buttonText,
-  buttonUrl,children
+  buttonUrl,
+  children,
 }: {
   showPlanLink: boolean;
   buttonUrl: string;
@@ -243,7 +210,7 @@ const UpdateItemDefault = ({
   return (
     <>
       <p className="user-plan--monthly-text">
-        {children ? children :<FormattedMessage id="header.plan_prepaid" />}
+        {children ? children : <FormattedMessage id="header.plan_prepaid" />}
       </p>
       {showPlanLink ? (
         <a className="user-plan" href={buttonUrl}>

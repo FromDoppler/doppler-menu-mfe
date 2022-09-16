@@ -159,7 +159,7 @@ describe(UserPlan.name, () => {
         ...defaultUser.plan,
         pendingFreeUpgrade: false,
         buttonUrl: "upgrade/link/to/test",
-        buttonText
+        buttonText,
       },
     };
 

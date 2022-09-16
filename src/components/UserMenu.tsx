@@ -3,6 +3,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 import { User } from "../model";
 import { Avatar } from "./Avatar";
 import { UserPlan } from "./UserPlan";
+import { ClientManagerUserPlan } from "./ClientManagerUserPlan";
 
 interface UserMenuProps {
   user: User;
@@ -38,7 +39,11 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             <span className="email">{email}</span>
           </p>
         </header>
-        <UserPlan user={user} />
+        {user.hasClientManager ? (
+          <ClientManagerUserPlan profileName={user.clientManager.profileName} />
+        ) : (
+          <UserPlan user={user} />
+        )}
         <ul className="options-user">
           {navItems.map((item, index) => (
             <li key={index}>
