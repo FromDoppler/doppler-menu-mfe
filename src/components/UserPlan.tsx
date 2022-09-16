@@ -31,35 +31,26 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     setIsModalOpen(true);
   };
 
-  const renderPlanLink = () => {
-    if (buttonUrl && !pendingFreeUpgrade)
-      return (
-        <a className="user-plan" href={buttonUrl}>
-          {plan.buttonText}
-        </a>
-      );
-  };
-
   return (
     <div className="user-plan--container">
       {!hasClientManager && (
         <>
           <UserPlanType>
             {isSubscribers || isMonthlyByEmail ? (
-              <>
-                <MonthlyPlan>
-                  <strong>{planName}</strong> ({maxSubscribers}{" "}
-                  {itemDescription})
-                </MonthlyPlan>
-                {renderPlanLink()}
-              </>
+              <UpdateItemDefault
+                showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
+                buttonUrl={plan.buttonUrl}
+                buttonText={plan.buttonText}
+              >
+                <strong>{planName}</strong> ({maxSubscribers}{" "}
+                {itemDescription})
+              </UpdateItemDefault>
             ) : (
-              <>
-                <MonthlyPlan>
-                  <FormattedMessage id="header.plan_prepaid" />
-                </MonthlyPlan>
-                {renderPlanLink()}
-              </>
+              <UpdateItemDefault
+                showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
+                buttonUrl={plan.buttonUrl}
+                buttonText={plan.buttonText}
+              />
             )}
             {!buttonUrl || pendingFreeUpgrade ? (
               <UpdatePlanButton
@@ -236,5 +227,29 @@ const UpdatePlanButton = (props: UpdatePlanButtonProp) => {
     <button onClick={props.click} className="user-plan">
       {props.text}
     </button>
+  );
+};
+
+const UpdateItemDefault = ({
+  showPlanLink,
+  buttonText,
+  buttonUrl,children
+}: {
+  showPlanLink: boolean;
+  buttonUrl: string;
+  buttonText: string;
+  children?: any;
+}) => {
+  return (
+    <>
+      <p className="user-plan--monthly-text">
+        {children ? children :<FormattedMessage id="header.plan_prepaid" />}
+      </p>
+      {showPlanLink ? (
+        <a className="user-plan" href={buttonUrl}>
+          {buttonText}
+        </a>
+      ) : null}
+    </>
   );
 };
