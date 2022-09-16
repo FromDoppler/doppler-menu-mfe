@@ -34,15 +34,15 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     <div className="user-plan--container">
       <div className="user-plan--type">
         {isSubscribers || isMonthlyByEmail ? (
-          <UpdateItemDefault
+          <UpgradePlanItem
             showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
             buttonUrl={plan.buttonUrl}
             buttonText={plan.buttonText}
           >
             <strong>{planName}</strong> ({maxSubscribers} {itemDescription})
-          </UpdateItemDefault>
+          </UpgradePlanItem>
         ) : (
-          <UpdateItemDefault
+          <UpgradePlanItem
             showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
             buttonUrl={plan.buttonUrl}
             buttonText={plan.buttonText}
@@ -57,14 +57,14 @@ export const UserPlan = ({ user }: UserPlanProps) => {
         ) : null}
       </div>
       <div className="user-plan--type">
-        <UserPlanInformation
+        <CurrentPlanCredits
           planType={planType}
           remainingCredits={remainingCredits}
           credits={maxSubscribers}
           description={description}
         />
         {sms.smsEnabled ? (
-          <SmsInformation
+          <RechargeSMSPlanCredits
             buttonText={sms.buttonText}
             buttonUrl={sms.buttonUrl}
             description={sms.description}
@@ -88,7 +88,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
   );
 };
 
-const UserPlanInformation = ({
+const CurrentPlanCredits = ({
   planType,
   credits,
   remainingCredits,
@@ -123,7 +123,7 @@ const UserPlanInformation = ({
   );
 };
 
-const SmsInformation = ({
+const RechargeSMSPlanCredits = ({
   remainingCredits,
   description,
   buttonUrl,
@@ -196,7 +196,7 @@ const UpdatePlanButton = (props: UpdatePlanButtonProp) => {
   );
 };
 
-const UpdateItemDefault = ({
+const UpgradePlanItem = ({
   showPlanLink,
   buttonText,
   buttonUrl,
