@@ -77,7 +77,7 @@ describe("<HeaderMessages />", () => {
   );
 
   it("display a button if url property is undefined and action is validateSubscribersPopup", async () => {
-    const modalTestId = "modal";
+    const modalTestId = "validate.subscribe.modal";
     const alertData: Alert = {
       type: "warning",
       message: "test--message",

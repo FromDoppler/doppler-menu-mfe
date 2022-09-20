@@ -3,6 +3,7 @@ interface ModalProp {
   type?: string;
   handleClose: () => void;
   children: React.ReactNode;
+  "data-testid"?: string;
 }
 
 export const Modal = ({
@@ -10,13 +11,14 @@ export const Modal = ({
   type = "medium",
   handleClose,
   children,
+  ...otherProps
 }: ModalProp) => {
   if (!isOpen) {
     return null;
   }
 
   return (
-    <div className="modal" data-testid="modal">
+    <div className="modal" {...otherProps}>
       <div className={`modal-content--${type}`}>
         <span
           onClick={handleClose}

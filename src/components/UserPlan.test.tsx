@@ -16,15 +16,11 @@ describe(UserPlan.name, () => {
     );
 
     // Assert
-    expect(screen.getByText(defaultUser.plan.planName)).toBeInTheDocument();
-    expect(
-      screen.getByText(defaultUser.plan.maxSubscribers)
-    ).toBeInTheDocument();
-    expect(screen.getByText(defaultUser.plan.buttonText)).toBeInTheDocument();
-    expect(
-      screen.getByText(defaultUser.plan.remainingCredits)
-    ).toBeInTheDocument();
-    expect(screen.getByText(defaultUser.plan.description)).toBeInTheDocument();
+    screen.getByText(defaultUser.plan.planName);
+    screen.getByText(defaultUser.plan.maxSubscribers);
+    screen.getByText(defaultUser.plan.buttonText);
+    screen.getByText(defaultUser.plan.remainingCredits);
+    screen.getByText(defaultUser.plan.description);
   });
 
   it("should display the user's monthly plan information.", () => {
@@ -132,75 +128,92 @@ describe(UserPlan.name, () => {
     expect(screen.getByText(upgradeLabel)).toBeInTheDocument();
   });
 
-  it("should render Modal when Upgrade button is clicked", async () => {
+  it("should display upgrade form modal when Upgrade button is clicked", async () => {
     // Arrange
-    const upgradeLabel = "UPGRADE";
-    const modalTestId = "modal";
+    const modalTestId = "upgrade.plan.form.modal";
+    const freeUser = {
+      ...defaultUser,
+      plan: {
+        ...defaultUser.plan,
+        buttonText: "upgrade.plan.button",
+      },
+    };
 
     // Act
     render(
       <MenuIntlProvider>
-        <UserPlan user={defaultUser} />
+        <UserPlan user={freeUser} />
       </MenuIntlProvider>
     );
 
-    const upgradeButton = screen.getByText(upgradeLabel);
+    const upgradeButton = screen.getByText("upgrade.plan.button");
     await user.click(upgradeButton);
-    const modal = screen.getByTestId(modalTestId);
-    expect(modal).toBeInTheDocument();
+    screen.getByTestId(modalTestId);
   });
 
-  it("should render an Upgrade link when plan has a button url and no pending free upgrade", () => {
+  it("should display plan link when plan no pending for upgrade", () => {
+    const buttonText = "no.pending.for.upgrade";
     const upgradeLinkPlanUser: User = {
       ...defaultUser,
       plan: {
         ...defaultUser.plan,
         pendingFreeUpgrade: false,
         buttonUrl: "upgrade/link/to/test",
+        buttonText,
       },
     };
-    const upgradeLabel = "UPGRADE";
 
     // Act
     render(
-      <MenuIntlProvider>
+      <IntlProviderDouble>
         <UserPlan user={upgradeLinkPlanUser} />
-      </MenuIntlProvider>
+      </IntlProviderDouble>
     );
 
     // Assert
-    const upgradeLink = screen.getByText(upgradeLabel);
+    const upgradeLink = screen.getByText(buttonText);
     expect(upgradeLink).toHaveAttribute(
       "href",
       upgradeLinkPlanUser.plan.buttonUrl
     );
   });
 
-  it("should render a button with tooltip when upgrade request was sent", () => {
+  it("should display button with tip when upgrade request was sent", () => {
     // Arrange
     const tooltipPlanUser: User = {
       ...defaultUser,
       isLastPlanRequested: true,
-      plan: {
-        ...defaultUser.plan,
-      },
     };
-    const requestSentLabel = "SOLICITUD ENVIADA";
 
     // Act
     render(
-      <MenuIntlProvider>
+      <IntlProviderDouble>
         <UserPlan user={tooltipPlanUser} />
-      </MenuIntlProvider>
+      </IntlProviderDouble>
     );
 
-    const requestSentButton = screen.getByText(requestSentLabel);
-    const tooltip = screen.getByText(
-      "Estamos diseñando un Plan a la medida de tus necesidades. ¡Te contactaremos pronto!"
+    screen.getByText("header.send_request");
+    screen.getByText("header.tooltip_last_plan");
+  });
+
+  it("don't should display button with tip when upgrade request wasn't sent", () => {
+    // Arrange
+    const tooltipPlanUser: User = {
+      ...defaultUser,
+      isLastPlanRequested: false,
+    };
+
+    // Act
+    render(
+      <IntlProviderDouble>
+        <UserPlan user={tooltipPlanUser} />
+      </IntlProviderDouble>
     );
 
-    expect(requestSentButton).toBeInTheDocument();
-    expect(tooltip).toBeInTheDocument();
+    const updatePlanButton = screen.queryByText("header.send_request");
+    const tip = screen.queryByText("header.tooltip_last_plan");
+    expect(updatePlanButton).not.toBeInTheDocument();
+    expect(tip).not.toBeInTheDocument();
   });
 
   it("should display sms plan information when is enabled", () => {

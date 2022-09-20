@@ -11,7 +11,12 @@ const toggleModal = jest.fn();
 describe("<Modal />", () => {
   it("renders Modal component", async () => {
     render(
-      <Modal isOpen={true} children={content} handleClose={toggleModal} />
+      <Modal
+        isOpen={true}
+        children={content}
+        handleClose={toggleModal}
+        data-testid="modal"
+      />
     );
 
     const modal = screen.getByTestId(modalTestId);

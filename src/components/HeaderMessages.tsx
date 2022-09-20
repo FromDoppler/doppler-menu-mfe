@@ -59,6 +59,7 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
           type={
             button?.action === validateSubscribersPopup ? "large" : "medium"
           }
+          data-testid={"validate.subscribe.modal"}
         >
           {button?.action === validateSubscribersPopup ? (
             <ValidateSubscribersForm

@@ -10,8 +10,7 @@ interface UserPlanProps {
 }
 
 export const UserPlan = ({ user }: UserPlanProps) => {
-  const { sms, plan, hasClientManager, isLastPlanRequested, clientManager } =
-    user;
+  const { sms, plan, isLastPlanRequested } = user;
 
   const {
     planName,
@@ -19,7 +18,6 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     planType,
     itemDescription,
     buttonUrl,
-    buttonText,
     pendingFreeUpgrade,
     remainingCredits,
     description,
@@ -32,105 +30,54 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     setIsModalOpen(true);
   };
 
-  const renderModalButton = () => (
-    <OpenModalButton className="user-plan" openModalHandler={openModalHandler}>
-      {buttonText}
-    </OpenModalButton>
-  );
-
-  const renderModalButtonWithTooltip = () => (
-    <div className="dp-request-sent">
-      <Tooltip>
-        <OpenModalButton
-          className="user-plan close-user--menu dp-tooltip-left"
-          openModalHandler={openModalHandler}
-        >
-          <FormattedMessage id="header.send_request" />
-          <div className="tooltiptext">
-            <FormattedMessage id="header.tooltip_last_plan" />
-          </div>
-        </OpenModalButton>
-        <span className="ms-icon icon-info-icon" />
-      </Tooltip>
-    </div>
-  );
-
-  const renderPlanLink = () => {
-    if (buttonUrl && !pendingFreeUpgrade)
-      return (
-        <a className="user-plan" href={buttonUrl}>
-          {buttonText}
-        </a>
-      );
-  };
-
   return (
     <div className="user-plan--container">
-      {!hasClientManager && (
-        <>
-          <UserPlanType>
-            {isSubscribers || isMonthlyByEmail ? (
-              <>
-                <MonthlyPlan>
-                  <strong>{planName}</strong> ({maxSubscribers}{" "}
-                  {itemDescription})
-                </MonthlyPlan>
-                {renderPlanLink()}
-              </>
-            ) : (
-              <>
-                <MonthlyPlan>
-                  <FormattedMessage id="header.plan_prepaid" />
-                </MonthlyPlan>
-                {renderPlanLink()}
-              </>
-            )}
-            {!buttonUrl || pendingFreeUpgrade
-              ? !isLastPlanRequested
-                ? renderModalButton()
-                : renderModalButtonWithTooltip()
-              : ""}
-          </UserPlanType>
-          <UserPlanType>
-            <UserPlanInformation
-              planType={planType}
-              remainingCredits={remainingCredits}
-              credits={maxSubscribers}
-              description={description}
-            />
-            {sms.smsEnabled ? (
-              <SmsInformation
-                buttonText={sms.buttonText}
-                buttonUrl={sms.buttonUrl}
-                description={sms.description}
-                remainingCredits={sms.remainingCredits}
-              />
-            ) : null}
-          </UserPlanType>
-        </>
-      )}
+      <div className="user-plan--type">
+        {isSubscribers || isMonthlyByEmail ? (
+          <UpgradePlanItem
+            showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
+            buttonUrl={plan.buttonUrl}
+            buttonText={plan.buttonText}
+          >
+            <strong>{planName}</strong> ({maxSubscribers} {itemDescription})
+          </UpgradePlanItem>
+        ) : (
+          <UpgradePlanItem
+            showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
+            buttonUrl={plan.buttonUrl}
+            buttonText={plan.buttonText}
+          />
+        )}
+        {!buttonUrl || pendingFreeUpgrade ? (
+          <UpdatePlanButton
+            showTips={isLastPlanRequested}
+            click={openModalHandler}
+            text={plan.buttonText}
+          />
+        ) : null}
+      </div>
+      <div className="user-plan--type">
+        <CurrentPlanCredits
+          planType={planType}
+          remainingCredits={remainingCredits}
+          credits={maxSubscribers}
+          description={description}
+        />
+        {sms.smsEnabled ? (
+          <RechargeSMSPlanCredits
+            buttonText={sms.buttonText}
+            buttonUrl={sms.buttonUrl}
+            description={sms.description}
+            remainingCredits={sms.remainingCredits}
+          />
+        ) : null}
+      </div>
 
-      {hasClientManager && (
-        <UserPlanType>
-          {clientManager?.profileName && (
-            <MonthlyPlan>
-              <FormattedMessage id="header.profile" />{" "}
-              <strong>{clientManager?.profileName}</strong>
-            </MonthlyPlan>
-          )}
-          {!clientManager?.profileName && (
-            <>
-              <MonthlyPlan>
-                <FormattedMessage id="header.send_mails" />
-              </MonthlyPlan>
-              <p className="user-plan-enabled">
-                <FormattedMessage id="header.enabled" />
-              </p>
-            </>
-          )}
-        </UserPlanType>
-      )}
-      <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
+      <Modal
+        isOpen={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
+        data-testid={"upgrade.plan.form.modal"}
+      >
         <UpgradePlanForm
           isSubscriber={isSubscribers}
           handleClose={() => setIsModalOpen(false)}
@@ -141,15 +88,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
   );
 };
 
-const MonthlyPlan = ({ children }: { children: React.ReactNode }) => {
-  return <p className="user-plan--monthly-text">{children}</p>;
-};
-
-const UserPlanType = ({ children }: { children: React.ReactNode }) => (
-  <div className="user-plan--type">{children}</div>
-);
-
-const UserPlanInformation = ({
+const CurrentPlanCredits = ({
   planType,
   credits,
   remainingCredits,
@@ -184,7 +123,7 @@ const UserPlanInformation = ({
   );
 };
 
-const SmsInformation = ({
+const RechargeSMSPlanCredits = ({
   remainingCredits,
   description,
   buttonUrl,
@@ -220,16 +159,64 @@ const SmsInformation = ({
   );
 };
 
-const OpenModalButton = ({
-  className,
-  openModalHandler,
+type UpdatePlanButtonProp =
+  | {
+      showTips: false;
+      text: string;
+      click: () => void;
+    }
+  | {
+      showTips: true;
+      click: () => void;
+    };
+
+const UpdatePlanButton = (props: UpdatePlanButtonProp) => {
+  if (props.showTips) {
+    return (
+      <div className="dp-request-sent">
+        <Tooltip>
+          <button
+            onClick={props.click}
+            className="user-plan close-user--menu dp-tooltip-left"
+          >
+            <FormattedMessage id="header.send_request" />
+            <div className="tooltiptext">
+              <FormattedMessage id="header.tooltip_last_plan" />
+            </div>
+          </button>
+          <span className="ms-icon icon-info-icon" />
+        </Tooltip>
+      </div>
+    );
+  }
+  return (
+    <button onClick={props.click} className="user-plan">
+      {props.text}
+    </button>
+  );
+};
+
+const UpgradePlanItem = ({
+  showPlanLink,
+  buttonText,
+  buttonUrl,
   children,
 }: {
-  className: string;
-  openModalHandler: () => void;
-  children: React.ReactNode;
-}) => (
-  <button onClick={() => openModalHandler()} className={className}>
-    {children}
-  </button>
-);
+  showPlanLink: boolean;
+  buttonUrl: string;
+  buttonText: string;
+  children?: any;
+}) => {
+  return (
+    <>
+      <p className="user-plan--monthly-text">
+        {children ? children : <FormattedMessage id="header.plan_prepaid" />}
+      </p>
+      {showPlanLink ? (
+        <a className="user-plan" href={buttonUrl}>
+          {buttonText}
+        </a>
+      ) : null}
+    </>
+  );
+};
