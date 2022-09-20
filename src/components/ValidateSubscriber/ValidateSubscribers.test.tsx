@@ -124,9 +124,11 @@ describe("ValidateSubscribersComponent", () => {
     // Act
     render(
       <QueryClientProvider client={queryClient}>
-        <IntlProviderDouble>
-          <ValidateSubscribersForm onClose={jest.fn} />
-        </IntlProviderDouble>
+        <AppConfigurationProvider configuration={{ useDummies: true }}>
+          <IntlProviderDouble>
+            <ValidateSubscribersForm onClose={jest.fn} />
+          </IntlProviderDouble>
+        </AppConfigurationProvider>
       </QueryClientProvider>
     );
 
