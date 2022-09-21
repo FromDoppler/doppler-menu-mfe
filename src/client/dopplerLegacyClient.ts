@@ -3,8 +3,9 @@ import { DopplerLegacyClientImpl } from "./DopplerLegacyClientImpl";
 import { DopplerLegacyClientDummy } from "./DopplerLegacyClientDummy";
 import { MaxSubscribersData } from "../components/ValidateSubscriber/types";
 import { useAppConfiguration } from "../AppConfiguration";
+import { useMutation, useQuery } from "react-query";
 
-export const useDopplerLegacyClient = () => {
+const useDopplerLegacyClient = () => {
   const appConfiguration = useAppConfiguration();
   const dopplerLegacyClient: DopplerLegacyClient = appConfiguration.useDummies
     ? new DopplerLegacyClientDummy()
@@ -15,6 +16,33 @@ export const useDopplerLegacyClient = () => {
         })
       );
   return dopplerLegacyClient;
+};
+
+export const useSendMaxSubscribersData = () => {
+  const client = useDopplerLegacyClient();
+
+  return useMutation(
+    async (maxSubscribersData: MaxSubscribersData): Promise<boolean> => {
+      return await client.sendMaxSubscribersData(maxSubscribersData);
+    }
+  );
+};
+
+export const useGetMaxSubscribers = () => {
+  const client = useDopplerLegacyClient();
+
+  const queryFn = async () => await client.getMaxSubscribersData();
+  const queryOptions = {
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: false,
+  };
+
+  return useQuery<MaxSubscribersData>(
+    "getMaxSubscribersData",
+    queryFn,
+    queryOptions
+  );
 };
 
 export interface DopplerLegacyClient {
