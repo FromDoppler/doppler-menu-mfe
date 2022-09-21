@@ -8,7 +8,7 @@ import { Loading } from "../Loading";
 
 export interface QuestionsFormProps {
   questions: QuestionModel[];
-  onSubmit: () => Promise<boolean>;
+  onSubmit: () => void;
   customSubmit?: ReactNode;
   className?: string;
 }
@@ -38,7 +38,7 @@ export const QuestionsForm = ({
 
   const answers: any = normalizeQuestions(questions);
 
-  const handlerSubmit = async (values: any, { setSubmitting }: any) => {
+  const handlerSubmit = async (values: any) => {
     questions.forEach((questionItem, index) => {
       if (isCheckbox(questionItem.answer)) {
         questionItem.answer.value = values[`answer${index}`].join("-");
@@ -47,10 +47,7 @@ export const QuestionsForm = ({
         questionItem.answer.value = values[`answer${index}`];
       }
     });
-    const result = await onSubmit();
-    if (!result) {
-      setSubmitting(false);
-    }
+    await onSubmit();
   };
 
   const validate = (values: any) => {
