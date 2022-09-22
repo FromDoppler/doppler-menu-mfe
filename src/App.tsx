@@ -3,8 +3,13 @@ import { HeaderMessages } from "./components/HeaderMessages";
 import { useLocationHref } from "./hooks/useLocationHref";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 import { useNavBarState } from "./navbar-state/navbar-state-hook";
+import { useEffect } from "react";
 
-function App() {
+function App({
+  onStatusUpdate,
+}: {
+  onStatusUpdate?: (status: string) => void;
+}) {
   const href = useLocationHref(window);
 
   const appSessionState = useAppSessionState();
@@ -13,6 +18,10 @@ function App() {
     currentUrl: href,
     appSessionState,
   });
+
+  useEffect(() => {
+    onStatusUpdate?.(appSessionState.status);
+  }, [appSessionState.status, onStatusUpdate]);
 
   if (appSessionState.status !== "authenticated") {
     return <HeaderPlaceholder />;

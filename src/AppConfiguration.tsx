@@ -4,6 +4,7 @@ export interface AppConfiguration {
   dopplerMenuElementId?: string;
   useDummies?: boolean;
   dopplerLegacyBaseUrl?: string;
+  onStatusUpdate?: (status: string) => void;
 }
 
 const DopplerLegacyContext = createContext<AppConfiguration>({

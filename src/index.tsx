@@ -57,7 +57,7 @@ function initialize(
         <AppSessionStateProvider appSessionStateClient={appSessionStateClient}>
           <AppConfigurationProvider configuration={configuration}>
             <MenuIntlProvider>
-              <App />
+              <App onStatusUpdate={configuration.onStatusUpdate} />
             </MenuIntlProvider>
           </AppConfigurationProvider>
         </AppSessionStateProvider>
