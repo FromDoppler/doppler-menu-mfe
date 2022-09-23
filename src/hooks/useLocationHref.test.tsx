@@ -69,8 +69,8 @@ describe(useLocationHref.name, () => {
       locationUpdatedEventType,
       expect.any(Function)
     );
-    expect(windowDouble.removeEventListener.mock.lastCall[1]).toBe(
-      windowDouble.addEventListener.mock.lastCall[1]
+    expect(windowDouble.removeEventListener.mock.lastCall?.[1]).toBe(
+      windowDouble.addEventListener.mock.lastCall?.[1]
     );
   });
 });
