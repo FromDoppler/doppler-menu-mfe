@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Loading } from "../Loading";
 import { QuestionsForm } from "./QuestionsForm";
 import { ValidateMaxSubscribersConfirmation } from "./ValidateMaxSubscribersConfirmation";
 import { UnexpectedError } from "../UnexpectedError";
-import { useDopplerLegacyClient } from "../../client/dopplerLegacyClient";
-import { useQuery } from "react-query";
+import {
+  useGetMaxSubscribers,
+  useSendMaxSubscribersData,
+} from "../../client/dopplerLegacyClient";
 import { FormattedMessage } from "react-intl";
 import { SubmitButton } from "./form-helpers";
-import { MaxSubscribersData } from "./types";
 
 interface ValidateSubscribersProps {
   onClose: () => void;
@@ -18,44 +19,34 @@ export const ValidateSubscribersForm = ({
   onClose,
   onComplete,
 }: ValidateSubscribersProps) => {
-  const dopplerLegacyClient = useDopplerLegacyClient();
   const {
     data: validationFormData,
     isLoading,
-    error,
-  } = useQuery<MaxSubscribersData>(
-    "getMaxSubscribersData",
-    dopplerLegacyClient.getMaxSubscribersData,
-    {
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      retry: false,
-    }
-  );
-
-  const [success, setSuccess] = useState(false);
+    isError,
+  } = useGetMaxSubscribers();
+  const { mutate: sendMaxSubscriberMutate, isSuccess } =
+    useSendMaxSubscribersData();
 
   const handleSubmit = async () => {
     // TODO: improve that, never occur if validationFormData is undefined
-    const isSuccess = validationFormData
-      ? await dopplerLegacyClient.sendMaxSubscribersData(validationFormData)
-      : false;
-    if (isSuccess) {
-      setSuccess(isSuccess);
+    if (!validationFormData) {
+      return;
     }
-    isSuccess && onComplete && onComplete();
-    return isSuccess;
+    sendMaxSubscriberMutate(validationFormData);
   };
 
   if (isLoading) {
     return <Loading />;
   }
 
-  if (error) {
+  if (isError) {
     return <UnexpectedError />;
   }
 
-  if (success) {
+  if (isSuccess) {
+    if (onComplete) {
+      onComplete();
+    }
     return <ValidateMaxSubscribersConfirmation handleClose={onClose} />;
   }
 

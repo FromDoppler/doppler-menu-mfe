@@ -10,7 +10,7 @@ import * as dopplerLegacyClient from "../../client/dopplerLegacyClient";
 import userEvent from "@testing-library/user-event";
 import { AnswerType, MaxSubscribersData } from "./types";
 import { AppConfigurationProvider } from "../../AppConfiguration";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 export const maxSubscribersData: MaxSubscribersData = {
   questionsList: [
@@ -111,14 +111,20 @@ describe("ValidateSubscribersComponent", () => {
   it("should render UnexpectedError when has an error", async () => {
     // Arrange
     jest
-      .spyOn(dopplerLegacyClient, "useDopplerLegacyClient")
-      .mockImplementationOnce(() => ({
-        getMaxSubscribersData: jest.fn(async () => {
-          throw new Error("Empty Doppler response");
-        }),
-        sendAcceptButtonAction: jest.fn(),
-        sendMaxSubscribersData: jest.fn(),
-      }));
+      .spyOn(dopplerLegacyClient, "useGetMaxSubscribers")
+      .mockImplementationOnce(() =>
+        useQuery<MaxSubscribersData>(
+          "getMaxSubscribersData",
+          async () => {
+            throw new Error("Empty Doppler response");
+          },
+          {
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            retry: false,
+          }
+        )
+      );
 
     const queryClient = new QueryClient();
     // Act
@@ -131,7 +137,7 @@ describe("ValidateSubscribersComponent", () => {
         </AppConfigurationProvider>
       </QueryClientProvider>
     );
-
+    screen.debug();
     // Assert
     const loader = screen.getByTestId("loading-box");
     await waitForElementToBeRemoved(loader);
@@ -140,12 +146,18 @@ describe("ValidateSubscribersComponent", () => {
 
   it("should render ValidateMaxSubscribersForm when there is form data", async () => {
     jest
-      .spyOn(dopplerLegacyClient, "useDopplerLegacyClient")
-      .mockImplementation(() => ({
-        getMaxSubscribersData: jest.fn(async () => maxSubscribersData),
-        sendAcceptButtonAction: jest.fn(),
-        sendMaxSubscribersData: jest.fn(async () => true),
-      }));
+      .spyOn(dopplerLegacyClient, "useGetMaxSubscribers")
+      .mockImplementation(() =>
+        useQuery<MaxSubscribersData>(
+          "getMaxSubscribersData",
+          async () => Promise.resolve(maxSubscribersData),
+          {
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            retry: false,
+          }
+        )
+      );
 
     const queryClient = new QueryClient();
     // Act
@@ -184,12 +196,18 @@ describe("ValidateSubscribersComponent", () => {
     };
 
     jest
-      .spyOn(dopplerLegacyClient, "useDopplerLegacyClient")
-      .mockImplementation(() => ({
-        getMaxSubscribersData: jest.fn(async () => formData),
-        sendAcceptButtonAction: jest.fn(),
-        sendMaxSubscribersData: jest.fn(async () => true),
-      }));
+      .spyOn(dopplerLegacyClient, "useGetMaxSubscribers")
+      .mockImplementation(() =>
+        useQuery<MaxSubscribersData>(
+          "getMaxSubscribersData",
+          async () => Promise.resolve(formData),
+          {
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            retry: false,
+          }
+        )
+      );
 
     const queryClient = new QueryClient();
     // Act

@@ -2,9 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { HeaderMessages } from "./HeaderMessages";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { Alert, User } from "../model";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import userEvent from "@testing-library/user-event";
 import * as dopplerLegacyClient from "../client/dopplerLegacyClient";
+import { MaxSubscribersData } from "./ValidateSubscriber/types";
 
 const userData: User = {
   email: "email@mock.com",
@@ -162,12 +163,18 @@ describe("<HeaderMessages />", () => {
       urlHelp: "https://help.fromdoppler.com/",
     };
     jest
-      .spyOn(dopplerLegacyClient, "useDopplerLegacyClient")
-      .mockImplementation(() => ({
-        getMaxSubscribersData: jest.fn(async () => questions),
-        sendAcceptButtonAction: jest.fn(),
-        sendMaxSubscribersData: jest.fn(async () => true),
-      }));
+      .spyOn(dopplerLegacyClient, "useGetMaxSubscribers")
+      .mockImplementation(() =>
+        useQuery<MaxSubscribersData>(
+          "getMaxSubscribersData",
+          async () => Promise.resolve(questions),
+          {
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            retry: false,
+          }
+        )
+      );
 
     const alertData: Alert = {
       type: "warning",
