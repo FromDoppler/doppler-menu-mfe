@@ -45,6 +45,8 @@ describe(Header.name, () => {
           navBar={{
             currentUrl: "/",
             selectedItemId: null,
+            defaultActiveItemId: null,
+            forcedActiveItemId: null,
             items: [],
             isExpanded: false,
           }}

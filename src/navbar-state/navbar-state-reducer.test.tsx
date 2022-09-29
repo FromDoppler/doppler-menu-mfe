@@ -54,6 +54,8 @@ describe(navBarStateReducer.name, () => {
         isExpanded: false,
         items: [],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "items/updated",
@@ -79,6 +81,8 @@ describe(navBarStateReducer.name, () => {
         isExpanded: false,
         items: [item0, item1, item2],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "url/updated",
@@ -102,6 +106,8 @@ describe(navBarStateReducer.name, () => {
         isExpanded: false,
         items: [{ ...item0, isActive: true }, item1, item2],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "url/updated",
@@ -151,6 +157,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: idHTML2,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "url/updated",
@@ -196,6 +204,8 @@ describe(navBarStateReducer.name, () => {
           item2,
         ],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "url/updated",
@@ -240,6 +250,8 @@ describe(navBarStateReducer.name, () => {
           item2,
         ],
         selectedItemId: idHTML1,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -282,6 +294,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -325,6 +339,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -378,6 +394,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -433,6 +451,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: idHTML2,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -462,7 +482,12 @@ describe(useNavBarStateReducer.name, () => {
     it("should accept empty items", () => {
       // Arrange
       const currentUrl = url1;
-      const initializationData = { currentUrl, items: [] };
+      const initializationData = {
+        currentUrl,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
+        items: [],
+      };
 
       const { TestComponent, getCurrentState } = createTestContext(
         () => initializationData
@@ -483,6 +508,8 @@ describe(useNavBarStateReducer.name, () => {
       // Arrange
       const initializationData = {
         currentUrl: url1,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
         items: [item0, item1, item2],
       };
 
@@ -510,6 +537,8 @@ describe(useNavBarStateReducer.name, () => {
 function createTestContext(
   getInitializationData: () => {
     currentUrl: string;
+    defaultActiveItemId: string | null;
+    forcedActiveItemId: string | null;
     items: ReadonlyArray<PrimaryNavItemState>;
   }
 ): {

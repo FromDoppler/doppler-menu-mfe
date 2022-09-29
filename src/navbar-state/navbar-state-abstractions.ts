@@ -27,6 +27,8 @@ export type NavBarState = Readonly<{
   /** selectedItemId is based on mouse hover.
    * It should be the idHTML of the last primaryNavItem that has been hovered */
   selectedItemId: string | null;
+  defaultActiveItemId: string | null;
+  forcedActiveItemId: string | null;
   items: ReadonlyArray<PrimaryNavItemState>;
   /** isExpanded is based on mouse hover.
    * It should be true when mouse is hovering over a primaryNavItem,
@@ -39,4 +41,6 @@ export type NavBarState = Readonly<{
 export type NavBarStateReducerAction =
   | { type: "items/updated"; items: ReadonlyArray<PrimaryNavItemState> }
   | { type: "url/updated"; href: string }
-  | { type: "selected-item/updated"; idHTML: string | null };
+  | { type: "selected-item/updated"; idHTML: string | null }
+  | { type: "default-active/updated"; idHTML: string | null }
+  | { type: "forced-active/updated"; idHTML: string | null };
