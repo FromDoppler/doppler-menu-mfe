@@ -33,7 +33,7 @@ export const messages_es = {
   validate_max_subscribers_form: {
     button_accept: "Aceptar",
     checkbox_empty: "¡Ouch! Tienes que seleccionar al menos una opción.",
-    form_help: "* ¿Quieres saber porqué te solicitamos esta información?",
+    form_help: "* ¿Quieres saber por qué te solicitamos esta información?",
     form_help_link_text: "Entérate aquí",
     info_text: `** Este proceso puede presentar demoras ya que debemos analizar los datos en profundidad.
     Gracias por tu paciencia.`,
