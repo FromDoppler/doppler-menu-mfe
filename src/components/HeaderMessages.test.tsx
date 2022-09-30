@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { HeaderMessages } from "./HeaderMessages";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { Alert, User } from "../model";
@@ -214,9 +214,11 @@ describe("<HeaderMessages />", () => {
     const submitButton = screen.getByText("Guardar");
     await userEvent.click(submitButton);
 
-    const confirmButton = screen.getByText("Aceptar");
-    await userEvent.click(confirmButton);
+    waitFor(async () => {
+      const confirmButton = screen.getByText("Aceptar");
+      await userEvent.click(confirmButton);
 
-    screen.getByText("next.alert.message");
+      screen.getByText("next.alert.message");
+    });
   });
 });
