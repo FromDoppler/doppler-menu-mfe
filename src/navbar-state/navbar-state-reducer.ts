@@ -104,10 +104,12 @@ function buildNavBarState({
 }): NavBarState {
   const { activePrimaryItem, activeSecondaryItem } = (forcedActiveItemId
     ? findActiveItemsByIdHTML(forcedActiveItemId, items)
-    : findActiveItemsByUrl(currentUrl, items)) || {
-    activePrimaryItem: null,
-    activeSecondaryItem: null,
-  };
+    : findActiveItemsByUrl(currentUrl, items)) ||
+    (defaultActiveItemId &&
+      findActiveItemsByIdHTML(defaultActiveItemId, items)) || {
+      activePrimaryItem: null,
+      activeSecondaryItem: null,
+    };
 
   const selectedPrimaryItem = findPrimaryItemByIdHTML({
     idHTML: selectedItemId,
