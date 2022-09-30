@@ -19,12 +19,10 @@ export const MenuRight = ({
   return (
     <nav className="nav-right-main" aria-label="secondary nav">
       <ul className="nav-right-main--list">
-        <li>
-          <Notifications
-            notifications={notifications}
-            emptyNotificationText={emptyNotificationText}
-          />
-        </li>
+        <Notifications
+          notifications={notifications}
+          emptyNotificationText={emptyNotificationText}
+        />
         <li>
           <a href="https://help.fromdoppler.com/en">
             <span className="ms-icon icon-header-help"></span>
