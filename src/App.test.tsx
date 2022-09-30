@@ -8,6 +8,7 @@ import {
 import testUserData from "./testUserData.json";
 import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
 import { safeUserData } from "./utils";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 test("renders Doppler Menu Micro-Frontend", () => {
   const mainHeaderLabel = "main header";
@@ -27,11 +28,14 @@ test("renders Doppler Menu Micro-Frontend", () => {
     onSessionUpdate: () => {},
     start: () => {},
   };
+  const queryClient = new QueryClient();
 
   render(
     <AppSessionStateProvider appSessionStateClient={dummyAppSessionStateClient}>
       <MenuIntlProvider>
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
       </MenuIntlProvider>
     </AppSessionStateProvider>
   );
