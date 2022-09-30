@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AppSessionState } from "../session/app-session-abstractions";
 import { useNavBarStateReducer } from "./navbar-state-reducer";
 import {
@@ -6,6 +6,7 @@ import {
   PrimaryNavItemState,
   SecondaryNavItemState,
 } from "./navbar-state-abstractions";
+import { useMeta } from "../hooks/useMeta";
 
 function extractNavItems(
   appSessionState: AppSessionState
@@ -41,9 +42,8 @@ export function useNavBarState({
   /** call this on mouse leave menu */
   unselectNavItem: () => void;
 } {
-  // TODO: read them from DOM using a custom hook to allow to scale to listening DOM
-  const [defaultActiveItemId] = useState(null);
-  const [forcedActiveItemId] = useState(null);
+  const defaultActiveItemId = useMeta("doppler-menu-mfe:default-active-item");
+  const forcedActiveItemId = useMeta("doppler-menu-mfe:force-active-item");
 
   const [state, dispatch] = useNavBarStateReducer(() => ({
     currentUrl,
