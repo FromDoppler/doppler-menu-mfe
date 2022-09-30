@@ -2,6 +2,7 @@ import "@testing-library/jest-dom/extend-expect";
 import {
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import { IntlProviderDouble } from "../i18n/DopplerIntlProvider.double-with-ids-as-values";
@@ -105,6 +106,7 @@ describe("ValidateSubscribersComponent", () => {
 
     // Assert
     const loader = screen.getByTestId("loading-box");
+    // TODO: mock getMaxSubscribersData to avoid timeouts
     await waitForElementToBeRemoved(loader);
   });
 
@@ -222,17 +224,19 @@ describe("ValidateSubscribersComponent", () => {
     const loader = screen.getByTestId("loading-box");
     await waitForElementToBeRemoved(loader);
 
-    const input = await screen.getByRole("textbox", { name: "Nombre" });
+    const input = screen.getByRole("textbox", { name: "Nombre" });
     await userEvent.type(input, "value");
-    const submitButton = await screen.getByRole("button", {
+    const submitButton = screen.getByRole("button", {
       name: "common.save",
     });
     await userEvent.click(submitButton);
 
     // Assert
-    const validateMaxSubscribersConfirm = await screen.getByTestId(
-      "validate-subscribers-confirm"
-    );
-    expect(validateMaxSubscribersConfirm).toBeInTheDocument();
+    waitFor(() => {
+      const validateMaxSubscribersConfirm = screen.getByTestId(
+        "validate-subscribers-confirm"
+      );
+      expect(validateMaxSubscribersConfirm).toBeInTheDocument();
+    });
   });
 });

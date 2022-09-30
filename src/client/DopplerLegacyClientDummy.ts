@@ -4,21 +4,24 @@ import {
   MaxSubscribersData,
 } from "../components/ValidateSubscriber/types";
 
+const timeout = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
 export class DopplerLegacyClientDummy implements DopplerLegacyClient {
   public async getMaxSubscribersData(): Promise<MaxSubscribersData> {
-    await setTimeout(() => {}, 1500);
+    await timeout(500);
     return maxSubscribersData;
   }
 
   public async sendAcceptButtonAction(): Promise<boolean> {
-    await setTimeout(() => {}, 1500);
+    await timeout(1500);
     return true;
   }
 
   public async sendMaxSubscribersData(
     maxSubscribersData: MaxSubscribersData
   ): Promise<boolean> {
-    await setTimeout(() => {}, 1500);
+    await timeout(1500);
     return true;
   }
 }
