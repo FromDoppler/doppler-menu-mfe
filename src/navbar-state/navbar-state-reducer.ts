@@ -7,6 +7,28 @@ import {
   SecondaryNavItemState,
 } from "./navbar-state-abstractions";
 
+function findActiveItemsByUrl(
+  currentUrl: string,
+  items: readonly PrimaryNavItemState[]
+) {
+  const activeSecondaryItem = findSecondaryItemByUrl({ currentUrl, items });
+  const activePrimaryItem = activeSecondaryItem
+    ? findParent({ subItem: activeSecondaryItem, items })
+    : findPrimaryItemByUrl({ currentUrl, items });
+  return activePrimaryItem ? { activePrimaryItem, activeSecondaryItem } : null;
+}
+
+function findActiveItemsByIdHTML(
+  idHTML: string,
+  items: readonly PrimaryNavItemState[]
+) {
+  const activeSecondaryItem = findSecondaryItemByIdHTML({ idHTML, items });
+  const activePrimaryItem = activeSecondaryItem
+    ? findParent({ subItem: activeSecondaryItem, items })
+    : findPrimaryItemByIdHTML({ idHTML, items });
+  return activePrimaryItem ? { activePrimaryItem, activeSecondaryItem } : null;
+}
+
 const findSecondaryItemByUrl = ({
   currentUrl,
   items,
@@ -19,6 +41,19 @@ const findSecondaryItemByUrl = ({
     : items
         .flatMap((primaryItem) => primaryItem.subNavItems || [])
         .find((secondaryItem) => IsActiveUrl(currentUrl, secondaryItem.url));
+
+const findSecondaryItemByIdHTML = ({
+  idHTML,
+  items,
+}: {
+  idHTML: string;
+  items: ReadonlyArray<PrimaryNavItemState>;
+}) =>
+  !idHTML
+    ? undefined
+    : items
+        .flatMap((primaryItem) => primaryItem.subNavItems || [])
+        .find((secondaryItem) => secondaryItem.idHTML === idHTML);
 
 const findPrimaryItemByUrl = ({
   currentUrl,
@@ -67,11 +102,12 @@ function buildNavBarState({
   forcedActiveItemId: string | null;
   itemsWithObsoleteState: ReadonlyArray<PrimaryNavItemState>;
 }): NavBarState {
-  const activeSecondaryItem = findSecondaryItemByUrl({ currentUrl, items });
-
-  const activePrimaryItem = activeSecondaryItem
-    ? findParent({ subItem: activeSecondaryItem, items })
-    : findPrimaryItemByUrl({ currentUrl, items });
+  const { activePrimaryItem, activeSecondaryItem } = (forcedActiveItemId
+    ? findActiveItemsByIdHTML(forcedActiveItemId, items)
+    : findActiveItemsByUrl(currentUrl, items)) || {
+    activePrimaryItem: null,
+    activeSecondaryItem: null,
+  };
 
   const selectedPrimaryItem = findPrimaryItemByIdHTML({
     idHTML: selectedItemId,
