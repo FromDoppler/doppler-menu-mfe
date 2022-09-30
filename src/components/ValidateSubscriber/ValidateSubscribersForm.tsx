@@ -24,12 +24,18 @@ export const ValidateSubscribersForm = ({
     isLoading,
     isError,
   } = useGetMaxSubscribers();
-  const { mutate: sendMaxSubscriberMutate, isSuccess } =
-    useSendMaxSubscribersData();
+  const {
+    mutate: sendMaxSubscriberMutate,
+    isSuccess,
+    isLoading: isSending,
+  } = useSendMaxSubscribersData();
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     // TODO: improve that, never occur if validationFormData is undefined
     if (!validationFormData) {
+      return;
+    }
+    if (isSending) {
       return;
     }
     sendMaxSubscriberMutate(validationFormData);
