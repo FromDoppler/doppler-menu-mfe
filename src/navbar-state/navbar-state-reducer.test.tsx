@@ -147,6 +147,31 @@ describe(navBarStateReducer.name, () => {
       expect(state1.items[1].isActive).toBe(true);
     });
 
+    it("should remove active item when URL is not found", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: url0,
+        isExpanded: false,
+        items: [{ ...item0, isActive: true }, item1, item2],
+        selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
+      } as const;
+      const action = {
+        type: "url/updated",
+        href: "UNKNOWN URL",
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.currentUrl).toBe("UNKNOWN URL");
+      expect(state1.items[0].isActive).toBe(false);
+      expect(state1.items[1].isActive).toBe(false);
+      expect(state1.items[2].isActive).toBe(false);
+    });
+
     it("should deselect item", () => {
       // Arrange
       const state0 = {
