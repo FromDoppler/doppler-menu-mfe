@@ -28,6 +28,13 @@ export const useSendMaxSubscribersData = () => {
   );
 };
 
+export const useSendAcceptButtonAction = () => {
+  const client = useDopplerLegacyClient();
+  return useMutation(
+    async (): Promise<boolean> => await client.sendAcceptButtonAction()
+  );
+};
+
 export const useGetMaxSubscribers = () => {
   const client = useDopplerLegacyClient();
 
