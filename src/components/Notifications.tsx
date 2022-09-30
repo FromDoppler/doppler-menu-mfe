@@ -20,7 +20,7 @@ export const Notifications = ({
     };
 
     return ({ children }: any) => (
-      <div ref={notificationsRef}>
+      <li ref={notificationsRef}>
         <span
           className="user-menu--open active"
           data-count={count ? count : null}
@@ -29,7 +29,7 @@ export const Notifications = ({
           <span className="ms-icon icon-notification" />
         </span>
         {children}
-      </div>
+      </li>
     );
   }, [count, notificationsRef]);
 
@@ -39,20 +39,19 @@ export const Notifications = ({
 
   return (
     <NotificationWrapper>
-      {notifications.map((notification, index) => {
-        return (
-          <div
-            key={index}
-            className={`user-menu helper--right dp-notifications ${
-              openNotification ? "open" : ""
-            }`}
-          >
-            <div className="dp-msj-notif">
+      <div
+        className={`user-menu helper--right dp-notifications ${
+          openNotification ? "open" : ""
+        }`}
+      >
+        {notifications.map((notification, index) => {
+          return (
+            <div key={index} className="dp-msj-notif">
               <div dangerouslySetInnerHTML={{ __html: notification }} />
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </NotificationWrapper>
   );
 };
