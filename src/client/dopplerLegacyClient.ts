@@ -5,7 +5,7 @@ import { MaxSubscribersData } from "../components/ValidateSubscriber/types";
 import { useAppConfiguration } from "../AppConfiguration";
 import { useMutation, useQuery } from "react-query";
 
-const useDopplerLegacyClient = () => {
+export const useDopplerLegacyClient = () => {
   const appConfiguration = useAppConfiguration();
   const dopplerLegacyClient: DopplerLegacyClient = appConfiguration.useDummies
     ? new DopplerLegacyClientDummy()
@@ -25,13 +25,6 @@ export const useSendMaxSubscribersData = () => {
     async (maxSubscribersData: MaxSubscribersData): Promise<boolean> => {
       return await client.sendMaxSubscribersData(maxSubscribersData);
     }
-  );
-};
-
-export const useSendAcceptButtonAction = () => {
-  const client = useDopplerLegacyClient();
-  return useMutation(
-    async (): Promise<boolean> => await client.sendAcceptButtonAction()
   );
 };
 

@@ -3,20 +3,25 @@ import { Modal } from "./Modal";
 import { User, Alert } from "../model";
 import { UpgradePlanForm } from "./UpgradePlanForm";
 import { ValidateSubscribersForm } from "./ValidateSubscriber/ValidateSubscribersForm";
-import { useSendAcceptButtonAction } from "../client/dopplerLegacyClient";
+import { useDopplerLegacyClient } from "../client/dopplerLegacyClient";
 
 interface HeaderMessagesProp {
   alert: Alert;
   user: User;
+  onClose?: () => void;
 }
 
 const upgradePlanPopup = "upgradePlanPopup";
 const validateSubscribersPopup = "validateSubscribersPopup";
 
-export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
+export const HeaderMessages = ({
+  alert,
+  user,
+  onClose,
+}: HeaderMessagesProp) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentAlert, setCurrentAlert] = useState<Alert>(alert);
-  const { mutate: sendAcceptButtonAction } = useSendAcceptButtonAction();
+  const client = useDopplerLegacyClient();
 
   if (!Object.keys(alert).length) {
     return null;
@@ -42,8 +47,12 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
     if (hasModal) {
       return toggleModal(true);
     }
-    if (alert.button?.action === "closeModal") {
-      return sendAcceptButtonAction();
+    if (currentAlert.button?.action === "closeModal") {
+      return client.sendAcceptButtonAction().then(() => {
+        if (onClose) {
+          onClose();
+        }
+      });
     }
   };
 
