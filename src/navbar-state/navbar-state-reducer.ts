@@ -7,6 +7,28 @@ import {
   SecondaryNavItemState,
 } from "./navbar-state-abstractions";
 
+function findActiveItemsByUrl(
+  currentUrl: string,
+  items: readonly PrimaryNavItemState[]
+) {
+  const activeSecondaryItem = findSecondaryItemByUrl({ currentUrl, items });
+  const activePrimaryItem = activeSecondaryItem
+    ? findParent({ subItem: activeSecondaryItem, items })
+    : findPrimaryItemByUrl({ currentUrl, items });
+  return activePrimaryItem ? { activePrimaryItem, activeSecondaryItem } : null;
+}
+
+function findActiveItemsByIdHTML(
+  idHTML: string,
+  items: readonly PrimaryNavItemState[]
+) {
+  const activeSecondaryItem = findSecondaryItemByIdHTML({ idHTML, items });
+  const activePrimaryItem = activeSecondaryItem
+    ? findParent({ subItem: activeSecondaryItem, items })
+    : findPrimaryItemByIdHTML({ idHTML, items });
+  return activePrimaryItem ? { activePrimaryItem, activeSecondaryItem } : null;
+}
+
 const findSecondaryItemByUrl = ({
   currentUrl,
   items,
@@ -19,6 +41,19 @@ const findSecondaryItemByUrl = ({
     : items
         .flatMap((primaryItem) => primaryItem.subNavItems || [])
         .find((secondaryItem) => IsActiveUrl(currentUrl, secondaryItem.url));
+
+const findSecondaryItemByIdHTML = ({
+  idHTML,
+  items,
+}: {
+  idHTML: string;
+  items: ReadonlyArray<PrimaryNavItemState>;
+}) =>
+  !idHTML
+    ? undefined
+    : items
+        .flatMap((primaryItem) => primaryItem.subNavItems || [])
+        .find((secondaryItem) => secondaryItem.idHTML === idHTML);
 
 const findPrimaryItemByUrl = ({
   currentUrl,
@@ -57,22 +92,31 @@ const findParent = ({
 function buildNavBarState({
   currentUrl,
   selectedItemId,
+  defaultActiveItemId,
+  forcedActiveItemId,
   itemsWithObsoleteState: items,
 }: {
   currentUrl: string;
   selectedItemId: string | null;
+  defaultActiveItemId: string | null;
+  forcedActiveItemId: string | null;
   itemsWithObsoleteState: ReadonlyArray<PrimaryNavItemState>;
 }): NavBarState {
-  const activeSecondaryItem = findSecondaryItemByUrl({ currentUrl, items });
-
-  const activePrimaryItem = activeSecondaryItem
-    ? findParent({ subItem: activeSecondaryItem, items })
-    : findPrimaryItemByUrl({ currentUrl, items });
+  const { activePrimaryItem, activeSecondaryItem } = (forcedActiveItemId
+    ? findActiveItemsByIdHTML(forcedActiveItemId, items)
+    : findActiveItemsByUrl(currentUrl, items)) ||
+    (defaultActiveItemId &&
+      findActiveItemsByIdHTML(defaultActiveItemId, items)) || {
+      activePrimaryItem: null,
+      activeSecondaryItem: null,
+    };
 
   const selectedPrimaryItem = findPrimaryItemByIdHTML({
     idHTML: selectedItemId,
     items,
   });
+
+  // TODO: take into account defaultActiveItemId and forcedActiveItemId
 
   const newItems = items.map((primaryItem) => {
     const isActive = primaryItem === activePrimaryItem;
@@ -101,6 +145,8 @@ function buildNavBarState({
     currentUrl,
     isExpanded,
     selectedItemId,
+    defaultActiveItemId,
+    forcedActiveItemId,
     items: newItems,
   };
 }
@@ -109,12 +155,20 @@ export function navBarStateReducer(
   state: NavBarState,
   action: NavBarStateReducerAction
 ): NavBarState {
-  const { currentUrl, selectedItemId, items } = state;
+  const {
+    currentUrl,
+    selectedItemId,
+    defaultActiveItemId,
+    forcedActiveItemId,
+    items,
+  } = state;
   switch (action.type) {
     case "items/updated":
       return buildNavBarState({
         currentUrl,
         selectedItemId,
+        defaultActiveItemId,
+        forcedActiveItemId,
         itemsWithObsoleteState: action.items,
       });
     case "url/updated":
@@ -122,6 +176,8 @@ export function navBarStateReducer(
         ? buildNavBarState({
             currentUrl: action.href,
             selectedItemId: null,
+            defaultActiveItemId,
+            forcedActiveItemId,
             itemsWithObsoleteState: items,
           })
         : state;
@@ -130,6 +186,28 @@ export function navBarStateReducer(
         ? buildNavBarState({
             currentUrl,
             selectedItemId: action.idHTML,
+            defaultActiveItemId,
+            forcedActiveItemId,
+            itemsWithObsoleteState: items,
+          })
+        : state;
+    case "default-active/updated":
+      return action.idHTML !== defaultActiveItemId
+        ? buildNavBarState({
+            currentUrl,
+            selectedItemId,
+            defaultActiveItemId: action.idHTML,
+            forcedActiveItemId,
+            itemsWithObsoleteState: items,
+          })
+        : state;
+    case "forced-active/updated":
+      return action.idHTML !== forcedActiveItemId
+        ? buildNavBarState({
+            currentUrl,
+            selectedItemId,
+            defaultActiveItemId,
+            forcedActiveItemId: action.idHTML,
             itemsWithObsoleteState: items,
           })
         : state;
@@ -139,14 +217,19 @@ export function navBarStateReducer(
 export function useNavBarStateReducer(
   getInitializationData: () => {
     currentUrl: string;
+    defaultActiveItemId: string | null;
+    forcedActiveItemId: string | null;
     items: ReadonlyArray<PrimaryNavItemState>;
   }
 ) {
   return useReducer(navBarStateReducer, null, () => {
-    const { currentUrl, items } = getInitializationData();
+    const { currentUrl, defaultActiveItemId, forcedActiveItemId, items } =
+      getInitializationData();
     return buildNavBarState({
       currentUrl,
       selectedItemId: null,
+      defaultActiveItemId,
+      forcedActiveItemId,
       itemsWithObsoleteState: items,
     });
   });

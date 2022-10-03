@@ -6,6 +6,7 @@ import {
   PrimaryNavItemState,
   SecondaryNavItemState,
 } from "./navbar-state-abstractions";
+import { useMeta } from "../hooks/useMeta";
 
 function extractNavItems(
   appSessionState: AppSessionState
@@ -41,10 +42,29 @@ export function useNavBarState({
   /** call this on mouse leave menu */
   unselectNavItem: () => void;
 } {
+  const defaultActiveItemId = useMeta("doppler-menu-mfe:default-active-item");
+  const forcedActiveItemId = useMeta("doppler-menu-mfe:force-active-item");
+
   const [state, dispatch] = useNavBarStateReducer(() => ({
     currentUrl,
+    defaultActiveItemId,
+    forcedActiveItemId,
     items: extractNavItems(appSessionState),
   }));
+
+  useEffect(() => {
+    dispatch({
+      type: "default-active/updated",
+      idHTML: defaultActiveItemId,
+    });
+  }, [defaultActiveItemId, dispatch]);
+
+  useEffect(() => {
+    dispatch({
+      type: "forced-active/updated",
+      idHTML: forcedActiveItemId,
+    });
+  }, [forcedActiveItemId, dispatch]);
 
   useEffect(() => {
     dispatch({

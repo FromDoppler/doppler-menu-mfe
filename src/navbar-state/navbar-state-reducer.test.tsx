@@ -54,6 +54,8 @@ describe(navBarStateReducer.name, () => {
         isExpanded: false,
         items: [],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "items/updated",
@@ -79,6 +81,8 @@ describe(navBarStateReducer.name, () => {
         isExpanded: false,
         items: [item0, item1, item2],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "url/updated",
@@ -95,6 +99,30 @@ describe(navBarStateReducer.name, () => {
       expect(state1.items[2]).toEqual(item2);
     });
 
+    it("should not override active item when there is a forced one", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: "Unknown URL",
+        isExpanded: false,
+        items: [item0, item1, item2],
+        selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: idHTML2,
+      } as const;
+      const action = {
+        type: "url/updated",
+        href: url1,
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.currentUrl).toBe(url1);
+      expect(state1.items[1].isActive).toBe(false);
+      expect(state1.items[2].isActive).toBe(true);
+    });
+
     it("should change active item when there is a previously activated item", () => {
       // Arrange
       const state0 = {
@@ -102,6 +130,8 @@ describe(navBarStateReducer.name, () => {
         isExpanded: false,
         items: [{ ...item0, isActive: true }, item1, item2],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "url/updated",
@@ -115,6 +145,56 @@ describe(navBarStateReducer.name, () => {
       expect(state1.currentUrl).toBe(url1);
       expect(state1.items[0].isActive).toBe(false);
       expect(state1.items[1].isActive).toBe(true);
+    });
+
+    it("should remove active item when URL is not found", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: url0,
+        isExpanded: false,
+        items: [{ ...item0, isActive: true }, item1, item2],
+        selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
+      } as const;
+      const action = {
+        type: "url/updated",
+        href: "UNKNOWN URL",
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.currentUrl).toBe("UNKNOWN URL");
+      expect(state1.items[0].isActive).toBe(false);
+      expect(state1.items[1].isActive).toBe(false);
+      expect(state1.items[2].isActive).toBe(false);
+    });
+
+    it("should active default item when URL is not found", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: url0,
+        isExpanded: false,
+        items: [{ ...item0, isActive: true }, item1, item2],
+        selectedItemId: null,
+        defaultActiveItemId: idHTML2,
+        forcedActiveItemId: null,
+      } as const;
+      const action = {
+        type: "url/updated",
+        href: "UNKNOWN URL",
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.currentUrl).toBe("UNKNOWN URL");
+      expect(state1.items[0].isActive).toBe(false);
+      expect(state1.items[1].isActive).toBe(false);
+      expect(state1.items[2].isActive).toBe(true);
     });
 
     it("should deselect item", () => {
@@ -151,6 +231,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: idHTML2,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "url/updated",
@@ -196,6 +278,8 @@ describe(navBarStateReducer.name, () => {
           item2,
         ],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "url/updated",
@@ -207,6 +291,146 @@ describe(navBarStateReducer.name, () => {
 
       // Assert
       expect(state1.currentUrl).toBe("urlSubItem0");
+      expect(state1.isExpanded).toBe(true);
+      expect(state1.items).toHaveLength(3);
+      expect(state1.items[0].isActive).toBe(true);
+      expect(state1.items[0].isOpen).toBe(true);
+      expect(state1.items[0].subNavItems![0].isActive).toBe(true);
+      expect(state1.items[1]).toEqual(item1);
+      expect(state1.items[2]).toEqual(item2);
+    });
+  });
+
+  describe("forced-active/updated action", () => {
+    it("should set active item when there is not a previously activated item", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: "Unknown URL",
+        isExpanded: false,
+        items: [item0, item1, item2],
+        selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
+      } as const;
+      const action = {
+        type: "forced-active/updated",
+        idHTML: idHTML1,
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.currentUrl).toBe(state0.currentUrl);
+      expect(state1.items[1].isActive).toBe(true);
+      expect(state1.items[0]).toEqual(item0);
+      expect(state1.items[2]).toEqual(item2);
+    });
+
+    it("should open the navbar when the URL matches a subItem", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: "Unknown URL",
+        isExpanded: false,
+        items: [
+          {
+            ...item0,
+            subNavItems: [
+              {
+                title: "subItem0",
+                url: "urlSubItem0",
+                idHTML: "idHTMLSubitem0",
+                isActive: false,
+              },
+            ],
+          },
+          item1,
+          item2,
+        ],
+        selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
+      } as const;
+      const action = {
+        type: "forced-active/updated",
+        idHTML: "idHTMLSubitem0",
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.currentUrl).toBe(state0.currentUrl);
+      expect(state1.isExpanded).toBe(true);
+      expect(state1.items).toHaveLength(3);
+      expect(state1.items[0].isActive).toBe(true);
+      expect(state1.items[0].isOpen).toBe(true);
+      expect(state1.items[0].subNavItems![0].isActive).toBe(true);
+      expect(state1.items[1]).toEqual(item1);
+      expect(state1.items[2]).toEqual(item2);
+    });
+  });
+
+  describe("default-active/updated action", () => {
+    it("should set active item when there is not a previously activated item", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: "Unknown URL",
+        isExpanded: false,
+        items: [item0, item1, item2],
+        selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
+      } as const;
+      const action = {
+        type: "default-active/updated",
+        idHTML: idHTML1,
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.currentUrl).toBe(state0.currentUrl);
+      expect(state1.items[1].isActive).toBe(true);
+      expect(state1.items[0]).toEqual(item0);
+      expect(state1.items[2]).toEqual(item2);
+    });
+
+    it("should open the navbar when the URL matches a subItem", () => {
+      // Arrange
+      const state0 = {
+        currentUrl: "Unknown URL",
+        isExpanded: false,
+        items: [
+          {
+            ...item0,
+            subNavItems: [
+              {
+                title: "subItem0",
+                url: "urlSubItem0",
+                idHTML: "idHTMLSubitem0",
+                isActive: false,
+              },
+            ],
+          },
+          item1,
+          item2,
+        ],
+        selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
+      } as const;
+      const action = {
+        type: "default-active/updated",
+        idHTML: "idHTMLSubitem0",
+      } as const;
+
+      // Act
+      const state1 = navBarStateReducer(state0, action);
+
+      // Assert
+      expect(state1.currentUrl).toBe(state0.currentUrl);
       expect(state1.isExpanded).toBe(true);
       expect(state1.items).toHaveLength(3);
       expect(state1.items[0].isActive).toBe(true);
@@ -240,6 +464,8 @@ describe(navBarStateReducer.name, () => {
           item2,
         ],
         selectedItemId: idHTML1,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -282,6 +508,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -325,6 +553,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -378,6 +608,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: null,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -433,6 +665,8 @@ describe(navBarStateReducer.name, () => {
           },
         ],
         selectedItemId: idHTML2,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
       } as const;
       const action = {
         type: "selected-item/updated",
@@ -462,7 +696,12 @@ describe(useNavBarStateReducer.name, () => {
     it("should accept empty items", () => {
       // Arrange
       const currentUrl = url1;
-      const initializationData = { currentUrl, items: [] };
+      const initializationData = {
+        currentUrl,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
+        items: [],
+      };
 
       const { TestComponent, getCurrentState } = createTestContext(
         () => initializationData
@@ -483,6 +722,8 @@ describe(useNavBarStateReducer.name, () => {
       // Arrange
       const initializationData = {
         currentUrl: url1,
+        defaultActiveItemId: null,
+        forcedActiveItemId: null,
         items: [item0, item1, item2],
       };
 
@@ -510,6 +751,8 @@ describe(useNavBarStateReducer.name, () => {
 function createTestContext(
   getInitializationData: () => {
     currentUrl: string;
+    defaultActiveItemId: string | null;
+    forcedActiveItemId: string | null;
     items: ReadonlyArray<PrimaryNavItemState>;
   }
 ): {
