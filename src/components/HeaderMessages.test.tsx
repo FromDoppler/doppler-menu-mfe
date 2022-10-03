@@ -45,9 +45,12 @@ describe("<HeaderMessages />", () => {
       button: { url, text: "upgrade.now" },
     };
 
+    const queryClient = new QueryClient();
     render(
       <MenuIntlProvider>
-        <HeaderMessages alert={alertData} user={userData} />
+        <QueryClientProvider client={queryClient}>
+          <HeaderMessages alert={alertData} user={userData} />
+        </QueryClientProvider>
       </MenuIntlProvider>
     );
 
@@ -67,9 +70,12 @@ describe("<HeaderMessages />", () => {
         button: { text: "upgrade.now.button", action },
       };
 
+      const queryClient = new QueryClient();
       render(
         <MenuIntlProvider>
-          <HeaderMessages alert={alertData} user={userData} />
+          <QueryClientProvider client={queryClient}>
+            <HeaderMessages alert={alertData} user={userData} />
+          </QueryClientProvider>
         </MenuIntlProvider>
       );
 
@@ -116,9 +122,12 @@ describe("<HeaderMessages />", () => {
       },
     };
 
+    const queryClient = new QueryClient();
     render(
       <MenuIntlProvider>
-        <HeaderMessages alert={alertData} user={userData} />
+        <QueryClientProvider client={queryClient}>
+          <HeaderMessages alert={alertData} user={userData} />
+        </QueryClientProvider>
       </MenuIntlProvider>
     );
 
@@ -135,9 +144,12 @@ describe("<HeaderMessages />", () => {
       },
     };
 
+    const queryClient = new QueryClient();
     render(
       <MenuIntlProvider>
-        <HeaderMessages alert={alertData} user={userData} />
+        <QueryClientProvider client={queryClient}>
+          <HeaderMessages alert={alertData} user={userData} />
+        </QueryClientProvider>
       </MenuIntlProvider>
     );
 

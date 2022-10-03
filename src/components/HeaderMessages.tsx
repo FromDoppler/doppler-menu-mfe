@@ -3,6 +3,7 @@ import { Modal } from "./Modal";
 import { User, Alert } from "../model";
 import { UpgradePlanForm } from "./UpgradePlanForm";
 import { ValidateSubscribersForm } from "./ValidateSubscriber/ValidateSubscribersForm";
+import { useSendAcceptButtonAction } from "../client/dopplerLegacyClient";
 
 interface HeaderMessagesProp {
   alert: Alert;
@@ -15,6 +16,7 @@ const validateSubscribersPopup = "validateSubscribersPopup";
 export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentAlert, setCurrentAlert] = useState<Alert>(alert);
+  const { mutate: sendAcceptButtonAction } = useSendAcceptButtonAction();
 
   if (!Object.keys(alert).length) {
     return null;
@@ -36,6 +38,15 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
 
   const showAction = button?.url || button?.action;
 
+  const setButtonOnclick = () => {
+    if (hasModal) {
+      return toggleModal(true);
+    }
+    if (alert.button?.action === "closeModal") {
+      return sendAcceptButtonAction();
+    }
+  };
+
   return (
     <>
       <div className={`messages-container sticky ${type}`}>
@@ -45,7 +56,7 @@ export const HeaderMessages = ({ alert, user }: HeaderMessagesProp) => {
             <ActionComponent
               type={button?.url ? "LINK" : "BUTTON"}
               url={button?.url}
-              onClick={() => toggleModal(true)}
+              onClick={() => setButtonOnclick()}
             >
               {button?.text}
             </ActionComponent>

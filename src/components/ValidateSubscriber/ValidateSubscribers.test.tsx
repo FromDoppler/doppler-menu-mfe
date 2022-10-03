@@ -139,7 +139,7 @@ describe("ValidateSubscribersComponent", () => {
         </AppConfigurationProvider>
       </QueryClientProvider>
     );
-    screen.debug();
+
     // Assert
     const loader = screen.getByTestId("loading-box");
     await waitForElementToBeRemoved(loader);
