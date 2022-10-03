@@ -15,7 +15,8 @@ export const Notifications = ({
   const notificationsRef = useOnclickOutside(() => setOpenNotification(false));
 
   const NotificationWrapper = useMemo(() => {
-    const handleToggleNotification = () => setOpenNotification((prev) => !prev);
+    const handleToggleNotification = () =>
+      setOpenNotification(!openNotification);
 
     return ({ children }: any) => (
       <li ref={notificationsRef}>
