@@ -15,9 +15,7 @@ export const Notifications = ({
   const notificationsRef = useOnclickOutside(() => setOpenNotification(false));
 
   const NotificationWrapper = useMemo(() => {
-    const handleToggleNotification = () => {
-      setOpenNotification((prev) => !prev);
-    };
+    const handleToggleNotification = () => setOpenNotification((prev) => !prev);
 
     return ({ children }: any) => (
       <li ref={notificationsRef}>
@@ -31,7 +29,7 @@ export const Notifications = ({
         {children}
       </li>
     );
-  }, [count, notificationsRef]);
+  }, [count, notificationsRef, openNotification, setOpenNotification]);
 
   if (count < 1) {
     return <NotificationWrapper>{emptyNotificationText}</NotificationWrapper>;
