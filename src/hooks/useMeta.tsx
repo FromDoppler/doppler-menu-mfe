@@ -1,19 +1,17 @@
-import { useState } from "react";
 import { useMutationObserver } from "./useMutationObserver";
 
 export function useMeta(name: string, global: Window = window) {
-  const [content, setContent] = useState(() => readMeta(global.document, name));
-
-  useMutationObserver({
+  const content = useMutationObserver({
     targetNode: global.document.body,
     config: {
       subtree: true,
       childList: true,
     },
-    callback: (mutations) => {
+    initialValue: () => readMeta(global.document, name),
+    onMutation: (mutations, setValue) => {
       if (isAnyMutationRelated(mutations, name)) {
         const newContent = readMeta(global.document, name);
-        setContent(newContent);
+        setValue(newContent);
       }
     },
   });
