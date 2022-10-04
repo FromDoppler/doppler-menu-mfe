@@ -3,7 +3,7 @@ import { HeaderMessages } from "./components/HeaderMessages";
 import { useLocationHref } from "./hooks/useLocationHref";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 import { useNavBarState } from "./navbar-state/navbar-state-hook";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function App({
   onStatusUpdate,
@@ -18,6 +18,7 @@ function App({
     currentUrl: href,
     appSessionState,
   });
+  const [hideHeaderMessage, setHideHeaderMessage] = useState(false);
 
   useEffect(() => {
     onStatusUpdate?.(appSessionState.status);
@@ -29,12 +30,17 @@ function App({
 
   const { notifications, emptyNotificationText, user, alert } =
     appSessionState.userData;
+  const closeAlert = () => {
+    setHideHeaderMessage(true);
+  };
 
   return (
     <>
       {
         // TODO: confirm if it is rendered in the right way
-        alert ? <HeaderMessages alert={alert} user={user} /> : null
+        alert && !hideHeaderMessage ? (
+          <HeaderMessages alert={alert} user={user} onClose={closeAlert} />
+        ) : null
       }
       <Header
         selectNavItem={selectNavItem}
@@ -43,7 +49,7 @@ function App({
         notifications={notifications}
         emptyNotificationText={emptyNotificationText}
         user={user}
-        sticky={!!alert}
+        sticky={!!alert && !hideHeaderMessage}
       />
     </>
   );
