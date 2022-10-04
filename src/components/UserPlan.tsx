@@ -31,7 +31,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
   };
 
   return (
-    <div className="user-plan--container">
+    <>
       <div className="user-plan--type">
         {isSubscribers || isMonthlyByEmail ? (
           <UpgradePlanItem
@@ -84,7 +84,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           user={user}
         />
       </Modal>
-    </div>
+    </>
   );
 };
 
