@@ -4,11 +4,12 @@ import { useLocationHref } from "./hooks/useLocationHref";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 import { useNavBarState } from "./navbar-state/navbar-state-hook";
 import { useEffect, useState } from "react";
+import { AppSessionState } from "./session/app-session-abstractions";
 
 function App({
   onStatusUpdate,
 }: {
-  onStatusUpdate?: (status: string) => void;
+  onStatusUpdate?: (status: AppSessionState["status"]) => void;
 }) {
   const href = useLocationHref(window);
 

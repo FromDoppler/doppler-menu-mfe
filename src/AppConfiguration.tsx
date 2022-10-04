@@ -1,10 +1,11 @@
 import React, { createContext, useContext } from "react";
+import { AppSessionState } from "./session/app-session-abstractions";
 
 export interface AppConfiguration {
   dopplerMenuElementId?: string;
   useDummies?: boolean;
   dopplerLegacyBaseUrl?: string;
-  onStatusUpdate?: (status: string) => void;
+  onStatusUpdate?: (status: AppSessionState["status"]) => void;
 }
 
 const DopplerLegacyContext = createContext<AppConfiguration>({
