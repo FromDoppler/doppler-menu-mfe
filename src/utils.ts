@@ -107,6 +107,10 @@ const safeUser = (data: any): User => ({
         hasClientManager: true,
         clientManager: {
           profileName: safeString(data.clientManager.profileName),
+          companyName: safeString(data.clientManager.companyName),
+          logo: data.clientManager.logo
+            ? safeString(data.clientManager.logo)
+            : undefined,
         },
       }
     : { hasClientManager: false }),
