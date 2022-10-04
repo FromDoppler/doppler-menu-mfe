@@ -102,7 +102,7 @@ const safeUser = (data: any): User => ({
   navItems: (data?.nav as any[])?.map(safeTerminalNavItem) ?? [],
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
-  ...(safeBoolean(data?.hasClientManager)
+  ...(data?.clientManager
     ? {
         hasClientManager: true,
         clientManager: {
