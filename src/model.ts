@@ -59,7 +59,7 @@ export type User = Readonly<
   } & (
     | {
         hasClientManager: true;
-        clientManager: Readonly<{ profileName: string }>;
+        clientManager: ClientManager;
       }
     | {
         hasClientManager: false;
@@ -67,6 +67,12 @@ export type User = Readonly<
       }
   )
 >;
+
+export type ClientManager = Readonly<{
+  profileName: string;
+  logo?: string;
+  companyName: string;
+}>;
 
 export type Alert = Readonly<{
   type: string;

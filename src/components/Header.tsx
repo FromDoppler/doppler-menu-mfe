@@ -4,6 +4,7 @@ import { Nav } from "./Nav";
 import { MenuRight } from "./MenuRight";
 import { User } from "../model";
 import { NavBarState } from "../navbar-state/navbar-state-abstractions";
+import { ClientManagerLogo } from "./ClientManagerLogo";
 
 interface HeaderProp {
   navBar: NavBarState;
@@ -31,8 +32,13 @@ export const Header = ({
       aria-label="main header"
       className={`header-main ${sticky ? "sticky" : ""} ${
         navBar.isExpanded ? "header-open" : ""
-      } ${openMenuMobile ? "open" : ""}`}
+      } ${openMenuMobile ? "open" : ""} ${
+        user.hasClientManager ? "dp-header--cm" : ""
+      }`}
     >
+      {user.hasClientManager ? (
+        <ClientManagerLogo clientManager={user.clientManager} />
+      ) : null}
       <div className="header-wrapper">
         <Logo />
         <Nav
