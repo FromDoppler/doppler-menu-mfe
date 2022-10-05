@@ -1,6 +1,9 @@
 import { useMutationObserver } from "./useMutationObserver";
 
-export function useMeta(name: string, global: Window = window) {
+export function useMeta(
+  name: string,
+  global: Window & typeof globalThis = window
+) {
   const content = useMutationObserver({
     targetNode: global.document.body,
     config: {
@@ -14,6 +17,7 @@ export function useMeta(name: string, global: Window = window) {
         setValue(newContent);
       }
     },
+    global,
   });
 
   return content;

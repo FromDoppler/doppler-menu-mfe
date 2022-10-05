@@ -5,6 +5,7 @@ export function useMutationObserver<T>({
   config,
   initialValue,
   onMutation,
+  global = window,
 }: {
   targetNode: HTMLElement;
   config: MutationObserverInit;
@@ -13,16 +14,15 @@ export function useMutationObserver<T>({
     mutations: MutationRecord[],
     setValue: (newValue: T) => void
   ) => void;
+  global?: Window & typeof globalThis;
 }): T {
   const [value, setValue] = useState(initialValue);
-
   const observer = useMemo(
     () =>
-      // TODO: allow to inject this factory to make it testable
-      new MutationObserver((mutationList) =>
+      new global.MutationObserver((mutationList) =>
         onMutation(mutationList, setValue)
       ),
-    [onMutation, setValue]
+    [onMutation, setValue, global.MutationObserver]
   );
 
   useEffect(() => {
