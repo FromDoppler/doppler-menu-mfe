@@ -8,13 +8,12 @@ describe(useMeta.name, () => {
     const metaContent = "content123";
     const metaElement = { content: metaContent } as HTMLMetaElement;
 
-    const querySelectorDouble = (selectors: string) =>
-      selectors == expectedSelector ? metaElement : null;
-
     const { TestComponent, windowDouble } = createTestContext();
-    windowDouble.document = {
-      querySelector: querySelectorDouble,
-    };
+
+    windowDouble.document.querySelector.mockImplementation(
+      (selectors: string) =>
+        selectors == expectedSelector ? metaElement : null
+    );
 
     render(<TestComponent metaName={metaName} />);
 
@@ -24,12 +23,9 @@ describe(useMeta.name, () => {
   it("should return null when meta element is not found", () => {
     const metaName = "metaName123";
 
-    const querySelectorDouble = () => null;
-
     const { TestComponent, windowDouble } = createTestContext();
-    windowDouble.document = {
-      querySelector: querySelectorDouble,
-    };
+
+    windowDouble.document.querySelector.mockImplementation(() => null);
 
     render(<TestComponent metaName={metaName} />);
 
@@ -38,7 +34,11 @@ describe(useMeta.name, () => {
 });
 
 function createTestContext() {
-  const windowDouble: any = {};
+  const windowDouble = {
+    document: {
+      querySelector: jest.fn<HTMLMetaElement | null, [string]>(),
+    },
+  };
 
   const TestComponent = ({ metaName }: { metaName: string }) => {
     const content = useMeta(metaName, windowDouble as any);
