@@ -234,6 +234,57 @@ describe(useMeta.name, () => {
     await waitFor(() => {
       screen.getByText(`[${metaContentB}]`);
     });
+  });
+
+  it("should not update value when DOM mutation is not childList", async () => {
+    // Arrange
+    const metaName = "metaName123";
+    const expectedSelector = `meta[name="${metaName}"]`;
+    const metaContentA = "contentA";
+    const metaContentB = "contentB";
+
+    let metaElement = { content: metaContentA } as HTMLMetaElement;
+
+    const { TestComponent, windowDouble, getObserverInstance } =
+      createTestContext();
+
+    windowDouble.document.querySelector.mockImplementation(
+      (selectors: string) =>
+        selectors == expectedSelector ? metaElement : null
+    );
+
+    render(<TestComponent metaName={metaName} />);
+    screen.getByText(`[${metaContentA}]`);
+
+    metaElement = { content: metaContentB } as HTMLMetaElement;
+
+    // Act
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [
+          {},
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [] as any as NodeList,
+        target: {} as Node,
+        type: "attributes",
+      },
+    ]);
+
+    // Assert
+    await timeout(1);
+    screen.getByText(`[${metaContentA}]`);
+  });
 });
 
 function createMutationObserverCtorMock() {
@@ -267,4 +318,8 @@ function createTestContext() {
     windowDouble.MutationObserver.mock.instances[index];
 
   return { TestComponent, windowDouble, getObserverInstance };
+}
+
+function timeout(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
