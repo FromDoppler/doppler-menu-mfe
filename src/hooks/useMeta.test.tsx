@@ -1,5 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { useMeta } from "./useMeta";
+
+type MutationObserverMock = MutationObserver & {
+  trigger: (mockedMutationsList: MutationRecord[]) => void;
+};
 
 describe(useMeta.name, () => {
   it("should return selected meta content value", () => {
@@ -31,10 +35,224 @@ describe(useMeta.name, () => {
 
     screen.getByText(`[]`);
   });
+
+  it("should update value when meta element is added to DOM in the first mutation", async () => {
+    // Arrange
+    const metaName = "metaName123";
+    const expectedSelector = `meta[name="${metaName}"]`;
+    const metaContentA = "contentA";
+    const metaContentB = "contentB";
+
+    let metaElement = { content: metaContentA } as HTMLMetaElement;
+
+    const { TestComponent, windowDouble, getObserverInstance } =
+      createTestContext();
+
+    windowDouble.document.querySelector.mockImplementation(
+      (selectors: string) =>
+        selectors == expectedSelector ? metaElement : null
+    );
+
+    render(<TestComponent metaName={metaName} />);
+    screen.getByText(`[${metaContentA}]`);
+
+    metaElement = { content: metaContentB } as HTMLMetaElement;
+
+    // Act
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
+
+    // Assert
+    await waitFor(() => {
+      screen.getByText(`[${metaContentB}]`);
+    });
+  });
+
+  it("should update value when meta element is added to DOM in the second mutation", async () => {
+    // Arrange
+    const metaName = "metaName123";
+    const expectedSelector = `meta[name="${metaName}"]`;
+    const metaContentA = "contentA";
+    const metaContentB = "contentB";
+
+    let metaElement = { content: metaContentA } as HTMLMetaElement;
+
+    const { TestComponent, windowDouble, getObserverInstance } =
+      createTestContext();
+
+    windowDouble.document.querySelector.mockImplementation(
+      (selectors: string) =>
+        selectors == expectedSelector ? metaElement : null
+    );
+
+    render(<TestComponent metaName={metaName} />);
+    screen.getByText(`[${metaContentA}]`);
+
+    metaElement = { content: metaContentB } as HTMLMetaElement;
+
+    // Act
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [
+          {},
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
+
+    // Assert
+    await waitFor(() => {
+      screen.getByText(`[${metaContentB}]`);
+    });
+  });
+
+  it("should update value when meta element is removed from DOM and there is not another one", async () => {
+    // Arrange
+    const metaName = "metaName123";
+    const expectedSelector = `meta[name="${metaName}"]`;
+    const metaContentA = "contentA";
+
+    let metaElement = { content: metaContentA } as HTMLMetaElement;
+
+    const { TestComponent, windowDouble, getObserverInstance } =
+      createTestContext();
+
+    windowDouble.document.querySelector.mockImplementation(
+      (selectors: string) =>
+        selectors == expectedSelector ? metaElement : null
+    );
+
+    render(<TestComponent metaName={metaName} />);
+    screen.getByText(`[${metaContentA}]`);
+
+    windowDouble.document.querySelector.mockImplementation(() => null);
+
+    // Act
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
+
+    // Assert
+    await waitFor(() => {
+      screen.getByText(`[]`);
+    });
+  });
+
+  it("should update value when meta element is removed from DOM and there is another one", async () => {
+    // Arrange
+    const metaName = "metaName123";
+    const expectedSelector = `meta[name="${metaName}"]`;
+    const metaContentA = "contentA";
+    const metaContentB = "contentB";
+
+    let metaElement = { content: metaContentA } as HTMLMetaElement;
+
+    const { TestComponent, windowDouble, getObserverInstance } =
+      createTestContext();
+
+    windowDouble.document.querySelector.mockImplementation(
+      (selectors: string) =>
+        selectors == expectedSelector ? metaElement : null
+    );
+
+    render(<TestComponent metaName={metaName} />);
+    screen.getByText(`[${metaContentA}]`);
+
+    metaElement = { content: metaContentB } as HTMLMetaElement;
+
+    // Act
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
+
+    // Assert
+    await waitFor(() => {
+      screen.getByText(`[${metaContentB}]`);
+    });
 });
+
+function createMutationObserverCtorMock() {
+  return jest.fn(function MutationObserver(
+    this: MutationObserverMock,
+    callback: MutationCallback
+  ) {
+    this.observe = jest.fn();
+    this.disconnect = jest.fn();
+    this.trigger = (mockedMutationsList: MutationRecord[]) => {
+      callback(mockedMutationsList, this);
+    };
+    return this;
+  });
+}
 
 function createTestContext() {
   const windowDouble = {
+    MutationObserver: createMutationObserverCtorMock(),
     document: {
       querySelector: jest.fn<HTMLMetaElement | null, [string]>(),
     },
@@ -45,5 +263,8 @@ function createTestContext() {
     return <>[{content}]</>;
   };
 
-  return { TestComponent, windowDouble };
+  const getObserverInstance = (index: number = 0) =>
+    windowDouble.MutationObserver.mock.instances[index];
+
+  return { TestComponent, windowDouble, getObserverInstance };
 }
