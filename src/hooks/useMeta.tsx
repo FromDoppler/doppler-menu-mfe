@@ -29,7 +29,12 @@ function isAnyMutationRelated(mutations: MutationRecord[], name: string) {
       for (const nodeList of [mutation.addedNodes, mutation.removedNodes]) {
         for (let index = 0; index < nodeList.length; index++) {
           const node = nodeList[index];
-          // TODO: confirm if it works when meta is the only added element
+          if (
+            node.nodeName === "META" &&
+            (node as HTMLMetaElement).name === name
+          ) {
+            return true;
+          }
           if ("querySelector" in node && readMeta(node as ParentNode, name)) {
             return true;
           }

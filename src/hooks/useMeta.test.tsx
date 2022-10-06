@@ -137,6 +137,56 @@ describe(useMeta.name, () => {
     });
   });
 
+  it("should update value when meta element is the only added element to DOM", async () => {
+    // Arrange
+    const metaName = "metaName123";
+    const expectedSelector = `meta[name="${metaName}"]`;
+    const metaContentA = "contentA";
+    const metaContentB = "contentB";
+
+    let metaElement = { content: metaContentA } as HTMLMetaElement;
+
+    const { TestComponent, windowDouble, getObserverInstance } =
+      createTestContext();
+
+    windowDouble.document.querySelector.mockImplementation(
+      (selectors: string) =>
+        selectors == expectedSelector ? metaElement : null
+    );
+
+    render(<TestComponent metaName={metaName} />);
+    screen.getByText(`[${metaContentA}]`);
+
+    metaElement = { content: metaContentB } as HTMLMetaElement;
+
+    // Act
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [
+          {
+            nodeName: "META",
+            name: metaName,
+            content: metaContentB,
+            querySelector: () => null,
+          },
+        ] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
+
+    // Assert
+    await waitFor(() => {
+      screen.getByText(`[${metaContentB}]`);
+    });
+  });
+
   it("should update value when meta element is removed from DOM and there is not another one", async () => {
     // Arrange
     const metaName = "metaName123";
