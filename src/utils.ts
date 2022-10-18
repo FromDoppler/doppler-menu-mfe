@@ -34,6 +34,11 @@ const safeNumber = (data: unknown): number => Number(data) || 0;
 
 const safeUrl = (data: unknown) => patchWebAppUrlIfNeed(safeString(data));
 
+const safeLang: (data: unknown) => User["lang"] = (data: unknown) => {
+  const str = safeString(data).toLowerCase();
+  return str === "en" ? "en" : "es";
+};
+
 const safeNavItem = (data: any): PrimaryNavItem => ({
   title: safeString(data?.title),
   url: safeUrl(data?.url),
@@ -95,6 +100,7 @@ const safeUser = (data: any): User => ({
   email: safeString(data?.email),
   fullname: safeString(data?.fullname),
   plan: safePlan(data?.plan),
+  lang: safeLang(data?.lang),
   avatar: {
     text: safeString(data?.avatar?.text),
     color: safeString(data?.avatar?.color),

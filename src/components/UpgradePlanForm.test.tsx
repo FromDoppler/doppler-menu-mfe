@@ -25,6 +25,7 @@ const userData: User = {
     pendingFreeUpgrade: false,
     isMonthlyByEmail: false,
   },
+  lang: "es",
   email: "",
   fullname: "",
   avatar: {

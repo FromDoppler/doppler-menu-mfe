@@ -22,6 +22,7 @@ const userData: User = {
     pendingFreeUpgrade: true,
     isMonthlyByEmail: false,
   },
+  lang: "es",
   avatar: { text: "BS", color: "#EE9C70" },
   navItems: [
     {
@@ -52,11 +53,14 @@ describe("<MenuRight />", () => {
     expect(screen.getByLabelText(secondaryNav)).toBeInTheDocument();
   });
 
-  it("should render MenuRight properly", () => {
+  it.each([
+    { lang: "es" as const, expectedUrl: "https://help.fromdoppler.com/es" },
+    { lang: "en" as const, expectedUrl: "https://help.fromdoppler.com/en" },
+  ])("should render MenuRight properly ($lang)", ({ lang, expectedUrl }) => {
     render(
       <MenuIntlProvider>
         <MenuRight
-          user={userData}
+          user={{ ...userData, lang }}
           notifications={[]}
           emptyNotificationText={""}
           setOpenMenuMobile={jest.fn()}
@@ -68,6 +72,10 @@ describe("<MenuRight />", () => {
     links.forEach((link) => {
       expect(link).toHaveAttribute("href");
     });
+
+    const helpIcon = screen.getByText("help");
+    const helpLink = helpIcon.parentElement;
+    expect(helpLink).toHaveAttribute("href", expectedUrl);
   });
 
   it("should call toggle menu when open/close icon is clicked", async () => {
