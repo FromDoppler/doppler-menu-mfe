@@ -76,6 +76,7 @@ describe("<MenuRight />", () => {
     const helpIcon = screen.getByText("help");
     const helpLink = helpIcon.parentElement;
     expect(helpLink).toHaveAttribute("href", expectedUrl);
+    expect(helpLink).toHaveAttribute("target", "_blank");
   });
 
   it("should call toggle menu when open/close icon is clicked", async () => {

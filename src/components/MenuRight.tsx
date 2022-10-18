@@ -24,7 +24,11 @@ export const MenuRight = ({
           emptyNotificationText={emptyNotificationText}
         />
         <li>
-          <a href={`https://help.fromdoppler.com/${user.lang}`}>
+          <a
+            href={`https://help.fromdoppler.com/${user.lang}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             <span className="ms-icon icon-header-help">help</span>
           </a>
         </li>
