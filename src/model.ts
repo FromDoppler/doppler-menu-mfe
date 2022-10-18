@@ -37,6 +37,7 @@ export type User = Readonly<
     email: string;
     fullname: string;
     plan: Plan;
+    lang: "es" | "en";
     avatar: Readonly<{ text: string; color: string }>;
     navItems: ReadonlyArray<TerminalNavItem>;
     sms: Readonly<

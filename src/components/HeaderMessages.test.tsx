@@ -23,6 +23,7 @@ const userData: User = {
     pendingFreeUpgrade: true,
     isMonthlyByEmail: false,
   },
+  lang: "es",
   avatar: { text: "BS", color: "#EE9C70" },
   navItems: [
     {
