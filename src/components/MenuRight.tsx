@@ -25,7 +25,7 @@ export const MenuRight = ({
         />
         <li>
           <a href="https://help.fromdoppler.com/en">
-            <span className="ms-icon icon-header-help"></span>
+            <span className="ms-icon icon-header-help">help</span>
           </a>
         </li>
         <li>
