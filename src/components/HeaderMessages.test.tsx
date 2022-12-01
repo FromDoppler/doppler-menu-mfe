@@ -1,11 +1,17 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import { HeaderMessages } from "./HeaderMessages";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { Alert, User } from "../model";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import userEvent from "@testing-library/user-event";
-import * as dopplerLegacyClient from "../client/dopplerLegacyClient";
-import { MaxSubscribersData } from "./ValidateSubscriber/types";
+import { DopplerLegacyClientImpl } from "../client/DopplerLegacyClientImpl";
+import { AppConfigurationProvider } from "../AppConfiguration";
+jest.mock("../client/DopplerLegacyClientImpl");
 
 const userData: User = {
   email: "email@mock.com",
@@ -38,6 +44,13 @@ const userData: User = {
 };
 
 describe("<HeaderMessages />", () => {
+  var dopplerLegacyClientPrototypeMock =
+    DopplerLegacyClientImpl.prototype as jest.Mocked<DopplerLegacyClientImpl>;
+
+  beforeEach(() => {
+    (DopplerLegacyClientImpl as any).mockClear();
+  });
+
   it("render alert action as link when url is defined", () => {
     const url = "test--url";
     const alertData: Alert = {
@@ -175,19 +188,9 @@ describe("<HeaderMessages />", () => {
       urlReferrer: "",
       urlHelp: "https://help.fromdoppler.com/",
     };
-    jest
-      .spyOn(dopplerLegacyClient, "useGetMaxSubscribers")
-      .mockImplementation(() =>
-        useQuery<MaxSubscribersData>(
-          "getMaxSubscribersData",
-          async () => Promise.resolve(questions),
-          {
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-            retry: false,
-          }
-        )
-      );
+    dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockResolvedValue(
+      questions
+    );
 
     const alertData: Alert = {
       type: "warning",
@@ -210,14 +213,19 @@ describe("<HeaderMessages />", () => {
     // Act
     render(
       <QueryClientProvider client={queryClient}>
-        <MenuIntlProvider>
-          <HeaderMessages alert={alertData} user={userData} />
-        </MenuIntlProvider>
+        <AppConfigurationProvider configuration={{ useDummies: false }}>
+          <MenuIntlProvider>
+            <HeaderMessages alert={alertData} user={userData} />
+          </MenuIntlProvider>
+        </AppConfigurationProvider>
       </QueryClientProvider>
     );
     // Assert
     const button = screen.getByText("button.action.text");
     await userEvent.click(button);
+
+    const loader = screen.getByTestId("loading-box");
+    await waitForElementToBeRemoved(loader);
 
     const answerInput = screen.getByLabelText("question", {
       selector: "input",
