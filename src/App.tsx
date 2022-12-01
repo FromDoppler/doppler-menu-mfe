@@ -31,8 +31,7 @@ function App({
     return <HeaderPlaceholder dashboardUrl={defaultDashboardUrl} />;
   }
 
-  const { notifications, emptyNotificationText, user, alert } =
-    appSessionState.userData;
+  const { user, alert } = appSessionState.userData;
   const closeAlert = () => {
     setHideHeaderMessage(true);
   };
@@ -53,8 +52,6 @@ function App({
         selectNavItem={selectNavItem}
         unselectNavItem={unselectNavItem}
         navBar={navBar}
-        notifications={notifications}
-        emptyNotificationText={emptyNotificationText}
         user={user}
         sticky={!!alert && !hideHeaderMessage}
         dashboardUrl={dashboardUrl}

@@ -4,25 +4,15 @@ import { UserMenu } from "./UserMenu";
 
 interface MenuRightProp {
   user: User;
-  notifications: ReadonlyArray<string>;
-  emptyNotificationText: string;
   setOpenMenuMobile: (param: any) => void;
 }
 
-export const MenuRight = ({
-  user,
-  notifications,
-  emptyNotificationText,
-  setOpenMenuMobile,
-}: MenuRightProp) => {
+export const MenuRight = ({ user, setOpenMenuMobile }: MenuRightProp) => {
   const toggleMenuMobile = () => setOpenMenuMobile((prev: boolean) => !prev);
   return (
     <nav className="nav-right-main" aria-label="secondary nav">
       <ul className="nav-right-main--list">
-        <Notifications
-          notifications={notifications}
-          emptyNotificationText={emptyNotificationText}
-        />
+        <Notifications />
         <li>
           <a
             href={`https://help.fromdoppler.com/${user.lang}`}
