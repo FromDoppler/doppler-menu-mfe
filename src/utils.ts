@@ -143,6 +143,4 @@ export const safeUserData = (data: any): UserData => ({
   navItems: data.nav?.map(safeNavItem) ?? [],
   user: safeUser(data?.user ?? {}),
   alert: data?.alert ? safeAlert(data?.alert) : undefined,
-  notifications: data?.notifications?.map(safeString) ?? [],
-  emptyNotificationText: safeString(data?.emptyNotificationText),
 });
