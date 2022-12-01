@@ -14,6 +14,7 @@ interface HeaderProp {
   sticky: boolean;
   selectNavItem: (idHTML: string) => void;
   unselectNavItem: () => void;
+  dashboardUrl: string;
 }
 
 export const Header = ({
@@ -24,6 +25,7 @@ export const Header = ({
   user,
   emptyNotificationText,
   sticky,
+  dashboardUrl,
 }: HeaderProp) => {
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
@@ -40,7 +42,7 @@ export const Header = ({
         <ClientManagerLogo clientManager={user.clientManager} />
       ) : null}
       <div className="header-wrapper">
-        <Logo />
+        <Logo url={dashboardUrl} />
         <Nav
           selectNavItem={selectNavItem}
           unselectNavItem={unselectNavItem}
@@ -57,10 +59,14 @@ export const Header = ({
   );
 };
 
-export const HeaderPlaceholder = () => (
+export const HeaderPlaceholder = ({
+  dashboardUrl,
+}: {
+  dashboardUrl: string;
+}) => (
   <header>
     <div className="header-wrapper">
-      <Logo />
+      <Logo url={dashboardUrl} />
     </div>
   </header>
 );

@@ -1,7 +1,7 @@
-export const Logo = () => {
+export const Logo = ({ url }: { url: string }) => {
   return (
     <div className="logo" aria-label="company logo">
-      <a href="/dashboard">
+      <a href={url}>
         <span
           className="ms-icon icon-doppler-logo"
           role="img"
