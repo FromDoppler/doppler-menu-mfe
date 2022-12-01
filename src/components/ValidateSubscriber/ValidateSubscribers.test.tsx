@@ -7,11 +7,12 @@ import {
 } from "@testing-library/react";
 import { IntlProviderDouble } from "../i18n/DopplerIntlProvider.double-with-ids-as-values";
 import { ValidateSubscribersForm } from "./ValidateSubscribersForm";
-import * as dopplerLegacyClient from "../../client/dopplerLegacyClient";
 import userEvent from "@testing-library/user-event";
 import { AnswerType, MaxSubscribersData } from "./types";
 import { AppConfigurationProvider } from "../../AppConfiguration";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { DopplerLegacyClientImpl } from "../../client/DopplerLegacyClientImpl";
+jest.mock("../../client/DopplerLegacyClientImpl");
 
 export const maxSubscribersData: MaxSubscribersData = {
   questionsList: [
@@ -93,8 +94,20 @@ export const maxSubscribersData: MaxSubscribersData = {
 };
 
 describe("ValidateSubscribersComponent", () => {
-  it("should render Loading when there is no data", async () => {
+  var dopplerLegacyClientPrototypeMock =
+    DopplerLegacyClientImpl.prototype as jest.Mocked<DopplerLegacyClientImpl>;
+
+  beforeEach(() => {
+    (DopplerLegacyClientImpl as any).mockClear();
+  });
+
+  it("should render Loading when while there is no data", async () => {
+    // Arrange
+    dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockRejectedValue(
+      new Error("Empty Doppler response")
+    );
     const queryClient = new QueryClient();
+
     // Act
     render(
       <QueryClientProvider client={queryClient}>
@@ -106,33 +119,20 @@ describe("ValidateSubscribersComponent", () => {
 
     // Assert
     const loader = screen.getByTestId("loading-box");
-    // TODO: mock getMaxSubscribersData to avoid timeouts
     await waitForElementToBeRemoved(loader);
   });
 
   it("should render UnexpectedError when has an error", async () => {
     // Arrange
-    jest
-      .spyOn(dopplerLegacyClient, "useGetMaxSubscribers")
-      .mockImplementationOnce(() =>
-        useQuery<MaxSubscribersData>(
-          "getMaxSubscribersData",
-          async () => {
-            throw new Error("Empty Doppler response");
-          },
-          {
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-            retry: false,
-          }
-        )
-      );
-
+    dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockRejectedValue(
+      new Error("Empty Doppler response")
+    );
     const queryClient = new QueryClient();
+
     // Act
     render(
       <QueryClientProvider client={queryClient}>
-        <AppConfigurationProvider configuration={{ useDummies: true }}>
+        <AppConfigurationProvider configuration={{ useDummies: false }}>
           <IntlProviderDouble>
             <ValidateSubscribersForm onClose={jest.fn} />
           </IntlProviderDouble>
@@ -147,25 +147,16 @@ describe("ValidateSubscribersComponent", () => {
   });
 
   it("should render ValidateMaxSubscribersForm when there is form data", async () => {
-    jest
-      .spyOn(dopplerLegacyClient, "useGetMaxSubscribers")
-      .mockImplementation(() =>
-        useQuery<MaxSubscribersData>(
-          "getMaxSubscribersData",
-          async () => Promise.resolve(maxSubscribersData),
-          {
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-            retry: false,
-          }
-        )
-      );
-
+    // Arrange
+    dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockResolvedValue(
+      maxSubscribersData
+    );
     const queryClient = new QueryClient();
+
     // Act
     render(
       <QueryClientProvider client={queryClient}>
-        <AppConfigurationProvider configuration={{ useDummies: true }}>
+        <AppConfigurationProvider configuration={{ useDummies: false }}>
           <IntlProviderDouble>
             <ValidateSubscribersForm onClose={jest.fn} />
           </IntlProviderDouble>
@@ -196,22 +187,11 @@ describe("ValidateSubscribersComponent", () => {
       urlReferrer: "",
       urlHelp: "https://help.fromdoppler.com/",
     };
-
-    jest
-      .spyOn(dopplerLegacyClient, "useGetMaxSubscribers")
-      .mockImplementation(() =>
-        useQuery<MaxSubscribersData>(
-          "getMaxSubscribersData",
-          async () => Promise.resolve(formData),
-          {
-            refetchOnWindowFocus: false,
-            refetchOnReconnect: false,
-            retry: false,
-          }
-        )
-      );
-
+    dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockResolvedValue(
+      formData
+    );
     const queryClient = new QueryClient();
+
     // Act
     render(
       <QueryClientProvider client={queryClient}>
