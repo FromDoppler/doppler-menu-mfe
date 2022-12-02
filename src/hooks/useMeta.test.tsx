@@ -1,5 +1,4 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
 import { useMeta } from "./useMeta";
 
 type MutationObserverMock = MutationObserver & {
@@ -60,28 +59,26 @@ describe(useMeta.name, () => {
     metaElement = { content: metaContentB } as HTMLMetaElement;
 
     // Act
-    act(() => {
-      getObserverInstance(0).trigger([
-        {
-          addedNodes: [
-            {
-              querySelector: () =>
-                expectedSelector
-                  ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
-                  : null,
-            },
-          ] as any as NodeList,
-          attributeName: null,
-          attributeNamespace: null,
-          nextSibling: null,
-          oldValue: null,
-          previousSibling: null,
-          removedNodes: [] as any as NodeList,
-          target: {} as Node,
-          type: "childList",
-        },
-      ]);
-    });
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
 
     // Assert
     await waitFor(() => {
@@ -112,29 +109,27 @@ describe(useMeta.name, () => {
     metaElement = { content: metaContentB } as HTMLMetaElement;
 
     // Act
-    act(() => {
-      getObserverInstance(0).trigger([
-        {
-          addedNodes: [
-            {},
-            {
-              querySelector: () =>
-                expectedSelector
-                  ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
-                  : null,
-            },
-          ] as any as NodeList,
-          attributeName: null,
-          attributeNamespace: null,
-          nextSibling: null,
-          oldValue: null,
-          previousSibling: null,
-          removedNodes: [] as any as NodeList,
-          target: {} as Node,
-          type: "childList",
-        },
-      ]);
-    });
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [
+          {},
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
 
     // Assert
     await waitFor(() => {
@@ -165,28 +160,26 @@ describe(useMeta.name, () => {
     metaElement = { content: metaContentB } as HTMLMetaElement;
 
     // Act
-    act(() => {
-      getObserverInstance(0).trigger([
-        {
-          addedNodes: [
-            {
-              nodeName: "META",
-              name: metaName,
-              content: metaContentB,
-              querySelector: () => null,
-            },
-          ] as any as NodeList,
-          attributeName: null,
-          attributeNamespace: null,
-          nextSibling: null,
-          oldValue: null,
-          previousSibling: null,
-          removedNodes: [] as any as NodeList,
-          target: {} as Node,
-          type: "childList",
-        },
-      ]);
-    });
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [
+          {
+            nodeName: "META",
+            name: metaName,
+            content: metaContentB,
+            querySelector: () => null,
+          },
+        ] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
 
     // Assert
     await waitFor(() => {
@@ -216,28 +209,26 @@ describe(useMeta.name, () => {
     windowDouble.document.querySelector.mockImplementation(() => null);
 
     // Act
-    act(() => {
-      getObserverInstance(0).trigger([
-        {
-          addedNodes: [] as any as NodeList,
-          attributeName: null,
-          attributeNamespace: null,
-          nextSibling: null,
-          oldValue: null,
-          previousSibling: null,
-          removedNodes: [
-            {
-              querySelector: () =>
-                expectedSelector
-                  ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
-                  : null,
-            },
-          ] as any as NodeList,
-          target: {} as Node,
-          type: "childList",
-        },
-      ]);
-    });
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
 
     // Assert
     await waitFor(() => {
@@ -268,28 +259,26 @@ describe(useMeta.name, () => {
     metaElement = { content: metaContentB } as HTMLMetaElement;
 
     // Act
-    act(() => {
-      getObserverInstance(0).trigger([
-        {
-          addedNodes: [] as any as NodeList,
-          attributeName: null,
-          attributeNamespace: null,
-          nextSibling: null,
-          oldValue: null,
-          previousSibling: null,
-          removedNodes: [
-            {
-              querySelector: () =>
-                expectedSelector
-                  ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
-                  : null,
-            },
-          ] as any as NodeList,
-          target: {} as Node,
-          type: "childList",
-        },
-      ]);
-    });
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        target: {} as Node,
+        type: "childList",
+      },
+    ]);
 
     // Assert
     await waitFor(() => {
@@ -320,29 +309,27 @@ describe(useMeta.name, () => {
     metaElement = { content: metaContentB } as HTMLMetaElement;
 
     // Act
-    act(() => {
-      getObserverInstance(0).trigger([
-        {
-          addedNodes: [
-            {},
-            {
-              querySelector: () =>
-                expectedSelector
-                  ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
-                  : null,
-            },
-          ] as any as NodeList,
-          attributeName: null,
-          attributeNamespace: null,
-          nextSibling: null,
-          oldValue: null,
-          previousSibling: null,
-          removedNodes: [] as any as NodeList,
-          target: {} as Node,
-          type: "attributes",
-        },
-      ]);
-    });
+    getObserverInstance(0).trigger([
+      {
+        addedNodes: [
+          {},
+          {
+            querySelector: () =>
+              expectedSelector
+                ? ({ content: "ANY CONTENT" } as HTMLMetaElement)
+                : null,
+          },
+        ] as any as NodeList,
+        attributeName: null,
+        attributeNamespace: null,
+        nextSibling: null,
+        oldValue: null,
+        previousSibling: null,
+        removedNodes: [] as any as NodeList,
+        target: {} as Node,
+        type: "attributes",
+      },
+    ]);
 
     // Assert
     await timeout(1);
