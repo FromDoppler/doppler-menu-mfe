@@ -72,13 +72,14 @@ export class DopplerLegacyClientImpl implements DopplerLegacyClient {
   public async sendMaxSubscribersData(
     maxSubscribersData: MaxSubscribersData
   ): Promise<boolean> {
-    const response = await this.axios.post(
-      "/sendmaxsubscribersemail/sendemailpopup",
-      mapMaxSubscribersDataToJson(maxSubscribersData),
-      {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      }
-    );
+    const response = await this.axios({
+      method: "post",
+      url: "/sendmaxsubscribersemail/sendemailpopup",
+      // Hack: it is to avoid Axios automatic serialization as x-www-form-urlencoded
+      data: JSON.stringify(mapMaxSubscribersDataToJson(maxSubscribersData)),
+      // Hack: It is to avoid CORS Preflight
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
     return response.data;
   }
 
