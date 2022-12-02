@@ -37,8 +37,9 @@ describe(Header.name, () => {
   it("should not break if props are missing", () => {
     const mainHeaderLabel = "main header";
     const mainHeaderClass = "header-main";
+    const dashboardUrl = "http://test/";
 
-    render(
+    const { container } = render(
       <MenuIntlProvider>
         <Header
           selectNavItem={() => {}}
@@ -55,11 +56,15 @@ describe(Header.name, () => {
           notifications={[]}
           user={userMock}
           sticky={true}
+          dashboardUrl={dashboardUrl}
         />
       </MenuIntlProvider>
     );
 
     const headerLabel = screen.getByLabelText(mainHeaderLabel);
     expect(headerLabel).toHaveClass(mainHeaderClass);
+    const dashboardLink = container.querySelector(".logo a");
+    expect(dashboardLink).toBeTruthy();
+    expect(dashboardLink).toHaveAttribute("href", dashboardUrl);
   });
 });

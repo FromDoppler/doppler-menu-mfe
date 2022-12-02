@@ -6,6 +6,8 @@ import { useNavBarState } from "./navbar-state/navbar-state-hook";
 import { useEffect, useState } from "react";
 import { AppSessionState } from "./session/app-session-abstractions";
 
+const defaultDashboardUrl = "https://app.fromdoppler.com/dashboard";
+
 function App({
   onStatusUpdate,
 }: {
@@ -26,7 +28,7 @@ function App({
   }, [appSessionState.status, onStatusUpdate]);
 
   if (appSessionState.status !== "authenticated") {
-    return <HeaderPlaceholder />;
+    return <HeaderPlaceholder dashboardUrl={defaultDashboardUrl} />;
   }
 
   const { notifications, emptyNotificationText, user, alert } =
@@ -34,6 +36,10 @@ function App({
   const closeAlert = () => {
     setHideHeaderMessage(true);
   };
+
+  const dashboardUrl =
+    navBar.items.find((item) => item.idHTML === "dashboardMenu")?.url ??
+    defaultDashboardUrl;
 
   return (
     <>
@@ -51,6 +57,7 @@ function App({
         emptyNotificationText={emptyNotificationText}
         user={user}
         sticky={!!alert && !hideHeaderMessage}
+        dashboardUrl={dashboardUrl}
       />
     </>
   );

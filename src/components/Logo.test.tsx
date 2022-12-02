@@ -5,15 +5,16 @@ const expectedIconClasses = "ms-icon icon-doppler-logo";
 
 describe(Logo.name, () => {
   it("renders logo link", () => {
-    render(<Logo />);
+    const url = "https://test/";
+    render(<Logo url={url} />);
 
     const link = screen.getByRole("link");
 
-    expect(link).toHaveAttribute("href");
+    expect(link).toHaveAttribute("href", url);
   });
 
   it("displays icon image properly", () => {
-    render(<Logo />);
+    render(<Logo url="https://test/" />);
 
     const icon = screen.getByRole("img");
 
