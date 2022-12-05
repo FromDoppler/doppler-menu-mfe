@@ -12,7 +12,7 @@ export const MenuRight = ({ user, setOpenMenuMobile }: MenuRightProp) => {
   return (
     <nav className="nav-right-main" aria-label="secondary nav">
       <ul className="nav-right-main--list">
-        <Notifications />
+        <Notifications user={user} />
         <li>
           <a
             href={`https://help.fromdoppler.com/${user.lang}`}
