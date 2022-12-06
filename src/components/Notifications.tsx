@@ -4,8 +4,10 @@ import { beamerInitialize } from "react-beamer";
 import { useEffect } from "react";
 import { User } from "../model";
 import { defaultLanguage } from "./i18n/MenuIntlProvider";
+import { useAppConfiguration } from "../AppConfiguration";
 
-export const BEAMER_ID = "wCWRrvwa50706";
+// this is a temporary beamer account with limited functions
+export const DEFAULT_BEAMER_ID = "wCWRrvwa50706";
 export const BEAMER_URL = null;
 
 export const BEAMER_CONFIG = {
@@ -20,18 +22,20 @@ interface NotificationProp {
 }
 
 export const Notifications = ({ user }: NotificationProp) => {
+  const { beamerId = DEFAULT_BEAMER_ID } = useAppConfiguration();
+
   useEffect(() => {
     // Title: How to Install Beamer on your Website or App
     // Date: Apr 17, 2018 · Last updated on Nov 03, 2022
     // Availability: https://www.getbeamer.com/blog/tutorial-how-to-use-beamer-in-your-website-or-app
-    beamerInitialize(BEAMER_ID, BEAMER_URL, {
+    beamerInitialize(beamerId, BEAMER_URL, {
       ...BEAMER_CONFIG,
       //---------------Visitor Information---------------
       user_firstname: user.fullname,
       user_email: user.email,
       language: user.lang,
     });
-  }, [user]);
+  }, [user, beamerId]);
 
   return (
     <li>
