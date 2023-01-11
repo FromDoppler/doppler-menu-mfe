@@ -15,6 +15,11 @@ const BEAMER_CONFIG = {
   right: -8,
   language: defaultLanguage,
 };
+
+// TODO: The styles will be added after to the UI library
+const notificationsStyles = {
+  fontSize: "22px",
+};
 interface NotificationProp {
   user: User;
 }
@@ -39,7 +44,10 @@ export const Notifications = ({ user }: NotificationProp) => {
   return (
     <li>
       <span className="user-menu--open active">
-        <span className="ms-icon icon-notification beamer-icon" />
+        <span
+          className="ms-icon dpicon iconapp-notification beamer-icon"
+          style={notificationsStyles}
+        />
       </span>
     </li>
   );
