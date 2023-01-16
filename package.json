@@ -13,7 +13,7 @@
     "axios": "1.2.2",
     "eclint": "2.8.1",
     "formik": "2.2.9",
-    "prettier": "2.8.2",
+    "prettier": "2.8.3",
     "react": "18.2.0",
     "react-cool-onclickoutside": "1.7.0",
     "react-dom": "18.2.0",
