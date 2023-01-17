@@ -176,6 +176,7 @@ const UpdatePlanButton = (props: UpdatePlanButtonProp) => {
       <div className="dp-request-sent">
         <Tooltip>
           <button
+            type="button"
             onClick={props.click}
             className="user-plan close-user--menu dp-tooltip-left"
           >
@@ -190,7 +191,7 @@ const UpdatePlanButton = (props: UpdatePlanButtonProp) => {
     );
   }
   return (
-    <button onClick={props.click} className="user-plan">
+    <button type="button" onClick={props.click} className="user-plan">
       {props.text}
     </button>
   );

@@ -121,7 +121,11 @@ const ActionComponent = ({
   }
 
   return (
-    <button className="button button--light button--tiny" onClick={onClick}>
+    <button
+      type="button"
+      className="button button--light button--tiny"
+      onClick={onClick}
+    >
       {children}
     </button>
   );
