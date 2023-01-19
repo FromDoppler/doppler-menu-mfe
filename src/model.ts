@@ -99,6 +99,4 @@ export type UserData = Readonly<{
   navItems: ReadonlyArray<PrimaryNavItem>;
   user: User;
   alert?: Alert;
-  notifications: ReadonlyArray<string>;
-  emptyNotificationText: string;
 }>;

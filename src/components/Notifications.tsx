@@ -1,56 +1,46 @@
-import { useMemo, useState } from "react";
-import useOnclickOutside from "react-cool-onclickoutside";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { beamerInitialize } from "react-beamer";
+import { useEffect } from "react";
+import { User } from "../model";
+import { defaultLanguage } from "./i18n/MenuIntlProvider";
+import { useAppConfiguration } from "../AppConfiguration";
 
-interface NotificationsProps {
-  notifications: ReadonlyArray<string>;
-  emptyNotificationText: string;
+// this is a temporary beamer account with limited functions
+const BEAMER_URL = null;
+
+const BEAMER_CONFIG = {
+  selector: ".beamer-icon",
+  top: -8,
+  right: -8,
+  language: defaultLanguage,
+};
+interface NotificationProp {
+  user: User;
 }
 
-export const Notifications = ({
-  notifications,
-  emptyNotificationText,
-}: NotificationsProps) => {
-  const count = notifications.length;
-  const [openNotification, setOpenNotification] = useState(false);
-  const notificationsRef = useOnclickOutside(() => setOpenNotification(false));
+export const Notifications = ({ user }: NotificationProp) => {
+  const { beamerId } = useAppConfiguration();
 
-  const NotificationWrapper = useMemo(() => {
-    const handleToggleNotification = () =>
-      setOpenNotification(!openNotification);
-
-    return ({ children }: any) => (
-      <li ref={notificationsRef}>
-        <span
-          className="user-menu--open active"
-          data-count={count ? count : null}
-          onClick={handleToggleNotification}
-        >
-          <span className="ms-icon icon-notification" />
-        </span>
-        {children}
-      </li>
-    );
-  }, [count, notificationsRef, openNotification, setOpenNotification]);
-
-  if (count < 1) {
-    return <NotificationWrapper>{emptyNotificationText}</NotificationWrapper>;
-  }
+  useEffect(() => {
+    if (beamerId) {
+      // Title: How to Install Beamer on your Website or App
+      // Date: Apr 17, 2018 · Last updated on Nov 03, 2022
+      // Availability: https://www.getbeamer.com/blog/tutorial-how-to-use-beamer-in-your-website-or-app
+      beamerInitialize(beamerId, BEAMER_URL, {
+        ...BEAMER_CONFIG,
+        user_firstname: user.fullname,
+        user_email: user.email,
+        language: user.lang,
+      });
+    }
+  }, [user, beamerId]);
 
   return (
-    <NotificationWrapper>
-      <div
-        className={`user-menu helper--right dp-notifications ${
-          openNotification ? "open" : ""
-        }`}
-      >
-        {notifications.map((notification, index) => {
-          return (
-            <div key={index} className="dp-msj-notif">
-              <div dangerouslySetInnerHTML={{ __html: notification }} />
-            </div>
-          );
-        })}
-      </div>
-    </NotificationWrapper>
+    <li>
+      <span className="user-menu--open active">
+        <span className="ms-icon dpicon iconapp-notification beamer-icon" />
+      </span>
+    </li>
   );
 };

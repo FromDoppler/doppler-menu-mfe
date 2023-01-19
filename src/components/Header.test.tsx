@@ -52,8 +52,6 @@ describe(Header.name, () => {
             items: [],
             isExpanded: false,
           }}
-          emptyNotificationText={""}
-          notifications={[]}
           user={userMock}
           sticky={true}
           dashboardUrl={dashboardUrl}

@@ -8,9 +8,7 @@ import { ClientManagerLogo } from "./ClientManagerLogo";
 
 interface HeaderProp {
   navBar: NavBarState;
-  notifications: ReadonlyArray<string>;
   user: User;
-  emptyNotificationText: string;
   sticky: boolean;
   selectNavItem: (idHTML: string) => void;
   unselectNavItem: () => void;
@@ -21,9 +19,7 @@ export const Header = ({
   selectNavItem,
   unselectNavItem,
   navBar,
-  notifications,
   user,
-  emptyNotificationText,
   sticky,
   dashboardUrl,
 }: HeaderProp) => {
@@ -48,12 +44,7 @@ export const Header = ({
           unselectNavItem={unselectNavItem}
           navBar={navBar}
         />
-        <MenuRight
-          user={user}
-          notifications={notifications}
-          emptyNotificationText={emptyNotificationText}
-          setOpenMenuMobile={setOpenMenuMobile}
-        />
+        <MenuRight user={user} setOpenMenuMobile={setOpenMenuMobile} />
       </div>
     </header>
   );

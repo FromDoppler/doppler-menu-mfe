@@ -40,12 +40,7 @@ describe("<MenuRight />", () => {
   it("should not break if props are missing", () => {
     render(
       <MenuIntlProvider>
-        <MenuRight
-          user={userData}
-          notifications={[]}
-          emptyNotificationText={""}
-          setOpenMenuMobile={jest.fn()}
-        />
+        <MenuRight user={userData} setOpenMenuMobile={jest.fn()} />
       </MenuIntlProvider>
     );
 
@@ -59,12 +54,7 @@ describe("<MenuRight />", () => {
   ])("should render MenuRight properly ($lang)", ({ lang, expectedUrl }) => {
     render(
       <MenuIntlProvider>
-        <MenuRight
-          user={{ ...userData, lang }}
-          notifications={[]}
-          emptyNotificationText={""}
-          setOpenMenuMobile={jest.fn()}
-        />
+        <MenuRight user={{ ...userData, lang }} setOpenMenuMobile={jest.fn()} />
       </MenuIntlProvider>
     );
 
@@ -83,12 +73,7 @@ describe("<MenuRight />", () => {
     const toggleMenu = jest.fn();
     render(
       <MenuIntlProvider>
-        <MenuRight
-          user={userData}
-          notifications={[]}
-          emptyNotificationText={""}
-          setOpenMenuMobile={toggleMenu}
-        />
+        <MenuRight user={userData} setOpenMenuMobile={toggleMenu} />
       </MenuIntlProvider>
     );
 

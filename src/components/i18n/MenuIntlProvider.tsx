@@ -5,7 +5,7 @@ import { messages_es } from "./es";
 import messages_en from "./en";
 import { flattenMessages } from "./utils";
 
-const defaultLanguage = "es";
+export const defaultLanguage = "es";
 
 const messages = {
   es: messages_es,

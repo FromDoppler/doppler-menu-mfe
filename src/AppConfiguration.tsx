@@ -6,6 +6,7 @@ export interface AppConfiguration {
   useDummies?: boolean;
   dopplerLegacyBaseUrl?: string;
   onStatusUpdate?: (status: AppSessionState["status"]) => void;
+  beamerId?: string;
 }
 
 const DopplerLegacyContext = createContext<AppConfiguration>({

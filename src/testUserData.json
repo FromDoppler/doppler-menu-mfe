@@ -206,9 +206,5 @@
     "siteTrackingActive": false,
     "emailParameterEnabled": true,
     "emailParameterActive": false
-  },
-  "notifications": [
-    "<strong>DOPPLER DIGITAL BOOTCAMP</strong><br/><p class='text--small'>Become an Automation Marketing expert with the Doppler Team. <a target='_blank' href='https://academy.fromdoppler.com/bootcamp/?utm_medium=appnotification&utm_source=fromdoppler&utm_campaign=inbound-bootcamp'><br/><strong>SIGN UP</strong></a>.</p>"
-  ],
-  "emptyNotificationText": "Empty Notification Text"
+  }
 }
