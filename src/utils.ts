@@ -8,6 +8,7 @@ import {
   PlanType,
 } from "./model";
 import { patchWebAppUrlIfNeed } from "./temporalPatchingUtils";
+import jwt_decode from "jwt-decode";
 
 const sanitizeUrlToCompare = (url: string): string =>
   url
@@ -16,6 +17,19 @@ const sanitizeUrlToCompare = (url: string): string =>
     .replace(/#.*$/, "")
     .replace(/\/+$/, "")
     .toLowerCase();
+
+const mapIdUserToken = (jwtToken: string) => {
+  try {
+    if (jwtToken) {
+      var tokenDecoded = jwt_decode<any>(jwtToken);
+      return tokenDecoded.nameid || 0;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return 0;
+};
 
 export const IsActiveUrl = (currentUrl: string, itemUrl: string): boolean =>
   sanitizeUrlToCompare(currentUrl) === sanitizeUrlToCompare(itemUrl);
