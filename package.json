@@ -13,6 +13,7 @@
     "axios": "1.3.1",
     "eclint": "2.8.1",
     "formik": "2.2.9",
+    "jwt-decode": "^3.1.2",
     "prettier": "2.8.4",
     "react": "18.2.0",
     "react-beamer": "^1.1.0",

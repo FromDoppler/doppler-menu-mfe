@@ -34,6 +34,7 @@ export type Plan = Readonly<{
 
 export type User = Readonly<
   {
+    idUser: Number;
     email: string;
     fullname: string;
     plan: Plan;

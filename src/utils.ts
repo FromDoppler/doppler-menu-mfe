@@ -8,6 +8,7 @@ import {
   PlanType,
 } from "./model";
 import { patchWebAppUrlIfNeed } from "./temporalPatchingUtils";
+import jwt_decode from "jwt-decode";
 
 const sanitizeUrlToCompare = (url: string): string =>
   url
@@ -16,6 +17,19 @@ const sanitizeUrlToCompare = (url: string): string =>
     .replace(/#.*$/, "")
     .replace(/\/+$/, "")
     .toLowerCase();
+
+const mapIdUserToken = (jwtToken: string) => {
+  try {
+    if (jwtToken) {
+      var tokenDecoded = jwt_decode<any>(jwtToken);
+      return tokenDecoded.nameid || 0;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return 0;
+};
 
 export const IsActiveUrl = (currentUrl: string, itemUrl: string): boolean =>
   sanitizeUrlToCompare(currentUrl) === sanitizeUrlToCompare(itemUrl);
@@ -97,6 +111,7 @@ const safeSms = (data: any) =>
     : { smsEnabled: false as const };
 
 const safeUser = (data: any): User => ({
+  idUser: mapIdUserToken(data?.jwtToken),
   email: safeString(data?.email),
   fullname: safeString(data?.fullname),
   plan: safePlan(data?.plan),
@@ -141,6 +156,6 @@ const safeAlert = (data: any): Alert => ({
 
 export const safeUserData = (data: any): UserData => ({
   navItems: data.nav?.map(safeNavItem) ?? [],
-  user: safeUser(data?.user ?? {}),
+  user: safeUser(data?.user ? { ...data.user, jwtToken: data.jwtToken } : {}),
   alert: data?.alert ? safeAlert(data?.alert) : undefined,
 });
