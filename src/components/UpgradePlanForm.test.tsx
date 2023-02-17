@@ -26,6 +26,7 @@ const userData: User = {
     isMonthlyByEmail: false,
   },
   lang: "es",
+  idUser: 123,
   email: "",
   fullname: "",
   avatar: {

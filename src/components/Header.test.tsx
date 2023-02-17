@@ -4,6 +4,7 @@ import { User } from "../model";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 
 const userMock: User = {
+  idUser: 123,
   email: "bseguer@makingsense.com",
   fullname: "bruno seguer",
   plan: {

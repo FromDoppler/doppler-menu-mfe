@@ -1,6 +1,7 @@
 import { User } from "../model";
 
 export const userData: User = {
+  idUser: 123,
   email: "test@makingsense.com",
   fullname: "test makingsense",
   plan: {

@@ -4,6 +4,7 @@ import { User } from "../model";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 
 const user: User = {
+  idUser: 123,
   email: "test@makingsense.com",
   fullname: "test makingsense",
   plan: {

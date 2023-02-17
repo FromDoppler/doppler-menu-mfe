@@ -14,6 +14,7 @@ import { AppConfigurationProvider } from "../AppConfiguration";
 jest.mock("../client/DopplerLegacyClientImpl");
 
 const userData: User = {
+  idUser: 123,
   email: "email@mock.com",
   fullname: "bruno seguer",
   plan: {

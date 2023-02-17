@@ -111,6 +111,7 @@ const safeSms = (data: any) =>
     : { smsEnabled: false as const };
 
 const safeUser = (data: any): User => ({
+  idUser: mapIdUserToken(data?.jwtToken),
   email: safeString(data?.email),
   fullname: safeString(data?.fullname),
   plan: safePlan(data?.plan),
@@ -155,6 +156,6 @@ const safeAlert = (data: any): Alert => ({
 
 export const safeUserData = (data: any): UserData => ({
   navItems: data.nav?.map(safeNavItem) ?? [],
-  user: safeUser(data?.user ?? {}),
+  user: safeUser(data?.user ? { ...data.user, jwtToken: data.jwtToken } : {}),
   alert: data?.alert ? safeAlert(data?.alert) : undefined,
 });
