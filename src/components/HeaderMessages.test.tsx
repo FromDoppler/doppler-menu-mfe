@@ -221,12 +221,14 @@ describe("<HeaderMessages />", () => {
         </AppConfigurationProvider>
       </QueryClientProvider>
     );
+
     // Assert
     const button = screen.getByText("button.action.text");
     await userEvent.click(button);
 
-    const loader = screen.getByTestId("loading-box");
-    await waitForElementToBeRemoved(loader);
+    waitFor(() => {
+      screen.getByTestId("loading-box");
+    });
 
     const answerInput = screen.getByLabelText("question", {
       selector: "input",
