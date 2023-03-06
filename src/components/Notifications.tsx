@@ -32,7 +32,7 @@ export const Notifications = ({ user }: NotificationProp) => {
         user_firstname: user.fullname,
         user_email: user.email,
         language: user.lang,
-        user_id: user.idUser,
+        user_id: user.email,
       });
     }
   }, [user, beamerId]);
