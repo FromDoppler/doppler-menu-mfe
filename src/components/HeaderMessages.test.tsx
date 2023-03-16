@@ -7,7 +7,7 @@ import {
 import { HeaderMessages } from "./HeaderMessages";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { Alert, User } from "../model";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import userEvent from "@testing-library/user-event";
 import { DopplerLegacyClientImpl } from "../client/DopplerLegacyClientImpl";
 import { AppConfigurationProvider } from "../AppConfiguration";

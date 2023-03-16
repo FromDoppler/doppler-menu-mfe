@@ -3,7 +3,7 @@ import { DopplerLegacyClientImpl } from "./DopplerLegacyClientImpl";
 import { DopplerLegacyClientDummy } from "./DopplerLegacyClientDummy";
 import { MaxSubscribersData } from "../components/ValidateSubscriber/types";
 import { useAppConfiguration } from "../AppConfiguration";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useDopplerLegacyClient = () => {
   const appConfiguration = useAppConfiguration();
@@ -39,7 +39,7 @@ export const useGetMaxSubscribers = () => {
   };
 
   return useQuery<MaxSubscribersData>(
-    "getMaxSubscribersData",
+    ["getMaxSubscribersData"],
     queryFn,
     queryOptions
   );
