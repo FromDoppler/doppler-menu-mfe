@@ -8,7 +8,7 @@ import {
 import testUserData from "./testUserData.json";
 import { MenuIntlProvider } from "./components/i18n/MenuIntlProvider";
 import { safeUserData } from "./utils";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 test("renders Doppler Menu Micro-Frontend", () => {
   const mainHeaderLabel = "main header";

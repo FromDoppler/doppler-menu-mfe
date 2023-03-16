@@ -10,7 +10,7 @@ import { ValidateSubscribersForm } from "./ValidateSubscribersForm";
 import userEvent from "@testing-library/user-event";
 import { AnswerType, MaxSubscribersData } from "./types";
 import { AppConfigurationProvider } from "../../AppConfiguration";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DopplerLegacyClientImpl } from "../../client/DopplerLegacyClientImpl";
 jest.mock("../../client/DopplerLegacyClientImpl");
 

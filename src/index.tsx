@@ -8,7 +8,7 @@ import { AppConfiguration, AppConfigurationProvider } from "./AppConfiguration";
 import { createDummyAppSessionStateClient } from "./session/dummyAppSessionStateClient";
 import { SessionMfeAppSessionStateClient } from "./session/SessionMfeAppSessionStateClient";
 import { patchBrowserBehaviorToInterceptLocationUpdates } from "./history/historyUtils";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 patchBrowserBehaviorToInterceptLocationUpdates(window);
 
