@@ -20,7 +20,7 @@
     "react-beamer": "^1.1.0",
     "react-cool-onclickoutside": "1.7.0",
     "react-dom": "18.2.0",
-    "react-intl": "6.3.1",
+    "react-intl": "6.3.2",
     "react-scripts": "5.0.1",
     "typescript": "5.0.2",
     "web-vitals": "3.3.0"
