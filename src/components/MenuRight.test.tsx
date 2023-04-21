@@ -64,8 +64,7 @@ describe("<MenuRight />", () => {
       expect(link).toHaveAttribute("href");
     });
 
-    const helpIcon = screen.getByText("help");
-    const helpLink = helpIcon.parentElement;
+    const helpLink = screen.getByText("Ayuda");
     expect(helpLink).toHaveAttribute("href", expectedUrl);
     expect(helpLink).toHaveAttribute("target", "_blank");
   });

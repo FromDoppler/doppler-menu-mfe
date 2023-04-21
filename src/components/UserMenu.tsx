@@ -22,11 +22,12 @@ export const UserMenu = ({ user }: UserMenuProps) => {
 
   return (
     <div ref={userMenuRef}>
-      <Avatar
-        text={avatarText}
+      <span
+        className="user-menu--open dp-avatar-user"
         onClick={handleToggleNotification}
-        backgroundColor={backgroundColor}
-      />
+      >
+        {fullname}
+      </span>
       <div className={`user-menu ${openUserMenu ? "open" : ""}`}>
         <header>
           <Avatar

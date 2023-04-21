@@ -42,9 +42,9 @@ describe("<UserMenu />", () => {
       </MenuIntlProvider>
     );
 
-    expect(screen.getByText(user.fullname)).toBeInTheDocument();
+    expect(screen.getAllByText(user.fullname)).toHaveLength(2);
     expect(screen.getByText(user.email)).toBeInTheDocument();
     expect(screen.getByText(user.navItems[0].title)).toBeInTheDocument();
-    expect(screen.getAllByText(user.avatar.text)).toHaveLength(2);
+    expect(screen.getAllByText(user.avatar.text)).toHaveLength(1);
   });
 });
