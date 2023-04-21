@@ -1,3 +1,4 @@
+import { FormattedMessage } from "react-intl";
 import { User } from "../model";
 import { Notifications } from "./Notifications";
 import { UserMenu } from "./UserMenu";
@@ -18,8 +19,9 @@ export const MenuRight = ({ user, setOpenMenuMobile }: MenuRightProp) => {
             href={`https://help.fromdoppler.com/${user.lang}`}
             target="_blank"
             rel="noreferrer"
+            className="dp-link-help"
           >
-            <span className="ms-icon icon-header-help">help</span>
+            <FormattedMessage id="common.help" />
           </a>
         </li>
         <li>

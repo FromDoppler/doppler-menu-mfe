@@ -1,6 +1,7 @@
 const messages_en = {
   common: {
     cancel: `Cancel`,
+    help: `Help`,
     message_last_plan: `Tell us more about your needs and we’ll create a perfect Plan for you`,
     message_success: `Done! Your request has been sent`,
     save: `Save`,
@@ -17,6 +18,7 @@ const messages_en = {
     send_mails: "Send of Emails",
     send_request: "REQUEST SENT",
     tooltip_last_plan: `We're making a perfect Plan for your business. We'll contact you soon!`,
+    user_notifications: `Notifications`,
   },
   upgradePlanForm: {
     confirmation_title: `Done!`,

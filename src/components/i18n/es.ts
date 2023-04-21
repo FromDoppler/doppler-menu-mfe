@@ -1,6 +1,7 @@
 export const messages_es = {
   common: {
     cancel: `Cancelar`,
+    help: `Ayuda`,
     send: `Enviar`,
     save: `Guardar`,
     message_success: `¡Hecho! Tu solicitud ha sido enviada`,
@@ -18,6 +19,7 @@ export const messages_es = {
     send_request: "SOLICITUD ENVIADA",
     tooltip_last_plan:
       "Estamos diseñando un Plan a la medida de tus necesidades. ¡Te contactaremos pronto!",
+    user_notifications: `Notificaciones`,
   },
   upgradePlanForm: {
     confirmation_title: `¡Hecho!`,

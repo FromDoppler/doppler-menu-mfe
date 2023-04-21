@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { User } from "../model";
 import { defaultLanguage } from "./i18n/MenuIntlProvider";
 import { useAppConfiguration } from "../AppConfiguration";
+import { FormattedMessage } from "react-intl";
 
 // this is a temporary beamer account with limited functions
 const BEAMER_URL = null;
@@ -39,8 +40,8 @@ export const Notifications = ({ user }: NotificationProp) => {
 
   return (
     <li>
-      <span className="user-menu--open active">
-        <span className="ms-icon dpicon iconapp-notification beamer-icon" />
+      <span className="user-menu--open active iconapp-notification beamer-icon">
+        <FormattedMessage id="header.user_notifications" />
       </span>
     </li>
   );
