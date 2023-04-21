@@ -5,6 +5,10 @@ import { IntlProviderDouble } from "./i18n/DopplerIntlProvider.double-with-ids-a
 
 describe("<Notifications />", () => {
   it("should display notifications", () => {
-    render(<IntlProviderDouble><Notifications user={defaultUser} /></IntlProviderDouble>);
+    render(
+      <IntlProviderDouble>
+        <Notifications user={defaultUser} />
+      </IntlProviderDouble>
+    );
   });
 });
