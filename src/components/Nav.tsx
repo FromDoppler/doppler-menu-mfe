@@ -7,7 +7,6 @@ import {
 interface NavProp {
   navBar: NavBarState;
   selectNavItem: (idHTML: string) => void;
-  unselectNavItem: () => void;
   openMenuMobile: Boolean;
 }
 
@@ -25,19 +24,9 @@ interface SubNavItemProp {
   subItem: SecondaryNavItemState;
 }
 
-export const Nav = ({
-  selectNavItem,
-  unselectNavItem,
-  navBar,
-  openMenuMobile,
-}: NavProp) => (
+export const Nav = ({ selectNavItem, navBar, openMenuMobile }: NavProp) => (
   <>
-    <nav
-      className="nav-left-main"
-      aria-label="main nav"
-      onMouseLeave={() => unselectNavItem()}
-      style={navStylePatch}
-    >
+    <nav className="nav-left-main" aria-label="main nav" style={navStylePatch}>
       <div className="menu-main--container">
         <ul className="menu-main">
           {navBar.items.map((item, index) => {

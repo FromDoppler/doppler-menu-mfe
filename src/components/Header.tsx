@@ -35,6 +35,7 @@ export const Header = ({
       } ${openMenuMobile ? "open" : ""} ${
         user.hasClientManager ? "dp-header--cm" : ""
       }`}
+      onMouseLeave={() => unselectNavItem()}
     >
       {user.hasClientManager ? (
         <ClientManagerLogo clientManager={user.clientManager} />
@@ -47,7 +48,6 @@ export const Header = ({
         <Logo url={dashboardUrl} />
         <Nav
           selectNavItem={selectNavItem}
-          unselectNavItem={unselectNavItem}
           navBar={navBar}
           openMenuMobile={openMenuMobile}
         />
