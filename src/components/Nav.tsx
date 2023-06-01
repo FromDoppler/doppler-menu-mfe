@@ -7,12 +7,13 @@ import {
 interface NavProp {
   navBar: NavBarState;
   selectNavItem: (idHTML: string) => void;
-  unselectNavItem: () => void;
+  openMenuMobile: Boolean;
 }
 
 interface NavItemProp {
   item: PrimaryNavItemState;
   selectNavItem: (idHTML: string) => void;
+  openMenuMobile: Boolean;
 }
 
 interface SubNavProp {
@@ -23,19 +24,19 @@ interface SubNavItemProp {
   subItem: SecondaryNavItemState;
 }
 
-export const Nav = ({ selectNavItem, unselectNavItem, navBar }: NavProp) => (
+export const Nav = ({ selectNavItem, navBar, openMenuMobile }: NavProp) => (
   <>
-    <nav
-      className="nav-left-main"
-      aria-label="main nav"
-      onMouseLeave={() => unselectNavItem()}
-      style={navStylePatch}
-    >
+    <nav className="nav-left-main" aria-label="main nav" style={navStylePatch}>
       <div className="menu-main--container">
         <ul className="menu-main">
           {navBar.items.map((item, index) => {
             return (
-              <NavItem key={index} item={item} selectNavItem={selectNavItem} />
+              <NavItem
+                key={index}
+                item={item}
+                selectNavItem={selectNavItem}
+                openMenuMobile={openMenuMobile}
+              />
             );
           })}
         </ul>
@@ -50,9 +51,10 @@ const navStylePatch = { flex: "unset" };
 const flexibleSpaceStylePatch = { flex: "1" };
 const FlexibleSpace = () => <div style={flexibleSpaceStylePatch} />;
 
-const NavItem = ({ selectNavItem, item }: NavItemProp) => {
+const NavItem = ({ selectNavItem, item, openMenuMobile }: NavItemProp) => {
   const { title, url, subNavItems = [] } = item;
   const hasSubmenuItems = !!subNavItems.length;
+  const showSubNavInMobile = hasSubmenuItems && openMenuMobile;
 
   return (
     <li
@@ -63,14 +65,14 @@ const NavItem = ({ selectNavItem, item }: NavItemProp) => {
       <a className={item.isActive ? "active" : ""} href={url}>
         {title}
       </a>
-      {hasSubmenuItems && <SubNav item={item} />}
+      {showSubNavInMobile && <SubNav item={item} />}
     </li>
   );
 };
 
 const SubNav = ({ item }: SubNavProp) => {
   return (
-    <ul className={`sub-menu ${item.isOpen ? "open" : ""}`}>
+    <ul className="sub-menu">
       {item.subNavItems?.map((subItem) => (
         <SubNavItem key={subItem.title} subItem={subItem} />
       ))}
