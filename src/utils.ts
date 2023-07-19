@@ -61,7 +61,7 @@ const safeNavItem = (data: any): PrimaryNavItem => ({
 });
 
 const safeSubNavItems = (
-  data: any
+  data: any,
 ): undefined | Readonly<[TerminalNavItem, ...TerminalNavItem[]]> => {
   return data && data.length > 0 ? data.map(safeTerminalNavItem) : undefined;
 };

@@ -8,7 +8,7 @@ describe("<Notifications />", () => {
     render(
       <IntlProviderDouble>
         <Notifications user={defaultUser} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
   });
 });

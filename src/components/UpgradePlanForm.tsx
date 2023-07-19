@@ -45,19 +45,19 @@ const fieldNames = {
 
 const getAvailablePlans = (
   userPlan: Plan,
-  availablePlans: ClientTypePlans[]
+  availablePlans: ClientTypePlans[],
 ) => {
   return availablePlans.filter(({ SubscribersQty, EmailQty }) =>
     userPlan.isSubscribers
       ? SubscribersQty > userPlan.maxSubscribers
-      : EmailQty && EmailQty > userPlan.maxSubscribers
+      : EmailQty && EmailQty > userPlan.maxSubscribers,
   );
 };
 
 const getAmmountSubscribers = (
   availablePlans: ClientTypePlans[],
   selectedPlanId: number,
-  isSubscriber: boolean
+  isSubscriber: boolean,
 ) => {
   const amount = isSubscriber
     ? availablePlans.find((plan) => plan.IdUserTypePlan === selectedPlanId)
@@ -107,7 +107,7 @@ export const UpgradePlanForm = ({
 
   const onSubmit = async (
     { selectedPlanId, message }: FormFields,
-    { setSubmitting }: FormikHelpers<FormFields>
+    { setSubmitting }: FormikHelpers<FormFields>,
   ) => {
     await upgradePlan({
       IdClientTypePlanSelected: selectedPlanId,
@@ -120,7 +120,7 @@ export const UpgradePlanForm = ({
       availablePlans &&
         selectedPlanId &&
         setAmountSubscribers(
-          getAmmountSubscribers(availablePlans, selectedPlanId, isSubscriber)
+          getAmmountSubscribers(availablePlans, selectedPlanId, isSubscriber),
         );
     } else {
       setSentEmail(true);

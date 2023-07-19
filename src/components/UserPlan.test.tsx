@@ -12,7 +12,7 @@ describe(UserPlan.name, () => {
     render(
       <MenuIntlProvider>
         <UserPlan user={defaultUser} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     // Assert
@@ -43,7 +43,7 @@ describe(UserPlan.name, () => {
     render(
       <IntlProviderDouble>
         <UserPlan user={monthlyPlanUser} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
 
     // Assert
@@ -71,7 +71,7 @@ describe(UserPlan.name, () => {
     render(
       <IntlProviderDouble>
         <UserPlan user={contactPlanUser} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
 
     // Assert
@@ -104,13 +104,13 @@ describe(UserPlan.name, () => {
       render(
         <IntlProviderDouble>
           <UserPlan user={contactPlanUser} />
-        </IntlProviderDouble>
+        </IntlProviderDouble>,
       );
 
       // Assert
       screen.getByText(remainingCredits);
       screen.getByText(/undefined.plan.description/);
-    }
+    },
   );
 
   it("should render an Upgrade button when plan has a button url and a pending free upgrade", () => {
@@ -121,7 +121,7 @@ describe(UserPlan.name, () => {
     render(
       <MenuIntlProvider>
         <UserPlan user={defaultUser} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     // Assert
@@ -143,7 +143,7 @@ describe(UserPlan.name, () => {
     render(
       <MenuIntlProvider>
         <UserPlan user={freeUser} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const upgradeButton = screen.getByText("upgrade.plan.button");
@@ -167,14 +167,14 @@ describe(UserPlan.name, () => {
     render(
       <IntlProviderDouble>
         <UserPlan user={upgradeLinkPlanUser} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
 
     // Assert
     const upgradeLink = screen.getByText(buttonText);
     expect(upgradeLink).toHaveAttribute(
       "href",
-      upgradeLinkPlanUser.plan.buttonUrl
+      upgradeLinkPlanUser.plan.buttonUrl,
     );
   });
 
@@ -189,7 +189,7 @@ describe(UserPlan.name, () => {
     render(
       <IntlProviderDouble>
         <UserPlan user={tooltipPlanUser} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
 
     screen.getByText("header.send_request");
@@ -207,7 +207,7 @@ describe(UserPlan.name, () => {
     render(
       <IntlProviderDouble>
         <UserPlan user={tooltipPlanUser} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
 
     const updatePlanButton = screen.queryByText("header.send_request");
@@ -233,7 +233,7 @@ describe(UserPlan.name, () => {
     render(
       <MenuIntlProvider>
         <UserPlan user={smsPlanUser} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
     screen.getByTestId("sms-information-test-id");
     screen.getByText("description.sms");
@@ -247,7 +247,7 @@ describe(UserPlan.name, () => {
     render(
       <MenuIntlProvider>
         <UserPlan user={defaultUser} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const description = screen.queryByTestId("sms-information-test-id");

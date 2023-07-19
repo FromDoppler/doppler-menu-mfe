@@ -57,7 +57,7 @@ describe(Header.name, () => {
           sticky={true}
           dashboardUrl={dashboardUrl}
         />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const headerLabel = screen.getByLabelText(mainHeaderLabel);

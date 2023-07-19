@@ -21,7 +21,7 @@ function createRequiredValidation(requiredProp: string | boolean | undefined) {
 
 export function combineValidations(
   ...validateFunctions: [
-    ((value: any) => true | string | null) | undefined | false | null
+    ((value: any) => true | string | null) | undefined | false | null,
   ]
 ): (value: any) => true | string | null {
   return (value) => {
@@ -102,7 +102,7 @@ export const FieldItem = connect(
             touched[fieldName as keyof typeof touched] &&
             errors[fieldName as keyof typeof errors]
             ? "error"
-            : ""
+            : "",
         )}
       >
         {children}
@@ -117,7 +117,7 @@ export const FieldItem = connect(
         ) : null}
       </li>
     );
-  }
+  },
 );
 
 interface InputFieldItemProp {

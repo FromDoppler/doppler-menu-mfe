@@ -21,7 +21,7 @@ describe(useLocationHref.name, () => {
       },
       addEventListener: jest.fn(
         (_eventType: string, listener: () => void) =>
-          (locationUpdatedEventListener = listener)
+          (locationUpdatedEventListener = listener),
       ),
       removeEventListener: jest.fn(),
     };
@@ -62,15 +62,15 @@ describe(useLocationHref.name, () => {
     expect(windowDouble.removeEventListener).toHaveBeenCalledTimes(1);
     expect(windowDouble.removeEventListener).toHaveBeenCalledWith(
       locationUpdatedEventType,
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(windowDouble.addEventListener).toHaveBeenCalledTimes(1);
     expect(windowDouble.addEventListener).toHaveBeenCalledWith(
       locationUpdatedEventType,
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(windowDouble.removeEventListener.mock.lastCall?.[1]).toBe(
-      windowDouble.addEventListener.mock.lastCall?.[1]
+      windowDouble.addEventListener.mock.lastCall?.[1],
     );
   });
 });

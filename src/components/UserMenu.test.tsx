@@ -39,7 +39,7 @@ describe("<UserMenu />", () => {
     render(
       <MenuIntlProvider>
         <UserMenu user={user} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     expect(screen.getAllByText(user.fullname)).toHaveLength(2);

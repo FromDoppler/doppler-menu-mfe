@@ -17,7 +17,7 @@ describe(useMeta.name, () => {
 
     windowDouble.document.querySelector.mockImplementation(
       (selectors: string) =>
-        selectors == expectedSelector ? metaElement : null
+        selectors == expectedSelector ? metaElement : null,
     );
 
     render(<TestComponent metaName={metaName} />);
@@ -51,7 +51,7 @@ describe(useMeta.name, () => {
 
     windowDouble.document.querySelector.mockImplementation(
       (selectors: string) =>
-        selectors == expectedSelector ? metaElement : null
+        selectors == expectedSelector ? metaElement : null,
     );
 
     render(<TestComponent metaName={metaName} />);
@@ -103,7 +103,7 @@ describe(useMeta.name, () => {
 
     windowDouble.document.querySelector.mockImplementation(
       (selectors: string) =>
-        selectors == expectedSelector ? metaElement : null
+        selectors == expectedSelector ? metaElement : null,
     );
 
     render(<TestComponent metaName={metaName} />);
@@ -156,7 +156,7 @@ describe(useMeta.name, () => {
 
     windowDouble.document.querySelector.mockImplementation(
       (selectors: string) =>
-        selectors == expectedSelector ? metaElement : null
+        selectors == expectedSelector ? metaElement : null,
     );
 
     render(<TestComponent metaName={metaName} />);
@@ -207,7 +207,7 @@ describe(useMeta.name, () => {
 
     windowDouble.document.querySelector.mockImplementation(
       (selectors: string) =>
-        selectors == expectedSelector ? metaElement : null
+        selectors == expectedSelector ? metaElement : null,
     );
 
     render(<TestComponent metaName={metaName} />);
@@ -259,7 +259,7 @@ describe(useMeta.name, () => {
 
     windowDouble.document.querySelector.mockImplementation(
       (selectors: string) =>
-        selectors == expectedSelector ? metaElement : null
+        selectors == expectedSelector ? metaElement : null,
     );
 
     render(<TestComponent metaName={metaName} />);
@@ -311,7 +311,7 @@ describe(useMeta.name, () => {
 
     windowDouble.document.querySelector.mockImplementation(
       (selectors: string) =>
-        selectors == expectedSelector ? metaElement : null
+        selectors == expectedSelector ? metaElement : null,
     );
 
     render(<TestComponent metaName={metaName} />);
@@ -353,7 +353,7 @@ describe(useMeta.name, () => {
 function createMutationObserverCtorMock() {
   return jest.fn(function MutationObserver(
     this: MutationObserverMock,
-    callback: MutationCallback
+    callback: MutationCallback,
   ) {
     this.observe = jest.fn();
     this.disconnect = jest.fn();

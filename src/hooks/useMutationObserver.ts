@@ -12,7 +12,7 @@ export function useMutationObserver<T>({
   initialValue: T | (() => T);
   onMutation: (
     mutations: MutationRecord[],
-    setValue: (newValue: T) => void
+    setValue: (newValue: T) => void,
   ) => void;
   global?: Window & typeof globalThis;
 }): T {
@@ -20,9 +20,9 @@ export function useMutationObserver<T>({
   const observer = useMemo(
     () =>
       new global.MutationObserver((mutationList) =>
-        onMutation(mutationList, setValue)
+        onMutation(mutationList, setValue),
       ),
-    [onMutation, setValue, global.MutationObserver]
+    [onMutation, setValue, global.MutationObserver],
   );
 
   useEffect(() => {

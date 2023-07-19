@@ -13,7 +13,7 @@ export const useDopplerLegacyClient = () => {
         axios.create({
           baseURL: appConfiguration.dopplerLegacyBaseUrl,
           withCredentials: true,
-        })
+        }),
       );
   return dopplerLegacyClient;
 };
@@ -24,7 +24,7 @@ export const useSendMaxSubscribersData = () => {
   return useMutation(
     async (maxSubscribersData: MaxSubscribersData): Promise<boolean> => {
       return await client.sendMaxSubscribersData(maxSubscribersData);
-    }
+    },
   );
 };
 
@@ -41,7 +41,7 @@ export const useGetMaxSubscribers = () => {
   return useQuery<MaxSubscribersData>(
     ["getMaxSubscribersData"],
     queryFn,
-    queryOptions
+    queryOptions,
   );
 };
 
@@ -49,7 +49,7 @@ export interface DopplerLegacyClient {
   getMaxSubscribersData(): Promise<MaxSubscribersData>;
 
   sendMaxSubscribersData(
-    maxSubscribersData: MaxSubscribersData
+    maxSubscribersData: MaxSubscribersData,
   ): Promise<boolean>;
 
   sendAcceptButtonAction(): Promise<boolean>;

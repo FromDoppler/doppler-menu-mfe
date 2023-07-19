@@ -6,7 +6,7 @@ import {
 
 export function useLocationHref(global: Window = window) {
   const [locationHref, setLocationHref] = useState<string>(
-    global.location.href
+    global.location.href,
   );
 
   useEffect(() => {

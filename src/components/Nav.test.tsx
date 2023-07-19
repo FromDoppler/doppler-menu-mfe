@@ -63,7 +63,7 @@ describe(Nav.name, () => {
           items: [],
           isExpanded: false,
         }}
-      />
+      />,
     );
 
     expect(screen.getAllByRole("navigation").length).toEqual(1);
@@ -83,7 +83,7 @@ describe(Nav.name, () => {
           items: nav,
           isExpanded: false,
         }}
-      />
+      />,
     );
 
     const links = screen.getAllByRole("link");

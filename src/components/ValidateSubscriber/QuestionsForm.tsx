@@ -67,7 +67,7 @@ export const QuestionsForm = ({
   const renderQuestions = (
     questionItem: QuestionModel,
     questionIndex: number,
-    formikProps: FormikState<any>
+    formikProps: FormikState<any>,
   ) => {
     const { touched, errors, submitCount } = formikProps;
     const fieldName = `answer${questionIndex}`;

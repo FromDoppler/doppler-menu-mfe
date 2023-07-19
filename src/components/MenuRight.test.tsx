@@ -42,7 +42,7 @@ describe("<MenuRight />", () => {
     render(
       <MenuIntlProvider>
         <MenuRight user={userData} setOpenMenuMobile={jest.fn()} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     expect(screen.getAllByRole("navigation").length).toEqual(1);
@@ -56,7 +56,7 @@ describe("<MenuRight />", () => {
     render(
       <MenuIntlProvider>
         <MenuRight user={{ ...userData, lang }} setOpenMenuMobile={jest.fn()} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const links = screen.getAllByRole("link");
@@ -74,7 +74,7 @@ describe("<MenuRight />", () => {
     render(
       <MenuIntlProvider>
         <MenuRight user={userData} setOpenMenuMobile={toggleMenu} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const openMenu = screen.getByTestId("open-menu");

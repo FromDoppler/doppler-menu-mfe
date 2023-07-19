@@ -8,7 +8,7 @@ describe("UnexpectedError component", () => {
     render(
       <MenuIntlProvider>
         <UnexpectedError />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     // Assert

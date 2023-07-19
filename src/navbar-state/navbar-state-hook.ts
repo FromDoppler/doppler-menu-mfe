@@ -9,7 +9,7 @@ import {
 import { useMeta } from "../hooks/useMeta";
 
 function extractNavItems(
-  appSessionState: AppSessionState
+  appSessionState: AppSessionState,
 ): ReadonlyArray<PrimaryNavItemState> {
   const items =
     appSessionState.status === "authenticated"
@@ -23,7 +23,7 @@ function extractNavItems(
     subNavItems: x.subNavItems
       ? (x.subNavItems.map((y) => ({ ...y, isActive: false })) as [
           SecondaryNavItemState,
-          ...SecondaryNavItemState[]
+          ...SecondaryNavItemState[],
         ])
       : undefined,
   }));

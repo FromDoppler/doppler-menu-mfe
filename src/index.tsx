@@ -26,7 +26,7 @@ if (targetElement) {
       initialize(window, configuration, targetElement);
     } else {
       console.error(
-        `Element with id ${configuration.dopplerMenuElementId} not found.`
+        `Element with id ${configuration.dopplerMenuElementId} not found.`,
       );
     }
   });
@@ -40,11 +40,11 @@ reportWebVitals();
 function initialize(
   window: Window,
   configuration: AppConfiguration,
-  targetElement: HTMLElement
+  targetElement: HTMLElement,
 ) {
   const appSessionStateClient = createAppSessionStateClient(
     window,
-    configuration
+    configuration,
   );
   appSessionStateClient.start();
   // Create a client
@@ -62,7 +62,7 @@ function initialize(
           </AppConfigurationProvider>
         </AppSessionStateProvider>
       </QueryClientProvider>
-    </StrictMode>
+    </StrictMode>,
   );
 }
 
@@ -78,7 +78,7 @@ function getTargetElement(document: Document, configuration: AppConfiguration) {
 
 function createAppSessionStateClient(
   window: Window,
-  configuration: AppConfiguration
+  configuration: AppConfiguration,
 ) {
   return configuration.useDummies
     ? createDummyAppSessionStateClient()

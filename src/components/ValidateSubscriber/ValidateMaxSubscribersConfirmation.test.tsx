@@ -12,10 +12,10 @@ describe("ValidateMaxSubscribersConfirm", () => {
     render(
       <IntlProviderDouble>
         <ValidateMaxSubscribersConfirmation handleClose={handleClose} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
     const button = screen.getByText(
-      "validate_max_subscribers_form.button_accept"
+      "validate_max_subscribers_form.button_accept",
     );
     await userEvent.click(button);
 

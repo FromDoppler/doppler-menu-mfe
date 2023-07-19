@@ -9,7 +9,7 @@ import {
 } from "./doppler-session-mfe-conventions";
 
 const mapDopplerSessionState: (
-  dopplerSessionState: DopplerSessionState
+  dopplerSessionState: DopplerSessionState,
 ) => AppSessionState = (dopplerSessionState) =>
   !dopplerSessionState
     ? {
@@ -41,7 +41,7 @@ export class SessionMfeAppSessionStateClient implements AppSessionStateClient {
       DOPPLER_SESSION_STATE_UPDATE_EVENT_TYPE,
       () => {
         this.onSessionUpdate();
-      }
+      },
     );
     this.onSessionUpdate();
   }
