@@ -8,7 +8,7 @@ const messages = Object.keys(flattenMessages(messages_es)).reduce(
     ...accumulator,
     [currentValue]: currentValue,
   }),
-  {}
+  {},
 );
 
 export const IntlProviderDouble = ({ children }: any) => (

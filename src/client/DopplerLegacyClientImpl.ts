@@ -10,7 +10,7 @@ const mapMaxSubscribersData = (json: any): MaxSubscribersData => {
   return {
     isSentSuccessEmail: json.data?.IsSentSuccessEmail,
     questionsList: json.data?.QuestionsList.map((question: any) =>
-      mapMaxSubscribersQuestion(question)
+      mapMaxSubscribersQuestion(question),
     ),
     urlHelp: json.data?.UrlHelp,
     urlReferrer: json.data?.UrlReferrer,
@@ -43,12 +43,12 @@ const mapMaxSubscribersQuestionData = (question: QuestionModel): any => {
 };
 
 const mapMaxSubscribersDataToJson = (
-  maxSubscribersData: MaxSubscribersData
+  maxSubscribersData: MaxSubscribersData,
 ): any => {
   return {
     IsSentSuccessEmail: maxSubscribersData.isSentSuccessEmail,
     QuestionsList: maxSubscribersData.questionsList.map((question: any) =>
-      mapMaxSubscribersQuestionData(question)
+      mapMaxSubscribersQuestionData(question),
     ),
     UrlHelp: maxSubscribersData.urlHelp,
     UrlReferrer: maxSubscribersData.urlReferrer,
@@ -64,13 +64,13 @@ export class DopplerLegacyClientImpl implements DopplerLegacyClient {
 
   public async getMaxSubscribersData(): Promise<MaxSubscribersData> {
     const response = await this.axios.get(
-      "/sendmaxsubscribersemail/getmaxsubscribersdata"
+      "/sendmaxsubscribersemail/getmaxsubscribersdata",
     );
     return mapMaxSubscribersData(response.data);
   }
 
   public async sendMaxSubscribersData(
-    maxSubscribersData: MaxSubscribersData
+    maxSubscribersData: MaxSubscribersData,
   ): Promise<boolean> {
     const response = await this.axios({
       method: "post",
@@ -85,7 +85,7 @@ export class DopplerLegacyClientImpl implements DopplerLegacyClient {
 
   public async sendAcceptButtonAction(): Promise<boolean> {
     const response = await this.axios.post(
-      "accountpreferences/acceptbuttonaction"
+      "accountpreferences/acceptbuttonaction",
     );
     return response.data;
   }

@@ -2,7 +2,7 @@ import { useMutationObserver } from "./useMutationObserver";
 
 export function useMeta(
   name: string,
-  global: Window & typeof globalThis = window
+  global: Window & typeof globalThis = window,
 ) {
   const content = useMutationObserver({
     targetNode: global.document.body,

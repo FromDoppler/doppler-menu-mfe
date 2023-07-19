@@ -63,7 +63,7 @@ describe(QuestionsForm.name, () => {
     render(
       <IntlProviderDouble>
         <QuestionsForm questions={questionsMock} onSubmit={handleSubmit} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
 
     // Assert
@@ -88,7 +88,7 @@ describe(QuestionsForm.name, () => {
         <IntlProviderDouble>
           <QuestionsForm questions={questionsMock} onSubmit={handleSubmit} />
         </IntlProviderDouble>
-      </AppConfigurationProvider>
+      </AppConfigurationProvider>,
     );
 
     const inputName = await screen.getByRole("textbox", { name: /Name/i });
@@ -103,7 +103,7 @@ describe(QuestionsForm.name, () => {
     await userEvent.click(checkboxSources);
 
     const checkboxSubscriptionMethods = await screen.getByLabelText(
-      subscriptionMethod
+      subscriptionMethod,
     );
     await userEvent.click(checkboxSubscriptionMethods);
 
@@ -128,7 +128,7 @@ describe(QuestionsForm.name, () => {
     render(
       <IntlProviderDouble>
         <QuestionsForm questions={questionsMock} onSubmit={jest.fn()} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
 
     const checkboxSources = await screen.getByLabelText(sourceSelected);
@@ -144,7 +144,7 @@ describe(QuestionsForm.name, () => {
     render(
       <IntlProviderDouble>
         <QuestionsForm questions={questionsMock} onSubmit={jest.fn()} />
-      </IntlProviderDouble>
+      </IntlProviderDouble>,
     );
 
     const textarea = await screen.getByTestId("last-textarea");

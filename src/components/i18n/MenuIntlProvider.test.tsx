@@ -16,7 +16,7 @@ describe(MenuIntlProvider.name, () => {
     render(
       <MenuIntlProvider>
         <FormattedMessage id="lang" />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
     // Assert
     screen.getByText(LANG_DEFAULT);

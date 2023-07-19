@@ -19,7 +19,7 @@ export class DopplerLegacyClientDummy implements DopplerLegacyClient {
   }
 
   public async sendMaxSubscribersData(
-    maxSubscribersData: MaxSubscribersData
+    maxSubscribersData: MaxSubscribersData,
   ): Promise<boolean> {
     await timeout(1500);
     return true;

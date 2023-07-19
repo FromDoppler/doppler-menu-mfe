@@ -66,7 +66,7 @@ describe("<HeaderMessages />", () => {
         <QueryClientProvider client={queryClient}>
           <HeaderMessages alert={alertData} user={userData} />
         </QueryClientProvider>
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const actionLink = screen.getByText("upgrade.now");
@@ -91,11 +91,11 @@ describe("<HeaderMessages />", () => {
           <QueryClientProvider client={queryClient}>
             <HeaderMessages alert={alertData} user={userData} />
           </QueryClientProvider>
-        </MenuIntlProvider>
+        </MenuIntlProvider>,
       );
 
       screen.getByText("upgrade.now.button");
-    }
+    },
   );
 
   it("display a button if url property is undefined and action is validateSubscribersPopup", async () => {
@@ -116,7 +116,7 @@ describe("<HeaderMessages />", () => {
         <MenuIntlProvider>
           <HeaderMessages alert={alertData} user={userData} />
         </MenuIntlProvider>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const button = screen.getByText("button.action.text");
@@ -143,7 +143,7 @@ describe("<HeaderMessages />", () => {
         <QueryClientProvider client={queryClient}>
           <HeaderMessages alert={alertData} user={userData} />
         </QueryClientProvider>
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     screen.getByText("upgrade.now.with.action.unknown");
@@ -165,7 +165,7 @@ describe("<HeaderMessages />", () => {
         <QueryClientProvider client={queryClient}>
           <HeaderMessages alert={alertData} user={userData} />
         </QueryClientProvider>
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     screen.getByText("button.action.upgrade.now");
@@ -190,7 +190,7 @@ describe("<HeaderMessages />", () => {
       urlHelp: "https://help.fromdoppler.com/",
     };
     dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockResolvedValue(
-      questions
+      questions,
     );
 
     const alertData: Alert = {
@@ -219,7 +219,7 @@ describe("<HeaderMessages />", () => {
             <HeaderMessages alert={alertData} user={userData} />
           </MenuIntlProvider>
         </AppConfigurationProvider>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // Assert

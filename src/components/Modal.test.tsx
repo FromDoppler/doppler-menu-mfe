@@ -16,7 +16,7 @@ describe("<Modal />", () => {
         children={content}
         handleClose={toggleModal}
         data-testid="modal"
-      />
+      />,
     );
 
     const modal = screen.getByTestId(modalTestId);
@@ -25,7 +25,7 @@ describe("<Modal />", () => {
 
   it("renders children prop", async () => {
     render(
-      <Modal isOpen={true} children={content} handleClose={toggleModal} />
+      <Modal isOpen={true} children={content} handleClose={toggleModal} />,
     );
 
     screen.getByText(content);
@@ -33,7 +33,7 @@ describe("<Modal />", () => {
 
   it("closes when click on close icon", async () => {
     render(
-      <Modal isOpen={true} children={content} handleClose={toggleModal} />
+      <Modal isOpen={true} children={content} handleClose={toggleModal} />,
     );
 
     const closeIcon = screen.getByTestId(iconTestId);

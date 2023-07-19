@@ -9,7 +9,7 @@ describe("<ConfirmationMessage />", () => {
     render(
       <MenuIntlProvider>
         <ConfirmationMessage isSubscriber={false} amountSubscribers={amount} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     screen.getByText(new RegExp(amount.toString()));
@@ -19,7 +19,7 @@ describe("<ConfirmationMessage />", () => {
     render(
       <MenuIntlProvider>
         <ConfirmationMessage isSubscriber={false} amountSubscribers={amount} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     screen.getByText(/Envíos./);
@@ -29,7 +29,7 @@ describe("<ConfirmationMessage />", () => {
     render(
       <MenuIntlProvider>
         <ConfirmationMessage isSubscriber={true} amountSubscribers={amount} />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     screen.getByText(/Contactos./);

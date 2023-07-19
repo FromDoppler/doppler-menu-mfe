@@ -704,7 +704,7 @@ describe(useNavBarStateReducer.name, () => {
       };
 
       const { TestComponent, getCurrentState } = createTestContext(
-        () => initializationData
+        () => initializationData,
       );
 
       // Act
@@ -728,7 +728,7 @@ describe(useNavBarStateReducer.name, () => {
       };
 
       const { TestComponent, getCurrentState } = createTestContext(
-        () => initializationData
+        () => initializationData,
       );
 
       // Act
@@ -754,7 +754,7 @@ function createTestContext(
     defaultActiveItemId: string | null;
     forcedActiveItemId: string | null;
     items: ReadonlyArray<PrimaryNavItemState>;
-  }
+  },
 ): {
   TestComponent: () => JSX.Element;
   getCurrentState: () => NavBarState;

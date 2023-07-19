@@ -23,7 +23,7 @@ describe(IsActiveUrl.name, () => {
     "returns true when urls are equal $currentUrl $itemUrl",
     ({ currentUrl, itemUrl }) => {
       expect(IsActiveUrl(currentUrl, itemUrl)).toBe(true);
-    }
+    },
   );
 
   it.each([

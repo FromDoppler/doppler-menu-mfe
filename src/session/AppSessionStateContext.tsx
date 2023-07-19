@@ -10,7 +10,7 @@ const AppSessionStateContext = createContext<AppSessionState>({
 
 const isTheSameSession: (
   prevState: AppSessionState,
-  newValue: AppSessionState
+  newValue: AppSessionState,
 ) => boolean = (previousState: AppSessionState, newState: AppSessionState) =>
   newState.status !== "authenticated"
     ? previousState.status === newState.status
@@ -32,7 +32,7 @@ export function AppSessionStateProvider({
     appSessionStateClient.onSessionUpdate = () => {
       const newState = appSessionStateClient.getCurrentSessionState();
       setAppSessionState((previousState) =>
-        isTheSameSession(previousState, newState) ? previousState : newState
+        isTheSameSession(previousState, newState) ? previousState : newState,
       );
     };
     appSessionStateClient.onSessionUpdate();

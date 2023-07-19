@@ -104,7 +104,7 @@ describe("ValidateSubscribersComponent", () => {
   it("should render Loading when while there is no data", async () => {
     // Arrange
     dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockRejectedValue(
-      new Error("Empty Doppler response")
+      new Error("Empty Doppler response"),
     );
     const queryClient = new QueryClient();
 
@@ -114,7 +114,7 @@ describe("ValidateSubscribersComponent", () => {
         <IntlProviderDouble>
           <ValidateSubscribersForm onClose={jest.fn} />
         </IntlProviderDouble>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // Assert
@@ -125,7 +125,7 @@ describe("ValidateSubscribersComponent", () => {
   it("should render UnexpectedError when has an error", async () => {
     // Arrange
     dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockRejectedValue(
-      new Error("Empty Doppler response")
+      new Error("Empty Doppler response"),
     );
     const queryClient = new QueryClient();
 
@@ -137,7 +137,7 @@ describe("ValidateSubscribersComponent", () => {
             <ValidateSubscribersForm onClose={jest.fn} />
           </IntlProviderDouble>
         </AppConfigurationProvider>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // Assert
@@ -149,7 +149,7 @@ describe("ValidateSubscribersComponent", () => {
   it("should render ValidateMaxSubscribersForm when there is form data", async () => {
     // Arrange
     dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockResolvedValue(
-      maxSubscribersData
+      maxSubscribersData,
     );
     const queryClient = new QueryClient();
 
@@ -161,7 +161,7 @@ describe("ValidateSubscribersComponent", () => {
             <ValidateSubscribersForm onClose={jest.fn} />
           </IntlProviderDouble>
         </AppConfigurationProvider>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
     // Assert
     const loader = screen.getByTestId("loading-box");
@@ -188,7 +188,7 @@ describe("ValidateSubscribersComponent", () => {
       urlHelp: "https://help.fromdoppler.com/",
     };
     dopplerLegacyClientPrototypeMock.getMaxSubscribersData.mockResolvedValue(
-      formData
+      formData,
     );
     const queryClient = new QueryClient();
 
@@ -198,7 +198,7 @@ describe("ValidateSubscribersComponent", () => {
         <IntlProviderDouble>
           <ValidateSubscribersForm onClose={jest.fn} />
         </IntlProviderDouble>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const loader = screen.getByTestId("loading-box");
@@ -214,7 +214,7 @@ describe("ValidateSubscribersComponent", () => {
     // Assert
     waitFor(() => {
       const validateMaxSubscribersConfirm = screen.getByTestId(
-        "validate-subscribers-confirm"
+        "validate-subscribers-confirm",
       );
       expect(validateMaxSubscribersConfirm).toBeInTheDocument();
     });

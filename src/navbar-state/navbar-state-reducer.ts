@@ -9,7 +9,7 @@ import {
 
 function findActiveItemsByUrl(
   currentUrl: string,
-  items: readonly PrimaryNavItemState[]
+  items: readonly PrimaryNavItemState[],
 ) {
   const activeSecondaryItem = findSecondaryItemByUrl({ currentUrl, items });
   const activePrimaryItem = activeSecondaryItem
@@ -20,7 +20,7 @@ function findActiveItemsByUrl(
 
 function findActiveItemsByIdHTML(
   idHTML: string,
-  items: readonly PrimaryNavItemState[]
+  items: readonly PrimaryNavItemState[],
 ) {
   const activeSecondaryItem = findSecondaryItemByIdHTML({ idHTML, items });
   const activePrimaryItem = activeSecondaryItem
@@ -86,7 +86,8 @@ const findParent = ({
 }) =>
   items.find(
     (primaryItem) =>
-      primaryItem.subNavItems && primaryItem.subNavItems.includes(secondaryItem)
+      primaryItem.subNavItems &&
+      primaryItem.subNavItems.includes(secondaryItem),
   );
 
 function buildNavBarState({
@@ -153,7 +154,7 @@ function buildNavBarState({
 
 export function navBarStateReducer(
   state: NavBarState,
-  action: NavBarStateReducerAction
+  action: NavBarStateReducerAction,
 ): NavBarState {
   const {
     currentUrl,
@@ -220,7 +221,7 @@ export function useNavBarStateReducer(
     defaultActiveItemId: string | null;
     forcedActiveItemId: string | null;
     items: ReadonlyArray<PrimaryNavItemState>;
-  }
+  },
 ) {
   return useReducer(navBarStateReducer, null, () => {
     const { currentUrl, defaultActiveItemId, forcedActiveItemId, items } =

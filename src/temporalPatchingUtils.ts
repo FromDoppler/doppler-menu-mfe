@@ -4,7 +4,7 @@ const applyUrlPatchInTheseDomainsRegex =
   /^https?:\/\/(?:testmenu(?:qa|int)\.fromdoppler\.net|testmenu\.fromdoppler\.com|localhost:3000)(?=\/|$)/;
 
 const shouldApplyPatch = applyUrlPatchInTheseDomainsRegex.test(
-  window.location.origin
+  window.location.origin,
 );
 
 export const patchWebAppUrlIfNeed: (url: string) => string = shouldApplyPatch

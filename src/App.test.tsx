@@ -37,7 +37,7 @@ test("renders Doppler Menu Micro-Frontend", () => {
           <App />
         </QueryClientProvider>
       </MenuIntlProvider>
-    </AppSessionStateProvider>
+    </AppSessionStateProvider>,
   );
 
   expect(screen.getByLabelText(mainHeaderLabel)).toBeInTheDocument();

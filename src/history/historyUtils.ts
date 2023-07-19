@@ -1,7 +1,7 @@
 const DOPPLER_MENU_LOCATION_UPDATED = "doppler-menu-mfe-location-updated";
 
 export function patchBrowserBehaviorToInterceptLocationUpdates(
-  global: Window = window
+  global: Window = window,
 ) {
   const dispatchLocationUpdatedEvent = () =>
     global.dispatchEvent(new CustomEvent(DOPPLER_MENU_LOCATION_UPDATED));
@@ -23,14 +23,14 @@ export function patchBrowserBehaviorToInterceptLocationUpdates(
 
 export function addLocationUpdatedEventListener(
   listener: () => void,
-  global: Window = window
+  global: Window = window,
 ) {
   global.addEventListener(DOPPLER_MENU_LOCATION_UPDATED, listener);
 }
 
 export function removeLocationUpdatedEventListener(
   listener: () => void,
-  global: Window = window
+  global: Window = window,
 ) {
   global.removeEventListener(DOPPLER_MENU_LOCATION_UPDATED, listener);
 }

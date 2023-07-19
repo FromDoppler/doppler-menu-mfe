@@ -50,7 +50,7 @@ describe("<UpgradePlanForm />", () => {
           handleClose={() => toggleModal(false)}
           user={userData}
         />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const loadingBox = screen.getByTestId("loading-box");
@@ -72,7 +72,7 @@ describe("<UpgradePlanForm />", () => {
           handleClose={() => toggleModal(false)}
           user={userData}
         />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const form = await screen.findByRole(formRole);
@@ -92,7 +92,7 @@ describe("<UpgradePlanForm />", () => {
           handleClose={() => toggleModal(false)}
           user={userData}
         />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const select = await screen.findByRole("combobox");
@@ -101,7 +101,7 @@ describe("<UpgradePlanForm />", () => {
     });
     await user.selectOptions(
       select,
-      within(select).getByRole("option", { name: "501-1500" })
+      within(select).getByRole("option", { name: "501-1500" }),
     );
     await user.click(submitButton);
     await waitForElementToBeRemoved(submitButton);
@@ -119,7 +119,7 @@ describe("<UpgradePlanForm />", () => {
           handleClose={() => toggleModal(false)}
           user={userData}
         />
-      </MenuIntlProvider>
+      </MenuIntlProvider>,
     );
 
     const cancelButton = await screen.findByText(cancelText);

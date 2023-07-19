@@ -11,7 +11,7 @@ export interface ClientTypePlans {
 }
 
 export const getUpgradePlanData = (
-  isSubscriber: boolean
+  isSubscriber: boolean,
 ): Promise<ClientTypePlans[]> => {
   const response = upgradePlanData.data.ClientTypePlans.map(
     ({
@@ -30,11 +30,11 @@ export const getUpgradePlanData = (
       ExtraEmailCost,
       IdUserType,
       SubscribersQty,
-    })
+    }),
   );
 
   return new Promise<ClientTypePlans[]>((res) =>
-    setTimeout(() => res(response), 900)
+    setTimeout(() => res(response), 900),
   );
 };
 
