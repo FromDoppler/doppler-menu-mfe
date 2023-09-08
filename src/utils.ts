@@ -111,6 +111,18 @@ const safeSms = (data: any) =>
       }
     : { smsEnabled: false as const };
 
+const safeChat = (data: any) =>
+  safeBoolean(data?.active)
+    ? {
+        active: true as const,
+        planName: safeString(data?.planName),
+        chatDescription: safeString(data?.chatDescription),
+        qty: safeNumber(data?.qty),
+        wppBalance: safeNumber(data?.wppBalance),
+        wppDescription: safeString(data?.wppDescription),
+      }
+    : { active: false as const };
+
 const safeUser = (data: any): User => ({
   idUser: mapIdUserToken(data?.jwtToken),
   email: safeString(data?.email),
@@ -124,6 +136,7 @@ const safeUser = (data: any): User => ({
   navItems: (data?.nav as any[])?.map(safeTerminalNavItem) ?? [],
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
+  chat: safeChat(data?.chat),
   ...(data?.clientManager
     ? {
         hasClientManager: true,
