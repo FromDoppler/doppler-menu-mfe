@@ -32,6 +32,7 @@ const userMock: User = {
   sms: { smsEnabled: false },
   isLastPlanRequested: false,
   hasClientManager: false,
+  chat: { active: false },
 };
 
 describe(Header.name, () => {
