@@ -4,6 +4,7 @@ import { PlanType, User } from "../model";
 import { Modal } from "./Modal";
 import { Tooltip } from "./Tooltip";
 import { UpgradePlanForm } from "./UpgradePlanForm";
+import { getProccessUrlWithAccountType } from "../utils";
 
 interface UserPlanProps {
   user: User;
@@ -23,6 +24,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     description,
     isSubscribers,
     isMonthlyByEmail,
+    isFreeAccount,
   } = plan;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,7 +38,10 @@ export const UserPlan = ({ user }: UserPlanProps) => {
         {isSubscribers || isMonthlyByEmail ? (
           <UpgradePlanItem
             showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
-            buttonUrl={plan.buttonUrl}
+            buttonUrl={getProccessUrlWithAccountType(
+              plan.buttonUrl,
+              isFreeAccount,
+            )}
             buttonText={plan.buttonText}
           >
             <strong>{planName}</strong> ({maxSubscribers} {itemDescription})
@@ -44,7 +49,10 @@ export const UserPlan = ({ user }: UserPlanProps) => {
         ) : (
           <UpgradePlanItem
             showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
-            buttonUrl={plan.buttonUrl}
+            buttonUrl={getProccessUrlWithAccountType(
+              plan.buttonUrl,
+              isFreeAccount,
+            )}
             buttonText={plan.buttonText}
           />
         )}
@@ -66,7 +74,10 @@ export const UserPlan = ({ user }: UserPlanProps) => {
         {sms.smsEnabled ? (
           <RechargeSMSPlanCredits
             buttonText={sms.buttonText}
-            buttonUrl={sms.buttonUrl}
+            buttonUrl={getProccessUrlWithAccountType(
+              sms.buttonUrl,
+              isFreeAccount,
+            )}
             description={sms.description}
             remainingCredits={sms.remainingCredits}
           />

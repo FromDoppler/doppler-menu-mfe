@@ -30,6 +30,7 @@ export type Plan = Readonly<{
   buttonUrl: string;
   pendingFreeUpgrade?: boolean;
   isMonthlyByEmail: boolean;
+  isFreeAccount: boolean;
 }>;
 
 export type User = Readonly<

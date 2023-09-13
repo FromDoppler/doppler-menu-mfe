@@ -96,6 +96,7 @@ const safePlan = (data: any): Plan => {
     buttonUrl: safeString(data?.buttonUrl),
     pendingFreeUpgrade: safeBoolean(data?.pendingFreeUpgrade),
     isMonthlyByEmail: safeBoolean(data?.isMonthlyByEmail),
+    isFreeAccount: safeBoolean([1, 7, "1", "7"].includes(data.planType)),
   };
 };
 
@@ -159,3 +160,26 @@ export const safeUserData = (data: any): UserData => ({
   user: safeUser(data?.user ? { ...data.user, jwtToken: data.jwtToken } : {}),
   alert: data?.alert ? safeAlert(data?.alert) : undefined,
 });
+
+export const getProccessUrlWithAccountType = (
+  url: string,
+  isFreeAccount: boolean,
+) => {
+  let newUrl = url;
+  const useAccountType = url.includes("/plan-selection");
+  const accountType = "accountType";
+  if (!isFreeAccount && useAccountType) {
+    const urlParts = url.split("?");
+    const hasQueryParams = urlParts.length > 1;
+    if (hasQueryParams) {
+      const accountTypeIsAlreadyExistsInUrl = url.includes(`${accountType}=`);
+      if (!accountTypeIsAlreadyExistsInUrl) {
+        newUrl = `${url}&${accountType}=PAID`;
+      }
+    } else {
+      newUrl = `${url}?${accountType}=PAID`;
+    }
+  }
+
+  return newUrl;
+};

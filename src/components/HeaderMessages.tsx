@@ -4,6 +4,7 @@ import { User, Alert } from "../model";
 import { UpgradePlanForm } from "./UpgradePlanForm";
 import { ValidateSubscribersForm } from "./ValidateSubscriber/ValidateSubscribersForm";
 import { useDopplerLegacyClient } from "../client/dopplerLegacyClient";
+import { getProccessUrlWithAccountType } from "../utils";
 
 interface HeaderMessagesProp {
   alert: Alert;
@@ -66,6 +67,7 @@ export const HeaderMessages = ({
               type={button?.url ? "LINK" : "BUTTON"}
               url={button?.url}
               onClick={() => setButtonOnclick()}
+              isFreeAccount={plan.isFreeAccount}
             >
               {button?.text}
             </ActionComponent>
@@ -103,6 +105,7 @@ interface ActionComponentProps {
   url?: string;
   onClick?: () => void;
   children: string | ReactNode;
+  isFreeAccount: boolean;
   type: "BUTTON" | "LINK";
 }
 
@@ -110,11 +113,16 @@ const ActionComponent = ({
   children,
   type,
   url,
+  isFreeAccount,
   onClick,
 }: ActionComponentProps) => {
   if (type === "LINK") {
+    const processedUrl = getProccessUrlWithAccountType(
+      url || "",
+      isFreeAccount,
+    );
     return (
-      <a href={url} className="button button--light button--tiny">
+      <a href={processedUrl} className="button button--light button--tiny">
         {children}
       </a>
     );
