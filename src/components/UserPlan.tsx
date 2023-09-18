@@ -5,6 +5,7 @@ import { Modal } from "./Modal";
 import { Tooltip } from "./Tooltip";
 import { UpgradePlanForm } from "./UpgradePlanForm";
 import { getProccessUrlWithAccountType } from "../utils";
+import { ChatPlan } from "./ChatPlan";
 
 interface UserPlanProps {
   user: User;
@@ -83,6 +84,17 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           />
         ) : null}
       </div>
+      {!user.hasClientManager && user.chat.active ? (
+        <ChatPlan
+          planName={user.chat.planName}
+          chatDescription={user.chat.chatDescription}
+          chatQty={user.chat.qty}
+          wppBalance={user.chat.wppBalance}
+          wppDescription={user.chat.wppDescription}
+        />
+      ) : (
+        <> </>
+      )}
 
       <Modal
         isOpen={isModalOpen}

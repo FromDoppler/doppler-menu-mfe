@@ -185,7 +185,15 @@
     ],
     "sms": { "smsEnabled": false, "remainingCredits": 0.0 },
     "isLastPlanRequested": false,
-    "hasCampaignSent": false
+    "hasCampaignSent": false,
+    "chat": {
+      "active": true,
+      "planName": "Premium Plan Conversations",
+      "chatDescription": "Conversations",
+      "qty": 1000,
+      "wppBalance": 100,
+      "wppDescription": "Available for WhatsApp"
+    }
   },
   "alert": {
     "type": "blocker",

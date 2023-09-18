@@ -42,6 +42,7 @@ const userData: User = {
   sms: { smsEnabled: false },
   isLastPlanRequested: false,
   hasClientManager: false,
+  chat: { active: false },
 };
 
 describe("<HeaderMessages />", () => {
