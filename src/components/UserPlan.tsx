@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { FormattedMessage, FormattedNumber } from "react-intl";
 import { PlanType, User } from "../model";
 import { Modal } from "./Modal";
