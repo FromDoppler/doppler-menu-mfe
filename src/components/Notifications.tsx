@@ -34,6 +34,13 @@ export const Notifications = ({ user }: NotificationProp) => {
         user_email: user.email,
         language: user.lang,
         user_id: user.email,
+        contact_info_country: user.country,
+        billing_country: user.billingCountry,
+        industry_code: user.industryCode,
+        id_industry: user.idIndustry,
+        user_type: user.userType,
+        integrations: user?.integrations?.toString().replaceAll(",", ";"),
+        plan_type: user.plan?.userTypePlan,
       });
     }
   }, [user, beamerId]);
