@@ -18,6 +18,15 @@ export type PlanType =
   | "agencies"
   | "free";
 
+export type UserType =
+  | "Free"
+  | "Monthly"
+  | "Individual"
+  | "Subscribers"
+  | "CM-Free"
+  | "CM-Monthly"
+  | "CM-Subscribers";
+
 export type Plan = Readonly<{
   planType?: PlanType;
   description: string;
@@ -31,6 +40,7 @@ export type Plan = Readonly<{
   pendingFreeUpgrade?: boolean;
   isMonthlyByEmail: boolean;
   isFreeAccount: boolean;
+  userTypePlan: string;
 }>;
 
 export type User = Readonly<
@@ -42,6 +52,12 @@ export type User = Readonly<
     lang: "es" | "en";
     avatar: Readonly<{ text: string; color: string }>;
     navItems: ReadonlyArray<TerminalNavItem>;
+    userType: UserType;
+    idIndustry: Number;
+    industryCode: string;
+    country: string;
+    billingCountry: string;
+    integrations: Array<string>;
     sms: Readonly<
       | {
           smsEnabled: true;

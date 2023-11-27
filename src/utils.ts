@@ -97,6 +97,7 @@ const safePlan = (data: any): Plan => {
     pendingFreeUpgrade: safeBoolean(data?.pendingFreeUpgrade),
     isMonthlyByEmail: safeBoolean(data?.isMonthlyByEmail),
     isFreeAccount: safeBoolean([1, 7, "1", "7"].includes(data.planType)),
+    userTypePlan: safeString(data?.userTypePlan),
   };
 };
 
@@ -134,6 +135,12 @@ const safeUser = (data: any): User => ({
     color: safeString(data?.avatar?.color),
   },
   navItems: (data?.nav as any[])?.map(safeTerminalNavItem) ?? [],
+  userType: data?.userType,
+  idIndustry: safeNumber(data?.idIndustry),
+  industryCode: safeString(data?.industryCode),
+  country: safeString(data?.country),
+  billingCountry: safeString(data?.billingCountry),
+  integrations: data?.integrations || [],
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
   chat: safeChat(data?.chat),
