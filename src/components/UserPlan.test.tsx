@@ -253,4 +253,39 @@ describe(UserPlan.name, () => {
     const description = screen.queryByTestId("sms-information-test-id");
     expect(description).not.toBeInTheDocument();
   });
+
+  it("should display chat plan information when is enabled and user is not client manager", () => {
+    // Arrange
+    const chatPlanUser: User = {
+      ...defaultUser,
+      chat: {
+        active: true,
+        planName: "Premium Plan Conversations",
+        chatDescription: "chat",
+        wppDescription: "whats app",
+        conversationsQtyBalance: 10,
+        whatsAppCreditBalance: 10,
+      },
+    };
+
+    // Act
+    render(
+      <MenuIntlProvider>
+        <UserPlan user={chatPlanUser} />
+      </MenuIntlProvider>,
+    );
+    screen.getByTestId("chat-plan-test-id");
+    screen.getByText("Premium Plan Conversations");
+  });
+
+  it("should not display chat plan information when is disabled", () => {
+    // Act
+    render(
+      <MenuIntlProvider>
+        <UserPlan user={defaultUser} />
+      </MenuIntlProvider>,
+    );
+    const description = screen.queryByTestId("chat-plan-test-id");
+    expect(description).not.toBeInTheDocument();
+  });
 });
