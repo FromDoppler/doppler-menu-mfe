@@ -64,17 +64,17 @@ export type User = Readonly<
           active: true;
           planName: string;
           chatDescription: string;
-          qty: number;
-          wppBalance: number;
           wppDescription: string;
+          conversationsQtyBalance: number | undefined;
+          whatsAppCreditBalance: number | undefined;
         }
       | {
           active: false;
           planName?: undefined;
           chatDescription?: undefined;
-          qty?: undefined;
-          wppBalance?: undefined;
           wppDescription?: undefined;
+          conversationsQtyBalance?: undefined;
+          whatsAppCreditBalance?: undefined;
         }
     >;
   } & (

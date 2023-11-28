@@ -88,8 +88,8 @@ export const UserPlan = ({ user }: UserPlanProps) => {
         <ChatPlan
           planName={user.chat.planName}
           chatDescription={user.chat.chatDescription}
-          chatQty={user.chat.qty}
-          wppBalance={user.chat.wppBalance}
+          chatQty={user.chat.conversationsQtyBalance}
+          wppBalance={user.chat.whatsAppCreditBalance}
           wppDescription={user.chat.wppDescription}
         />
       ) : (

@@ -189,10 +189,10 @@
     "chat": {
       "active": true,
       "planName": "Premium Plan Conversations",
-      "chatDescription": "Conversations",
-      "qty": 1000,
-      "wppBalance": 100,
-      "wppDescription": "Available for WhatsApp"
+      "chatDescription": "Available Conversations",
+      "wppDescription": "Available for WhatsApp",
+      "conversationsQtyBalance": 10,
+      "whatsAppCreditBalance": 25.2
     }
   },
   "alert": {
