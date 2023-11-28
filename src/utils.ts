@@ -38,8 +38,8 @@ const safeBoolean = (data: unknown): boolean =>
   data === true
     ? true
     : data === false
-    ? false
-    : typeof data === "string" && data.toLowerCase() === "true";
+      ? false
+      : typeof data === "string" && data.toLowerCase() === "true";
 
 const safeString = (data: unknown): string =>
   typeof data === "string" ? data : !data ? "" : `${data}`;
@@ -160,11 +160,11 @@ const safeAlert = (data: any): Alert => ({
         url: safeUrl(data.button.url),
       }
     : data?.button?.action
-    ? {
-        text: safeString(data.button.text),
-        action: safeString(data.button.action),
-      }
-    : undefined,
+      ? {
+          text: safeString(data.button.text),
+          action: safeString(data.button.action),
+        }
+      : undefined,
   nextAlert: data.nextAlert ? safeAlert(data.nextAlert) : undefined,
 });
 

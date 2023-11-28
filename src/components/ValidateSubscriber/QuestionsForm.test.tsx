@@ -102,9 +102,8 @@ describe(QuestionsForm.name, () => {
     const checkboxSources = await screen.getByLabelText(sourceSelected);
     await userEvent.click(checkboxSources);
 
-    const checkboxSubscriptionMethods = await screen.getByLabelText(
-      subscriptionMethod,
-    );
+    const checkboxSubscriptionMethods =
+      await screen.getByLabelText(subscriptionMethod);
     await userEvent.click(checkboxSubscriptionMethods);
 
     // Assert

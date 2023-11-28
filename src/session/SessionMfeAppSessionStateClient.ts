@@ -16,13 +16,13 @@ const mapDopplerSessionState: (
         status: "unknown",
       }
     : dopplerSessionState.status !== "authenticated"
-    ? { status: dopplerSessionState.status }
-    : {
-        status: "authenticated",
-        dopplerAccountName: dopplerSessionState.dopplerAccountName,
-        lang: dopplerSessionState.rawDopplerUserData?.user?.lang,
-        userData: safeUserData(dopplerSessionState.rawDopplerUserData),
-      };
+      ? { status: dopplerSessionState.status }
+      : {
+          status: "authenticated",
+          dopplerAccountName: dopplerSessionState.dopplerAccountName,
+          lang: dopplerSessionState.rawDopplerUserData?.user?.lang,
+          userData: safeUserData(dopplerSessionState.rawDopplerUserData),
+        };
 
 export class SessionMfeAppSessionStateClient implements AppSessionStateClient {
   private readonly _window;
