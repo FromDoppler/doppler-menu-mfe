@@ -46,7 +46,9 @@ function App({
         // TODO: confirm if it is rendered in the right way
         alert && !hideHeaderMessage ? (
           <HeaderMessages alert={alert} user={user} onClose={closeAlert} />
-        ) : null
+        ) : (
+          <></>
+        )
       }
       <Header
         selectNavItem={selectNavItem}
