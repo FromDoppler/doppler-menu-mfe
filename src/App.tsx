@@ -41,15 +41,14 @@ function App({
     defaultDashboardUrl;
 
   return (
-    //Use div instead of react fragment here. // See https://stackoverflow.com/questions/54880669/
-    // react-domexception-failed-to-execute-removechild-on-node-the-node-to-be-re#:~:text=Problem%
-    // 20explanation%3A
-    <div>
+    <>
       {
         // TODO: confirm if it is rendered in the right way
         alert && !hideHeaderMessage ? (
           <HeaderMessages alert={alert} user={user} onClose={closeAlert} />
-        ) : null
+        ) : (
+          <></>
+        )
       }
       <Header
         selectNavItem={selectNavItem}
@@ -59,7 +58,7 @@ function App({
         sticky={!!alert && !hideHeaderMessage}
         dashboardUrl={dashboardUrl}
       />
-    </div>
+    </>
   );
 }
 
