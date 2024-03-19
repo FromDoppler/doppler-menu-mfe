@@ -22,10 +22,19 @@ function App({
     appSessionState,
   });
   const [hideHeaderMessage, setHideHeaderMessage] = useState(false);
+  const [hideApp, setHideApp] = useState(false);
 
   useEffect(() => {
     onStatusUpdate?.(appSessionState.status);
   }, [appSessionState.status, onStatusUpdate]);
+
+  (window as any).displayDopplerNavBar = (value: boolean) => {
+    setHideApp(!value);
+  };
+
+  if (hideApp) {
+    return <></>;
+  }
 
   if (appSessionState.status !== "authenticated") {
     return <HeaderPlaceholder dashboardUrl={defaultDashboardUrl} />;
