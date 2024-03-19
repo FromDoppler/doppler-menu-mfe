@@ -28,8 +28,8 @@ function App({
     onStatusUpdate?.(appSessionState.status);
   }, [appSessionState.status, onStatusUpdate]);
 
-  (window as any).hideDopplerNavBar = (value: boolean) => {
-    setHideApp(value);
+  (window as any).displayDopplerNavBar = (value: boolean) => {
+    setHideApp(!value);
   };
 
   if (hideApp) {

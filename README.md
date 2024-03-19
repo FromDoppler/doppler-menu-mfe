@@ -87,11 +87,11 @@ It's possible to hide or display the Menu with a simple js function.
 **_hide menu_**
 
 ```javascript
-window.hideDopplerNavBar(true);
+window.displayDopplerNavBar(true);
 ```
 
 **_show menu_**
 
 ```javascript
-window.hideDopplerNavBar(false);
+window.displayDopplerNavBar(false);
 ```
