@@ -79,3 +79,19 @@ referenced by content value is used when the current URL does not match with a m
 
 If the DOM contains a _meta_ tag with the name `doppler-menu-mfe:force-active-item`, the _IdHTML_
 referenced by content value is used to select the menu item whatever the current URL is.
+
+## Hide/Display Menu
+
+It's possible to hide or display the Menu with a simple js function.
+
+**_hide menu_**
+
+```javascript
+window.hideDopplerNavBar(true);
+```
+
+**_show menu_**
+
+```javascript
+window.hideDopplerNavBar(false);
+```
