@@ -33,6 +33,10 @@ export class SessionMfeAppSessionStateClient implements AppSessionStateClient {
   }
 
   getCurrentSessionState() {
+    console.log(
+      "this._window.dopplerSessionState",
+      this._window.dopplerSessionState,
+    );
     return mapDopplerSessionState(this._window.dopplerSessionState);
   }
 

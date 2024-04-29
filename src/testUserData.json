@@ -193,6 +193,18 @@
       "wppDescription": "Available for WhatsApp",
       "conversationsQtyBalance": 10,
       "whatsAppCreditBalance": 25.2
+    },
+    "landings": {
+      "planName": "Add Ons",
+      "buttonText": "BUY NOW",
+      "buttonUrl": "https://webappint.fromdoppler.net",
+      "landingsEditorEnabled": true,
+      "landingPacks": [
+        {
+          "packageQty": 1,
+          "landingsQty": 5
+        }
+      ]
     }
   },
   "alert": {
@@ -213,6 +225,7 @@
     "siteTrackingEnabled": true,
     "siteTrackingActive": false,
     "emailParameterEnabled": true,
-    "emailParameterActive": false
+    "emailParameterActive": false,
+    "landingsEditorEnabled": true
   }
 }

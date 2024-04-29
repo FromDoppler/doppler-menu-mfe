@@ -93,6 +93,22 @@ export type User = Readonly<
           whatsAppCreditBalance?: undefined;
         }
     >;
+    landings: Readonly<
+      | {
+          planName: string;
+          buttonText: string;
+          buttonUrl: string;
+          landingPacks: any;
+          landingsEditorEnabled: Boolean;
+        }
+      | {
+          planName: undefined;
+          buttonText: undefined;
+          buttonUrl: undefined;
+          landingPacks: [];
+          landingsEditorEnabled: true;
+        }
+    >;
   } & (
     | {
         hasClientManager: true;
