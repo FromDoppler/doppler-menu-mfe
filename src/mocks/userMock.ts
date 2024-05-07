@@ -17,6 +17,18 @@ export const userData: User = {
     pendingFreeUpgrade: true,
     isMonthlyByEmail: false,
   },
+  landings: {
+    planName: "Add Ons",
+    buttonText: "BUY NOW",
+    buttonUrl: "https://webappint.fromdoppler.net",
+    landingsEditorEnabled: true,
+    landingPacks: [
+      {
+        packageQty: 1,
+        landingsQty: 5,
+      },
+    ],
+  },
   lang: "es",
   avatar: { text: "BS", color: "#EE9C70" },
   navItems: [

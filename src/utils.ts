@@ -124,6 +124,14 @@ const safeChat = (data: any) =>
       }
     : { active: false as const };
 
+const safeLandings = (data: any) => ({
+  planName: safeString(data?.landings?.planName),
+  buttonText: safeString(data?.landings?.buttonText),
+  buttonUrl: safeString(data?.landings?.buttonUrl),
+  landingPacks: data?.landings.landingPacks || [],
+  landingsEditorEnabled: data.landings.landingsEditorEnabled,
+});
+
 const safeUser = (data: any): User => ({
   idUser: mapIdUserToken(data?.jwtToken),
   email: safeString(data?.email),
@@ -144,6 +152,7 @@ const safeUser = (data: any): User => ({
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
   chat: safeChat(data?.chat),
+  landings: safeLandings(data),
   ...(data?.clientManager
     ? {
         hasClientManager: true,
@@ -175,11 +184,28 @@ const safeAlert = (data: any): Alert => ({
   nextAlert: data.nextAlert ? safeAlert(data.nextAlert) : undefined,
 });
 
-export const safeUserData = (data: any): UserData => ({
-  navItems: data.nav?.map(safeNavItem) ?? [],
-  user: safeUser(data?.user ? { ...data.user, jwtToken: data.jwtToken } : {}),
-  alert: data?.alert ? safeAlert(data?.alert) : undefined,
-});
+export const safeUserData = (data: any): UserData => {
+  console.log("data safeUserData", data);
+
+  return {
+    navItems: data.nav?.map(safeNavItem) ?? [],
+    user: safeUser(
+      data?.user
+        ? {
+            ...data.user,
+            landings: {
+              ...data.user.landings,
+              landingsEditorEnabled: !!(
+                data.features && data.features.landingsEditorEnabled
+              ),
+            },
+            jwtToken: data.jwtToken,
+          }
+        : {},
+    ),
+    alert: data?.alert ? safeAlert(data?.alert) : undefined,
+  };
+};
 
 export const getProccessUrlWithAccountType = (
   url: string,

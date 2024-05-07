@@ -6,13 +6,14 @@ import { Tooltip } from "./Tooltip";
 import { UpgradePlanForm } from "./UpgradePlanForm";
 import { getProccessUrlWithAccountType } from "../utils";
 import { ChatPlan } from "./ChatPlan";
+import { LandingPlan } from "./LandingPlan";
 
 interface UserPlanProps {
   user: User;
 }
 
 export const UserPlan = ({ user }: UserPlanProps) => {
-  const { sms, plan, isLastPlanRequested } = user;
+  const { sms, plan, landings, isLastPlanRequested } = user;
 
   const {
     planName,
@@ -32,6 +33,8 @@ export const UserPlan = ({ user }: UserPlanProps) => {
   const openModalHandler = () => {
     setIsModalOpen(true);
   };
+
+  console.log("landings", landings);
 
   return (
     <>
@@ -84,6 +87,14 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           />
         ) : null}
       </div>
+      {landings?.landingsEditorEnabled && (
+        <LandingPlan
+          planName={landings?.planName}
+          landingPacks={landings.landingPacks}
+          buttonText={landings.buttonText}
+          buttonUrl={landings.buttonUrl}
+        />
+      )}
       {!user.hasClientManager && user.chat.active ? (
         <ChatPlan
           planName={user.chat.planName}
