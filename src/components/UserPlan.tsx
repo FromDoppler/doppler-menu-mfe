@@ -34,8 +34,6 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     setIsModalOpen(true);
   };
 
-  console.log("landings", landings);
-
   return (
     <>
       <div className="user-plan--type">
@@ -87,7 +85,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           />
         ) : null}
       </div>
-      {landings?.landingsEditorEnabled && (
+      {landings?.landingsEditorEnabled && !isFreeAccount && (
         <LandingPlan
           planName={landings?.planName}
           landingPacks={landings.landingPacks}
