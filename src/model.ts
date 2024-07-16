@@ -1,4 +1,4 @@
-﻿export type TerminalNavItem = Readonly<{
+export type TerminalNavItem = Readonly<{
   title: string;
   url: string;
   idHTML: string;

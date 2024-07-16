@@ -1,4 +1,4 @@
-﻿import {
+import {
   Alert,
   PrimaryNavItem,
   Plan,
