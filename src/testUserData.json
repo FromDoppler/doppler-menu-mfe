@@ -1,4 +1,4 @@
-{
+﻿{
   "nav": [
     {
       "title": "Home",
@@ -227,5 +227,12 @@
     "emailParameterEnabled": true,
     "emailParameterActive": false,
     "landingsEditorEnabled": true
+  },
+  "userAccount": {
+    "email": "test@fromdoppler.com",
+    "firstName": "test",
+    "idLanguage": 2,
+    "lastName": "test",
+    "userProfileType": "USER"
   }
 }

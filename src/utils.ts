@@ -1,4 +1,4 @@
-import {
+﻿import {
   Alert,
   PrimaryNavItem,
   Plan,
@@ -165,6 +165,7 @@ const safeUser = (data: any): User => ({
         },
       }
     : { hasClientManager: false }),
+  userAccount: data.userAccount,
 });
 
 const safeAlert = (data: any): Alert => ({

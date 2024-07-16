@@ -1,4 +1,4 @@
-export type TerminalNavItem = Readonly<{
+﻿export type TerminalNavItem = Readonly<{
   title: string;
   url: string;
   idHTML: string;
@@ -26,6 +26,16 @@ export type UserType =
   | "CM-Free"
   | "CM-Monthly"
   | "CM-Subscribers";
+
+export type userAccountType =
+  | Readonly<{
+      email: string;
+      firstName: string;
+      lastName: string;
+      idLanguage: number;
+      userProfileType: string;
+    }>
+  | undefined;
 
 export type Plan = Readonly<{
   planType?: PlanType;
@@ -109,6 +119,7 @@ export type User = Readonly<
           landingsEditorEnabled: true;
         }
     >;
+    userAccount: Readonly<userAccountType>;
   } & (
     | {
         hasClientManager: true;
