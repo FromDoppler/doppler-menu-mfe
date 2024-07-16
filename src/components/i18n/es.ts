@@ -10,11 +10,14 @@ export const messages_es = {
   },
   header: {
     availables: "disponibles",
+    change_account_button: "Ver todas las cuentas",
     enabled: "HABILITADO",
     plan_emails: "Emails",
     plan_prepaid: "Plan Premium por Créditos",
     plan_subscribers: "Suscriptores",
     profile: "Perfil",
+    profile_COLLABORATOR: "Colaborador",
+    profile_USER: "Propietario",
     send_mails: "Envío de Emails",
     send_request: "SOLICITUD ENVIADA",
     tooltip_last_plan:
