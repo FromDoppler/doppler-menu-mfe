@@ -201,6 +201,7 @@ export const safeUserData = (data: any): UserData => {
               ),
             },
             jwtToken: data.jwtToken,
+            userAccount: data.userAccount,
           }
         : {},
     ),
