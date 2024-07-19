@@ -34,7 +34,16 @@ const messages_en = {
     message_placeholder: `Your message`,
     title: `Request an update of your Plan`,
     plan_select: `Select Plan`,
+
     update: `Update Plan`,
+  },
+  userSelectionMenu: {
+    description:
+      "These are all off your account, pick the one you would like " +
+      "to work with today",
+    search_placeholder: `Search...`,
+    search_text: `Busca cuentas:`,
+    title: `Every Account`,
   },
   validate_max_subscribers_form: {
     button_accept: "Accept",

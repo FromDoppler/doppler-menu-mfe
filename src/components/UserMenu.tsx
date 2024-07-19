@@ -6,20 +6,20 @@ import { UserPlan } from "./UserPlan";
 import { ClientManagerUserPlan } from "./ClientManagerUserPlan";
 import { Modal } from "./Modal";
 import { FormattedMessage } from "react-intl";
+import { UserSelection } from "./UserSelection";
 
 interface UserMenuProps {
   user: User;
 }
 
 export const UserMenu = ({ user }: UserMenuProps) => {
-  const { fullname, email, avatar, navItems, userAccount } = user;
+  const { fullname, email, avatar, navItems, userAccount, relatedUsers } = user;
   const { color: backgroundColor, text: avatarText } = avatar;
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [openUserSelection, setOpenUserSelection] = useState(false);
   const userMenuRef = useOnclickOutside(() => {
     setOpenUserMenu(false);
-    setOpenUserSelection(false);
   });
 
   const handleToggleNotification = () => {
@@ -49,7 +49,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             <span className="name">{fullname}</span>
             <span className="email">{email}</span>
           </p>
-          {userAccount ? (
+          {userAccount && relatedUsers && relatedUsers.length > 1 ? (
             <div data-testid="user-accounts-test-id">
               <p className="dp-account-status">
                 <span>
@@ -60,7 +60,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
               </p>
               <button
                 type="button"
-                className="dp-button button-big primary-green button-medium "
+                className="dp-button button-big primary-green button-medium"
                 onClick={handleToggleModal}
               >
                 <FormattedMessage id="header.change_account_button" />
@@ -86,12 +86,16 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             </li>
           ))}
         </ul>
-        {openUserSelection ? (
+        {openUserSelection && relatedUsers ? (
           <Modal
             isOpen={openUserSelection}
             handleClose={() => setOpenUserSelection(false)}
+            modalId="modal-all-accounts"
           >
-            <span></span>
+            <UserSelection
+              data={relatedUsers}
+              currentUser={email}
+            ></UserSelection>
           </Modal>
         ) : (
           <></>

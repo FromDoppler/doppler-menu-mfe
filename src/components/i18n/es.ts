@@ -35,6 +35,14 @@ export const messages_es = {
     plan_select: `Selecciona el Plan`,
     update: `Actualizar Plan`,
   },
+  userSelectionMenu: {
+    description:
+      "Estas son todas tus cuentas, selecciona con cual " +
+      "quieres trabajar el día de hoy.",
+    search_placeholder: `Buscar...`,
+    search_text: `Busca cuentas:`,
+    title: `Todas las cuentas`,
+  },
   validate_max_subscribers_form: {
     button_accept: "Aceptar",
     checkbox_empty: "¡Ouch! Tienes que seleccionar al menos una opción.",
