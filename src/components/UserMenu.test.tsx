@@ -81,6 +81,26 @@ describe("<UserMenu />", () => {
         lastName: "test",
         userProfileType: "USER",
       },
+      relatedUsers: [
+        {
+          IdUser: 123,
+          IdUserAccount: 123,
+          UTCLastAccessDate: new Date(),
+          AccountName: "test@makingsense.com",
+          FirstName: "TEST",
+          LastName: "LastName",
+          Type: "COLLABORATOR",
+        },
+        {
+          IdUser: 456,
+          IdUserAccount: 456,
+          UTCLastAccessDate: new Date(),
+          AccountName: "bseguer@makingsense.com",
+          FirstName: "Bruno",
+          LastName: "Seguer",
+          Type: "USER",
+        },
+      ],
     };
 
     render(
@@ -89,6 +109,6 @@ describe("<UserMenu />", () => {
       </MenuIntlProvider>,
     );
 
-    expect(screen.queryByTestId("user-accounts-test-id")).toBeInTheDocument;
+    expect(screen.getByText("Ver todas las cuentas")).toBeInTheDocument;
   });
 });

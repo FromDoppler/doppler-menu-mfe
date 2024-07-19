@@ -27,15 +27,13 @@ export type UserType =
   | "CM-Monthly"
   | "CM-Subscribers";
 
-export type userAccountType =
-  | Readonly<{
-      email: string;
-      firstName: string;
-      lastName: string;
-      idLanguage: number;
-      userProfileType: string;
-    }>
-  | undefined;
+export type userAccountType = Readonly<{
+  email: string;
+  firstName: string;
+  lastName: string;
+  idLanguage: number;
+  userProfileType: string;
+}>;
 
 export type Plan = Readonly<{
   planType?: PlanType;
@@ -52,6 +50,16 @@ export type Plan = Readonly<{
   isFreeAccount: boolean;
   userTypePlan: string;
 }>;
+
+export type RelatedUsersData = {
+  IdUser: number;
+  IdUserAccount: number;
+  UTCLastAccessDate: Date;
+  AccountName: string;
+  FirstName: string;
+  LastName: string;
+  Type: string;
+};
 
 export type User = Readonly<
   {
@@ -119,7 +127,8 @@ export type User = Readonly<
           landingsEditorEnabled: true;
         }
     >;
-    userAccount: Readonly<userAccountType>;
+    userAccount: Readonly<userAccountType> | undefined;
+    relatedUsers: RelatedUsersData[] | undefined;
   } & (
     | {
         hasClientManager: true;
