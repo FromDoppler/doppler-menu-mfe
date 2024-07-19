@@ -3,7 +3,7 @@ import { UserMenu } from "./UserMenu";
 import { User } from "../model";
 import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 
-const user: User = {
+const baseUser: User = {
   idUser: 123,
   email: "test@makingsense.com",
   fullname: "test makingsense",
@@ -51,13 +51,44 @@ describe("<UserMenu />", () => {
   it("renders user menu", () => {
     render(
       <MenuIntlProvider>
+        <UserMenu user={baseUser} />
+      </MenuIntlProvider>,
+    );
+
+    expect(screen.getAllByText(baseUser.fullname)).toHaveLength(2);
+    expect(screen.getByText(baseUser.email)).toBeInTheDocument();
+    expect(screen.getByText(baseUser.navItems[0].title)).toBeInTheDocument();
+    expect(screen.getAllByText(baseUser.avatar.text)).toHaveLength(1);
+  });
+
+  it("renders user menu without accounts button", () => {
+    render(
+      <MenuIntlProvider>
+        <UserMenu user={baseUser} />
+      </MenuIntlProvider>,
+    );
+
+    expect(screen.queryByTestId("user-accounts-test-id")).not.toBeInTheDocument;
+  });
+
+  it("renders user menu with accounts button", () => {
+    const user = {
+      ...baseUser,
+      userAccount: {
+        email: "test@fromdoppler.com",
+        firstName: "test",
+        idLanguage: 2,
+        lastName: "test",
+        userProfileType: "USER",
+      },
+    };
+
+    render(
+      <MenuIntlProvider>
         <UserMenu user={user} />
       </MenuIntlProvider>,
     );
 
-    expect(screen.getAllByText(user.fullname)).toHaveLength(2);
-    expect(screen.getByText(user.email)).toBeInTheDocument();
-    expect(screen.getByText(user.navItems[0].title)).toBeInTheDocument();
-    expect(screen.getAllByText(user.avatar.text)).toHaveLength(1);
+    expect(screen.queryByTestId("user-accounts-test-id")).toBeInTheDocument;
   });
 });

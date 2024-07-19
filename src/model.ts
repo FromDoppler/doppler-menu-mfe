@@ -27,6 +27,16 @@ export type UserType =
   | "CM-Monthly"
   | "CM-Subscribers";
 
+export type userAccountType =
+  | Readonly<{
+      email: string;
+      firstName: string;
+      lastName: string;
+      idLanguage: number;
+      userProfileType: string;
+    }>
+  | undefined;
+
 export type Plan = Readonly<{
   planType?: PlanType;
   description: string;
@@ -109,6 +119,7 @@ export type User = Readonly<
           landingsEditorEnabled: true;
         }
     >;
+    userAccount: Readonly<userAccountType>;
   } & (
     | {
         hasClientManager: true;
