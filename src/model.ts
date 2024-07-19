@@ -163,3 +163,13 @@ export type UserData = Readonly<{
   user: User;
   alert?: Alert;
 }>;
+
+export type RelatedUsersData = {
+  IdUser: number;
+  IdUserAccount: number;
+  UTCLastAccessDate: Date;
+  AccountName: string;
+  FirstName: string;
+  LastName: string;
+  Type: string;
+};
