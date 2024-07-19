@@ -166,6 +166,7 @@ const safeUser = (data: any): User => ({
       }
     : { hasClientManager: false }),
   userAccount: data.userAccount,
+  relatedUsers: data.relatedUsers,
 });
 
 const safeAlert = (data: any): Alert => ({
@@ -202,6 +203,7 @@ export const safeUserData = (data: any): UserData => {
             },
             jwtToken: data.jwtToken,
             userAccount: data.userAccount,
+            relatedUsers: data.relatedUsers,
           }
         : {},
     ),

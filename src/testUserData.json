@@ -234,5 +234,25 @@
     "idLanguage": 2,
     "lastName": "test",
     "userProfileType": "USER"
-  }
+  },
+  "relatedUsers": [
+    {
+      "IdUser": 123,
+      "IdUserAccount": 123,
+      "UTCLastAccessDate": "2022-07-08T00:00:00",
+      "AccountName": "test@makingsense.com",
+      "FirstName": "TEST",
+      "LastName": "LastName",
+      "Type": "COLLABORATOR"
+    },
+    {
+      "IdUser": 456,
+      "IdUserAccount": 456,
+      "UTCLastAccessDate": "2022-07-08T00:00:00",
+      "AccountName": "bseguer@makingsense.com",
+      "FirstName": "Bruno",
+      "LastName": "Seguer",
+      "Type": "USER"
+    }
+  ]
 }
