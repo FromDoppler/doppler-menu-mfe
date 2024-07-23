@@ -18,6 +18,8 @@ export const UserMenu = ({ user }: UserMenuProps) => {
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [openUserSelection, setOpenUserSelection] = useState(false);
+  const showRelatedUsersMenu =
+    userAccount && relatedUsers && relatedUsers.length > 1;
   const userMenuRef = useOnclickOutside(() => {
     setOpenUserMenu(false);
   });
@@ -39,36 +41,40 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         {fullname}
       </span>
       <div className={`user-menu ${openUserMenu ? "open" : ""}`}>
-        <header>
+        <header className={showRelatedUsersMenu ? "header-user-info" : ""}>
           <Avatar
             text={avatarText}
             backgroundColor={backgroundColor}
             size="lg"
           />
-          <p>
-            <span className="name">{fullname}</span>
-            <span className="email">{email}</span>
-          </p>
-          {userAccount && relatedUsers && relatedUsers.length > 1 ? (
-            <div data-testid="user-accounts-test-id">
-              <p className="dp-account-status">
-                <span>
-                  <FormattedMessage
-                    id={`header.profile_${userAccount.userProfileType}`}
-                  />
+          <div className="dp-info-user">
+            <p>
+              <span className="name">{fullname}</span>
+              <span className="email">{email}</span>
+              {showRelatedUsersMenu ? (
+                <span className="dp-account-status">
+                  <span>
+                    <FormattedMessage
+                      id={`header.profile_${userAccount.userProfileType}`}
+                    />
+                  </span>
                 </span>
-              </p>
+              ) : (
+                <></>
+              )}
+            </p>
+            {showRelatedUsersMenu ? (
               <button
                 type="button"
-                className="dp-button button-big primary-green button-medium"
+                className="dp-button button-small primary-green dp-w-100"
                 onClick={handleToggleModal}
               >
                 <FormattedMessage id="header.change_account_button" />
               </button>
-            </div>
-          ) : (
-            <></>
-          )}
+            ) : (
+              <></>
+            )}
+          </div>
         </header>
         <div className="user-plan--container">
           {user.hasClientManager ? (
