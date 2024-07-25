@@ -49,4 +49,8 @@ export class SessionMfeAppSessionStateClient implements AppSessionStateClient {
     );
     this.onSessionUpdate();
   }
+
+  restart() {
+    window.restartDopplerSessionMonitor();
+  }
 }

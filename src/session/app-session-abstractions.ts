@@ -14,4 +14,5 @@ export interface AppSessionStateClient {
   readonly getCurrentSessionState: () => AppSessionState;
   readonly start: () => void;
   onSessionUpdate: () => void;
+  restart: () => void;
 }

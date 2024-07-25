@@ -21,6 +21,7 @@ export function createDummyAppSessionStateClient(): AppSessionStateClient {
       }, 1000);
     },
     onSessionUpdate: () => {},
+    restart: () => {},
   };
   return instance;
 }
