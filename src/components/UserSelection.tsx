@@ -1,6 +1,8 @@
 import { FormattedMessage } from "react-intl";
 import { RelatedUsersData } from "../model";
 import { useState } from "react";
+import { useChangeUserSession } from "../client/dopplerLegacyClient";
+import { SessionMfeAppSessionStateClient } from "../session/SessionMfeAppSessionStateClient";
 
 interface UserSelectionProps {
   data: RelatedUsersData[];
@@ -14,6 +16,14 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
     }),
   );
 
+  const appSessionStateClient = new SessionMfeAppSessionStateClient({ window });
+
+  const {
+    mutate: sendChangeUserSessionMutate,
+    isSuccess,
+    isLoading: isSending,
+  } = useChangeUserSession();
+
   const handleSearchOnChange = (value: string) => {
     setUsers(
       data
@@ -23,6 +33,19 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
         }),
     );
   };
+
+  const handleClick = (value: number) => {
+    if (isSending) {
+      return;
+    }
+    sendChangeUserSessionMutate(value);
+  };
+
+  if (isSuccess) {
+    appSessionStateClient.restart();
+  } else {
+    //display error message
+  }
 
   return (
     <>
@@ -90,6 +113,7 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
                         type="radio"
                         name="radio"
                         defaultChecked={user.AccountName === currentUser}
+                        onClick={() => handleClick(user.IdUser)}
                       />
                       <span></span>
                     </label>
