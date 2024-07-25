@@ -20,6 +20,8 @@ export const UserMenu = ({ user }: UserMenuProps) => {
   const [openUserSelection, setOpenUserSelection] = useState(false);
   const showRelatedUsersMenu =
     userAccount && relatedUsers && relatedUsers.length > 1;
+  const isCollaborator =
+    userAccount && userAccount.userProfileType === "COLLABORATOR";
   const userMenuRef = useOnclickOutside(() => {
     setOpenUserMenu(false);
   });
@@ -41,17 +43,17 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         {fullname}
       </span>
       <div className={`user-menu ${openUserMenu ? "open" : ""}`}>
-        <header className={showRelatedUsersMenu ? "header-user-info" : ""}>
-          <Avatar
-            text={avatarText}
-            backgroundColor={backgroundColor}
-            size="lg"
-          />
-          <div className="dp-info-user">
-            <p>
-              <span className="name">{fullname}</span>
-              <span className="email">{email}</span>
-              {showRelatedUsersMenu ? (
+        {showRelatedUsersMenu || isCollaborator ? (
+          <header className="header-user-info">
+            <Avatar
+              text={avatarText}
+              backgroundColor={backgroundColor}
+              size="lg"
+            />
+            <div className="dp-info-user">
+              <p>
+                <span className="name">{fullname}</span>
+                <span className="email">{email}</span>
                 <span className="dp-account-status">
                   <span>
                     <FormattedMessage
@@ -59,23 +61,35 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                     />
                   </span>
                 </span>
+              </p>
+              {showRelatedUsersMenu ? (
+                <button
+                  type="button"
+                  className="dp-button button-small primary-green dp-w-100"
+                  onClick={handleToggleModal}
+                >
+                  <FormattedMessage id="header.change_account_button" />
+                </button>
               ) : (
                 <></>
               )}
-            </p>
-            {showRelatedUsersMenu ? (
-              <button
-                type="button"
-                className="dp-button button-small primary-green dp-w-100"
-                onClick={handleToggleModal}
-              >
-                <FormattedMessage id="header.change_account_button" />
-              </button>
-            ) : (
-              <></>
-            )}
-          </div>
-        </header>
+            </div>
+          </header>
+        ) : (
+          <header>
+            <Avatar
+              text={avatarText}
+              backgroundColor={backgroundColor}
+              size="lg"
+            />
+            <div className="dp-info-user">
+              <p>
+                <span className="name">{fullname}</span>
+                <span className="email">{email}</span>
+              </p>
+            </div>
+          </header>
+        )}
         <div className="user-plan--container">
           {user.hasClientManager ? (
             <ClientManagerUserPlan
