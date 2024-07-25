@@ -45,6 +45,14 @@ export const useGetMaxSubscribers = () => {
   );
 };
 
+export const useChangeUserSession = () => {
+  const client = useDopplerLegacyClient();
+
+  return useMutation(async (idUser: number): Promise<boolean> => {
+    return await client.changeUserSession(idUser);
+  });
+};
+
 export interface DopplerLegacyClient {
   getMaxSubscribersData(): Promise<MaxSubscribersData>;
 
@@ -53,4 +61,6 @@ export interface DopplerLegacyClient {
   ): Promise<boolean>;
 
   sendAcceptButtonAction(): Promise<boolean>;
+
+  changeUserSession(idUser: number): Promise<boolean>;
 }

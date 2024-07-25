@@ -89,4 +89,16 @@ export class DopplerLegacyClientImpl implements DopplerLegacyClient {
     );
     return response.data;
   }
+
+  public async changeUserSession(idUser: number): Promise<boolean> {
+    const response = await this.axios({
+      method: "post",
+      url: "/WebAppPublic/ChangeUserSession",
+      // Hack: it is to avoid Axios automatic serialization as x-www-form-urlencoded
+      data: JSON.stringify({ idUser: idUser }),
+      // Hack: It is to avoid CORS Preflight
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+    return response.data?.success ?? false;
+  }
 }
