@@ -26,8 +26,6 @@ export class DopplerLegacyClientDummy implements DopplerLegacyClient {
   }
 
   public async changeUserSession(idUser: number): Promise<boolean> {
-    console.log(idUser);
-    console.log("Change User sesion");
     await timeout(1500);
     return true;
   }

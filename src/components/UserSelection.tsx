@@ -32,6 +32,7 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
     mutate: sendChangeUserSessionMutate,
     isSuccess,
     isLoading: isSending,
+    isError,
   } = useChangeUserSession();
 
   const handleSearchOnChange = (value: string) => {
@@ -53,8 +54,6 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
 
   if (isSuccess) {
     appSessionStateClient.restart();
-  } else {
-    //display error message
   }
 
   return (
@@ -65,6 +64,16 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
       <p>
         <FormattedMessage id={"userSelectionMenu.description"} />
       </p>
+      {isError ? (
+        <div className="dp-wrap-message dp-wrap-cancel m-b-24">
+          <span className="dp-message-icon"></span>
+          <div className="dp-content-message">
+            <FormattedMessage id={"common.unexpected_error"} />
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
       <form action="#" className="awa-form">
         <fieldset className="">
           <ul className="field-group">
