@@ -24,6 +24,11 @@ export class DopplerLegacyClientDummy implements DopplerLegacyClient {
     await timeout(1500);
     return true;
   }
+
+  public async changeUserSession(idUser: number): Promise<boolean> {
+    await timeout(1500);
+    return true;
+  }
 }
 
 const maxSubscribersData: MaxSubscribersData = {

@@ -15,5 +15,6 @@ export type DopplerSessionState =
 declare global {
   interface Window {
     dopplerSessionState: DopplerSessionState;
+    restartDopplerSessionMonitor: () => void;
   }
 }

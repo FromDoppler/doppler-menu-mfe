@@ -1,10 +1,22 @@
 import { FormattedMessage } from "react-intl";
 import { RelatedUsersData } from "../model";
 import { useState } from "react";
+import { useChangeUserSession } from "../client/dopplerLegacyClient";
+import { SessionMfeAppSessionStateClient } from "../session/SessionMfeAppSessionStateClient";
+import { AppConfiguration } from "../AppConfiguration";
+import { createDummyAppSessionStateClient } from "../session/dummyAppSessionStateClient";
 
 interface UserSelectionProps {
   data: RelatedUsersData[];
   currentUser: string;
+}
+
+function createAppSessionStateClient() {
+  const configuration: AppConfiguration =
+    (window as any)["doppler-menu-mfe-configuration"] ?? {};
+  return configuration.useDummies
+    ? createDummyAppSessionStateClient()
+    : new SessionMfeAppSessionStateClient({ window });
 }
 
 export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
@@ -13,6 +25,15 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
       return item.AccountName === currentUser ? -1 : 0;
     }),
   );
+
+  const appSessionStateClient = createAppSessionStateClient();
+
+  const {
+    mutate: sendChangeUserSessionMutate,
+    isSuccess,
+    isLoading: isSending,
+    isError,
+  } = useChangeUserSession();
 
   const handleSearchOnChange = (value: string) => {
     setUsers(
@@ -24,6 +45,17 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
     );
   };
 
+  const handleClick = (value: number) => {
+    if (isSending) {
+      return;
+    }
+    sendChangeUserSessionMutate(value);
+  };
+
+  if (isSuccess) {
+    appSessionStateClient.restart();
+  }
+
   return (
     <>
       <h2 className="modal-title">
@@ -32,6 +64,16 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
       <p>
         <FormattedMessage id={"userSelectionMenu.description"} />
       </p>
+      {isError ? (
+        <div className="dp-wrap-message dp-wrap-cancel m-b-24">
+          <span className="dp-message-icon"></span>
+          <div className="dp-content-message">
+            <FormattedMessage id={"common.unexpected_error"} />
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
       <form action="#" className="awa-form">
         <fieldset className="">
           <ul className="field-group">
@@ -90,6 +132,7 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
                         type="radio"
                         name="radio"
                         defaultChecked={user.AccountName === currentUser}
+                        onClick={() => handleClick(user.IdUser)}
                       />
                       <span></span>
                     </label>
