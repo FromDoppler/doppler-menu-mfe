@@ -19,9 +19,9 @@ export const UserMenu = ({ user }: UserMenuProps) => {
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const [openUserSelection, setOpenUserSelection] = useState(false);
   const showRelatedUsersMenu =
-    userAccount && relatedUsers && relatedUsers.length > 1;
-  const isCollaborator =
-    userAccount && userAccount.userProfileType === "COLLABORATOR";
+    userAccount &&
+    ((relatedUsers && relatedUsers.length > 1) ||
+      userAccount.userProfileType === "COLLABORATOR");
   const userMenuRef = useOnclickOutside(() => {
     setOpenUserMenu(false);
   });
@@ -43,7 +43,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         {fullname}
       </span>
       <div className={`user-menu ${openUserMenu ? "open" : ""}`}>
-        {showRelatedUsersMenu || isCollaborator ? (
+        {showRelatedUsersMenu ? (
           <header className="header-user-info">
             <Avatar
               text={avatarText}
@@ -62,17 +62,13 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                   </span>
                 </span>
               </p>
-              {showRelatedUsersMenu ? (
-                <button
-                  type="button"
-                  className="dp-button button-small primary-green dp-w-100"
-                  onClick={handleToggleModal}
-                >
-                  <FormattedMessage id="header.change_account_button" />
-                </button>
-              ) : (
-                <></>
-              )}
+              <button
+                type="button"
+                className="dp-button button-small primary-green dp-w-100"
+                onClick={handleToggleModal}
+              >
+                <FormattedMessage id="header.change_account_button" />
+              </button>
             </div>
           </header>
         ) : (
