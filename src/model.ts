@@ -59,8 +59,8 @@ export type RelatedUsersData = {
   FirstName: string;
   LastName: string;
   Type: string;
-  AvatarText: string;
-  AvatarColor: string;
+  AvatarText: string | undefined;
+  AvatarColor: string | undefined;
 };
 
 export type User = Readonly<
