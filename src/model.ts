@@ -59,6 +59,8 @@ export type RelatedUsersData = {
   FirstName: string;
   LastName: string;
   Type: string;
+  AvatarText: string;
+  AvatarColor: string;
 };
 
 export type User = Readonly<
