@@ -27,6 +27,7 @@ test("renders Doppler Menu Micro-Frontend", () => {
     getCurrentSessionState: () => appSessionState,
     onSessionUpdate: () => {},
     start: () => {},
+    restart: () => {},
   };
   const queryClient = new QueryClient();
 
