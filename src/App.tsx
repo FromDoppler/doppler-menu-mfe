@@ -3,10 +3,24 @@ import { HeaderMessages } from "./components/HeaderMessages";
 import { useLocationHref } from "./hooks/useLocationHref";
 import { useAppSessionState } from "./session/AppSessionStateContext";
 import { useNavBarState } from "./navbar-state/navbar-state-hook";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { AppSessionState } from "./session/app-session-abstractions";
+import { Modal } from "./components/Modal";
+import { UserSelection } from "./components/UserSelection";
 
 const defaultDashboardUrl = "https://app.fromdoppler.com/dashboard";
+
+interface userSelectionModal {
+  setOpenUserSelection: (value: boolean) => void;
+}
+
+const UserSelectionModalContext = createContext<userSelectionModal>({
+  setOpenUserSelection: () => {},
+});
+
+export function useUserSelectionContext() {
+  return useContext(UserSelectionModalContext);
+}
 
 function App({
   onStatusUpdate,
@@ -23,6 +37,7 @@ function App({
   });
   const [hideHeaderMessage, setHideHeaderMessage] = useState(false);
   const [hideApp, setHideApp] = useState(false);
+  const [openUserSelection, setOpenUserSelection] = useState(false);
 
   useEffect(() => {
     onStatusUpdate?.(appSessionState.status);
@@ -57,14 +72,28 @@ function App({
           <HeaderMessages alert={alert} user={user} onClose={closeAlert} />
         ) : null
       }
-      <Header
-        selectNavItem={selectNavItem}
-        unselectNavItem={unselectNavItem}
-        navBar={navBar}
-        user={user}
-        sticky={!!alert && !hideHeaderMessage}
-        dashboardUrl={dashboardUrl}
-      />
+      <UserSelectionModalContext.Provider value={{ setOpenUserSelection }}>
+        <Header
+          selectNavItem={selectNavItem}
+          unselectNavItem={unselectNavItem}
+          navBar={navBar}
+          user={user}
+          sticky={!!alert && !hideHeaderMessage}
+          dashboardUrl={dashboardUrl}
+        />
+      </UserSelectionModalContext.Provider>
+      {openUserSelection && user.relatedUsers ? (
+        <Modal
+          isOpen={openUserSelection}
+          handleClose={() => setOpenUserSelection(false)}
+          modalId="modal-all-accounts"
+        >
+          <UserSelection
+            data={user.relatedUsers}
+            currentUser={user.email}
+          ></UserSelection>
+        </Modal>
+      ) : null}
     </>
   );
 }
