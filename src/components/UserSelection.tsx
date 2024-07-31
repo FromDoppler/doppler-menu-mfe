@@ -5,6 +5,7 @@ import { useChangeUserSession } from "../client/dopplerLegacyClient";
 import { SessionMfeAppSessionStateClient } from "../session/SessionMfeAppSessionStateClient";
 import { AppConfiguration } from "../AppConfiguration";
 import { createDummyAppSessionStateClient } from "../session/dummyAppSessionStateClient";
+import { Avatar } from "./Avatar";
 
 interface UserSelectionProps {
   data: RelatedUsersData[];
@@ -114,7 +115,10 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
             return (
               <li key={user.IdUserAccount}>
                 <div className="dp-account">
-                  <span className="dp-img-account"></span>
+                  <Avatar
+                    text={user.AvatarText}
+                    backgroundColor={user.AvatarColor}
+                  />
                   <p className="dp-account-name">
                     <span>
                       <strong>{`${user.FirstName} ${user.LastName}`}</strong>

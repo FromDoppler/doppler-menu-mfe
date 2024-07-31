@@ -19,8 +19,15 @@ export const Avatar = ({
 
   const styleProps = useMemo(() => {
     let className = "user-avatar";
-    if (size === "lg") {
-      className += " user-avatar--menu";
+    switch (size) {
+      case "lg":
+        className += " user-avatar--menu";
+        break;
+      case "md":
+        className += " dp-img-account";
+        break;
+      default:
+        break;
     }
 
     return {

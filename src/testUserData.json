@@ -243,7 +243,9 @@
       "AccountName": "test@makingsense.com",
       "FirstName": "TEST",
       "LastName": "LastName",
-      "Type": "COLLABORATOR"
+      "Type": "COLLABORATOR",
+      "AvatarColor": "#F8B3B2",
+      "AvatarText": "TL"
     },
     {
       "IdUser": 456,
@@ -252,7 +254,9 @@
       "AccountName": "bseguer@makingsense.com",
       "FirstName": "Bruno",
       "LastName": "Seguer",
-      "Type": "USER"
+      "Type": "USER",
+      "AvatarColor": "#EE9C70",
+      "AvatarText": "BS"
     }
   ]
 }

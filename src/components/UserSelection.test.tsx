@@ -15,6 +15,8 @@ const relatedUsers: RelatedUsersData[] = [
     FirstName: "TEST",
     LastName: "LastName",
     Type: "COLLABORATOR",
+    AvatarText: "TL",
+    AvatarColor: "#F8B3B2",
   },
 ];
 
