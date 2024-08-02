@@ -3,7 +3,7 @@ import { RelatedUsersData } from "../model";
 import { useState } from "react";
 import { useChangeUserSession } from "../client/dopplerLegacyClient";
 import { SessionMfeAppSessionStateClient } from "../session/SessionMfeAppSessionStateClient";
-import { AppConfiguration } from "../AppConfiguration";
+import { useAppConfiguration } from "../AppConfiguration";
 import { createDummyAppSessionStateClient } from "../session/dummyAppSessionStateClient";
 import { Avatar } from "./Avatar";
 
@@ -12,10 +12,9 @@ interface UserSelectionProps {
   currentUser: string;
 }
 
-function createAppSessionStateClient() {
-  const configuration: AppConfiguration =
-    (window as any)["doppler-menu-mfe-configuration"] ?? {};
-  return configuration.useDummies
+function useCreateAppSessionStateClient() {
+  const { useDummies } = useAppConfiguration();
+  return useDummies
     ? createDummyAppSessionStateClient()
     : new SessionMfeAppSessionStateClient({ window });
 }
@@ -27,7 +26,7 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
     }),
   );
 
-  const appSessionStateClient = createAppSessionStateClient();
+  const appSessionStateClient = useCreateAppSessionStateClient();
 
   const {
     mutate: sendChangeUserSessionMutate,
