@@ -49,7 +49,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             <div className="dp-info-user">
               <p>
                 <span className="name">{fullname}</span>
-                <span className="email">{userAccount.email}</span>
+                <span className="email">{email}</span>
                 <span className="dp-account-status">
                   <span>
                     <FormattedMessage
