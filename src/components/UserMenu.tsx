@@ -4,9 +4,8 @@ import { User } from "../model";
 import { Avatar } from "./Avatar";
 import { UserPlan } from "./UserPlan";
 import { ClientManagerUserPlan } from "./ClientManagerUserPlan";
-import { Modal } from "./Modal";
 import { FormattedMessage } from "react-intl";
-import { UserSelection } from "./UserSelection";
+import { useUserSelectionContext } from "../App";
 
 interface UserMenuProps {
   user: User;
@@ -17,7 +16,6 @@ export const UserMenu = ({ user }: UserMenuProps) => {
   const { color: backgroundColor, text: avatarText } = avatar;
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
-  const [openUserSelection, setOpenUserSelection] = useState(false);
   const showRelatedUsersMenu =
     userAccount &&
     ((relatedUsers && relatedUsers.length > 1) ||
@@ -30,9 +28,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
     setOpenUserMenu((prev) => !prev);
   };
 
-  const handleToggleModal = () => {
-    setOpenUserSelection((prev) => !prev);
-  };
+  const { setOpenUserSelection } = useUserSelectionContext();
 
   return (
     <div ref={userMenuRef}>
@@ -53,7 +49,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             <div className="dp-info-user">
               <p>
                 <span className="name">{fullname}</span>
-                <span className="email">{userAccount.email}</span>
+                <span className="email">{email}</span>
                 <span className="dp-account-status">
                   <span>
                     <FormattedMessage
@@ -65,7 +61,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
               <button
                 type="button"
                 className="dp-button button-small primary-green dp-w-100"
-                onClick={handleToggleModal}
+                onClick={() => setOpenUserSelection(true)}
               >
                 <FormattedMessage id="header.change_account_button" />
               </button>
@@ -102,20 +98,6 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             </li>
           ))}
         </ul>
-        {openUserSelection && relatedUsers ? (
-          <Modal
-            isOpen={openUserSelection}
-            handleClose={() => setOpenUserSelection(false)}
-            modalId="modal-all-accounts"
-          >
-            <UserSelection
-              data={relatedUsers}
-              currentUser={email}
-            ></UserSelection>
-          </Modal>
-        ) : (
-          <></>
-        )}
       </div>
     </div>
   );
