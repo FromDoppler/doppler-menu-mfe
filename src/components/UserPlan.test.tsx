@@ -174,7 +174,7 @@ describe(UserPlan.name, () => {
     const upgradeLink = screen.getByText(buttonText);
     expect(upgradeLink).toHaveAttribute(
       "href",
-      upgradeLinkPlanUser.plan.buttonUrl,
+      upgradeLinkPlanUser.plan.buttonUrl + "?buyType=1",
     );
   });
 

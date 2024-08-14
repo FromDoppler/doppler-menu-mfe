@@ -246,7 +246,10 @@ const UpgradePlanItem = ({
         {children ? children : <FormattedMessage id="header.plan_prepaid" />}
       </p>
       {showPlanLink ? (
-        <a className="user-plan" href={buttonUrl}>
+        <a
+          className="user-plan"
+          href={`${buttonUrl}${buttonUrl.lastIndexOf("?") === -1 ? "?buyType=1" : "&buyType=1"}`}
+        >
           {buttonText}
         </a>
       ) : null}

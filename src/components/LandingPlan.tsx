@@ -25,7 +25,7 @@ export const LandingPlan = ({
             >{`${lp.packageQty} Pack de ${lp.landingsQty} landings c/u`}</span>
           ))}
       </p>
-      <a type="button" href={buttonUrl} className="user-plan">
+      <a type="button" href={`${buttonUrl}?buyType=3`} className="user-plan">
         {buttonText}
       </a>
     </div>
