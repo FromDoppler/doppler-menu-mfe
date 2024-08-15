@@ -2,21 +2,12 @@ import { FormattedMessage } from "react-intl";
 import { RelatedUsersData } from "../model";
 import { useState } from "react";
 import { useChangeUserSession } from "../client/dopplerLegacyClient";
-import { SessionMfeAppSessionStateClient } from "../session/SessionMfeAppSessionStateClient";
-import { useAppConfiguration } from "../AppConfiguration";
-import { createDummyAppSessionStateClient } from "../session/dummyAppSessionStateClient";
 import { Avatar } from "./Avatar";
+import { useAppSessionState } from "../session/AppSessionStateContext";
 
 interface UserSelectionProps {
   data: RelatedUsersData[];
   currentUser: string;
-}
-
-function useCreateAppSessionStateClient() {
-  const { useDummies } = useAppConfiguration();
-  return useDummies
-    ? createDummyAppSessionStateClient()
-    : new SessionMfeAppSessionStateClient({ window });
 }
 
 export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
@@ -26,7 +17,7 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
     }),
   );
 
-  const appSessionStateClient = useCreateAppSessionStateClient();
+  const appSessionState = useAppSessionState();
 
   const {
     mutate: sendChangeUserSessionMutate,
@@ -53,7 +44,12 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
   };
 
   if (isSuccess) {
-    appSessionStateClient.restart();
+    if (appSessionState.status === "authenticated") {
+      const dashboardNav = appSessionState.userData.navItems.filter(
+        (item) => item.idHTML === "dashboardMenu",
+      )[0];
+      window.location.href = dashboardNav.url;
+    }
   }
 
   return (
