@@ -15,7 +15,7 @@ const defaultUser: User = {
     conversationsQtyBalance: 100,
     whatsAppCreditBalance: 25.2,
     buttonText: "BUY NOW",
-    buttonUrl: "https://webappint.fromdoppler.net"
+    buttonUrl: "https://webappint.fromdoppler.net",
   },
 };
 
@@ -42,8 +42,9 @@ describe(ChatPlan.name, () => {
     screen.getByText("Premium Plan Conversations");
     screen.getByText("Available conversations");
     screen.getByText("Available for WhatsApp");
-    expect(screen.getByText(defaultUser.chat.buttonText ?? "").closest('a'))
-    .toHaveAttribute('href', defaultUser.chat.buttonUrl ?? "");
+    expect(
+      screen.getByText(defaultUser.chat.buttonText ?? "").closest("a"),
+    ).toHaveAttribute("href", defaultUser.chat.buttonUrl ?? "");
   });
 
   it("should not render chat plan details when conversationsQtyBalance isn't defined", () => {
