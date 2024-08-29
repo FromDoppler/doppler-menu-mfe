@@ -121,6 +121,8 @@ const safeChat = (data: any) =>
         conversationsQtyBalance: data?.conversationsQtyBalance,
         whatsAppCreditBalance: data?.whatsAppCreditBalance,
         wppDescription: safeString(data?.wppDescription),
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
       }
     : { active: false as const };
 
