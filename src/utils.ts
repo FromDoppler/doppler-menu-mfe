@@ -124,7 +124,14 @@ const safeChat = (data: any) =>
         buttonText: safeString(data?.buttonText),
         buttonUrl: safeString(data?.buttonUrl),
       }
-    : { active: false as const };
+    : {
+        active: false as const,
+        planName: safeString(data?.planName),
+        chatDescription: safeString(data?.chatDescription),
+        wppDescription: safeString(data?.wppDescription),
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      };
 
 const safeLandings = (data: any) => ({
   planName: safeString(data?.landings?.planName),
