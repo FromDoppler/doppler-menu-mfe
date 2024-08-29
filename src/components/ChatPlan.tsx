@@ -7,7 +7,7 @@ export const ChatPlan = ({
   wppBalance,
   wppDescription,
   buttonUrl,
-  buttonText
+  buttonText,
 }: {
   planName: string;
   chatDescription: string;
