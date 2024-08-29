@@ -265,6 +265,8 @@ describe(UserPlan.name, () => {
         wppDescription: "whats app",
         conversationsQtyBalance: 10,
         whatsAppCreditBalance: 10,
+        buttonText: "BUY NOW",
+        buttonUrl: "https://webappint.fromdoppler.net",
       },
     };
 

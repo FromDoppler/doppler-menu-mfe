@@ -14,6 +14,8 @@ const defaultUser: User = {
     wppDescription: "Available for WhatsApp",
     conversationsQtyBalance: 100,
     whatsAppCreditBalance: 25.2,
+    buttonText: "BUY NOW",
+    buttonUrl: "https://webappint.fromdoppler.net"
   },
 };
 
@@ -29,6 +31,8 @@ describe(ChatPlan.name, () => {
             chatQty={defaultUser.chat.conversationsQtyBalance}
             wppDescription={defaultUser.chat.wppDescription}
             wppBalance={defaultUser.chat.whatsAppCreditBalance}
+            buttonText={defaultUser.chat.buttonText}
+            buttonUrl={defaultUser.chat.buttonUrl}
           />
         </MenuIntlProvider>,
       );
@@ -38,6 +42,8 @@ describe(ChatPlan.name, () => {
     screen.getByText("Premium Plan Conversations");
     screen.getByText("Available conversations");
     screen.getByText("Available for WhatsApp");
+    expect(screen.getByText(defaultUser.chat.buttonText ?? "").closest('a'))
+    .toHaveAttribute('href', defaultUser.chat.buttonUrl ?? "");
   });
 
   it("should not render chat plan details when conversationsQtyBalance isn't defined", () => {
@@ -51,6 +57,8 @@ describe(ChatPlan.name, () => {
         wppDescription: "Available for WhatsApp",
         conversationsQtyBalance: undefined,
         whatsAppCreditBalance: 25.2,
+        buttonText: "BUY NOW",
+        buttonUrl: "https://webappint.fromdoppler.net",
       },
     };
 
@@ -64,6 +72,8 @@ describe(ChatPlan.name, () => {
             chatQty={chatUser.chat.conversationsQtyBalance}
             wppDescription={chatUser.chat.wppDescription}
             wppBalance={chatUser.chat.whatsAppCreditBalance}
+            buttonText={chatUser.chat.buttonText}
+            buttonUrl={chatUser.chat.buttonUrl}
           />
         </MenuIntlProvider>,
       );
@@ -85,6 +95,8 @@ describe(ChatPlan.name, () => {
         wppDescription: "Available for WhatsApp",
         conversationsQtyBalance: 100,
         whatsAppCreditBalance: undefined,
+        buttonText: "BUY NOW",
+        buttonUrl: "https://webappint.fromdoppler.net",
       },
     };
 
@@ -98,6 +110,8 @@ describe(ChatPlan.name, () => {
             chatQty={chatUser.chat.conversationsQtyBalance}
             wppDescription={chatUser.chat.wppDescription}
             wppBalance={chatUser.chat.whatsAppCreditBalance}
+            buttonText={chatUser.chat.buttonText}
+            buttonUrl={chatUser.chat.buttonUrl}
           />
         </MenuIntlProvider>,
       );

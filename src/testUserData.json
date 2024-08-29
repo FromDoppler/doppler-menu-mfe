@@ -192,7 +192,9 @@
       "chatDescription": "Available Conversations",
       "wppDescription": "Available for WhatsApp",
       "conversationsQtyBalance": 10,
-      "whatsAppCreditBalance": 25.2
+      "whatsAppCreditBalance": 25.2,
+      "buttonText": "BUY NOW",
+      "buttonUrl": "https://webappint.fromdoppler.net"
     },
     "landings": {
       "planName": "Add Ons",

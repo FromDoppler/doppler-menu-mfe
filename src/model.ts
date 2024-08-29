@@ -103,6 +103,8 @@ export type User = Readonly<
           wppDescription: string;
           conversationsQtyBalance: number | undefined;
           whatsAppCreditBalance: number | undefined;
+          buttonUrl: string;
+          buttonText: string;
         }
       | {
           active: false;
@@ -111,6 +113,8 @@ export type User = Readonly<
           wppDescription?: undefined;
           conversationsQtyBalance?: undefined;
           whatsAppCreditBalance?: undefined;
+          buttonUrl: undefined;
+          buttonText: undefined;
         }
     >;
     landings: Readonly<

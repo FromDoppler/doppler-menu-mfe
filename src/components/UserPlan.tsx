@@ -100,6 +100,8 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           chatQty={user.chat.conversationsQtyBalance}
           wppBalance={user.chat.whatsAppCreditBalance}
           wppDescription={user.chat.wppDescription}
+          buttonUrl={user.chat.buttonUrl}
+          buttonText={user.chat.buttonText}
         />
       ) : (
         <> </>
