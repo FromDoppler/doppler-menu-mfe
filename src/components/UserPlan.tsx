@@ -93,13 +93,15 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           buttonUrl={landings.buttonUrl}
         />
       )}
-      {!user.hasClientManager && user.chat.active ? (
+      {!user.hasClientManager ? (
         <ChatPlan
-          planName={user.chat.planName}
-          chatDescription={user.chat.chatDescription}
+          planName={user.chat.planName ?? ""}
+          chatDescription={user.chat.chatDescription ?? ""}
           chatQty={user.chat.conversationsQtyBalance}
           wppBalance={user.chat.whatsAppCreditBalance}
-          wppDescription={user.chat.wppDescription}
+          wppDescription={user.chat.wppDescription ?? ""}
+          buttonUrl={user.chat.buttonUrl}
+          buttonText={user.chat.buttonText}
         />
       ) : (
         <> </>

@@ -265,6 +265,8 @@ describe(UserPlan.name, () => {
         wppDescription: "whats app",
         conversationsQtyBalance: 10,
         whatsAppCreditBalance: 10,
+        buttonText: "BUY NOW",
+        buttonUrl: "https://webappint.fromdoppler.net",
       },
     };
 
@@ -278,14 +280,27 @@ describe(UserPlan.name, () => {
     screen.getByText("Premium Plan Conversations");
   });
 
-  it("should not display chat plan information when is disabled", () => {
+  it("should display chat buy link when conversation is not active", () => {
+    // Arrange
+    const chatPlanUser: User = {
+      ...defaultUser,
+      chat: {
+        active: false,
+        planName: "Premium Plan Conversations",
+        chatDescription: "chat",
+        wppDescription: "whats app",
+        buttonText: "BUY NOW",
+        buttonUrl: "https://webappint.fromdoppler.net",
+      },
+    };
+
     // Act
     render(
       <MenuIntlProvider>
-        <UserPlan user={defaultUser} />
+        <UserPlan user={chatPlanUser} />
       </MenuIntlProvider>,
     );
-    const description = screen.queryByTestId("chat-plan-test-id");
-    expect(description).not.toBeInTheDocument();
+    screen.getByTestId("chat-plan-test-id");
+    screen.getByText("Premium Plan Conversations");
   });
 });
