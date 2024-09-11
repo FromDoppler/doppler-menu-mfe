@@ -196,8 +196,6 @@ const safeAlert = (data: any): Alert => ({
 });
 
 export const safeUserData = (data: any): UserData => {
-  console.log("data safeUserData", data);
-
   return {
     navItems: data.nav?.map(safeNavItem) ?? [],
     user: safeUser(
