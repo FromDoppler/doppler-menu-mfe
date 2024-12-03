@@ -61,12 +61,12 @@ function App({
         company: {
           id: user.idUser,
           name: user.fullname,
-          userType: user.userType,	
+          userType: user.userType,
           planType: user.plan.planType,
           industry: user.industryCode,
           country: user.country,
           billingCountry: user.billingCountry,
-          integrations: user.integrations?.toString().replaceAll(",", ";")
+          integrations: user.integrations?.toString().replaceAll(",", ";"),
         },
       });
     }
