@@ -57,12 +57,17 @@ function App({
       Userpilot.identify(user.idUser, {
         fullname: user.fullname,
         email: user.email,
-        userType: user.userType,
-        planType: user.plan.planType,
-        industry: user.industryCode,
-        country: user.country,
-        billingCountry: user.billingCountry,
-        integrations: user.integrations?.toString().replaceAll(",", ";"),
+        languague: user.lang,
+        company: {
+          id: user.idUser,
+          name: user.fullname,
+          userType: user.userType,	
+          planType: user.plan.planType,
+          industry: user.industryCode,
+          country: user.country,
+          billingCountry: user.billingCountry,
+          integrations: user.integrations?.toString().replaceAll(",", ";")
+        },
       });
     }
   }, [appSessionState, userpilotInitialized]);
