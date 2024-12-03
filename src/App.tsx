@@ -7,6 +7,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { AppSessionState } from "./session/app-session-abstractions";
 import { Modal } from "./components/Modal";
 import { UserSelection } from "./components/UserSelection";
+import { Userpilot } from "userpilot";
+import { useAppConfiguration } from "./AppConfiguration";
 
 const defaultDashboardUrl = "https://app.fromdoppler.com/dashboard";
 
@@ -28,7 +30,7 @@ function App({
   onStatusUpdate?: (status: AppSessionState["status"]) => void;
 }) {
   const href = useLocationHref(window);
-
+  const AppConfiguration = useAppConfiguration();
   const appSessionState = useAppSessionState();
 
   const { navBar, selectNavItem, unselectNavItem } = useNavBarState({
@@ -38,6 +40,38 @@ function App({
   const [hideHeaderMessage, setHideHeaderMessage] = useState(false);
   const [hideApp, setHideApp] = useState(false);
   const [openUserSelection, setOpenUserSelection] = useState(false);
+  const [userpilotInitialized, setUserpilotInitialized] = useState(false);
+
+  useEffect(() => {
+    if (AppConfiguration?.userpilotToken) {
+      Userpilot.initialize(AppConfiguration.userpilotToken);
+      setUserpilotInitialized(true);
+    }
+  }, [AppConfiguration.userpilotToken]);
+
+  useEffect(() => {
+    if (userpilotInitialized && appSessionState?.status === "authenticated") {
+      const {
+        userData: { user },
+      } = appSessionState;
+      Userpilot.identify(user.idUser, {
+        fullname: user.fullname,
+        email: user.email,
+        userType: user.userType,
+        planType: user.plan.planType,
+        industry: user.industryCode,
+        country: user.country,
+        billingCountry: user.billingCountry,
+        integrations: user.integrations?.toString().replaceAll(",", ";"),
+      });
+    }
+  }, [appSessionState, userpilotInitialized]);
+
+  useEffect(() => {
+    if (userpilotInitialized && appSessionState?.status === "authenticated") {
+      Userpilot.reload();
+    }
+  }, [appSessionState.status, userpilotInitialized, href]);
 
   useEffect(() => {
     onStatusUpdate?.(appSessionState.status);
