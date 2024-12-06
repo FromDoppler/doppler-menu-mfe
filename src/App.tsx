@@ -51,6 +51,8 @@ function App({
 
   useEffect(() => {
     if (userpilotInitialized && appSessionState?.status === "authenticated") {
+      console.log("appSessionState mfe");
+      console.log({appSessionState})
       const {
         userData: { user },
       } = appSessionState;
