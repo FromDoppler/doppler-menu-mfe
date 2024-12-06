@@ -60,6 +60,9 @@ function App({
         fullname: user.userAccount
           ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
           : user.fullname,
+        firstname: user.userAccount
+          ? user.userAccount.firstName
+          : user.fullname,
         email: user.userAccount ? user.userAccount.email : user.email,
         languague: user.userAccount ? user.userAccount.language : user.lang,
         company: {
