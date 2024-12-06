@@ -33,6 +33,7 @@ export type userAccountType = Readonly<{
   lastName: string;
   idLanguage: number;
   userProfileType: string;
+  language: string;
 }>;
 
 export type Plan = Readonly<{
@@ -68,6 +69,7 @@ export type User = Readonly<
     idUser: Number;
     email: string;
     fullname: string;
+    firstname: string;
     plan: Plan;
     lang: "es" | "en";
     avatar: Readonly<{ text: string; color: string }>;

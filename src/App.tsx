@@ -57,9 +57,9 @@ function App({
         userData: { user },
       } = appSessionState;
       Userpilot.identify(user.idUser, {
-        fullname: user.fullname,
-        email: user.email,
-        languague: user.lang,
+        fullname: user.userAccount ? `${user.userAccount.firstName} ${user.userAccount.lastName}` : user.fullname,
+        email: user.userAccount ? user.userAccount.email : user.email,
+        languague: user.userAccount ? user.userAccount.language : user.lang,
         company: {
           id: user.idUser,
           name: user.fullname,
