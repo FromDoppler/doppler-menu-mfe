@@ -79,6 +79,9 @@ function App({
           spfok: user.domainStatus.isSPFEnabled,
           dmarcok: user.domainStatus.isDMARCEnabled,
           trialends: user.plan.trialExpirationDate,
+          conversationsPlan: user.chat,
+          landingsPlan: user.landings,
+          onsitePlan: user.onsite
         },
       });
     }

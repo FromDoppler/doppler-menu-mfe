@@ -139,6 +139,24 @@ export type User = Readonly<
           landingsEditorEnabled: true;
         }
     >;
+    onsite: Readonly<
+      | {
+          active: true;
+          planName: string;
+          description: string;
+          qty: number | undefined;
+          buttonUrl: string;
+          buttonText: string;
+        }
+      | {
+          active: false;
+          planName?: undefined;
+          description?: undefined;
+          qty?: undefined;
+          buttonUrl: undefined;
+          buttonText: undefined;
+        }
+    >;
     userAccount: Readonly<userAccountType> | undefined;
     relatedUsers: RelatedUsersData[] | undefined;
   } & (
