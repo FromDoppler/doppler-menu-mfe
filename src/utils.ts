@@ -99,6 +99,7 @@ const safePlan = (data: any): Plan => {
     isMonthlyByEmail: safeBoolean(data?.isMonthlyByEmail),
     isFreeAccount: safeBoolean([1, 7, "1", "7"].includes(data.planType)),
     userTypePlan: safeString(data?.userTypePlan),
+    trialExpirationDate: safeString(data?.trialExpirationDate),
   };
 };
 

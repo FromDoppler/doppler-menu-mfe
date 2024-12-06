@@ -50,6 +50,7 @@ export type Plan = Readonly<{
   isMonthlyByEmail: boolean;
   isFreeAccount: boolean;
   userTypePlan: string;
+  trialExpirationDate: String;
 }>;
 
 export type RelatedUsersData = {
