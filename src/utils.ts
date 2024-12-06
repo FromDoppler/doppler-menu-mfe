@@ -135,6 +135,24 @@ const safeChat = (data: any) =>
         buttonUrl: safeString(data?.buttonUrl),
       };
 
+const safeOnSite = (data: any) =>
+  safeBoolean(data?.active)
+    ? {
+        active: true as const,
+        planName: safeString(data?.planName),
+        description: safeString(data?.description),
+        qty: data?.qty,
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      }
+    : {
+        active: false as const,
+        planName: safeString(data?.planName),
+        description: safeString(data?.description),
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      };
+
 const safeLandings = (data: any) => ({
   planName: safeString(data?.landings?.planName),
   buttonText: safeString(data?.landings?.buttonText),
@@ -182,6 +200,9 @@ const safeUser = (data: any): User => ({
   userAccount: data.userAccount,
   relatedUsers: data.relatedUsers,
   domainStatus: safeDomainStatus(data?.domainStatus),
+  onsite: safeOnSite(data?.onSite),
+});
+
 const safeDomainStatus = (data: any): DomainStatus => {
   if (
     !data ||
