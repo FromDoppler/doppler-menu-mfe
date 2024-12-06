@@ -56,7 +56,8 @@ function App({
       const {
         userData: { user },
       } = appSessionState;
-      Userpilot.identify(user.idUser, {
+
+      const identityObj = {
         fullname: user.userAccount
           ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
           : user.fullname,
@@ -83,7 +84,12 @@ function App({
           landingsPlan: user.landings,
           onsitePlan: user.onsite,
         },
-      });
+      };
+
+      console.log("identityObj");
+      console.log({ identityObj });
+
+      Userpilot.identify(user.idUser, identityObj);
     }
   }, [appSessionState, userpilotInitialized]);
 
