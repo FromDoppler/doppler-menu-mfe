@@ -148,6 +148,7 @@ const safeUser = (data: any): User => ({
   email: safeString(data?.email),
   fullname: safeString(data?.fullname),
   firstname: safeString(data?.firstName),
+  companyName: safeString(data?.companyName),
   plan: safePlan(data?.plan),
   lang: safeLang(data?.lang),
   avatar: {
@@ -161,6 +162,7 @@ const safeUser = (data: any): User => ({
   country: safeString(data?.country),
   billingCountry: safeString(data?.billingCountry),
   integrations: data?.integrations || [],
+  utcRegisterDate: safeString(data?.utcRegisterDate),
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
   chat: safeChat(data?.chat),

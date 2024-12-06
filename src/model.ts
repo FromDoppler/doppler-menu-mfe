@@ -71,6 +71,7 @@ export type User = Readonly<
     email: string;
     fullname: string;
     firstname: string;
+    companyName: string;
     plan: Plan;
     lang: "es" | "en";
     avatar: Readonly<{ text: string; color: string }>;
@@ -81,6 +82,7 @@ export type User = Readonly<
     country: string;
     billingCountry: string;
     integrations: Array<string>;
+    utcRegisterDate: string;
     domainStatus: DomainStatus;
     sms: Readonly<
       | {
