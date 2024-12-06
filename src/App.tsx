@@ -67,13 +67,18 @@ function App({
         languague: user.userAccount ? user.userAccount.language : user.lang,
         company: {
           id: user.idUser,
-          name: user.fullname,
+          name: user.companyName,
+          createdAt: user.utcRegisterDate,
           userType: user.userType,
           planType: user.plan.planType,
           industry: user.industryCode,
           country: user.country,
           billingCountry: user.billingCountry,
           integrations: user.integrations?.toString().replaceAll(",", ";"),
+          dkimok: user.domainStatus.isDKIMEnabled,
+          spfok: user.domainStatus.isSPFEnabled,
+          dmarcok: user.domainStatus.isDMARCEnabled,
+          trialends: user.plan.trialExpirationDate,
         },
       });
     }

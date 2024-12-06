@@ -50,6 +50,7 @@ export type Plan = Readonly<{
   isMonthlyByEmail: boolean;
   isFreeAccount: boolean;
   userTypePlan: string;
+  trialExpirationDate: String;
 }>;
 
 export type RelatedUsersData = {
@@ -70,6 +71,7 @@ export type User = Readonly<
     email: string;
     fullname: string;
     firstname: string;
+    companyName: string;
     plan: Plan;
     lang: "es" | "en";
     avatar: Readonly<{ text: string; color: string }>;
@@ -80,6 +82,8 @@ export type User = Readonly<
     country: string;
     billingCountry: string;
     integrations: Array<string>;
+    utcRegisterDate: string;
+    domainStatus: DomainStatus;
     sms: Readonly<
       | {
           smsEnabled: true;
@@ -179,4 +183,10 @@ export type UserData = Readonly<{
   navItems: ReadonlyArray<PrimaryNavItem>;
   user: User;
   alert?: Alert;
+}>;
+
+export type DomainStatus = Readonly<{
+  isSPFEnabled: boolean;
+  isDKIMEnabled: boolean;
+  isDMARCEnabled: boolean;
 }>;
