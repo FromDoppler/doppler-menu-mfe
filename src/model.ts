@@ -70,6 +70,7 @@ export type User = Readonly<
     idUser: Number;
     email: string;
     fullname: string;
+    firstname: string;
     plan: Plan;
     lang: "es" | "en";
     avatar: Readonly<{ text: string; color: string }>;

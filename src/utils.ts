@@ -147,6 +147,7 @@ const safeUser = (data: any): User => ({
   idUser: mapIdUserToken(data?.jwtToken),
   email: safeString(data?.email),
   fullname: safeString(data?.fullname),
+  firstname: safeString(data?.firstName),
   plan: safePlan(data?.plan),
   lang: safeLang(data?.lang),
   avatar: {
