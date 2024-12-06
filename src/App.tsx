@@ -81,7 +81,7 @@ function App({
           trialends: user.plan.trialExpirationDate,
           conversationsPlan: user.chat,
           landingsPlan: user.landings,
-          onsitePlan: user.onsite
+          onsitePlan: user.onsite,
         },
       });
     }
