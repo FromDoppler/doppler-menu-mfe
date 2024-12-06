@@ -65,7 +65,7 @@ function App({
           ? user.userAccount.firstName
           : user.fullname,
         email: user.userAccount ? user.userAccount.email : user.email,
-        languague: user.userAccount ? user.userAccount.language : user.lang,
+        language: user.userAccount ? user.userAccount.language : user.lang,
         company: {
           id: user.idUser,
           name: user.companyName,
@@ -76,9 +76,9 @@ function App({
           country: user.country,
           billingCountry: user.billingCountry,
           integrations: user.integrations?.toString().replaceAll(",", ";"),
-          dkimok: user.domainStatus.isDKIMEnabled,
-          spfok: user.domainStatus.isSPFEnabled,
-          dmarcok: user.domainStatus.isDMARCEnabled,
+          dkimOk: user.domainStatus.isDKIMEnabled,
+          spfOk: user.domainStatus.isSPFEnabled,
+          dmarcOk: user.domainStatus.isDMARCEnabled,
           trialends: user.plan.trialExpirationDate,
           conversationsPlan: user.chat,
           landingsPlan: user.landings,
