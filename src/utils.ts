@@ -6,6 +6,7 @@ import {
   User,
   UserData,
   PlanType,
+  DomainStatus,
 } from "./model";
 import { patchWebAppUrlIfNeed } from "./temporalPatchingUtils";
 import jwt_decode from "jwt-decode";
@@ -176,7 +177,27 @@ const safeUser = (data: any): User => ({
     : { hasClientManager: false }),
   userAccount: data.userAccount,
   relatedUsers: data.relatedUsers,
-});
+  domainStatus: safeDomainStatus(data?.domainStatus),
+const safeDomainStatus = (data: any): DomainStatus => {
+  if (
+    !data ||
+    typeof data.isSPFEnabled !== "boolean" ||
+    typeof data.isDKIMEnabled !== "boolean" ||
+    typeof data.isDMARCEnabled !== "boolean"
+  ) {
+    return {
+      isSPFEnabled: false,
+      isDKIMEnabled: false,
+      isDMARCEnabled: false,
+    };
+  }
+
+  return {
+    isSPFEnabled: data.isSPFEnabled,
+    isDKIMEnabled: data.isDKIMEnabled,
+    isDMARCEnabled: data.isDMARCEnabled,
+  };
+};
 
 const safeAlert = (data: any): Alert => ({
   type: safeString(data?.type),

@@ -78,6 +78,7 @@ export type User = Readonly<
     country: string;
     billingCountry: string;
     integrations: Array<string>;
+    domainStatus: DomainStatus;
     sms: Readonly<
       | {
           smsEnabled: true;
@@ -177,4 +178,10 @@ export type UserData = Readonly<{
   navItems: ReadonlyArray<PrimaryNavItem>;
   user: User;
   alert?: Alert;
+}>;
+
+export type DomainStatus = Readonly<{
+  isSPFEnabled: boolean;
+  isDKIMEnabled: boolean;
+  isDMARCEnabled: boolean;
 }>;
