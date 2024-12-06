@@ -54,19 +54,33 @@ function App({
       const {
         userData: { user },
       } = appSessionState;
+
       Userpilot.identify(user.idUser, {
-        fullname: user.fullname,
-        email: user.email,
-        languague: user.lang,
+        fullname: user.userAccount
+          ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
+          : user.fullname,
+        firstname: user.userAccount
+          ? user.userAccount.firstName
+          : user.fullname,
+        email: user.userAccount ? user.userAccount.email : user.email,
+        language: user.userAccount ? user.userAccount.language : user.lang,
         company: {
           id: user.idUser,
-          name: user.fullname,
+          name: user.companyName,
+          createdAt: user.utcRegisterDate,
           userType: user.userType,
           planType: user.plan.planType,
           industry: user.industryCode,
           country: user.country,
           billingCountry: user.billingCountry,
           integrations: user.integrations?.toString().replaceAll(",", ";"),
+          dkimOk: user.domainStatus.isDKIMEnabled,
+          spfOk: user.domainStatus.isSPFEnabled,
+          dmarcOk: user.domainStatus.isDMARCEnabled,
+          trialends: user.plan.trialExpirationDate,
+          conversationsPlan: user.chat,
+          landingsPlan: user.landings,
+          onsitePlan: user.onsite,
         },
       });
     }
