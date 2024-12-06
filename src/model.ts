@@ -33,6 +33,7 @@ export type userAccountType = Readonly<{
   lastName: string;
   idLanguage: number;
   userProfileType: string;
+  language: string;
 }>;
 
 export type Plan = Readonly<{
