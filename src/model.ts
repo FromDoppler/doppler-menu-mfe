@@ -33,6 +33,7 @@ export type userAccountType = Readonly<{
   lastName: string;
   idLanguage: number;
   userProfileType: string;
+  language: string;
 }>;
 
 export type Plan = Readonly<{
@@ -49,6 +50,7 @@ export type Plan = Readonly<{
   isMonthlyByEmail: boolean;
   isFreeAccount: boolean;
   userTypePlan: string;
+  trialExpirationDate: String;
 }>;
 
 export type RelatedUsersData = {
@@ -68,6 +70,8 @@ export type User = Readonly<
     idUser: Number;
     email: string;
     fullname: string;
+    firstname: string;
+    companyName: string;
     plan: Plan;
     lang: "es" | "en";
     avatar: Readonly<{ text: string; color: string }>;
@@ -78,6 +82,8 @@ export type User = Readonly<
     country: string;
     billingCountry: string;
     integrations: Array<string>;
+    utcRegisterDate: string;
+    domainStatus: DomainStatus;
     sms: Readonly<
       | {
           smsEnabled: true;
@@ -133,6 +139,24 @@ export type User = Readonly<
           landingsEditorEnabled: true;
         }
     >;
+    onsite: Readonly<
+      | {
+          active: true;
+          planName: string;
+          description: string;
+          qty: number | undefined;
+          buttonUrl: string;
+          buttonText: string;
+        }
+      | {
+          active: false;
+          planName?: undefined;
+          description?: undefined;
+          qty?: undefined;
+          buttonUrl: undefined;
+          buttonText: undefined;
+        }
+    >;
     userAccount: Readonly<userAccountType> | undefined;
     relatedUsers: RelatedUsersData[] | undefined;
   } & (
@@ -177,4 +201,10 @@ export type UserData = Readonly<{
   navItems: ReadonlyArray<PrimaryNavItem>;
   user: User;
   alert?: Alert;
+}>;
+
+export type DomainStatus = Readonly<{
+  isSPFEnabled: boolean;
+  isDKIMEnabled: boolean;
+  isDMARCEnabled: boolean;
 }>;
