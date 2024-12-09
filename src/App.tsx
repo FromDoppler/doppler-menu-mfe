@@ -56,8 +56,8 @@ function App({
       } = appSessionState;
 
       const userFullName = user.userAccount
-      ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
-      : user.fullname;
+        ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
+        : user.fullname;
 
       Userpilot.identify(user.idUser, {
         name: userFullName,
