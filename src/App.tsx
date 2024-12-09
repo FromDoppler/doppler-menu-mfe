@@ -58,10 +58,10 @@ function App({
       Userpilot.identify(user.idUser, {
         fullname: user.userAccount
           ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
-          : user.firstname,
+          : user.fullname,
         firstname: user.userAccount
           ? user.userAccount.firstName
-          : user.fullname,
+          : user.firstname,
         email: user.userAccount ? user.userAccount.email : user.email,
         language: user.userAccount ? user.userAccount.language : user.lang,
         company: {
