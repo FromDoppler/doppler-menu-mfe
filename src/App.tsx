@@ -55,10 +55,13 @@ function App({
         userData: { user },
       } = appSessionState;
 
+      const userFullName = user.userAccount
+        ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
+        : user.fullname;
+
       Userpilot.identify(user.idUser, {
-        fullname: user.userAccount
-          ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
-          : user.fullname,
+        name: userFullName,
+        fullname: userFullName,
         firstname: user.userAccount
           ? user.userAccount.firstName
           : user.firstname,
