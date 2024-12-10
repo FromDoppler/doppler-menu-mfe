@@ -6,6 +6,7 @@ import {
   User,
   UserData,
   PlanType,
+  DomainStatus,
 } from "./model";
 import { patchWebAppUrlIfNeed } from "./temporalPatchingUtils";
 import jwt_decode from "jwt-decode";
@@ -98,6 +99,7 @@ const safePlan = (data: any): Plan => {
     isMonthlyByEmail: safeBoolean(data?.isMonthlyByEmail),
     isFreeAccount: safeBoolean([1, 7, "1", "7"].includes(data.planType)),
     userTypePlan: safeString(data?.userTypePlan),
+    trialExpirationDate: safeString(data?.trialExpirationDate),
   };
 };
 
@@ -133,6 +135,24 @@ const safeChat = (data: any) =>
         buttonUrl: safeString(data?.buttonUrl),
       };
 
+const safeOnSite = (data: any) =>
+  safeBoolean(data?.active)
+    ? {
+        active: true as const,
+        planName: safeString(data?.planName),
+        description: safeString(data?.description),
+        qty: data?.qty,
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      }
+    : {
+        active: false as const,
+        planName: safeString(data?.planName),
+        description: safeString(data?.description),
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      };
+
 const safeLandings = (data: any) => ({
   planName: safeString(data?.landings?.planName),
   buttonText: safeString(data?.landings?.buttonText),
@@ -145,6 +165,8 @@ const safeUser = (data: any): User => ({
   idUser: mapIdUserToken(data?.jwtToken),
   email: safeString(data?.email),
   fullname: safeString(data?.fullname),
+  firstname: safeString(data?.firstName),
+  companyName: safeString(data?.companyName),
   plan: safePlan(data?.plan),
   lang: safeLang(data?.lang),
   avatar: {
@@ -158,6 +180,7 @@ const safeUser = (data: any): User => ({
   country: safeString(data?.country),
   billingCountry: safeString(data?.billingCountry),
   integrations: data?.integrations || [],
+  utcRegisterDate: safeString(data?.utcRegisterDate),
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
   chat: safeChat(data?.chat),
@@ -176,7 +199,30 @@ const safeUser = (data: any): User => ({
     : { hasClientManager: false }),
   userAccount: data.userAccount,
   relatedUsers: data.relatedUsers,
+  domainStatus: safeDomainStatus(data?.domainStatus),
+  onsite: safeOnSite(data?.onSite),
 });
+
+const safeDomainStatus = (data: any): DomainStatus => {
+  if (
+    !data ||
+    typeof data.isSPFEnabled !== "boolean" ||
+    typeof data.isDKIMEnabled !== "boolean" ||
+    typeof data.isDMARCEnabled !== "boolean"
+  ) {
+    return {
+      isSPFEnabled: false,
+      isDKIMEnabled: false,
+      isDMARCEnabled: false,
+    };
+  }
+
+  return {
+    isSPFEnabled: data.isSPFEnabled,
+    isDKIMEnabled: data.isDKIMEnabled,
+    isDMARCEnabled: data.isDMARCEnabled,
+  };
+};
 
 const safeAlert = (data: any): Alert => ({
   type: safeString(data?.type),
