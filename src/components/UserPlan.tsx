@@ -7,6 +7,7 @@ import { UpgradePlanForm } from "./UpgradePlanForm";
 import { getProccessUrlWithAccountType } from "../utils";
 import { ChatPlan } from "./ChatPlan";
 import { LandingPlan } from "./LandingPlan";
+import { OnSitePlan } from "./OnSitePlan";
 
 interface UserPlanProps {
   user: User;
@@ -94,15 +95,24 @@ export const UserPlan = ({ user }: UserPlanProps) => {
         />
       )}
       {!user.hasClientManager ? (
-        <ChatPlan
-          planName={user.chat.planName ?? ""}
-          chatDescription={user.chat.chatDescription ?? ""}
-          chatQty={user.chat.conversationsQtyBalance}
-          wppBalance={user.chat.whatsAppCreditBalance}
-          wppDescription={user.chat.wppDescription ?? ""}
-          buttonUrl={user.chat.buttonUrl}
-          buttonText={user.chat.buttonText}
-        />
+        <>
+          <ChatPlan
+            planName={user.chat.planName ?? ""}
+            chatDescription={user.chat.chatDescription ?? ""}
+            chatQty={user.chat.conversationsQtyBalance}
+            wppBalance={user.chat.whatsAppCreditBalance}
+            wppDescription={user.chat.wppDescription ?? ""}
+            buttonUrl={user.chat.buttonUrl}
+            buttonText={user.chat.buttonText}
+          />
+          <OnSitePlan
+            planName={user.onsite.planName ?? ""}
+            description={user.onsite.description ?? ""}
+            qty={user.onsite.qty}
+            buttonUrl={user.onsite.buttonUrl}
+            buttonText={user.onsite.buttonText}
+          />
+        </>
       ) : (
         <> </>
       )}

@@ -170,6 +170,25 @@ const safeLandings = (data: any) => ({
   landingsEditorEnabled: data.landings.landingsEditorEnabled,
 });
 
+const safeOnSite = (data: any) =>
+  safeBoolean(data?.active)
+    ? {
+        active: true as const,
+        planName: safeString(data?.planName),
+        description: safeString(data?.description),
+        qty: data?.qty,
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      }
+    : {
+        active: false as const,
+        planName: safeString(data?.planName),
+        description: safeString(data?.description),
+        qty: data?.qty,
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      };
+
 const safeUser = (data: any): User => ({
   idUser: mapIdUserToken(data?.jwtToken),
   email: safeString(data?.email),
@@ -206,6 +225,7 @@ const safeUser = (data: any): User => ({
         },
       }
     : { hasClientManager: false }),
+  onsite: safeOnSite(data?.onsite),
   userAccount: data.userAccount,
   relatedUsers: data.relatedUsers,
   domainStatus: safeDomainStatus(data?.domainStatus),
