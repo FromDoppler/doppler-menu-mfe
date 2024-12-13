@@ -20,15 +20,15 @@ const defaultUser: User = {
 describe(OnSitePlan.name, () => {
   it("should render onsite plan details", () => {
     // Act
-    if (defaultUser.chat.active) {
+    if (defaultUser.onsite.active) {
       render(
         <MenuIntlProvider>
           <OnSitePlan
             planName={defaultUser.onsite.planName}
             description={defaultUser.onsite.description}
             qty={defaultUser.onsite.qty}
-            buttonText={defaultUser.chat.buttonText}
-            buttonUrl={defaultUser.chat.buttonUrl}
+            buttonText={defaultUser.onsite.buttonText}
+            buttonUrl={defaultUser.onsite.buttonUrl}
           />
         </MenuIntlProvider>,
       );
@@ -61,9 +61,9 @@ describe(OnSitePlan.name, () => {
       render(
         <MenuIntlProvider>
           <OnSitePlan
-            planName={defaultUser.onsite.planName}
-            description={defaultUser.onsite.description}
-            qty={defaultUser.onsite.qty}
+            planName={onSiteUser.onsite.planName}
+            description={onSiteUser.onsite.description}
+            qty={onSiteUser.onsite.qty}
             buttonText={onSiteUser.onsite.buttonText}
             buttonUrl={onSiteUser.onsite.buttonUrl}
           />

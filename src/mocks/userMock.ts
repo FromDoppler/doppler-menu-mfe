@@ -42,4 +42,5 @@ export const userData: User = {
   isLastPlanRequested: false,
   hasClientManager: false,
   chat: { active: false },
+  onsite: { active: false },
 };

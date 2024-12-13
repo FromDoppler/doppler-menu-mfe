@@ -1,5 +1,3 @@
-import { FormattedNumber } from "react-intl";
-
 export const OnSitePlan = ({
   planName,
   description,
@@ -14,7 +12,7 @@ export const OnSitePlan = ({
   buttonText?: string;
 }) => (
   <>
-    <div className="user-plan--type" data-testid="chat-plan-test-id">
+    <div className="user-plan--type" data-testid="onsite-plan-test-id">
       <p className="user-plan--chat-text">
         <strong>{planName}</strong>
       </p>

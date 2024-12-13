@@ -303,4 +303,52 @@ describe(UserPlan.name, () => {
     screen.getByTestId("chat-plan-test-id");
     screen.getByText("Premium Plan Conversations");
   });
+
+  it("should display onsite plan information when is enabled and user is not client manager", () => {
+    // Arrange
+    const chatPlanUser: User = {
+      ...defaultUser,
+      onsite: {
+        active: true,
+        planName: "Premium Plan Prints",
+        description: "onsite",
+        qty: 10,
+        buttonText: "BUY NOW",
+        buttonUrl: "https://webappint.fromdoppler.net",
+      },
+    };
+
+    // Act
+    render(
+      <MenuIntlProvider>
+        <UserPlan user={chatPlanUser} />
+      </MenuIntlProvider>,
+    );
+    screen.getByTestId("onsite-plan-test-id");
+    screen.getByText("Premium Plan Prints");
+  });
+
+  it("should display chat buy link when conversation is not active", () => {
+    // Arrange
+    const chatPlanUser: User = {
+      ...defaultUser,
+      onsite: {
+        active: false,
+        planName: "Premium Plan Prints",
+        description: "onsite",
+        qty: 10,
+        buttonText: "BUY NOW",
+        buttonUrl: "https://webappint.fromdoppler.net",
+      },
+    };
+
+    // Act
+    render(
+      <MenuIntlProvider>
+        <UserPlan user={chatPlanUser} />
+      </MenuIntlProvider>,
+    );
+    screen.getByTestId("onsite-plan-test-id");
+    screen.getByText("Premium Plan Prints");
+  });
 });
