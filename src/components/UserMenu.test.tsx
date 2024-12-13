@@ -45,6 +45,7 @@ const baseUser: User = {
   isLastPlanRequested: false,
   hasClientManager: false,
   chat: { active: false },
+  onsite: { active: false },
 };
 
 describe("<UserMenu />", () => {
