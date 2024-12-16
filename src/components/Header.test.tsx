@@ -44,6 +44,7 @@ const userMock: User = {
   isLastPlanRequested: false,
   hasClientManager: false,
   chat: { active: false },
+  onsite: { active: false },
 };
 
 describe(Header.name, () => {
