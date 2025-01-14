@@ -6,6 +6,7 @@ commit=""
 name=""
 version=""
 versionPre=""
+environment=""
 
 print_help () {
     echo ""
@@ -17,6 +18,7 @@ print_help () {
     echo "  -p, --package, package name (optional, default: ${pkgName})"
     echo "  -b, --cdn-base-url, CDN base URL (optional, default: ${cdnBaseUrl})"
     echo "  -c, --commit (mandatory)"
+    echo "  -e, --environment, build with this environment configuration (mandatory)"
     echo "  -n, --name, version name"
     echo "  -v, --version, version number"
     echo "  -s, --pre-version-suffix (optional, only with version)"
@@ -24,11 +26,11 @@ print_help () {
     echo "Only one of name or version parameters is required, and cannot be included together."
     echo
     echo "Examples:"
-    echo "  sh build-n-publish.sh --commit=aee25c286a7c8265e2b32ccc293f5ab0bd7a9d57 --version=v1.2.11"
-    echo "  sh build-n-publish.sh --commit=e247ba0527665eb9dd7ffbff00bb42e5073cd457 --version=v0.0.0 --pre-version-suffix=commit-e247ba0527665eb9dd7ffbff00bb42e5073cd457"
-    echo "  sh build-n-publish.sh -c=94f85efb9c3689f409104ef7cde6813652ca59fb -v=v12.34.5"
-    echo "  sh build-n-publish.sh -c=94f85efb9c3689f409104ef7cde6813652ca59fb -v=v12.34.5 -s=beta1"
-    echo "  sh build-n-publish.sh -c=94f85efb9c3689f409104ef7cde6813652ca59fb -v=v12.34.5 -s=pr123"
+    echo "  sh build-n-publish.sh --commit=aee25c286a7c8265e2b32ccc293f5ab0bd7a9d57 --version=v1.2.11 --environment=production"
+    echo "  sh build-n-publish.sh --commit=e247ba0527665eb9dd7ffbff00bb42e5073cd457 --version=v0.0.0 --pre-version-suffix=commit-e247ba0527665eb9dd7ffbff00bb42e5073cd457 --environment=production"
+    echo "  sh build-n-publish.sh -c=94f85efb9c3689f409104ef7cde6813652ca59fb -v=v12.34.5 --environment=production"
+    echo "  sh build-n-publish.sh -c=94f85efb9c3689f409104ef7cde6813652ca59fb -v=v12.34.5 -s=beta1 --environment=production"
+    echo "  sh build-n-publish.sh -c=94f85efb9c3689f409104ef7cde6813652ca59fb -v=v12.34.5 -s=pr123 --environment=production"
 }
 
 for i in "$@" ; do
@@ -41,6 +43,9 @@ case $i in
     ;;
     -c=*|--commit=*)
     commit="${i#*=}"
+    ;;
+    -e=*|--environment=*)
+    environment="${i#*=}"
     ;;
     -n=*|--name=*)
     name="${i#*=}"
@@ -77,6 +82,20 @@ then
   echo "Error: commit parameter is mandatory"
   print_help
   exit 1
+fi
+
+if [ -z "${environment}" ]
+then
+  echo "Error: environment parameter is mandatory"
+  print_help
+  exit 1
+fi
+
+if [ "${environment}" != "int" ] && [ "${environment}" != "qa" ] && [ "${environment}" != "production" ];
+then
+    echo "Error: environment parameter value should be int, qa or production"
+    print_help
+    exit 1
 fi
 
 if [ -n "${version}" ] && [ -n "${name}" ]
@@ -123,6 +142,7 @@ tag="${pkgName}-${commit}"
 docker build . \
   --tag "${tag}" \
   --build-arg public_url="${cdnBaseUrl}/${pkgName}/" \
+  --build-arg environment="${environment}" \
 
 docker run --rm \
   -v /var/lib/jenkins/.ssh:/root/.ssh:ro \

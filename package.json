@@ -13,6 +13,7 @@
     "@types/react-dom": "18.2.25",
     "axios": "1.4.0",
     "eclint": "2.8.1",
+    "env-cmd": "^10.1.0",
     "formik": "2.4.3",
     "jwt-decode": "^3.1.2",
     "prettier": "3.4.2",
@@ -29,6 +30,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:production": "env-cmd -f .env.production yarn build",
+    "build:qa": "env-cmd -f .env.qa yarn build",
+    "build:int": "env-cmd -f .env.int yarn build",
+    "build:development": "env-cmd -f .env.development yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "verify-format": "yarn prettier-check && yarn eclint-check",

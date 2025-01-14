@@ -17,6 +17,9 @@ console.log("mfe script");
 const configuration: AppConfiguration = readConfiguration(window);
 const targetElement = getTargetElement(document, configuration);
 
+console.log("mfe configuration");
+console.log(configuration);
+
 if (targetElement) {
   initialize(window, configuration, targetElement);
 } else {
@@ -70,7 +73,11 @@ function initialize(
 }
 
 function readConfiguration(window: Window): AppConfiguration {
-  return (window as any)["doppler-menu-mfe-configuration"] ?? {};
+  const baseConfig = (window as any)["doppler-menu-mfe-configuration"] ?? {};
+  return {
+    ...baseConfig,
+    userpilotTokenV2: process.env.REACT_APP_USERPILOT_TOKEN,
+  };
 }
 
 function getTargetElement(document: Document, configuration: AppConfiguration) {

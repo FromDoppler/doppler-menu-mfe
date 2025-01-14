@@ -33,7 +33,10 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build --target build .'
+                sh '''
+                  docker build --target build . \
+                    --build-arg environment=production
+                  '''
             }
         }
         stage('Publish in our CDN') {
@@ -50,7 +53,8 @@ pipeline {
                           sh build-n-publish.sh \
                             --package=${PKG_NAME} \
                             --commit=${GIT_COMMIT} \
-                            --name=pr-${CHANGE_ID}
+                            --name=pr-${CHANGE_ID} \
+                            --environment=qa \
                           '''
                     }
                 }
@@ -63,7 +67,8 @@ pipeline {
                           sh build-n-publish.sh \
                             --package=${PKG_NAME} \
                             --commit=${GIT_COMMIT} \
-                            --name=main
+                            --name=main \
+                            --environment=qa \
                           '''
                     }
                 }
@@ -76,7 +81,8 @@ pipeline {
                           sh build-n-publish.sh \
                             --package=${PKG_NAME} \
                             --commit=${GIT_COMMIT} \
-                            --name=INT
+                            --name=INT \
+                            --environment=int \
                           '''
                     }
                 }
@@ -91,7 +97,8 @@ pipeline {
                           sh build-n-publish.sh \
                             --package=${PKG_NAME} \
                             --commit=${GIT_COMMIT} \
-                            --version=${TAG_NAME}
+                            --version=${TAG_NAME} \
+                            --environment=production \
                           '''
                     }
                 }
