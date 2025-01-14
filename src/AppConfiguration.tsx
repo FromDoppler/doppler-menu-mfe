@@ -8,6 +8,7 @@ export interface AppConfiguration {
   onStatusUpdate?: (status: AppSessionState["status"]) => void;
   beamerId?: string;
   userpilotToken?: string;
+  userpilotTokenV2?: string;
 }
 
 const DopplerLegacyContext = createContext<AppConfiguration>({
