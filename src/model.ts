@@ -105,6 +105,11 @@ export type User = Readonly<
       | {
           active: true;
           planName: string;
+          planData: {
+            idChatPlan: number;
+            description: string;
+            quantity: number;
+          };
           chatDescription: string;
           wppDescription: string;
           conversationsQtyBalance: number | undefined;
