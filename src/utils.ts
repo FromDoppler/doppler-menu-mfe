@@ -119,6 +119,7 @@ const safeChat = (data: any) =>
     ? {
         active: true as const,
         planName: safeString(data?.planName),
+        planData: safeChatPlanData(data?.planData),
         chatDescription: safeString(data?.chatDescription),
         conversationsQtyBalance: data?.conversationsQtyBalance,
         whatsAppCreditBalance: data?.whatsAppCreditBalance,
@@ -134,6 +135,14 @@ const safeChat = (data: any) =>
         buttonText: safeString(data?.buttonText),
         buttonUrl: safeString(data?.buttonUrl),
       };
+
+const safeChatPlanData = (planData: any) => {
+  return {
+    idChatPlan: planData?.idPlan ?? 0,
+    description: safeString(planData?.description),
+    quantity: planData?.conversationQty ?? 0,
+  };
+};
 
 const safeOnSite = (data: any) =>
   safeBoolean(data?.active)
@@ -285,4 +294,48 @@ export const getProccessUrlWithAccountType = (
   }
 
   return newUrl;
+};
+
+export const getTotalLandingPages = (landingPacks: any) => {
+  if (!landingPacks || !Array.isArray(landingPacks)) {
+    return 0;
+  }
+
+  const isValidArray = landingPacks.every(
+    (item) =>
+      typeof item === "object" &&
+      item !== null &&
+      "landingsQty" in item &&
+      "packageQty" in item,
+  );
+
+  if (!isValidArray) {
+    return 0;
+  }
+
+  const total = landingPacks.reduce((sum, item) => {
+    return sum + item.landingsQty * item.packageQty;
+  }, 0);
+
+  return total;
+};
+
+export const getActiveAddons = (user: User): string => {
+  const addons: string[] = [];
+  if (user.chat.active) {
+    addons.push("Conversations");
+  }
+
+  if (user.onsite.active) {
+    addons.push("OnSite");
+  }
+
+  if (
+    Array.isArray(user.landings.landingPacks) &&
+    user.landings.landingPacks.length > 0
+  ) {
+    addons.push("Landings");
+  }
+
+  return addons.toString().replaceAll(",", ";");
 };

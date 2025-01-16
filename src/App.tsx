@@ -9,6 +9,7 @@ import { Modal } from "./components/Modal";
 import { UserSelection } from "./components/UserSelection";
 import { Userpilot } from "userpilot";
 import { useAppConfiguration } from "./AppConfiguration";
+import { getActiveAddons, getTotalLandingPages } from "./utils";
 
 const defaultDashboardUrl = "https://app.fromdoppler.com/dashboard";
 
@@ -69,10 +70,18 @@ function App({
           : user.firstname,
         email: user.userAccount ? user.userAccount.email : user.email,
         language: user.userAccount ? user.userAccount.language : user.lang,
+        local_code: user.userAccount
+          ? user.userAccount.language === "es"
+            ? "default"
+            : "en"
+          : user.lang === "es"
+            ? "default"
+            : "en",
         company: {
           id: user.idUser,
           name: user.companyName,
           created_at: new Date(Date.parse(user.utcRegisterDate)),
+          local_code: user.lang === "es" ? "default" : "en",
           userType: user.userType,
           planType: user.plan.planType,
           industry: user.industryCode,
@@ -83,9 +92,10 @@ function App({
           spfOk: user.domainStatus.isSPFEnabled,
           dmarcOk: user.domainStatus.isDMARCEnabled,
           trialends: user.plan.trialExpirationDate,
-          conversationsPlan: user.chat,
-          landingsPlan: user.landings,
-          onsitePlan: user.onsite,
+          addons: getActiveAddons(user),
+          conversationsQty: user.chat.active ? user.chat.planData.quantity : 0,
+          landingsQty: getTotalLandingPages(user.landings?.landingPacks),
+          onsiteQty: user.onsite.active ? user.onsite.qty : 0,
         },
       });
       console.log("Userpilot - identified");
