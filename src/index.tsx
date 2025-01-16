@@ -12,13 +12,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 patchBrowserBehaviorToInterceptLocationUpdates(window);
 
-console.log("mfe script");
-
 const configuration: AppConfiguration = readConfiguration(window);
 const targetElement = getTargetElement(document, configuration);
-
-console.log("mfe configuration");
-console.log(configuration);
 
 if (targetElement) {
   initialize(window, configuration, targetElement);
@@ -47,7 +42,6 @@ function initialize(
   configuration: AppConfiguration,
   targetElement: HTMLElement,
 ) {
-  console.log("Initializing mfe");
   const appSessionStateClient = createAppSessionStateClient(
     window,
     configuration,

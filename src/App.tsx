@@ -46,7 +46,6 @@ function App({
   useEffect(() => {
     if (AppConfiguration?.userpilotToken) {
       Userpilot.initialize(AppConfiguration.userpilotToken);
-      console.log("Userpilot - initialized");
       setUserpilotInitialized(true);
     }
   }, [AppConfiguration.userpilotToken]);
@@ -61,7 +60,6 @@ function App({
         ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
         : user.fullname;
 
-      console.log("Userpilot - identifying");
       Userpilot.identify(user.idUser, {
         name: userFullName,
         fullname: userFullName,
@@ -98,7 +96,6 @@ function App({
           onsiteQty: user.onsite.active ? user.onsite.qty : 0,
         },
       });
-      console.log("Userpilot - identified");
     }
   }, [appSessionState, userpilotInitialized]);
 
