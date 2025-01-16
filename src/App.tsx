@@ -60,6 +60,10 @@ function App({
         ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
         : user.fullname;
 
+      const userIntegrations = user.integrations
+        ?.toString()
+        .replaceAll(",", ";");
+
       Userpilot.identify(user.idUser, {
         name: userFullName,
         fullname: userFullName,
@@ -75,6 +79,11 @@ function App({
           : user.lang === "es"
             ? "default"
             : "en",
+        billingCountry: user.billingCountry,
+        integrations: userIntegrations,
+        planType: user.plan.planType,
+        userType: user.userType,
+        industry: user.industryCode,
         company: {
           id: user.idUser,
           name: user.companyName,
@@ -85,7 +94,7 @@ function App({
           industry: user.industryCode,
           country: user.country,
           billingCountry: user.billingCountry,
-          integrations: user.integrations?.toString().replaceAll(",", ";"),
+          integrations: userIntegrations,
           dkimOk: user.domainStatus.isDKIMEnabled,
           spfOk: user.domainStatus.isSPFEnabled,
           dmarcOk: user.domainStatus.isDMARCEnabled,
