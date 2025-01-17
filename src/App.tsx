@@ -102,7 +102,8 @@ function App({
           addons: getActiveAddons(user),
           conversationsQty: user.chat.active ? user.chat.planData.quantity : 0,
           landingsQty: getTotalLandingPages(user.landings?.landingPacks),
-          onsiteQty: (user.onsite.active && user.onsite.qty) ? user.onsite.qty : 0,
+          onsiteQty:
+            user.onsite.active && user.onsite.qty ? user.onsite.qty : 0,
         },
       });
     }

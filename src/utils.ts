@@ -326,7 +326,7 @@ export const getActiveAddons = (user: User): string => {
     addons.push("Conversations");
   }
 
-  if (((user.onsite.active && user.onsite.qty) ? user.onsite.qty : 0) > 0) {
+  if ((user.onsite.active && user.onsite.qty ? user.onsite.qty : 0) > 0) {
     addons.push("OnSite");
   }
 
