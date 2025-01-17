@@ -206,10 +206,10 @@ const safeUser = (data: any): User => ({
         },
       }
     : { hasClientManager: false }),
+  onsite: safeOnSite(data?.onSite),
   userAccount: data.userAccount,
   relatedUsers: data.relatedUsers,
   domainStatus: safeDomainStatus(data?.domainStatus),
-  onsite: safeOnSite(data?.onSite),
 });
 
 const safeDomainStatus = (data: any): DomainStatus => {
