@@ -296,7 +296,7 @@ export const getProccessUrlWithAccountType = (
   return newUrl;
 };
 
-export const getTotalLandingPages = (landingPacks: any) => {
+export const getTotalLandingPages = (landingPacks: any): number => {
   if (!landingPacks || !Array.isArray(landingPacks)) {
     return 0;
   }
@@ -313,7 +313,7 @@ export const getTotalLandingPages = (landingPacks: any) => {
     return 0;
   }
 
-  const total = landingPacks.reduce((sum, item) => {
+  const total = landingPacks.reduce<number>((sum, item) => {
     return sum + item.landingsQty * item.packageQty;
   }, 0);
 
@@ -322,11 +322,11 @@ export const getTotalLandingPages = (landingPacks: any) => {
 
 export const getActiveAddons = (user: User): string => {
   const addons: string[] = [];
-  if (user.chat.active) {
+  if ((user.chat.active ? user.chat.planData.quantity : 0) > 0) {
     addons.push("Conversations");
   }
 
-  if (user.onsite.active) {
+  if ((user.onsite.active && user.onsite.qty ? user.onsite.qty : 0) > 0) {
     addons.push("OnSite");
   }
 
