@@ -70,7 +70,7 @@ function readConfiguration(window: Window): AppConfiguration {
   const baseConfig = (window as any)["doppler-menu-mfe-configuration"] ?? {};
   return {
     ...baseConfig,
-    userpilotTokenV2: process.env.REACT_APP_USERPILOT_TOKEN,
+    userpilotToken: process.env.REACT_APP_USERPILOT_TOKEN,
   };
 }
 
