@@ -7,9 +7,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { AppSessionState } from "./session/app-session-abstractions";
 import { Modal } from "./components/Modal";
 import { UserSelection } from "./components/UserSelection";
-import { Userpilot } from "userpilot";
-import { useAppConfiguration } from "./AppConfiguration";
-import { getActiveAddons, getTotalLandingPages } from "./utils";
+import { useUserpilot } from "./hooks/useUserpilot";
 
 const defaultDashboardUrl = "https://app.fromdoppler.com/dashboard";
 
@@ -31,7 +29,6 @@ function App({
   onStatusUpdate?: (status: AppSessionState["status"]) => void;
 }) {
   const href = useLocationHref(window);
-  const AppConfiguration = useAppConfiguration();
   const appSessionState = useAppSessionState();
 
   const { navBar, selectNavItem, unselectNavItem } = useNavBarState({
@@ -41,79 +38,8 @@ function App({
   const [hideHeaderMessage, setHideHeaderMessage] = useState(false);
   const [hideApp, setHideApp] = useState(false);
   const [openUserSelection, setOpenUserSelection] = useState(false);
-  const [userpilotInitialized, setUserpilotInitialized] = useState(false);
 
-  useEffect(() => {
-    if (AppConfiguration?.userpilotToken) {
-      Userpilot.initialize(AppConfiguration.userpilotToken);
-      setUserpilotInitialized(true);
-    }
-  }, [AppConfiguration.userpilotToken]);
-
-  useEffect(() => {
-    if (userpilotInitialized && appSessionState?.status === "authenticated") {
-      const {
-        userData: { user },
-      } = appSessionState;
-
-      const userFullName = user.userAccount
-        ? `${user.userAccount.firstName} ${user.userAccount.lastName}`
-        : user.fullname;
-
-      const userIntegrations = user.integrations
-        ?.toString()
-        .replaceAll(",", ";");
-
-      Userpilot.identify(user.idUser, {
-        name: userFullName,
-        fullname: userFullName,
-        firstname: user.userAccount
-          ? user.userAccount.firstName
-          : user.firstname,
-        email: user.userAccount ? user.userAccount.email : user.email,
-        language: user.userAccount ? user.userAccount.language : user.lang,
-        local_code: user.userAccount
-          ? user.userAccount.language === "es"
-            ? "default"
-            : "en"
-          : user.lang === "es"
-            ? "default"
-            : "en",
-        billingCountry: user.billingCountry,
-        integrations: userIntegrations,
-        planType: user.plan.planType,
-        userType: user.userType,
-        industry: user.industryCode,
-        company: {
-          id: user.idUser,
-          name: user.companyName,
-          created_at: new Date(Date.parse(user.utcRegisterDate)),
-          local_code: user.lang === "es" ? "default" : "en",
-          userType: user.userType,
-          planType: user.plan.planType,
-          industry: user.industryCode,
-          country: user.country,
-          billingCountry: user.billingCountry,
-          integrations: userIntegrations,
-          dkimOk: user.domainStatus.isDKIMEnabled,
-          spfOk: user.domainStatus.isSPFEnabled,
-          dmarcOk: user.domainStatus.isDMARCEnabled,
-          trialends: user.plan.trialExpirationDate,
-          addons: getActiveAddons(user),
-          conversationsQty: user.chat.active ? user.chat.planData.quantity : 0,
-          landingsQty: getTotalLandingPages(user.landings?.landingPacks),
-          onsiteQty:
-            user.onsite.active && user.onsite.qty ? user.onsite.qty : 0,
-        },
-      });
-    }
-  }, [appSessionState, userpilotInitialized]);
-
-  useEffect(() => {
-    if (userpilotInitialized && appSessionState?.status === "authenticated") {
-      Userpilot.reload();
-    }
-  }, [appSessionState.status, userpilotInitialized, href]);
+  useUserpilot();
 
   useEffect(() => {
     onStatusUpdate?.(appSessionState.status);
