@@ -84,7 +84,7 @@ function App({
         planType: user.plan.planType,
         userType: user.userType,
         industry: user.industryCode,
-        created_at: user.userAccount?.utcRegisterDate 
+        created_at: user.userAccount?.utcRegisterDate
           ? new Date(Date.parse(user.userAccount.utcRegisterDate))
           : new Date(Date.parse(user.utcRegisterDate)),
         company: {
