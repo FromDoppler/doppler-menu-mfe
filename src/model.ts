@@ -34,6 +34,7 @@ export type userAccountType = Readonly<{
   idLanguage: number;
   userProfileType: string;
   language: string;
+  utcRegisterDate: string;
 }>;
 
 export type Plan = Readonly<{
