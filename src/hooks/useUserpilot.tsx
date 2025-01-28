@@ -32,7 +32,7 @@ export const useUserpilot = () => {
         ?.toString()
         .replaceAll(",", ";");
 
-      Userpilot.identify(user.idUser, {
+      Userpilot.identify(user.userAccount?.idUserAccount ?? user.idUser, {
         name: userFullName,
         fullname: userFullName,
         firstname: user.userAccount
