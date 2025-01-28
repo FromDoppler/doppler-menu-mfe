@@ -28,6 +28,7 @@ export type UserType =
   | "CM-Subscribers";
 
 export type userAccountType = Readonly<{
+  idUserAccount: Number;
   email: string;
   firstName: string;
   lastName: string;
