@@ -8,7 +8,7 @@
     "@testing-library/react": "15.0.7",
     "@testing-library/user-event": "14.6.1",
     "@types/jest": "29.5.14",
-    "@types/node": "20.17.17",
+    "@types/node": "20.17.18",
     "@types/react": "18.2.79",
     "@types/react-dom": "18.2.25",
     "axios": "1.4.0",
