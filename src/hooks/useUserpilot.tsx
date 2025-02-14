@@ -15,6 +15,7 @@ export const useUserpilot = () => {
     if (AppConfiguration?.userpilotToken) {
       Userpilot.initialize(AppConfiguration.userpilotToken);
       setUserpilotInitialized(true);
+      console.log("Userpilot initialized");
     }
   }, [AppConfiguration.userpilotToken]);
 
@@ -31,6 +32,9 @@ export const useUserpilot = () => {
       const userIntegrations = user.integrations
         ?.toString()
         .replaceAll(",", ";");
+
+      console.log("Userpilot identify");
+      console.log({ user });
 
       Userpilot.identify(user.userAccount?.idUserAccount ?? user.idUser, {
         name: userFullName,
@@ -83,6 +87,7 @@ export const useUserpilot = () => {
   useEffect(() => {
     if (userpilotInitialized && appSessionState?.status === "authenticated") {
       Userpilot.reload();
+      console.log("Userpilot reload");
     }
   }, [appSessionState.status, userpilotInitialized, href]);
 };
