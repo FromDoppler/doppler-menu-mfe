@@ -9823,9 +9823,9 @@ use-sync-external-store@^1.2.0:
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
 userpilot@^1.3.6:
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/userpilot/-/userpilot-1.3.6.tgz#0ce33b3e9f2f36187199b24b447cff77af0a87b2"
-  integrity sha512-NK/4sQTnWrpER164PkWzLdLjUc2766B4yeLdLiFDoRfyLNAc3SecLWszZH6oPlv67B+XcYzqtmzEalE86bkljw==
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/userpilot/-/userpilot-1.3.7.tgz#c3ec74a131f8b23a408ecbfa3a2c01f4e723e0c9"
+  integrity sha512-F6RiNcaYaHuWZyVLzyYBZQ4YAQzAgN4tWYyRkI0ZST/HSYwoVI6DGenNHEEqPoy28rZngVehXMyKKQ/1aRL7vQ==
   dependencies:
     "@ndhoule/includes" "^2.0.1"
     "@ndhoule/pick" "^2.0.0"
