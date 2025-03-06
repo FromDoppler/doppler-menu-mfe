@@ -27,7 +27,7 @@ export const OnSitePlan = ({
       >
         <div className="user-plan--buyContainer">
           <p>
-            <strong>{qty}</strong> {description}
+            Plan <strong>{qty}</strong> {description}
           </p>
         </div>
       </div>
