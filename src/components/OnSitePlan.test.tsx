@@ -36,7 +36,7 @@ describe(OnSitePlan.name, () => {
 
     // Assert
     screen.getByText("Premium Plan OnSite");
-    screen.getByText("Available prints");
+    screen.getByText("Plan Available prints");
     expect(
       screen.getByText(defaultUser.onsite.buttonText ?? "").closest("a"),
     ).toHaveAttribute("href", defaultUser.onsite.buttonUrl ?? "");
