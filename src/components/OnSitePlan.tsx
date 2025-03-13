@@ -19,20 +19,15 @@ export const OnSitePlan = ({
       <a type="button" href={buttonUrl} className="user-plan">
         {buttonText}
       </a>
-    </div>
-    {qty ? (
-      <div
-        className="user-plan--type"
-        data-testid="onsite-plan-description-test-id"
-      >
+      {qty ? (
         <div className="user-plan--buyContainer">
           <p>
             Plan <strong>{qty}</strong> {description}
           </p>
         </div>
-      </div>
-    ) : (
-      <></>
-    )}
+      ) : (
+        <></>
+      )}
+    </div>
   </>
 );
