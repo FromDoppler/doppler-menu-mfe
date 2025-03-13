@@ -208,7 +208,7 @@
         }
       ]
     },
-    "onsite": {
+    "onSite": {
       "active": true,
       "planName": "OnSite",
       "description": "Impresiones",
