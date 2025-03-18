@@ -42,7 +42,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
 
   return (
     <>
-      {showMyPlanMenuOption ? (
+      {(showMyPlanMenuOption && !isFreeAccount) ? (
         <div className="user-plan--type">
           <>
             <p>
