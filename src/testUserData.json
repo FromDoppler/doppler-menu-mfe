@@ -156,7 +156,10 @@
       "trialExpired": false,
       "trialExpirationDate": "2022-07-08T00:00:00",
       "trialExpirationDays": 1,
-      "planFee": 0.0
+      "planFee": 0.0,
+      "myPlanButtonText": "CONFIGURATION",
+      "myPlanButtonUrl": "https://webappint.fromdoppler.net",
+      "myPlanMenuText": "My Plan"
     },
     "lang": "en",
     "avatar": { "text": "BS", "color": "#EE9C70" },
