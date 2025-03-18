@@ -14,6 +14,9 @@ interface UserPlanProps {
 }
 
 export const UserPlan = ({ user }: UserPlanProps) => {
+  const showMyPlanMenuOption = process.env.REACT_APP_SHOW_MY_PLAN_MENU_OPTION
+    ? process.env.REACT_APP_SHOW_MY_PLAN_MENU_OPTION === "true"
+    : false;
   const { sms, plan, landings, isLastPlanRequested } = user;
 
   const {
@@ -28,6 +31,9 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     isSubscribers,
     isMonthlyByEmail,
     isFreeAccount,
+    myPlanButtonText,
+    myPlanButtonUrl,
+    myPlanMenuText,
   } = plan;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,6 +43,18 @@ export const UserPlan = ({ user }: UserPlanProps) => {
 
   return (
     <>
+      {showMyPlanMenuOption && !isFreeAccount ? (
+        <div className="user-plan--type">
+          <>
+            <p>
+              <strong>{myPlanMenuText}</strong>
+            </p>
+            <a className="user-plan" href={myPlanButtonUrl}>
+              {myPlanButtonText}
+            </a>
+          </>
+        </div>
+      ) : null}
       <div className="user-plan--type">
         {isSubscribers || isMonthlyByEmail ? (
           <UpgradePlanItem
