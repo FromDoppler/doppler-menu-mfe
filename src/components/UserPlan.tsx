@@ -14,9 +14,7 @@ interface UserPlanProps {
 }
 
 export const UserPlan = ({ user }: UserPlanProps) => {
-  const showMyPlanMenuOption = process.env.REACT_APP_SHOW_MY_PLAN_MENU_OPTION
-    ? process.env.REACT_APP_SHOW_MY_PLAN_MENU_OPTION === "true"
-    : false;
+  const showMyPlanMenuOption = process.env.REACT_APP_SHOW_MY_PLAN_MENU_OPTION === "true";
   const { sms, plan, landings, isLastPlanRequested } = user;
 
   const {
@@ -43,7 +41,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
 
   return (
     <>
-      {showMyPlanMenuOption && !isFreeAccount ? (
+      {showMyPlanMenuOption ? (
         <div className="user-plan--type">
           <>
             <p>
