@@ -14,7 +14,8 @@ interface UserPlanProps {
 }
 
 export const UserPlan = ({ user }: UserPlanProps) => {
-  const showMyPlanMenuOption = process.env.REACT_APP_SHOW_MY_PLAN_MENU_OPTION === "true";
+  const showMyPlanMenuOption =
+    process.env.REACT_APP_SHOW_MY_PLAN_MENU_OPTION === "true";
   const { sms, plan, landings, isLastPlanRequested } = user;
 
   const {
