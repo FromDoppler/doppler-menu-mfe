@@ -53,6 +53,9 @@ export type Plan = Readonly<{
   isFreeAccount: boolean;
   userTypePlan: string;
   trialExpirationDate: String;
+  myPlanButtonText: string;
+  myPlanButtonUrl: string;
+  myPlanMenuText: string;
 }>;
 
 export type RelatedUsersData = {

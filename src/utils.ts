@@ -100,6 +100,9 @@ const safePlan = (data: any): Plan => {
     isFreeAccount: safeBoolean([1, 7, "1", "7"].includes(data.planType)),
     userTypePlan: safeString(data?.userTypePlan),
     trialExpirationDate: safeString(data?.trialExpirationDate),
+    myPlanButtonText: safeString(data?.myPlanButtonText),
+    myPlanButtonUrl: safeString(data?.myPlanButtonUrl),
+    myPlanMenuText: safeString(data?.myPlanMenuText),
   };
 };
 
