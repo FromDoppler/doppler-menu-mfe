@@ -207,6 +207,14 @@
           "landingsQty": 5
         }
       ]
+    },
+    "onSite": {
+      "active": true,
+      "planName": "OnSite",
+      "description": "Impresiones",
+      "qty": "100000",
+      "buttonUrl": "https://webappint.fromdoppler.net",
+      "buttonText": "BUY NOW"
     }
   },
   "alert": {
