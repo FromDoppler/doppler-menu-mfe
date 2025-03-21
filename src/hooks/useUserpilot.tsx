@@ -39,14 +39,8 @@ export const useUserpilot = () => {
           ? user.userAccount.firstName
           : user.firstname,
         email: user.userAccount ? user.userAccount.email : user.email,
-        language: user.userAccount ? user.userAccount.language : user.lang,
-        local_code: user.userAccount
-          ? user.userAccount.language === "es"
-            ? "default"
-            : "en"
-          : user.lang === "es"
-            ? "default"
-            : "en",
+        language: user.lang,
+        locale_code: user.lang === "es" ? "default" : "en",
         billingCountry: user.billingCountry,
         integrations: userIntegrations,
         planType: user.plan.planType,
@@ -59,7 +53,7 @@ export const useUserpilot = () => {
           id: user.idUser,
           name: user.companyName,
           created_at: new Date(Date.parse(user.utcRegisterDate)),
-          local_code: user.lang === "es" ? "default" : "en",
+          locale_code: user.lang === "es" ? "default" : "en",
           userType: user.userType,
           planType: user.plan.planType,
           industry: user.industryCode,
