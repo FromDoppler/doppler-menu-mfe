@@ -47,6 +47,13 @@ export const useUserpilot = () => {
           : user.lang === "es"
             ? "default"
             : "en",
+        locale_code: user.userAccount
+          ? user.userAccount.language === "es"
+            ? "default"
+            : "en"
+          : user.lang === "es"
+            ? "default"
+            : "en",
         billingCountry: user.billingCountry,
         integrations: userIntegrations,
         planType: user.plan.planType,
@@ -60,6 +67,7 @@ export const useUserpilot = () => {
           name: user.companyName,
           created_at: new Date(Date.parse(user.utcRegisterDate)),
           local_code: user.lang === "es" ? "default" : "en",
+          locale_code: user.lang === "es" ? "default" : "en",
           userType: user.userType,
           planType: user.plan.planType,
           industry: user.industryCode,
