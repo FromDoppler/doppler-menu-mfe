@@ -7,7 +7,7 @@ import { UpgradePlanForm } from "./UpgradePlanForm";
 import { getProccessUrlWithAccountType } from "../utils";
 import { ChatPlan } from "./ChatPlan";
 import { LandingPlan } from "./LandingPlan";
-import { OnSitePlan } from "./OnSitePlan";
+import { AddOnPlan } from "./AddOnPlan";
 
 interface UserPlanProps {
   user: User;
@@ -16,6 +16,9 @@ interface UserPlanProps {
 export const UserPlan = ({ user }: UserPlanProps) => {
   const showMyPlanMenuOption =
     process.env.REACT_APP_SHOW_MY_PLAN_MENU_OPTION === "true";
+  const showBuyPushNotificationOption =
+    process.env.REACT_APP_DOPPLER_CAN_BUY_PUSHNOTIFICATION_PLAN === "true";
+
   const { sms, plan, landings, isLastPlanRequested } = user;
 
   const {
@@ -122,13 +125,22 @@ export const UserPlan = ({ user }: UserPlanProps) => {
             buttonUrl={user.chat.buttonUrl}
             buttonText={user.chat.buttonText}
           />
-          <OnSitePlan
+          <AddOnPlan
             planName={user.onsite.planName ?? ""}
             description={user.onsite.description ?? ""}
             qty={user.onsite.qty}
             buttonUrl={user.onsite.buttonUrl}
             buttonText={user.onsite.buttonText}
           />
+          {showBuyPushNotificationOption && (
+            <AddOnPlan
+              planName={user.pushNotificationPlan.planName ?? ""}
+              description={user.pushNotificationPlan.description ?? ""}
+              qty={user.pushNotificationPlan.qty}
+              buttonUrl={user.pushNotificationPlan.buttonUrl}
+              buttonText={user.pushNotificationPlan.buttonText}
+            />
+          )}
         </>
       ) : (
         <> </>

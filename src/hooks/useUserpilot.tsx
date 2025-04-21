@@ -69,6 +69,10 @@ export const useUserpilot = () => {
           landingsQty: getTotalLandingPages(user.landings?.landingPacks),
           onsiteQty:
             user.onsite.active && user.onsite.qty ? user.onsite.qty : 0,
+          pushNotificationQty:
+            user.pushNotificationPlan.active && user.pushNotificationPlan.qty
+              ? user.pushNotificationPlan.qty
+              : 0,
         },
       });
     }

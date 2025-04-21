@@ -324,7 +324,7 @@ describe(UserPlan.name, () => {
         <UserPlan user={chatPlanUser} />
       </MenuIntlProvider>,
     );
-    screen.getByTestId("onsite-plan-test-id");
+    screen.getByTestId("addon-plan-test-id");
     screen.getByText("Premium Plan Prints");
   });
 
@@ -348,7 +348,7 @@ describe(UserPlan.name, () => {
         <UserPlan user={chatPlanUser} />
       </MenuIntlProvider>,
     );
-    screen.getByTestId("onsite-plan-test-id");
+    screen.getByTestId("addon-plan-test-id");
     screen.getByText("Premium Plan Prints");
   });
 });
