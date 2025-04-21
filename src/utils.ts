@@ -165,6 +165,24 @@ const safeOnSite = (data: any) =>
         buttonUrl: safeString(data?.buttonUrl),
       };
 
+const safePushNotification = (data: any) =>
+  safeBoolean(data?.active)
+    ? {
+        active: true as const,
+        planName: safeString(data?.planName),
+        description: safeString(data?.description),
+        qty: data?.qty,
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      }
+    : {
+        active: false as const,
+        planName: safeString(data?.planName),
+        description: safeString(data?.description),
+        buttonText: safeString(data?.buttonText),
+        buttonUrl: safeString(data?.buttonUrl),
+      };
+
 const safeLandings = (data: any) => ({
   planName: safeString(data?.landings?.planName),
   buttonText: safeString(data?.landings?.buttonText),
@@ -210,6 +228,7 @@ const safeUser = (data: any): User => ({
       }
     : { hasClientManager: false }),
   onsite: safeOnSite(data?.onSite),
+  pushNotificationPlan: safePushNotification(data?.pushNotificationPlan),
   userAccount: data.userAccount,
   relatedUsers: data.relatedUsers,
   domainStatus: safeDomainStatus(data?.domainStatus),
@@ -331,6 +350,14 @@ export const getActiveAddons = (user: User): string => {
 
   if ((user.onsite.active && user.onsite.qty ? user.onsite.qty : 0) > 0) {
     addons.push("OnSite");
+  }
+
+  if (
+    (user.pushNotificationPlan.active && user.pushNotificationPlan.qty
+      ? user.pushNotificationPlan.qty
+      : 0) > 0
+  ) {
+    addons.push("PushNotification");
   }
 
   if (

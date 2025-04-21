@@ -218,6 +218,14 @@
       "qty": "100000",
       "buttonUrl": "https://webappint.fromdoppler.net",
       "buttonText": "BUY NOW"
+    },
+    "pushNotification": {
+      "active": true,
+      "planName": "PushNotification",
+      "description": "Envíos",
+      "qty": "100000",
+      "buttonUrl": "https://webappint.fromdoppler.net",
+      "buttonText": "BUY NOW"
     }
   },
   "alert": {

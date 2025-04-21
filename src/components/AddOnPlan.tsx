@@ -1,4 +1,4 @@
-export const OnSitePlan = ({
+export const AddOnPlan = ({
   planName,
   description,
   qty,
@@ -12,7 +12,7 @@ export const OnSitePlan = ({
   buttonText?: string;
 }) => (
   <>
-    <div className="user-plan--type" data-testid="onsite-plan-test-id">
+    <div className="user-plan--type" data-testid="addon-plan-test-id">
       <p className="user-plan--chat-text">
         <strong>{planName}</strong>
       </p>

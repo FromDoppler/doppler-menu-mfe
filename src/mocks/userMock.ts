@@ -43,4 +43,5 @@ export const userData: User = {
   hasClientManager: false,
   chat: { active: false },
   onsite: { active: false },
+  pushNotificationPlan: { active: false },
 };

@@ -3,7 +3,7 @@ import { MenuIntlProvider } from "./i18n/MenuIntlProvider";
 import { IntlProviderDouble } from "./i18n/DopplerIntlProvider.double-with-ids-as-values";
 import { userData } from "../mocks/userMock";
 import { User } from "../model";
-import { OnSitePlan } from "./OnSitePlan";
+import { AddOnPlan } from "./AddOnPlan";
 
 const defaultUser: User = {
   ...userData,
@@ -17,13 +17,13 @@ const defaultUser: User = {
   },
 };
 
-describe(OnSitePlan.name, () => {
+describe(AddOnPlan.name, () => {
   it("should render onsite plan details", () => {
     // Act
     if (defaultUser.onsite.active) {
       render(
         <MenuIntlProvider>
-          <OnSitePlan
+          <AddOnPlan
             planName={defaultUser.onsite.planName}
             description={defaultUser.onsite.description}
             qty={defaultUser.onsite.qty}
@@ -60,7 +60,7 @@ describe(OnSitePlan.name, () => {
     if (onSiteUser.onsite.active) {
       render(
         <MenuIntlProvider>
-          <OnSitePlan
+          <AddOnPlan
             planName={onSiteUser.onsite.planName}
             description={onSiteUser.onsite.description}
             qty={onSiteUser.onsite.qty}

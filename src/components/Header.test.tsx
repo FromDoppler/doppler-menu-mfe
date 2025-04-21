@@ -45,6 +45,7 @@ const userMock: User = {
   hasClientManager: false,
   chat: { active: false },
   onsite: { active: false },
+  pushNotificationPlan: { active: false },
 };
 
 describe(Header.name, () => {
