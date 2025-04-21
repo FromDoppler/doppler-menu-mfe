@@ -15,6 +15,14 @@ const defaultUser: User = {
     buttonText: "BUY NOW",
     buttonUrl: "https://webappint.fromdoppler.net",
   },
+  pushNotificationPlan: {
+    active: true,
+    planName: "Premium Plan Push Notification",
+    description: "Available emails",
+    qty: 100,
+    buttonText: "BUY NOW",
+    buttonUrl: "https://webappint.fromdoppler.net",
+  },
 };
 
 describe(AddOnPlan.name, () => {
@@ -66,6 +74,64 @@ describe(AddOnPlan.name, () => {
             qty={onSiteUser.onsite.qty}
             buttonText={onSiteUser.onsite.buttonText}
             buttonUrl={onSiteUser.onsite.buttonUrl}
+          />
+        </MenuIntlProvider>,
+      );
+    }
+
+    // Assert
+    const description = screen.queryByTestId("onsite-plan-description-test-id");
+    expect(description).not.toBeInTheDocument();
+  });
+
+  it("should render push notification plan details", () => {
+    // Act
+    if (defaultUser.pushNotificationPlan.active) {
+      render(
+        <MenuIntlProvider>
+          <AddOnPlan
+            planName={defaultUser.pushNotificationPlan.planName}
+            description={defaultUser.pushNotificationPlan.description}
+            qty={defaultUser.pushNotificationPlan.qty}
+            buttonText={defaultUser.pushNotificationPlan.buttonText}
+            buttonUrl={defaultUser.pushNotificationPlan.buttonUrl}
+          />
+        </MenuIntlProvider>,
+      );
+    }
+
+    // Assert
+    screen.getByText("Premium Plan Push Notification");
+    screen.getByText("Plan Available emails");
+    expect(
+      screen.getByText(defaultUser.onsite.buttonText ?? "").closest("a"),
+    ).toHaveAttribute("href", defaultUser.onsite.buttonUrl ?? "");
+  });
+
+  it("should not render push notification plan details when qty isn't defined", () => {
+    //Arrenge
+    const pushNotificationUser: User = {
+      ...defaultUser,
+      pushNotificationPlan: {
+        active: true,
+        planName: "Premium Plan Push Notification",
+        description: "Available emails",
+        qty: undefined,
+        buttonText: "BUY NOW",
+        buttonUrl: "https://webappint.fromdoppler.net",
+      },
+    };
+
+    // Act
+    if (pushNotificationUser.pushNotificationPlan.active) {
+      render(
+        <MenuIntlProvider>
+          <AddOnPlan
+            planName={pushNotificationUser.pushNotificationPlan.planName}
+            description={pushNotificationUser.pushNotificationPlan.description}
+            qty={pushNotificationUser.pushNotificationPlan.qty}
+            buttonText={pushNotificationUser.pushNotificationPlan.buttonText}
+            buttonUrl={pushNotificationUser.pushNotificationPlan.buttonUrl}
           />
         </MenuIntlProvider>,
       );
