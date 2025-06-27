@@ -9932,9 +9932,9 @@ use-sync-external-store@^1.2.0:
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
 
 userpilot@^1.3.6:
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/userpilot/-/userpilot-1.3.6.tgz#0ce33b3e9f2f36187199b24b447cff77af0a87b2"
-  integrity sha512-NK/4sQTnWrpER164PkWzLdLjUc2766B4yeLdLiFDoRfyLNAc3SecLWszZH6oPlv67B+XcYzqtmzEalE86bkljw==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/userpilot/-/userpilot-1.4.1.tgz#688b8455b0b95365e59e1f6cdcf789aec382f420"
+  integrity sha512-I6tYwPCbOAhqZsdIDWmOdxHKtDvxnCLa1cIO4Lcy/qZG1kXhTiHYaoHA58xpbh6I1wmkOn3hbkIs71f+/JRvWg==
   dependencies:
     "@ndhoule/includes" "^2.0.1"
     "@ndhoule/pick" "^2.0.0"
