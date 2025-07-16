@@ -57,95 +57,98 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           </>
         </div>
       ) : null}
-      <div className="user-plan--type">
-        {isSubscribers || isMonthlyByEmail ? (
-          <UpgradePlanItem
-            showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
-            buttonUrl={getProccessUrlWithAccountType(
-              plan.buttonUrl,
-              isFreeAccount,
-            )}
-            buttonText={plan.buttonText}
-          >
-            <strong>{planName}</strong> ({maxSubscribers} {itemDescription})
-          </UpgradePlanItem>
-        ) : (
-          <UpgradePlanItem
-            showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
-            buttonUrl={getProccessUrlWithAccountType(
-              plan.buttonUrl,
-              isFreeAccount,
-            )}
-            buttonText={plan.buttonText}
-          />
-        )}
-        {!buttonUrl || pendingFreeUpgrade ? (
-          <UpdatePlanButton
-            showTips={isLastPlanRequested}
-            click={openModalHandler}
-            text={plan.buttonText}
-          />
-        ) : null}
-      </div>
-      <div className="user-plan--type">
-        <CurrentPlanCredits
-          planType={planType}
-          remainingCredits={remainingCredits}
-          credits={maxSubscribers}
-          description={description}
-        />
-        {sms.smsEnabled ? (
-          <RechargeSMSPlanCredits
-            buttonText={sms.buttonText}
-            buttonUrl={getProccessUrlWithAccountType(
-              sms.buttonUrl,
-              isFreeAccount,
-            )}
-            description={sms.description}
-            remainingCredits={sms.remainingCredits}
-          />
-        ) : null}
-      </div>
-      {landings?.landingsEditorEnabled && !isFreeAccount && (
-        <LandingPlan
-          planName={landings?.planName}
-          landingPacks={landings.landingPacks}
-          buttonText={landings.buttonText}
-          buttonUrl={landings.buttonUrl}
-        />
-      )}
-      {!user.hasClientManager ? (
+      {(!showMyPlanMenuOption || isFreeAccount) && (
         <>
-          <ChatPlan
-            planName={user.chat.planName ?? ""}
-            chatDescription={user.chat.chatDescription ?? ""}
-            chatQty={user.chat.conversationsQtyBalance}
-            wppBalance={user.chat.whatsAppCreditBalance}
-            wppDescription={user.chat.wppDescription ?? ""}
-            buttonUrl={user.chat.buttonUrl}
-            buttonText={user.chat.buttonText}
-          />
-          <AddOnPlan
-            planName={user.onsite.planName ?? ""}
-            description={user.onsite.description ?? ""}
-            qty={user.onsite.qty}
-            buttonUrl={user.onsite.buttonUrl}
-            buttonText={user.onsite.buttonText}
-          />
-          {showBuyPushNotificationOption && (
-            <AddOnPlan
-              planName={user.pushNotificationPlan.planName ?? ""}
-              description={user.pushNotificationPlan.description ?? ""}
-              qty={user.pushNotificationPlan.qty}
-              buttonUrl={user.pushNotificationPlan.buttonUrl}
-              buttonText={user.pushNotificationPlan.buttonText}
+          <div className="user-plan--type">
+            {isSubscribers || isMonthlyByEmail ? (
+              <UpgradePlanItem
+                showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
+                buttonUrl={getProccessUrlWithAccountType(
+                  plan.buttonUrl,
+                  isFreeAccount,
+                )}
+                buttonText={plan.buttonText}
+              >
+                <strong>{planName}</strong> ({maxSubscribers} {itemDescription})
+              </UpgradePlanItem>
+            ) : (
+              <UpgradePlanItem
+                showPlanLink={!!buttonUrl && !pendingFreeUpgrade}
+                buttonUrl={getProccessUrlWithAccountType(
+                  plan.buttonUrl,
+                  isFreeAccount,
+                )}
+                buttonText={plan.buttonText}
+              />
+            )}
+            {!buttonUrl || pendingFreeUpgrade ? (
+              <UpdatePlanButton
+                showTips={isLastPlanRequested}
+                click={openModalHandler}
+                text={plan.buttonText}
+              />
+            ) : null}
+          </div>
+          <div className="user-plan--type">
+            <CurrentPlanCredits
+              planType={planType}
+              remainingCredits={remainingCredits}
+              credits={maxSubscribers}
+              description={description}
+            />
+            {sms.smsEnabled ? (
+              <RechargeSMSPlanCredits
+                buttonText={sms.buttonText}
+                buttonUrl={getProccessUrlWithAccountType(
+                  sms.buttonUrl,
+                  isFreeAccount,
+                )}
+                description={sms.description}
+                remainingCredits={sms.remainingCredits}
+              />
+            ) : null}
+          </div>
+          {landings?.landingsEditorEnabled && !isFreeAccount && (
+            <LandingPlan
+              planName={landings?.planName}
+              landingPacks={landings.landingPacks}
+              buttonText={landings.buttonText}
+              buttonUrl={landings.buttonUrl}
             />
           )}
+          {!user.hasClientManager ? (
+            <>
+              <ChatPlan
+                planName={user.chat.planName ?? ""}
+                chatDescription={user.chat.chatDescription ?? ""}
+                chatQty={user.chat.conversationsQtyBalance}
+                wppBalance={user.chat.whatsAppCreditBalance}
+                wppDescription={user.chat.wppDescription ?? ""}
+                buttonUrl={user.chat.buttonUrl}
+                buttonText={user.chat.buttonText}
+              />
+              <AddOnPlan
+                planName={user.onsite.planName ?? ""}
+                description={user.onsite.description ?? ""}
+                qty={user.onsite.qty}
+                buttonUrl={user.onsite.buttonUrl}
+                buttonText={user.onsite.buttonText}
+              />
+              {showBuyPushNotificationOption && (
+                <AddOnPlan
+                  planName={user.pushNotificationPlan.planName ?? ""}
+                  description={user.pushNotificationPlan.description ?? ""}
+                  qty={user.pushNotificationPlan.qty}
+                  buttonUrl={user.pushNotificationPlan.buttonUrl}
+                  buttonText={user.pushNotificationPlan.buttonText}
+                />
+              )}
+            </>
+          ) : (
+            <> </>
+          )}
         </>
-      ) : (
-        <> </>
       )}
-
       <Modal
         isOpen={isModalOpen}
         handleClose={() => setIsModalOpen(false)}
