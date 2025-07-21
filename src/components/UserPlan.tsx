@@ -45,7 +45,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
 
   return (
     <>
-      {showMyPlanMenuOption && !isFreeAccount ? (
+      {showMyPlanMenuOption ? (
         <div className="user-plan--type">
           <>
             <p>
@@ -57,7 +57,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           </>
         </div>
       ) : null}
-      {(!showMyPlanMenuOption || isFreeAccount) && (
+      {!showMyPlanMenuOption && (
         <>
           <div className="user-plan--type">
             {isSubscribers || isMonthlyByEmail ? (
