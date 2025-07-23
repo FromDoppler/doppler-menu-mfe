@@ -84,6 +84,7 @@ export type User = Readonly<
     userType: UserType;
     idIndustry: Number;
     industryCode: string;
+    industry: string;
     country: string;
     billingCountry: string;
     integrations: Array<string>;
