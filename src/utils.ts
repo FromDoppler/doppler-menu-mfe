@@ -207,6 +207,7 @@ const safeUser = (data: any): User => ({
   userType: data?.userType,
   idIndustry: safeNumber(data?.idIndustry),
   industryCode: safeString(data?.industryCode),
+  industry: safeString(data?.industry),
   country: safeString(data?.country),
   billingCountry: safeString(data?.billingCountry),
   integrations: data?.integrations || [],
