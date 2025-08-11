@@ -82,15 +82,17 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             </div>
           </header>
         )}
-        <div className="user-plan--container">
-          {user.hasClientManager ? (
+
+        {user.hasClientManager ? (
+          <div className="user-plan--container">
             <ClientManagerUserPlan
               profileName={user.clientManager.profileName}
             />
-          ) : (
-            <UserPlan user={user} />
-          )}
-        </div>
+          </div>
+        ) : (
+          <UserPlan user={user} />
+        )}
+
         <ul className="options-user">
           {navItems.map((item, index) => (
             <li key={index}>
