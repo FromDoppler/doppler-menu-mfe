@@ -33,7 +33,6 @@ export const UserPlan = ({ user }: UserPlanProps) => {
     isSubscribers,
     isMonthlyByEmail,
     isFreeAccount,
-    myPlanButtonText,
     myPlanButtonUrl,
     myPlanMenuText,
   } = plan;
@@ -46,19 +45,16 @@ export const UserPlan = ({ user }: UserPlanProps) => {
   return (
     <>
       {showMyPlanMenuOption ? (
-        <div className="user-plan--type">
-          <>
-            <p>
-              <strong>{myPlanMenuText}</strong>
-            </p>
+        <ul className="options-user">
+          <li>
             <a className="user-plan" href={myPlanButtonUrl}>
-              {myPlanButtonText}
+              {myPlanMenuText}
             </a>
-          </>
-        </div>
+          </li>
+        </ul>
       ) : null}
       {!showMyPlanMenuOption && (
-        <>
+        <div className="user-plan--container">
           <div className="user-plan--type">
             {isSubscribers || isMonthlyByEmail ? (
               <UpgradePlanItem
@@ -147,7 +143,7 @@ export const UserPlan = ({ user }: UserPlanProps) => {
           ) : (
             <> </>
           )}
-        </>
+        </div>
       )}
       <Modal
         isOpen={isModalOpen}
