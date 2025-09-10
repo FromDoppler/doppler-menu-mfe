@@ -24,7 +24,7 @@ export const Notifications = ({ user }: NotificationProp) => {
   const { beamerId } = useAppConfiguration();
 
   useEffect(() => {
-    if (beamerId) {
+    if (beamerId && user?.email) {
       // Title: How to Install Beamer on your Website or App
       // Date: Apr 17, 2018 · Last updated on Nov 03, 2022
       // Availability: https://www.getbeamer.com/blog/tutorial-how-to-use-beamer-in-your-website-or-app
