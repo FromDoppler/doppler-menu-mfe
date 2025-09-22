@@ -39,6 +39,7 @@ export const useUserpilot = () => {
           ? user.userAccount.firstName
           : user.firstname,
         email: user.userAccount ? user.userAccount.email : user.email,
+        phone: user.userAccount ? user.userAccount.phone : null,
         language: user.lang,
         locale_code: user.lang === "es" ? "default" : "en",
         billingCountry: user.billingCountry,

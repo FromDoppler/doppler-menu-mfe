@@ -30,6 +30,7 @@ export type UserType =
 export type userAccountType = Readonly<{
   idUserAccount: Number;
   email: string;
+  phone?: string;
   firstName: string;
   lastName: string;
   idLanguage: number;
