@@ -189,7 +189,7 @@ export type User = Readonly<
     >;
     userAccount: Readonly<userAccountType> | undefined;
     relatedUsers: RelatedUsersData[] | undefined;
-    automations: Automation
+    automations: Automation;
   } & (
     | {
         hasClientManager: true;
