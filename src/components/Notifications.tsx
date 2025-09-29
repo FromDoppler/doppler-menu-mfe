@@ -32,6 +32,7 @@ export const Notifications = ({ user }: NotificationProp) => {
         ...BEAMER_CONFIG,
         user_firstname: user.fullname,
         user_email: user.email,
+        phone: user.userAccount ? user.userAccount.phone : null,
         language: user.lang,
         user_id: user.email,
         contact_info_country: user.country,
