@@ -39,6 +39,7 @@ export const useUserpilot = () => {
           ? user.userAccount.firstName
           : user.firstname,
         email: user.userAccount ? user.userAccount.email : user.email,
+        phone: user.userAccount ? user.userAccount.phone : null,
         language: user.lang,
         locale_code: user.lang === "es" ? "default" : "en",
         billingCountry: user.billingCountry,
@@ -73,6 +74,7 @@ export const useUserpilot = () => {
             user.pushNotificationPlan.active && user.pushNotificationPlan.qty
               ? user.pushNotificationPlan.qty
               : 0,
+          automation: user.automations.tasks.length > 0 ? true : false,
         },
       });
     }

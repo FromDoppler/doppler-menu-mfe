@@ -32,6 +32,7 @@ export const Notifications = ({ user }: NotificationProp) => {
         ...BEAMER_CONFIG,
         user_firstname: user.fullname,
         user_email: user.email,
+        phone: user.userAccount ? user.userAccount.phone : null,
         language: user.lang,
         user_id: user.email,
         contact_info_country: user.country,
@@ -41,6 +42,7 @@ export const Notifications = ({ user }: NotificationProp) => {
         user_type: user.userType,
         integrations: user?.integrations?.toString().replaceAll(",", ";"),
         plan_type: user.plan?.userTypePlan,
+        automation: user.automations.tasks.length > 0 ? true : false,
       });
     }
   }, [user, beamerId]);
