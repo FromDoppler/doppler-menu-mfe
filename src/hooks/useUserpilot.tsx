@@ -74,7 +74,7 @@ export const useUserpilot = () => {
             user.pushNotificationPlan.active && user.pushNotificationPlan.qty
               ? user.pushNotificationPlan.qty
               : 0,
-          automation: user.automations.tasks.length > 0 ? true : false,
+          automation: user.hasAutomation ?? false,
         },
       });
     }

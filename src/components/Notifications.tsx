@@ -42,7 +42,7 @@ export const Notifications = ({ user }: NotificationProp) => {
         user_type: user.userType,
         integrations: user?.integrations?.toString().replaceAll(",", ";"),
         plan_type: user.plan?.userTypePlan,
-        automation: user.automations.tasks.length > 0 ? true : false,
+        automation: user.hasAutomation ?? false,
       });
     }
   }, [user, beamerId]);

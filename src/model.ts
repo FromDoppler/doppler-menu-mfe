@@ -190,6 +190,7 @@ export type User = Readonly<
     userAccount: Readonly<userAccountType> | undefined;
     relatedUsers: RelatedUsersData[] | undefined;
     automations: Automation;
+    hasAutomation?: boolean;
   } & (
     | {
         hasClientManager: true;
