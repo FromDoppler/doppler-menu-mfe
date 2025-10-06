@@ -189,7 +189,6 @@ export type User = Readonly<
     >;
     userAccount: Readonly<userAccountType> | undefined;
     relatedUsers: RelatedUsersData[] | undefined;
-    automations: Automation;
     hasAutomation?: boolean;
   } & (
     | {
@@ -239,14 +238,4 @@ export type DomainStatus = Readonly<{
   isSPFEnabled: boolean;
   isDKIMEnabled: boolean;
   isDMARCEnabled: boolean;
-}>;
-
-export type Automation = Readonly<{
-  tasks: ReadonlyArray<Task>;
-}>;
-
-export type Task = Readonly<{
-  name: string;
-  isActive: boolean;
-  status: number;
 }>;

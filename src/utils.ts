@@ -7,7 +7,6 @@ import {
   UserData,
   PlanType,
   DomainStatus,
-  Automation,
 } from "./model";
 import { patchWebAppUrlIfNeed } from "./temporalPatchingUtils";
 import jwt_decode from "jwt-decode";
@@ -234,7 +233,7 @@ const safeUser = (data: any): User => ({
   userAccount: data.userAccount,
   relatedUsers: data.relatedUsers,
   domainStatus: safeDomainStatus(data?.domainStatus),
-  automations: safeAutomation(data?.automations),
+  hasAutomation: data?.hasAutomation,
 });
 
 const safeDomainStatus = (data: any): DomainStatus => {
@@ -371,10 +370,4 @@ export const getActiveAddons = (user: User): string => {
   }
 
   return addons.toString().replaceAll(",", ";");
-};
-
-const safeAutomation = (data: any): Automation => {
-  return {
-    tasks: data?.tasks || [],
-  };
 };
