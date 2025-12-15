@@ -75,6 +75,15 @@ export const useUserpilot = () => {
               ? user.pushNotificationPlan.qty
               : 0,
           automation: user.hasAutomation ?? false,
+          origin: user.origin,
+          originCookie: user.originCookie,
+          originInbound: user.originInbound,
+          utmCampaign: user.utmCampaign,
+          utmContent: user.utmContent,
+          utmCookies: user.utmCookies,
+          utmMedium: user.utmMedium,
+          utmSource: user.utmSource,
+          utmTerm: user.utmTerm,
         },
       });
     }

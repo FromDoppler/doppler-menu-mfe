@@ -190,6 +190,15 @@ export type User = Readonly<
     userAccount: Readonly<userAccountType> | undefined;
     relatedUsers: RelatedUsersData[] | undefined;
     hasAutomation?: boolean;
+    origin: string;
+    originCookie: string;
+    originInbound: string;
+    utmCampaign: string;
+    utmContent: string;
+    utmCookies: string;
+    utmMedium: string;
+    utmSource: string;
+    utmTerm: string;
   } & (
     | {
         hasClientManager: true;
