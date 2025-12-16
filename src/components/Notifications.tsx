@@ -43,6 +43,15 @@ export const Notifications = ({ user }: NotificationProp) => {
         integrations: user?.integrations?.toString().replaceAll(",", ";"),
         plan_type: user.plan?.userTypePlan,
         automation: user.hasAutomation ?? false,
+        origin: user.origin,
+        originCookie: user.originCookie,
+        originInbound: user.originInbound,
+        utmCampaign: user.utmCampaign,
+        utmContent: user.utmContent,
+        utmCookies: user.utmCookies,
+        utmMedium: user.utmMedium,
+        utmSource: user.utmSource,
+        utmTerm: user.utmTerm,
       });
     }
   }, [user, beamerId]);
