@@ -234,6 +234,15 @@ const safeUser = (data: any): User => ({
   relatedUsers: data.relatedUsers,
   domainStatus: safeDomainStatus(data?.domainStatus),
   hasAutomation: data?.hasAutomation,
+  origin: safeString(data?.origin),
+  originCookie: safeString(data?.originCookie),
+  originInbound: safeString(data?.originInbound),
+  utmCampaign: safeString(data?.utmCampaign),
+  utmContent: safeString(data?.utmContent),
+  utmCookies: safeString(data?.utmCookies),
+  utmMedium: safeString(data?.utmMedium),
+  utmSource: safeString(data?.utmSource),
+  utmTerm: safeString(data?.utmTerm),
 });
 
 const safeDomainStatus = (data: any): DomainStatus => {
