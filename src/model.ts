@@ -199,6 +199,7 @@ export type User = Readonly<
     utmMedium: string;
     utmSource: string;
     utmTerm: string;
+    surveyFormCompleted: boolean;
   } & (
     | {
         hasClientManager: true;

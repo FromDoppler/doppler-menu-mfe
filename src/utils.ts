@@ -243,6 +243,7 @@ const safeUser = (data: any): User => ({
   utmMedium: safeString(data?.utmMedium),
   utmSource: safeString(data?.utmSource),
   utmTerm: safeString(data?.utmTerm),
+  surveyFormCompleted: safeBoolean(data?.surveyFormCompleted),
 });
 
 const safeDomainStatus = (data: any): DomainStatus => {
