@@ -200,6 +200,7 @@ export type User = Readonly<
     utmSource: string;
     utmTerm: string;
     surveyFormCompleted: boolean;
+    customOnboardingCompleted: boolean;
   } & (
     | {
         hasClientManager: true;

@@ -53,6 +53,7 @@ export const Notifications = ({ user }: NotificationProp) => {
         utmSource: user.utmSource,
         utmTerm: user.utmTerm,
         surveyFormCompleted: user.surveyFormCompleted ?? false,
+        customOnboardingCompleted: user.customOnboardingCompleted ?? false,
       });
     }
   }, [user, beamerId]);
