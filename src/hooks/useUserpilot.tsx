@@ -84,6 +84,8 @@ export const useUserpilot = () => {
           utmMedium: user.utmMedium,
           utmSource: user.utmSource,
           utmTerm: user.utmTerm,
+          surveyFormCompleted: user.surveyFormCompleted ?? false,
+          customOnboardingCompleted: user.customOnboardingCompleted ?? false,
         },
       });
     }
