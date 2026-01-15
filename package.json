@@ -16,7 +16,7 @@
     "env-cmd": "^10.1.0",
     "formik": "2.4.3",
     "jwt-decode": "^3.1.2",
-    "prettier": "3.7.4",
+    "prettier": "3.8.0",
     "react": "18.2.0",
     "react-beamer": "^1.1.0",
     "react-cool-onclickoutside": "1.7.0",
