@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { beamerInitialize } from "react-beamer";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { User } from "../model";
 import { defaultLanguage } from "./i18n/MenuIntlProvider";
 import { useAppConfiguration } from "../AppConfiguration";
@@ -22,6 +22,33 @@ interface NotificationProp {
 
 export const Notifications = ({ user }: NotificationProp) => {
   const { beamerId } = useAppConfiguration();
+  const notificationRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const host = notificationRef.current;
+    if (!host) {
+      return;
+    }
+
+    const reveal = () => {
+      const badge = host.querySelector<HTMLElement>(".beamer_icon");
+      const count = parseInt(badge?.textContent?.trim() ?? "", 10);
+      if (badge && count > 0) {
+        badge.style.display = "";
+      }
+    };
+
+    reveal();
+    const observer = new MutationObserver(reveal);
+    observer.observe(host, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ["style"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (beamerId && user?.email) {
@@ -60,7 +87,10 @@ export const Notifications = ({ user }: NotificationProp) => {
 
   return (
     <li>
-      <span className="user-menu--open active iconapp-notification beamer-icon">
+      <span
+        ref={notificationRef}
+        className="user-menu--open active iconapp-notification beamer-icon"
+      >
         <FormattedMessage id="header.user_notifications" />
       </span>
     </li>
