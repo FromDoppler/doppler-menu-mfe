@@ -60,7 +60,10 @@ pipeline {
                 }
                 stage('Publish pre-release packages from main') {
                     when {
-                        branch 'main'
+                        anyOf {
+                            branch 'main'
+                            branch 'TEST'
+                        }
                     }
                     steps {
                         sh '''
