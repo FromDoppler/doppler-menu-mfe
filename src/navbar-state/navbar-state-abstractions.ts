@@ -18,8 +18,7 @@ export type PrimaryNavItemState = Omit<PrimaryNavItem, "subNavItems"> &
      * It should be the last primaryNavItem that was hovered. */
     isSelected: boolean;
     subNavItems:
-      | Readonly<[SecondaryNavItemState, ...SecondaryNavItemState[]]>
-      | undefined;
+      Readonly<[SecondaryNavItemState, ...SecondaryNavItemState[]]> | undefined;
   }>;
 
 export type NavBarState = Readonly<{

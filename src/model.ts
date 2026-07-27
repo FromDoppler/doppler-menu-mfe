@@ -12,11 +12,7 @@ export type PrimaryNavItem = Readonly<{
 }>;
 
 export type PlanType =
-  | "monthly-deliveries"
-  | "prepaid"
-  | "contacts"
-  | "agencies"
-  | "free";
+  "monthly-deliveries" | "prepaid" | "contacts" | "agencies" | "free";
 
 export type UserType =
   | "Free"

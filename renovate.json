@@ -14,6 +14,10 @@
   "platformAutomerge": true,
   "packageRules": [
     {
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
       "packageRules": [
         {
           "matchDepTypes": ["devDependencies"],
