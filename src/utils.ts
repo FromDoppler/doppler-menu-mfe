@@ -192,12 +192,12 @@ const safeLandings = (data: any) => ({
   landingsEditorEnabled: data.landings.landingsEditorEnabled,
 });
 
-const COLLABORATOR_SECTIONS = {
+const COLLABORATOR_SECTIONS: Record<string, CollaboratorSection> = {
   controlPanel: {
     idSection: 4,
     name: "ControlPanel",
   },
-} as const satisfies Record<string, CollaboratorSection>;
+};
 
 const isCollaboratorUser = (userAccount: any) =>
   userAccount?.userProfileType === "COLLABORATOR";
