@@ -14,7 +14,8 @@ interface UserMenuProps {
 export const UserMenu = ({ user }: UserMenuProps) => {
   const { fullname, email, avatar, navItems, userAccount, relatedUsers } = user;
   const { color: backgroundColor, text: avatarText } = avatar;
-  const shouldHidePlanForCollaborator = user.isCollaborator && !user.canAccessControlPanel;
+  const shouldHidePlanForCollaborator =
+    user.isCollaborator && !user.canAccessControlPanel;
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
   const showRelatedUsersMenu =
