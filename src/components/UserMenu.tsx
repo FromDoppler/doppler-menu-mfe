@@ -60,7 +60,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
               </p>
               <button
                 type="button"
-                className="dp-button button-small primary-green dp-w-100"
+                className="dp-button button-small primary-green dp-w-100 m-b-12"
                 onClick={() => setOpenUserSelection(true)}
               >
                 <FormattedMessage id="header.change_account_button" />
