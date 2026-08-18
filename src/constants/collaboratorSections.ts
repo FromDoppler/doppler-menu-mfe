@@ -5,8 +5,4 @@ export const COLLABORATOR_SECTIONS: Record<string, CollaboratorSection> = {
     idSection: 4,
     name: "ControlPanel",
   },
-  dashboard: {
-    idSection: 14,
-    name: "Dashboard",
-  },
 };

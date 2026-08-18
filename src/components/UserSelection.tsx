@@ -1,9 +1,9 @@
 import { FormattedMessage } from "react-intl";
 import { RelatedUsersData } from "../model";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useChangeUserSession } from "../client/dopplerLegacyClient";
+import { useAppConfiguration } from "../AppConfiguration";
 import { Avatar } from "./Avatar";
-import { useAppSessionState } from "../session/AppSessionStateContext";
 
 interface UserSelectionProps {
   data: RelatedUsersData[];
@@ -16,8 +16,7 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
       return item.AccountName === currentUser ? -1 : 0;
     }),
   );
-
-  const appSessionState = useAppSessionState();
+  const { webappBaseUrl } = useAppConfiguration();
 
   const {
     mutate: sendChangeUserSessionMutate,
@@ -43,14 +42,13 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
     sendChangeUserSessionMutate(value);
   };
 
-  if (isSuccess) {
-    if (appSessionState.status === "authenticated") {
-      const dashboardNav = appSessionState.userData.navItems.filter(
-        (item) => item.idHTML === "dashboardMenu",
-      )[0];
-      window.location.href = dashboardNav.url;
+  useEffect(() => {
+    if (!isSuccess || !webappBaseUrl) {
+      return;
     }
-  }
+
+    window.location.href = webappBaseUrl;
+  }, [isSuccess, webappBaseUrl]);
 
   return (
     <>
