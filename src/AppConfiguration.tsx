@@ -5,7 +5,6 @@ export interface AppConfiguration {
   dopplerMenuElementId?: string;
   useDummies?: boolean;
   dopplerLegacyBaseUrl?: string;
-  webappBaseUrl?: string;
   onStatusUpdate?: (status: AppSessionState["status"]) => void;
   beamerId?: string;
   userpilotToken?: string;

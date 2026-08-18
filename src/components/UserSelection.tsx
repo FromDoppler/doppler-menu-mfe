@@ -2,7 +2,6 @@ import { FormattedMessage } from "react-intl";
 import { RelatedUsersData } from "../model";
 import { useEffect, useState } from "react";
 import { useChangeUserSession } from "../client/dopplerLegacyClient";
-import { useAppConfiguration } from "../AppConfiguration";
 import { Avatar } from "./Avatar";
 
 interface UserSelectionProps {
@@ -16,7 +15,7 @@ export const UserSelection = ({ data, currentUser }: UserSelectionProps) => {
       return item.AccountName === currentUser ? -1 : 0;
     }),
   );
-  const { webappBaseUrl } = useAppConfiguration();
+  const webappBaseUrl = process.env.REACT_APP_WEBAPP_BASE_URL;
 
   const {
     mutate: sendChangeUserSessionMutate,

@@ -13,7 +13,6 @@ The global object `"doppler-menu-mfe-configuration"` could be used to configure 
 - `dopplerMenuElementId?: string`: where the menu will be rendered.
 - `useDummies?: boolean`: when it is true, dummy data will be used, in place of the real backend.
 - `dopplerLegacyBaseUrl?: string`: it is required to connect with the Doppler Legacy backend, for example to submit EAV Form.
-- `webappBaseUrl?: string`: base URL used when the menu needs to redirect to Doppler WebApp.
 - `onStatusUpdate?: (status: "unknown" | "non-authenticated" | "authenticated") => void;`: Function to be executed when the session status is updated.
 - `beamerId?: string`: beamer product Id (notifications)
 
@@ -23,7 +22,6 @@ Example:
 window["doppler-menu-mfe-configuration"] = {
   dopplerMenuElementId: "doppler-menu-mfe",
   dopplerLegacyBaseUrl: "https://app2.fromdoppler.com",
-  webappBaseUrl: "https://app.fromdoppler.com/",
   onStatusUpdate: (status) => {
     if (status === "authenticated") {
       // Only show the page content after Menu is ready
