@@ -68,12 +68,11 @@ function initialize(
 
 function readConfiguration(window: Window): AppConfiguration {
   const baseConfig = (window as any)["doppler-menu-mfe-configuration"] ?? {};
-  const sessionConfig =
-    (window as any)["doppler-session-mfe-configuration"] ?? {};
   return {
     ...baseConfig,
     dopplerLegacyBaseUrl:
-      baseConfig.dopplerLegacyBaseUrl ?? sessionConfig.dopplerLegacyBaseUrl,
+      baseConfig.dopplerLegacyBaseUrl ??
+      process.env.REACT_APP_DOPPLER_LEGACY_BASE_URL,
     userpilotToken: process.env.REACT_APP_USERPILOT_TOKEN,
   };
 }
