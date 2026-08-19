@@ -33,6 +33,16 @@ export type userAccountType = Readonly<{
   userProfileType: string;
   language: string;
   utcRegisterDate: string;
+  collaboratorViewAccessRights?: ReadonlyArray<{
+    accessLevel: number;
+    idSection: number;
+    name: string;
+  }>;
+}>;
+
+export type CollaboratorSection = Readonly<{
+  idSection: number;
+  name: string;
 }>;
 
 export type Plan = Readonly<{
@@ -184,6 +194,8 @@ export type User = Readonly<
         }
     >;
     userAccount: Readonly<userAccountType> | undefined;
+    isCollaborator?: boolean;
+    canAccessControlPanel?: boolean;
     relatedUsers: RelatedUsersData[] | undefined;
     hasAutomation?: boolean;
     origin: string;

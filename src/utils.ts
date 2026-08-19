@@ -1,5 +1,6 @@
 import {
   Alert,
+  CollaboratorSection,
   PrimaryNavItem,
   Plan,
   TerminalNavItem,
@@ -191,6 +192,27 @@ const safeLandings = (data: any) => ({
   landingsEditorEnabled: data.landings.landingsEditorEnabled,
 });
 
+const COLLABORATOR_SECTIONS: Record<string, CollaboratorSection> = {
+  controlPanel: {
+    idSection: 4,
+    name: "ControlPanel",
+  },
+};
+
+const isCollaboratorUser = (userAccount: any) =>
+  userAccount?.userProfileType === "COLLABORATOR";
+
+const hasCollaboratorSectionAccess = (
+  userAccount: any,
+  section: CollaboratorSection,
+) =>
+  isCollaboratorUser(userAccount) &&
+  Array.isArray(userAccount?.collaboratorViewAccessRights) &&
+  userAccount.collaboratorViewAccessRights.some(
+    (access: any) =>
+      access?.idSection === section.idSection && access?.name === section.name,
+  );
+
 const safeUser = (data: any): User => ({
   idUser: mapIdUserToken(data?.jwtToken),
   email: safeString(data?.email),
@@ -214,6 +236,11 @@ const safeUser = (data: any): User => ({
   utcRegisterDate: safeString(data?.utcRegisterDate),
   sms: safeSms(data?.sms),
   isLastPlanRequested: safeBoolean(data?.isLastPlanRequested),
+  isCollaborator: isCollaboratorUser(data?.userAccount),
+  canAccessControlPanel: hasCollaboratorSectionAccess(
+    data?.userAccount,
+    COLLABORATOR_SECTIONS.controlPanel,
+  ),
   chat: safeChat(data?.chat),
   landings: safeLandings(data),
   ...(data?.clientManager

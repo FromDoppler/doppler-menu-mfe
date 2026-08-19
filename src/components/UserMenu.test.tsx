@@ -43,6 +43,8 @@ const baseUser: User = {
   ],
   sms: { smsEnabled: false },
   isLastPlanRequested: false,
+  isCollaborator: false,
+  canAccessControlPanel: true,
   hasClientManager: false,
   chat: { active: false },
   onsite: { active: false },
@@ -111,5 +113,21 @@ describe("<UserMenu />", () => {
     );
 
     expect(screen.getByText("Ver todas las cuentas")).toBeInTheDocument;
+  });
+
+  it("does not render plan for collaborators without control panel access", () => {
+    const user = {
+      ...baseUser,
+      isCollaborator: true,
+      canAccessControlPanel: false,
+    };
+
+    render(
+      <MenuIntlProvider>
+        <UserMenu user={user} />
+      </MenuIntlProvider>,
+    );
+
+    expect(screen.queryByText(baseUser.plan.planName)).not.toBeInTheDocument();
   });
 });
