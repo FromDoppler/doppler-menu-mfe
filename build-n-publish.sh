@@ -7,6 +7,7 @@ name=""
 version=""
 versionPre=""
 environment=""
+skipClean=""
 
 print_help () {
     echo ""
@@ -55,6 +56,9 @@ case $i in
     ;;
     -s=*|--pre-version-suffix=*)
     versionPre="${i#*=}"
+    ;;
+    --skip-clean)
+    skipClean="true"
     ;;
     -h|--help)
     print_help
@@ -156,4 +160,22 @@ docker run --rm \
     && sh ./upload.sh \
       --port=\"${CDN_SFTP_PORT}\" \
       --destination=\"${CDN_SFTP_USERNAME}@${CDN_SFTP_HOSTNAME}:/${CDN_SFTP_BASE}/${pkgName}/\" \
+    && ( \
+      if [ -n \"${skipClean}\" ]; then \
+        echo 'Skipping CDN cleanup because --skip-clean was provided.'; \
+      elif [ -n \"${name}\" ]; then \
+        if echo \"${name}\" | grep -q '^pr-'; then \
+          environmentToClean='pr'; \
+        else \
+          environmentToClean=\"${name}\"; \
+        fi; \
+        echo \"Cleaning old CDN files for \${environmentToClean}...\"; \
+        sh ./clean.sh \
+          --port=\"${CDN_SFTP_PORT}\" \
+          --destination=\"${CDN_SFTP_USERNAME}@${CDN_SFTP_HOSTNAME}:/${CDN_SFTP_BASE}/${pkgName}/\" \
+          --environment=\"\${environmentToClean}\"; \
+      else \
+        echo 'Skipping CDN cleanup for versioned release.'; \
+      fi; \
+    ) \
     "
