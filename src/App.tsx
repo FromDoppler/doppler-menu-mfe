@@ -87,6 +87,7 @@ function App({
       {openUserSelection && user.relatedUsers ? (
         <Modal
           isOpen={openUserSelection}
+          convrrtWA={true}
           handleClose={() => setOpenUserSelection(false)}
           modalId="modal-all-accounts"
         >
