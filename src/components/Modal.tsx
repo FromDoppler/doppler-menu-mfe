@@ -20,7 +20,7 @@ export const Modal = ({
   }
 
   return (
-    <div className="modal" {...otherProps} id={modalId}>
+    <div className="dp-modal" {...otherProps} id={modalId}>
       <div className={`modal-content--${type}`}>
         <span
           onClick={handleClose}

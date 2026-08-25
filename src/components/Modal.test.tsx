@@ -5,7 +5,6 @@ import { Modal } from "./Modal";
 const content = "Test Children";
 const iconTestId = "modal-close";
 const modalTestId = "modal";
-const modalClass = "modal";
 const toggleModal = jest.fn();
 
 describe("<Modal />", () => {
@@ -20,7 +19,7 @@ describe("<Modal />", () => {
     );
 
     const modal = screen.getByTestId(modalTestId);
-    expect(modal).toHaveClass(modalClass);
+    expect(modal).toHaveClass("dp-modal");
   });
 
   it("renders children prop", async () => {
