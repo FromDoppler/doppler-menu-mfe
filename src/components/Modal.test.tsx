@@ -5,7 +5,6 @@ import { Modal } from "./Modal";
 const content = "Test Children";
 const iconTestId = "modal-close";
 const modalTestId = "modal";
-const modalClass = "modal";
 const toggleModal = jest.fn();
 
 describe("<Modal />", () => {
@@ -20,7 +19,7 @@ describe("<Modal />", () => {
     );
 
     const modal = screen.getByTestId(modalTestId);
-    expect(modal).toHaveClass(modalClass);
+    expect(modal).toHaveClass("dp-modal");
   });
 
   it("renders children prop", async () => {
@@ -29,22 +28,6 @@ describe("<Modal />", () => {
     );
 
     screen.getByText(content);
-  });
-
-  it("uses dp-modal when convrrtWA is true", async () => {
-    render(
-      <Modal
-        isOpen={true}
-        children={content}
-        handleClose={toggleModal}
-        convrrtWA={true}
-        data-testid="modal"
-      />,
-    );
-
-    const modal = screen.getByTestId(modalTestId);
-    expect(modal).toHaveClass("dp-modal");
-    expect(modal).not.toHaveClass(modalClass);
   });
 
   it("closes when click on close icon", async () => {
