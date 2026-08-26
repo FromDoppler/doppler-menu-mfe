@@ -11,7 +11,7 @@
     "@types/node": "22.20.1",
     "@types/react": "18.3.31",
     "@types/react-dom": "18.3.7",
-    "axios": "1.4.0",
+    "axios": "1.20.0",
     "eclint": "2.8.1",
     "env-cmd": "^10.1.0",
     "formik": "2.4.3",
