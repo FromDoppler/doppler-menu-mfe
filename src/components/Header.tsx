@@ -6,6 +6,7 @@ import { User } from "../model";
 import { NavBarState } from "../navbar-state/navbar-state-abstractions";
 import { ClientManagerLogo } from "./ClientManagerLogo";
 import { SubNavDesktop } from "./SubNavDesktop";
+import { EcoIAMenuButton } from "./EcoIAMenuButton";
 
 interface HeaderProp {
   navBar: NavBarState;
@@ -51,6 +52,7 @@ export const Header = ({
           navBar={navBar}
           openMenuMobile={openMenuMobile}
         />
+        <EcoIAMenuButton />
         <MenuRight user={user} setOpenMenuMobile={setOpenMenuMobile} />
       </div>
       {!!openItem && <SubNavDesktop item={openItem} />}

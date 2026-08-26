@@ -11,6 +11,9 @@ const messages_en = {
   header: {
     availables: "availables",
     change_account_button: "See all available accounts",
+    eco_ia: "Eco IA",
+    eco_ia_beta: "BETA",
+    eco_ia_open: "Open Eco IA",
     enabled: "ENABLED",
     plan_emails: "Emails",
     plan_prepaid: "Premium Plan by Credits",
