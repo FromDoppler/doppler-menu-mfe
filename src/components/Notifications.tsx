@@ -5,7 +5,8 @@ import { useEffect, useRef } from "react";
 import { User } from "../model";
 import { defaultLanguage } from "./i18n/MenuIntlProvider";
 import { useAppConfiguration } from "../AppConfiguration";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
+import { Tooltip } from "./Tooltip";
 
 // this is a temporary beamer account with limited functions
 const BEAMER_URL = null;
@@ -23,6 +24,7 @@ interface NotificationProp {
 export const Notifications = ({ user }: NotificationProp) => {
   const { beamerId } = useAppConfiguration();
   const notificationRef = useRef<HTMLSpanElement>(null);
+  const intl = useIntl();
 
   useEffect(() => {
     const host = notificationRef.current;
@@ -87,12 +89,13 @@ export const Notifications = ({ user }: NotificationProp) => {
 
   return (
     <li>
-      <span
-        ref={notificationRef}
-        className="user-menu--open active iconapp-notification beamer-icon"
-      >
-        <FormattedMessage id="header.user_notifications" />
-      </span>
+      <Tooltip label={intl.formatMessage({ id: "header.user_notifications" })}>
+        <span
+          ref={notificationRef}
+          aria-label={intl.formatMessage({ id: "header.user_notifications" })}
+          className="user-menu--open active iconapp-notification beamer-icon"
+        />
+      </Tooltip>
     </li>
   );
 };

@@ -1,0 +1,56 @@
+.dp-tooltip-container {
+  display: inline-flex;
+  position: relative;
+}
+
+.dp-tooltip-screen-reader-only {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.dp-tooltip {
+  background: #262626;
+  border-radius: 2px;
+  bottom: auto;
+  color: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  left: 50%;
+  line-height: 16px;
+  opacity: 0;
+  padding: 7px 10px;
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  transform: translateX(-50%);
+  transition:
+    opacity 0.15s ease-in-out,
+    visibility 0.15s ease-in-out;
+  visibility: hidden;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.dp-tooltip::before {
+  border-bottom: 5px solid #262626;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  content: "";
+  left: 50%;
+  position: absolute;
+  top: -5px;
+  transform: translateX(-50%);
+}
+
+.dp-tooltip-container:focus-within .dp-tooltip,
+.dp-tooltip-container:hover .dp-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
