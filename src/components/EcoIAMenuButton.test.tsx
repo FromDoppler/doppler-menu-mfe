@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import {
   EcoIAMenuButton,
+  ECO_IA_CLOSE_REQUESTED_EVENT_TYPE,
   ECO_IA_OPEN_REQUESTED_EVENT_TYPE,
 } from "./EcoIAMenuButton";
 import { DOPPLER_SESSION_STATE_UPDATE_EVENT_TYPE } from "../session/doppler-session-mfe-conventions";
@@ -64,5 +65,22 @@ describe(EcoIAMenuButton.name, () => {
 
     expect(openRequested).toHaveBeenCalledTimes(1);
     window.removeEventListener(ECO_IA_OPEN_REQUESTED_EVENT_TYPE, openRequested);
+  });
+
+  it("requests the docked widget to close when it reports being open", () => {
+    setEcoIAAddOnActive(true);
+    const closeRequested = jest.fn();
+    window.addEventListener(ECO_IA_CLOSE_REQUESTED_EVENT_TYPE, closeRequested);
+
+    renderEcoIAMenuButton();
+    fireEvent(window, new Event("ecoia:opened"));
+    fireEvent.click(screen.getByTestId("eco-ia-menu-button"));
+
+    expect(closeRequested).toHaveBeenCalledTimes(1);
+    expect(screen.getByLabelText("Cerrar Eco IA")).toBeInTheDocument();
+    window.removeEventListener(
+      ECO_IA_CLOSE_REQUESTED_EVENT_TYPE,
+      closeRequested,
+    );
   });
 });

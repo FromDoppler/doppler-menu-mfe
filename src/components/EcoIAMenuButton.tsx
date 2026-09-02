@@ -11,6 +11,9 @@ const ECO_IA_ADDON_TYPE_ID = 5;
 // README.md in this folder for the exact listener snippet and why the
 // button doesn't call .open() directly.
 export const ECO_IA_OPEN_REQUESTED_EVENT_TYPE = "ecoia:open-requested";
+export const ECO_IA_CLOSE_REQUESTED_EVENT_TYPE = "ecoia:close-requested";
+const ECO_IA_OPENED_EVENT_TYPE = "ecoia:opened";
+const ECO_IA_CLOSED_EVENT_TYPE = "ecoia:closed";
 
 type AddOnPlan = {
   active?: boolean;
@@ -39,6 +42,7 @@ function checkEcoIAAddonActive(): boolean {
 
 export const EcoIAMenuButton = () => {
   const [active, setActive] = useState(checkEcoIAAddonActive());
+  const [isOpen, setIsOpen] = useState(false);
   const intl = useIntl();
 
   useEffect(() => {
@@ -53,19 +57,41 @@ export const EcoIAMenuButton = () => {
       );
   }, []);
 
+  useEffect(() => {
+    const markAsOpen = () => setIsOpen(true);
+    const markAsClosed = () => setIsOpen(false);
+
+    window.addEventListener(ECO_IA_OPENED_EVENT_TYPE, markAsOpen);
+    window.addEventListener(ECO_IA_CLOSED_EVENT_TYPE, markAsClosed);
+    return () => {
+      window.removeEventListener(ECO_IA_OPENED_EVENT_TYPE, markAsOpen);
+      window.removeEventListener(ECO_IA_CLOSED_EVENT_TYPE, markAsClosed);
+    };
+  }, []);
+
   if (!active) {
     return null;
   }
 
   const openEcoIA = () => {
-    window.dispatchEvent(new CustomEvent(ECO_IA_OPEN_REQUESTED_EVENT_TYPE));
+    window.dispatchEvent(
+      new CustomEvent(
+        isOpen
+          ? ECO_IA_CLOSE_REQUESTED_EVENT_TYPE
+          : ECO_IA_OPEN_REQUESTED_EVENT_TYPE,
+      ),
+    );
   };
+
+  const buttonLabel = intl.formatMessage({
+    id: isOpen ? "header.eco_ia_close" : "header.eco_ia_open",
+  });
 
   return (
     <button
       type="button"
       onClick={openEcoIA}
-      aria-label={intl.formatMessage({ id: "header.eco_ia_open" })}
+      aria-label={buttonLabel}
       data-testid="eco-ia-menu-button"
       className="dp-eco-ia-menu-button"
     >

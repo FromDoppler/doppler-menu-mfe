@@ -325,6 +325,11 @@ export const safeUserData = (data: any): UserData => {
                 data.features && data.features.landingsEditorEnabled
               ),
             },
+            addOnPlans: {
+              planData: {
+                idAddOnType: 5,
+              },
+            },
             jwtToken: data.jwtToken,
             userAccount: data.userAccount,
             relatedUsers: data.relatedUsers,

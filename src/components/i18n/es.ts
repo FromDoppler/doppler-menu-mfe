@@ -13,6 +13,7 @@ export const messages_es = {
     change_account_button: "Ver todas las cuentas",
     eco_ia: "Eco IA",
     eco_ia_beta: "BETA",
+    eco_ia_close: "Cerrar Eco IA",
     eco_ia_open: "Abrir Eco IA",
     enabled: "HABILITADO",
     plan_emails: "Emails",
